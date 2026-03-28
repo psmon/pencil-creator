@@ -1,0 +1,268 @@
+<Window x:Class="WpfSamples.BadgeCounterPop"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Badge Counter Pop" Height="500" Width="600"
+        Background="#1E1E2E" WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <!-- Badge Pop Animation using KeyFrames with ElasticEase -->
+        <Storyboard x:Key="BadgePopAnimation">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="BadgeScale"
+                                            Storyboard.TargetProperty="ScaleX">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.15" Value="1.3">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CubicEase EasingMode="EaseOut"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="1.0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <ElasticEase Oscillations="1" Springiness="8" EasingMode="EaseOut"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="BadgeScale"
+                                            Storyboard.TargetProperty="ScaleY">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.15" Value="1.3">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CubicEase EasingMode="EaseOut"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="1.0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <ElasticEase Oscillations="1" Springiness="8" EasingMode="EaseOut"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+
+        <!-- Badge 2 Pop -->
+        <Storyboard x:Key="Badge2PopAnimation">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Badge2Scale"
+                                            Storyboard.TargetProperty="ScaleX">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.15" Value="1.3">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CubicEase EasingMode="EaseOut"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="1.0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <ElasticEase Oscillations="1" Springiness="8" EasingMode="EaseOut"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Badge2Scale"
+                                            Storyboard.TargetProperty="ScaleY">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.15" Value="1.3">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CubicEase EasingMode="EaseOut"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="1.0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <ElasticEase Oscillations="1" Springiness="8" EasingMode="EaseOut"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+
+        <!-- Badge 3 Pop -->
+        <Storyboard x:Key="Badge3PopAnimation">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Badge3Scale"
+                                            Storyboard.TargetProperty="ScaleX">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.15" Value="1.3">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CubicEase EasingMode="EaseOut"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="1.0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <ElasticEase Oscillations="1" Springiness="8" EasingMode="EaseOut"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Badge3Scale"
+                                            Storyboard.TargetProperty="ScaleY">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.15" Value="1.3">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CubicEase EasingMode="EaseOut"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="1.0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <ElasticEase Oscillations="1" Springiness="8" EasingMode="EaseOut"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+
+        <!-- Base Button Style -->
+        <Style x:Key="BadgeButtonStyle" TargetType="Button">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bg" Background="{TemplateBinding Background}"
+                                CornerRadius="8" Padding="20,12">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="Bg"
+                                                             Storyboard.TargetProperty="Opacity"
+                                                             To="0.85" Duration="0:0:0.15"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="Bg"
+                                                             Storyboard.TargetProperty="Opacity"
+                                                             To="1" Duration="0:0:0.15"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <!-- Trigger badge pop animations on Window.Loaded for demo -->
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="Window.Loaded">
+            <BeginStoryboard Storyboard="{StaticResource BadgePopAnimation}"/>
+            <BeginStoryboard Storyboard="{StaticResource Badge2PopAnimation}"/>
+            <BeginStoryboard Storyboard="{StaticResource Badge3PopAnimation}"/>
+        </EventTrigger>
+    </Window.Triggers>
+
+    <Grid>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+            <!-- Title -->
+            <TextBlock Text="Badge Counter Pop Animation"
+                       Foreground="#CDD6F4" FontSize="24" FontWeight="SemiBold"
+                       HorizontalAlignment="Center" Margin="0,0,0,40"/>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <!-- Button 1: Notifications with badge -->
+                <Grid Margin="20,0">
+                    <Button Content="Notifications"
+                            Style="{StaticResource BadgeButtonStyle}"
+                            Background="#2A2A3E"/>
+                    <!-- Red Badge -->
+                    <Border x:Name="Badge1"
+                            Background="#F44336"
+                            Width="24" Height="24"
+                            CornerRadius="12"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            Margin="0,-10,-10,0"
+                            RenderTransformOrigin="0.5,0.5">
+                        <Border.RenderTransform>
+                            <ScaleTransform x:Name="BadgeScale" ScaleX="1" ScaleY="1"/>
+                        </Border.RenderTransform>
+                        <Border.Effect>
+                            <DropShadowEffect Color="#F44336" BlurRadius="8"
+                                              ShadowDepth="0" Opacity="0.5"/>
+                        </Border.Effect>
+                        <TextBlock Text="3" Foreground="White" FontSize="12"
+                                   FontWeight="Bold"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
+                    </Border>
+                </Grid>
+
+                <!-- Button 2: Messages with badge -->
+                <Grid Margin="20,0">
+                    <Button Content="Messages"
+                            Style="{StaticResource BadgeButtonStyle}"
+                            Background="#2A2A3E"/>
+                    <!-- Red Badge -->
+                    <Border x:Name="Badge2"
+                            Background="#F44336"
+                            Width="24" Height="24"
+                            CornerRadius="12"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            Margin="0,-10,-10,0"
+                            RenderTransformOrigin="0.5,0.5">
+                        <Border.RenderTransform>
+                            <ScaleTransform x:Name="Badge2Scale" ScaleX="1" ScaleY="1"/>
+                        </Border.RenderTransform>
+                        <Border.Effect>
+                            <DropShadowEffect Color="#F44336" BlurRadius="8"
+                                              ShadowDepth="0" Opacity="0.5"/>
+                        </Border.Effect>
+                        <TextBlock Text="12" Foreground="White" FontSize="11"
+                                   FontWeight="Bold"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
+                    </Border>
+                </Grid>
+
+                <!-- Button 3: Cart with badge -->
+                <Grid Margin="20,0">
+                    <Button Content="Cart"
+                            Style="{StaticResource BadgeButtonStyle}"
+                            Background="#2A2A3E"/>
+                    <!-- Red Badge -->
+                    <Border x:Name="Badge3"
+                            Background="#F44336"
+                            Width="24" Height="24"
+                            CornerRadius="12"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            Margin="0,-10,-10,0"
+                            RenderTransformOrigin="0.5,0.5">
+                        <Border.RenderTransform>
+                            <ScaleTransform x:Name="Badge3Scale" ScaleX="1" ScaleY="1"/>
+                        </Border.RenderTransform>
+                        <Border.Effect>
+                            <DropShadowEffect Color="#F44336" BlurRadius="8"
+                                              ShadowDepth="0" Opacity="0.5"/>
+                        </Border.Effect>
+                        <TextBlock Text="99+" Foreground="White" FontSize="9"
+                                   FontWeight="Bold"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
+                    </Border>
+                </Grid>
+            </StackPanel>
+
+            <!-- Replay button -->
+            <Button Content="Replay Badge Animation"
+                    Style="{StaticResource BadgeButtonStyle}"
+                    Background="#7C3AED"
+                    HorizontalAlignment="Center"
+                    Margin="0,40,0,0">
+                <Button.Triggers>
+                    <EventTrigger RoutedEvent="Button.Click">
+                        <BeginStoryboard Storyboard="{StaticResource BadgePopAnimation}"/>
+                        <BeginStoryboard Storyboard="{StaticResource Badge2PopAnimation}"/>
+                        <BeginStoryboard Storyboard="{StaticResource Badge3PopAnimation}"/>
+                    </EventTrigger>
+                </Button.Triggers>
+            </Button>
+
+            <!-- Hint -->
+            <TextBlock Text="Badges pop with ElasticEase (Oscillations=1, Springiness=8) on Loaded"
+                       Foreground="#6C7086" FontSize="12"
+                       HorizontalAlignment="Center" Margin="0,20,0,0"/>
+        </StackPanel>
+    </Grid>
+</Window>

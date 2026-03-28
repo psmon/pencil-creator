@@ -1,0 +1,95 @@
+<Window x:Class="WpfSample.AnimatedGradientBg"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Animated Gradient Background" Height="500" Width="700"
+        WindowStartupLocation="CenterScreen">
+
+    <Window.Background>
+        <LinearGradientBrush x:Name="GradBrush" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop x:Name="Stop1" Color="#667eea" Offset="0.0"/>
+            <GradientStop x:Name="Stop2" Color="#764ba2" Offset="0.5"/>
+            <GradientStop x:Name="Stop3" Color="#f093fb" Offset="1.0"/>
+        </LinearGradientBrush>
+    </Window.Background>
+
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="Window.Loaded">
+            <BeginStoryboard>
+                <Storyboard>
+                    <!-- Stop 1: #667eea -> #f093fb -->
+                    <ColorAnimation Storyboard.TargetName="Stop1"
+                                    Storyboard.TargetProperty="Color"
+                                    From="#667eea" To="#f093fb"
+                                    Duration="0:0:4" AutoReverse="True"
+                                    RepeatBehavior="Forever"/>
+
+                    <!-- Stop 2: #764ba2 -> #667eea -->
+                    <ColorAnimation Storyboard.TargetName="Stop2"
+                                    Storyboard.TargetProperty="Color"
+                                    From="#764ba2" To="#667eea"
+                                    Duration="0:0:4" AutoReverse="True"
+                                    RepeatBehavior="Forever"/>
+
+                    <!-- Stop 3: #f093fb -> #764ba2 -->
+                    <ColorAnimation Storyboard.TargetName="Stop3"
+                                    Storyboard.TargetProperty="Color"
+                                    From="#f093fb" To="#764ba2"
+                                    Duration="0:0:4" AutoReverse="True"
+                                    RepeatBehavior="Forever"/>
+
+                    <!-- Middle stop offset animation 0.3 <-> 0.7 -->
+                    <DoubleAnimation Storyboard.TargetName="Stop2"
+                                     Storyboard.TargetProperty="Offset"
+                                     From="0.3" To="0.7"
+                                     Duration="0:0:4" AutoReverse="True"
+                                     RepeatBehavior="Forever"/>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </Window.Triggers>
+
+    <Grid>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+            <!-- Glass card overlay -->
+            <Border CornerRadius="16" Padding="40,30"
+                    Width="400">
+                <Border.Background>
+                    <SolidColorBrush Color="#1E1E2E" Opacity="0.6"/>
+                </Border.Background>
+                <StackPanel>
+                    <TextBlock Text="Animated Gradient" FontSize="32" FontWeight="Bold"
+                               Foreground="White" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Background" FontSize="32" FontWeight="Light"
+                               Foreground="#E0E0E0" HorizontalAlignment="Center" Margin="0,-4,0,0"/>
+                    <TextBlock FontSize="14" Foreground="#B0B0C0" TextAlignment="Center"
+                               Margin="0,16,0,0" TextWrapping="Wrap"
+                               Text="Three gradient stops animate their colors continuously while the middle stop shifts its offset between 0.3 and 0.7."/>
+
+                    <Border Background="#FFFFFF" Opacity="0.15" CornerRadius="8"
+                            Height="4" Margin="40,20,40,0"/>
+
+                    <WrapPanel HorizontalAlignment="Center" Margin="0,20,0,0">
+                        <Border CornerRadius="6" Padding="12,6" Margin="4">
+                            <Border.Background>
+                                <SolidColorBrush Color="White" Opacity="0.15"/>
+                            </Border.Background>
+                            <TextBlock Text="4s Duration" Foreground="White" FontSize="12"/>
+                        </Border>
+                        <Border CornerRadius="6" Padding="12,6" Margin="4">
+                            <Border.Background>
+                                <SolidColorBrush Color="White" Opacity="0.15"/>
+                            </Border.Background>
+                            <TextBlock Text="AutoReverse" Foreground="White" FontSize="12"/>
+                        </Border>
+                        <Border CornerRadius="6" Padding="12,6" Margin="4">
+                            <Border.Background>
+                                <SolidColorBrush Color="White" Opacity="0.15"/>
+                            </Border.Background>
+                            <TextBlock Text="Forever" Foreground="White" FontSize="12"/>
+                        </Border>
+                    </WrapPanel>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </Grid>
+</Window>

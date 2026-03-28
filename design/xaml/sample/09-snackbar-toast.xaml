@@ -1,0 +1,277 @@
+<Window x:Class="WpfSamples.SnackbarToast"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Snackbar Toast" Height="500" Width="600"
+        Background="#1E1E2E" WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <!-- Snackbar Storyboard: slide up, show, auto-hide after 3s -->
+        <Storyboard x:Key="ShowSnackbar">
+            <!-- Slide up from below -->
+            <DoubleAnimation Storyboard.TargetName="SnackbarPanel"
+                             Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                             From="60" To="0" Duration="0:0:0.3">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <!-- Fade in -->
+            <DoubleAnimation Storyboard.TargetName="SnackbarPanel"
+                             Storyboard.TargetProperty="Opacity"
+                             From="0" To="1" Duration="0:0:0.3">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <!-- After 3 seconds, slide back down -->
+            <DoubleAnimation Storyboard.TargetName="SnackbarPanel"
+                             Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                             From="0" To="60" Duration="0:0:0.3"
+                             BeginTime="0:0:3">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseIn"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <!-- Fade out after 3 seconds -->
+            <DoubleAnimation Storyboard.TargetName="SnackbarPanel"
+                             Storyboard.TargetProperty="Opacity"
+                             From="1" To="0" Duration="0:0:0.3"
+                             BeginTime="0:0:3">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseIn"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+
+        <!-- Success variant -->
+        <Storyboard x:Key="ShowSuccessSnackbar">
+            <DoubleAnimation Storyboard.TargetName="SuccessSnackbar"
+                             Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                             From="60" To="0" Duration="0:0:0.3">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Storyboard.TargetName="SuccessSnackbar"
+                             Storyboard.TargetProperty="Opacity"
+                             From="0" To="1" Duration="0:0:0.3"/>
+            <DoubleAnimation Storyboard.TargetName="SuccessSnackbar"
+                             Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                             To="60" Duration="0:0:0.3" BeginTime="0:0:3">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseIn"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Storyboard.TargetName="SuccessSnackbar"
+                             Storyboard.TargetProperty="Opacity"
+                             To="0" Duration="0:0:0.3" BeginTime="0:0:3"/>
+        </Storyboard>
+
+        <!-- Error variant -->
+        <Storyboard x:Key="ShowErrorSnackbar">
+            <DoubleAnimation Storyboard.TargetName="ErrorSnackbar"
+                             Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                             From="60" To="0" Duration="0:0:0.3">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Storyboard.TargetName="ErrorSnackbar"
+                             Storyboard.TargetProperty="Opacity"
+                             From="0" To="1" Duration="0:0:0.3"/>
+            <DoubleAnimation Storyboard.TargetName="ErrorSnackbar"
+                             Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                             To="60" Duration="0:0:0.3" BeginTime="0:0:3">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseIn"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Storyboard.TargetName="ErrorSnackbar"
+                             Storyboard.TargetProperty="Opacity"
+                             To="0" Duration="0:0:0.3" BeginTime="0:0:3"/>
+        </Storyboard>
+
+        <!-- Button Style -->
+        <Style x:Key="TriggerButtonStyle" TargetType="Button">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="20,10"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bg" Background="{TemplateBinding Background}"
+                                CornerRadius="6" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="Bg"
+                                                             Storyboard.TargetProperty="Opacity"
+                                                             To="0.85" Duration="0:0:0.15"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="Bg"
+                                                             Storyboard.TargetProperty="Opacity"
+                                                             To="1" Duration="0:0:0.15"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <!-- Main Content Area -->
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBlock Text="Snackbar / Toast Notifications"
+                       Foreground="#CDD6F4" FontSize="24" FontWeight="SemiBold"
+                       HorizontalAlignment="Center" Margin="0,0,0,30"/>
+
+            <TextBlock Text="Click buttons to trigger different snackbar styles"
+                       Foreground="#6C7086" FontSize="13"
+                       HorizontalAlignment="Center" Margin="0,0,0,24"/>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <!-- Default Snackbar Button -->
+                <Button Content="Show Default"
+                        Style="{StaticResource TriggerButtonStyle}"
+                        Background="#323232" Margin="6,0">
+                    <Button.Triggers>
+                        <EventTrigger RoutedEvent="Button.Click">
+                            <BeginStoryboard Storyboard="{StaticResource ShowSnackbar}"/>
+                        </EventTrigger>
+                    </Button.Triggers>
+                </Button>
+
+                <!-- Success Snackbar Button -->
+                <Button Content="Show Success"
+                        Style="{StaticResource TriggerButtonStyle}"
+                        Background="#2E7D32" Margin="6,0">
+                    <Button.Triggers>
+                        <EventTrigger RoutedEvent="Button.Click">
+                            <BeginStoryboard Storyboard="{StaticResource ShowSuccessSnackbar}"/>
+                        </EventTrigger>
+                    </Button.Triggers>
+                </Button>
+
+                <!-- Error Snackbar Button -->
+                <Button Content="Show Error"
+                        Style="{StaticResource TriggerButtonStyle}"
+                        Background="#C62828" Margin="6,0">
+                    <Button.Triggers>
+                        <EventTrigger RoutedEvent="Button.Click">
+                            <BeginStoryboard Storyboard="{StaticResource ShowErrorSnackbar}"/>
+                        </EventTrigger>
+                    </Button.Triggers>
+                </Button>
+            </StackPanel>
+        </StackPanel>
+
+        <!-- Default Snackbar (Dark Bar) -->
+        <Border x:Name="SnackbarPanel"
+                Background="#323232"
+                CornerRadius="6"
+                Padding="16,12"
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Center"
+                Margin="0,0,0,24"
+                Opacity="0"
+                MinWidth="400">
+            <Border.RenderTransform>
+                <TranslateTransform Y="60"/>
+            </Border.RenderTransform>
+            <Border.Effect>
+                <DropShadowEffect Color="Black" BlurRadius="16"
+                                  ShadowDepth="4" Opacity="0.4"/>
+            </Border.Effect>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="This is a default snackbar message"
+                           Foreground="#EEEEEE" FontSize="14"
+                           VerticalAlignment="Center"/>
+                <TextBlock Grid.Column="1" Text="DISMISS"
+                           Foreground="#BB86FC" FontSize="13" FontWeight="Bold"
+                           VerticalAlignment="Center" Cursor="Hand"
+                           Margin="20,0,0,0"/>
+            </Grid>
+        </Border>
+
+        <!-- Success Snackbar -->
+        <Border x:Name="SuccessSnackbar"
+                Background="#1B5E20"
+                CornerRadius="6"
+                Padding="16,12"
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Center"
+                Margin="0,0,0,24"
+                Opacity="0"
+                MinWidth="400">
+            <Border.RenderTransform>
+                <TranslateTransform Y="60"/>
+            </Border.RenderTransform>
+            <Border.Effect>
+                <DropShadowEffect Color="Black" BlurRadius="16"
+                                  ShadowDepth="4" Opacity="0.4"/>
+            </Border.Effect>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="&#x2713;" Foreground="#81C784" FontSize="16"
+                           VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <TextBlock Text="Changes saved successfully!"
+                           Foreground="#E8F5E9" FontSize="14"
+                           VerticalAlignment="Center"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Error Snackbar -->
+        <Border x:Name="ErrorSnackbar"
+                Background="#B71C1C"
+                CornerRadius="6"
+                Padding="16,12"
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Center"
+                Margin="0,0,0,24"
+                Opacity="0"
+                MinWidth="400">
+            <Border.RenderTransform>
+                <TranslateTransform Y="60"/>
+            </Border.RenderTransform>
+            <Border.Effect>
+                <DropShadowEffect Color="Black" BlurRadius="16"
+                                  ShadowDepth="4" Opacity="0.4"/>
+            </Border.Effect>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="&#x2717;" Foreground="#EF9A9A" FontSize="16"
+                               VerticalAlignment="Center" Margin="0,0,10,0"/>
+                    <TextBlock Text="An error occurred. Please try again."
+                               Foreground="#FFEBEE" FontSize="14"
+                               VerticalAlignment="Center"/>
+                </StackPanel>
+                <TextBlock Grid.Column="1" Text="RETRY"
+                           Foreground="#FFCDD2" FontSize="13" FontWeight="Bold"
+                           VerticalAlignment="Center" Cursor="Hand"
+                           Margin="20,0,0,0"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

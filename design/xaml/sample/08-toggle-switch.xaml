@@ -1,0 +1,195 @@
+<Window x:Class="WpfSamples.ToggleSwitch"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Toggle Switch" Height="450" Width="500"
+        Background="#1E1E2E" WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <!-- Material Design Toggle Switch Style -->
+        <Style x:Key="ToggleSwitchStyle" TargetType="ToggleButton">
+            <Setter Property="Width" Value="44"/>
+            <Setter Property="Height" Value="22"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Grid>
+                            <!-- Pill Track -->
+                            <Border x:Name="Track"
+                                    Width="44" Height="22"
+                                    CornerRadius="11"
+                                    Background="#B0BEC5"/>
+
+                            <!-- Sliding Circle Knob -->
+                            <Border x:Name="Knob"
+                                    Width="18" Height="18"
+                                    CornerRadius="9"
+                                    Background="White"
+                                    HorizontalAlignment="Left"
+                                    Margin="2,0,0,0"
+                                    RenderTransformOrigin="0.5,0.5">
+                                <Border.RenderTransform>
+                                    <TranslateTransform x:Name="KnobTranslate" X="0"/>
+                                </Border.RenderTransform>
+                                <Border.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="4"
+                                                      ShadowDepth="1" Opacity="0.3"/>
+                                </Border.Effect>
+                            </Border>
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+                            <!-- Checked State: slide knob right, track turns green -->
+                            <Trigger Property="IsChecked" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <!-- Knob slides right -->
+                                            <DoubleAnimation Storyboard.TargetName="KnobTranslate"
+                                                             Storyboard.TargetProperty="X"
+                                                             To="22" Duration="0:0:0.25"
+                                                             AccelerationRatio="0.4"
+                                                             DecelerationRatio="0.6"/>
+                                            <!-- Track color: gray to green -->
+                                            <ColorAnimation Storyboard.TargetName="Track"
+                                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                            To="#4CAF50" Duration="0:0:0.25"
+                                                            AccelerationRatio="0.4"
+                                                            DecelerationRatio="0.6"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <!-- Knob slides back -->
+                                            <DoubleAnimation Storyboard.TargetName="KnobTranslate"
+                                                             Storyboard.TargetProperty="X"
+                                                             To="0" Duration="0:0:0.25"
+                                                             AccelerationRatio="0.4"
+                                                             DecelerationRatio="0.6"/>
+                                            <!-- Track color: green to gray -->
+                                            <ColorAnimation Storyboard.TargetName="Track"
+                                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                            To="#B0BEC5" Duration="0:0:0.25"
+                                                            AccelerationRatio="0.4"
+                                                            DecelerationRatio="0.6"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+
+                            <!-- Hover: slight scale on knob -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="Knob"
+                                                             Storyboard.TargetProperty="Width"
+                                                             To="20" Duration="0:0:0.15"/>
+                                            <DoubleAnimation Storyboard.TargetName="Knob"
+                                                             Storyboard.TargetProperty="Height"
+                                                             To="20" Duration="0:0:0.15"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="Knob"
+                                                             Storyboard.TargetProperty="Width"
+                                                             To="18" Duration="0:0:0.15"/>
+                                            <DoubleAnimation Storyboard.TargetName="Knob"
+                                                             Storyboard.TargetProperty="Height"
+                                                             To="18" Duration="0:0:0.15"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="350">
+            <!-- Title -->
+            <TextBlock Text="Material Toggle Switch"
+                       Foreground="#CDD6F4" FontSize="24" FontWeight="SemiBold"
+                       HorizontalAlignment="Center" Margin="0,0,0,40"/>
+
+            <!-- Toggle Row 1 -->
+            <Grid Margin="0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel>
+                    <TextBlock Text="Dark Mode" Foreground="#CDD6F4" FontSize="15"/>
+                    <TextBlock Text="Use dark theme across the application"
+                               Foreground="#6C7086" FontSize="12" Margin="0,2,0,0"/>
+                </StackPanel>
+                <ToggleButton Grid.Column="1" Style="{StaticResource ToggleSwitchStyle}"
+                              IsChecked="True" VerticalAlignment="Center"/>
+            </Grid>
+
+            <Border Height="1" Background="#333" Margin="0,8"/>
+
+            <!-- Toggle Row 2 -->
+            <Grid Margin="0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel>
+                    <TextBlock Text="Notifications" Foreground="#CDD6F4" FontSize="15"/>
+                    <TextBlock Text="Enable push notifications"
+                               Foreground="#6C7086" FontSize="12" Margin="0,2,0,0"/>
+                </StackPanel>
+                <ToggleButton Grid.Column="1" Style="{StaticResource ToggleSwitchStyle}"
+                              VerticalAlignment="Center"/>
+            </Grid>
+
+            <Border Height="1" Background="#333" Margin="0,8"/>
+
+            <!-- Toggle Row 3 -->
+            <Grid Margin="0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel>
+                    <TextBlock Text="Auto Save" Foreground="#CDD6F4" FontSize="15"/>
+                    <TextBlock Text="Automatically save changes"
+                               Foreground="#6C7086" FontSize="12" Margin="0,2,0,0"/>
+                </StackPanel>
+                <ToggleButton Grid.Column="1" Style="{StaticResource ToggleSwitchStyle}"
+                              IsChecked="True" VerticalAlignment="Center"/>
+            </Grid>
+
+            <Border Height="1" Background="#333" Margin="0,8"/>
+
+            <!-- Toggle Row 4 -->
+            <Grid Margin="0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel>
+                    <TextBlock Text="Analytics" Foreground="#CDD6F4" FontSize="15"/>
+                    <TextBlock Text="Share usage data to improve experience"
+                               Foreground="#6C7086" FontSize="12" Margin="0,2,0,0"/>
+                </StackPanel>
+                <ToggleButton Grid.Column="1" Style="{StaticResource ToggleSwitchStyle}"
+                              VerticalAlignment="Center"/>
+            </Grid>
+
+            <!-- Hint -->
+            <TextBlock Text="Click toggles to see slide + color animation"
+                       Foreground="#6C7086" FontSize="12"
+                       HorizontalAlignment="Center" Margin="0,30,0,0"/>
+        </StackPanel>
+    </Grid>
+</Window>

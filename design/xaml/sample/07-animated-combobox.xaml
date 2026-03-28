@@ -1,0 +1,267 @@
+<Window x:Class="WpfSamples.AnimatedComboBox"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Animated ComboBox" Height="450" Width="500"
+        Background="#1E1E2E" WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <!-- Animated ComboBox Style -->
+        <Style x:Key="AnimatedComboBoxStyle" TargetType="ComboBox">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid>
+                            <!-- Main Border -->
+                            <Border x:Name="MainBorder"
+                                    Background="#2A2A3E"
+                                    BorderBrush="#444"
+                                    BorderThickness="1"
+                                    CornerRadius="6"
+                                    Padding="12,0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="30"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- Selected Item Display -->
+                                    <ContentPresenter Grid.Column="0"
+                                                      Content="{TemplateBinding SelectionBoxItem}"
+                                                      ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                                      VerticalAlignment="Center"
+                                                      IsHitTestVisible="False"/>
+
+                                    <!-- Arrow Icon -->
+                                    <Path x:Name="Arrow" Grid.Column="1"
+                                          Data="M0,0 L5,5 L10,0"
+                                          Stroke="#888" StrokeThickness="2"
+                                          VerticalAlignment="Center"
+                                          HorizontalAlignment="Center"
+                                          RenderTransformOrigin="0.5,0.5">
+                                        <Path.RenderTransform>
+                                            <RotateTransform x:Name="ArrowRotate" Angle="0"/>
+                                        </Path.RenderTransform>
+                                    </Path>
+
+                                    <!-- Invisible Toggle Button for opening dropdown -->
+                                    <ToggleButton Grid.ColumnSpan="2"
+                                                  IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                                  Background="Transparent"
+                                                  BorderThickness="0"
+                                                  Opacity="0"/>
+                                </Grid>
+                            </Border>
+
+                            <!-- Dropdown Popup -->
+                            <Popup x:Name="PART_Popup"
+                                   IsOpen="{TemplateBinding IsDropDownOpen}"
+                                   Placement="Bottom"
+                                   AllowsTransparency="True"
+                                   PopupAnimation="None">
+                                <Border x:Name="DropdownBorder"
+                                        Background="#2A2A3E"
+                                        BorderBrush="#555"
+                                        BorderThickness="1"
+                                        CornerRadius="6"
+                                        Margin="4,2,4,4"
+                                        MinWidth="{TemplateBinding ActualWidth}"
+                                        MaxHeight="200"
+                                        RenderTransformOrigin="0.5,0">
+                                    <Border.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform x:Name="DropdownScale" ScaleY="0"/>
+                                        </TransformGroup>
+                                    </Border.RenderTransform>
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="Black" BlurRadius="12"
+                                                          ShadowDepth="4" Opacity="0.4"/>
+                                    </Border.Effect>
+                                    <ScrollViewer>
+                                        <StackPanel IsItemsHost="True"
+                                                    KeyboardNavigation.DirectionalNavigation="Contained"/>
+                                    </ScrollViewer>
+                                </Border>
+                            </Popup>
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+                            <!-- Dropdown Open Animation -->
+                            <Trigger Property="IsDropDownOpen" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <!-- ScaleY 0 to 1 -->
+                                            <DoubleAnimation Storyboard.TargetName="DropdownScale"
+                                                             Storyboard.TargetProperty="ScaleY"
+                                                             From="0" To="1"
+                                                             Duration="0:0:0.25">
+                                                <DoubleAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseOut"/>
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+                                            <!-- Opacity fade in -->
+                                            <DoubleAnimation Storyboard.TargetName="DropdownBorder"
+                                                             Storyboard.TargetProperty="Opacity"
+                                                             From="0" To="1"
+                                                             Duration="0:0:0.25">
+                                                <DoubleAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseOut"/>
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+                                            <!-- Arrow rotation -->
+                                            <DoubleAnimation Storyboard.TargetName="ArrowRotate"
+                                                             Storyboard.TargetProperty="Angle"
+                                                             To="180" Duration="0:0:0.25">
+                                                <DoubleAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseOut"/>
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+                                            <!-- Border highlight -->
+                                            <ColorAnimation Storyboard.TargetName="MainBorder"
+                                                            Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                                            To="#2196F3" Duration="0:0:0.2"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="DropdownScale"
+                                                             Storyboard.TargetProperty="ScaleY"
+                                                             To="0" Duration="0:0:0.15">
+                                                <DoubleAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseIn"/>
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+                                            <DoubleAnimation Storyboard.TargetName="DropdownBorder"
+                                                             Storyboard.TargetProperty="Opacity"
+                                                             To="0" Duration="0:0:0.15"/>
+                                            <DoubleAnimation Storyboard.TargetName="ArrowRotate"
+                                                             Storyboard.TargetProperty="Angle"
+                                                             To="0" Duration="0:0:0.2"/>
+                                            <ColorAnimation Storyboard.TargetName="MainBorder"
+                                                            Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                                            To="#444444" Duration="0:0:0.2"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+
+                            <!-- Hover effect -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetName="MainBorder"
+                                                            Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                                            To="#666" Duration="0:0:0.15"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetName="MainBorder"
+                                                            Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                                            To="#444444" Duration="0:0:0.15"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- ComboBoxItem Style -->
+        <Style x:Key="AnimatedComboBoxItemStyle" TargetType="ComboBoxItem">
+            <Setter Property="Foreground" Value="#CDD6F4"/>
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBoxItem">
+                        <Border x:Name="ItemBorder"
+                                Background="Transparent"
+                                Padding="{TemplateBinding Padding}"
+                                CornerRadius="4"
+                                Margin="4,1">
+                            <ContentPresenter/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetName="ItemBorder"
+                                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                            To="#3A3A50" Duration="0:0:0.15"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetName="ItemBorder"
+                                                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                            To="Transparent" Duration="0:0:0.15"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="ItemBorder" Property="Background" Value="#2196F3"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="350">
+            <!-- Title -->
+            <TextBlock Text="Animated ComboBox"
+                       Foreground="#CDD6F4" FontSize="24" FontWeight="SemiBold"
+                       HorizontalAlignment="Center" Margin="0,0,0,40"/>
+
+            <!-- Label -->
+            <TextBlock Text="Select a Framework" Foreground="#888" FontSize="12" Margin="0,0,0,6"/>
+
+            <!-- Animated ComboBox -->
+            <ComboBox Style="{StaticResource AnimatedComboBoxStyle}"
+                      ItemContainerStyle="{StaticResource AnimatedComboBoxItemStyle}"
+                      SelectedIndex="0">
+                <ComboBoxItem Content="WPF (.NET Framework)"/>
+                <ComboBoxItem Content="WPF (.NET Core)"/>
+                <ComboBoxItem Content="WinUI 3"/>
+                <ComboBoxItem Content="MAUI"/>
+                <ComboBoxItem Content="Avalonia UI"/>
+                <ComboBoxItem Content="Uno Platform"/>
+            </ComboBox>
+
+            <!-- Second ComboBox -->
+            <TextBlock Text="Select a Theme" Foreground="#888" FontSize="12" Margin="0,24,0,6"/>
+
+            <ComboBox Style="{StaticResource AnimatedComboBoxStyle}"
+                      ItemContainerStyle="{StaticResource AnimatedComboBoxItemStyle}"
+                      SelectedIndex="0">
+                <ComboBoxItem Content="Dark (Catppuccin Mocha)"/>
+                <ComboBoxItem Content="Dark (Dracula)"/>
+                <ComboBoxItem Content="Dark (One Dark)"/>
+                <ComboBoxItem Content="Light (Default)"/>
+                <ComboBoxItem Content="High Contrast"/>
+            </ComboBox>
+
+            <!-- Hint -->
+            <TextBlock Text="Click dropdown to see ScaleY + Opacity animation"
+                       Foreground="#6C7086" FontSize="12"
+                       HorizontalAlignment="Center" Margin="0,30,0,0"/>
+        </StackPanel>
+    </Grid>
+</Window>

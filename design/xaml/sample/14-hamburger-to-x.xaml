@@ -1,0 +1,185 @@
+<Window x:Class="WpfSample.HamburgerToX"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Hamburger to X Animation" Height="500" Width="700"
+        Background="#1E1E2E" WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <!-- To X Animation -->
+        <Storyboard x:Key="ToX">
+            <!-- Middle line fade out -->
+            <DoubleAnimation Storyboard.TargetName="MiddleLine"
+                             Storyboard.TargetProperty="Opacity"
+                             To="0" Duration="0:0:0.25">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseInOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+
+            <!-- Top line rotate 45 -->
+            <DoubleAnimation Storyboard.TargetName="TopLineRotate"
+                             Storyboard.TargetProperty="Angle"
+                             To="45" Duration="0:0:0.25">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseInOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <!-- Top line translate Y+7 -->
+            <DoubleAnimation Storyboard.TargetName="TopLineTranslate"
+                             Storyboard.TargetProperty="Y"
+                             To="7" Duration="0:0:0.25">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseInOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+
+            <!-- Bottom line rotate -45 -->
+            <DoubleAnimation Storyboard.TargetName="BottomLineRotate"
+                             Storyboard.TargetProperty="Angle"
+                             To="-45" Duration="0:0:0.25">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseInOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <!-- Bottom line translate Y-7 -->
+            <DoubleAnimation Storyboard.TargetName="BottomLineTranslate"
+                             Storyboard.TargetProperty="Y"
+                             To="-7" Duration="0:0:0.25">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseInOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+
+        <!-- Back to Hamburger Animation -->
+        <Storyboard x:Key="ToHamburger">
+            <!-- Middle line fade in -->
+            <DoubleAnimation Storyboard.TargetName="MiddleLine"
+                             Storyboard.TargetProperty="Opacity"
+                             To="1" Duration="0:0:0.25">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseInOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+
+            <!-- Top line rotate back -->
+            <DoubleAnimation Storyboard.TargetName="TopLineRotate"
+                             Storyboard.TargetProperty="Angle"
+                             To="0" Duration="0:0:0.25">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseInOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Storyboard.TargetName="TopLineTranslate"
+                             Storyboard.TargetProperty="Y"
+                             To="0" Duration="0:0:0.25">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseInOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+
+            <!-- Bottom line rotate back -->
+            <DoubleAnimation Storyboard.TargetName="BottomLineRotate"
+                             Storyboard.TargetProperty="Angle"
+                             To="0" Duration="0:0:0.25">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseInOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Storyboard.TargetName="BottomLineTranslate"
+                             Storyboard.TargetProperty="Y"
+                             To="0" Duration="0:0:0.25">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseInOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+    </Window.Resources>
+
+    <Grid>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBlock Text="Hamburger to X" FontSize="28" FontWeight="Bold"
+                       Foreground="#CDD6F4" HorizontalAlignment="Center" Margin="0,0,0,40"/>
+
+            <!-- Hamburger Toggle Button -->
+            <ToggleButton x:Name="HamburgerToggle" Width="56" Height="56" Cursor="Hand"
+                          HorizontalAlignment="Center">
+                <ToggleButton.Style>
+                    <Style TargetType="ToggleButton">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ToggleButton">
+                                    <Border x:Name="BtnBg" Background="#2A2A3E" CornerRadius="12"
+                                            Width="56" Height="56">
+                                        <Canvas Width="24" Height="18" HorizontalAlignment="Center"
+                                                VerticalAlignment="Center">
+                                            <!-- Top Line -->
+                                            <Rectangle x:Name="TopLine" Width="24" Height="2.5"
+                                                       Fill="#CDD6F4" RadiusX="1.25" RadiusY="1.25"
+                                                       Canvas.Top="0" RenderTransformOrigin="0.5,0.5">
+                                                <Rectangle.RenderTransform>
+                                                    <TransformGroup>
+                                                        <RotateTransform x:Name="TopLineRotate" Angle="0"/>
+                                                        <TranslateTransform x:Name="TopLineTranslate" Y="0"/>
+                                                    </TransformGroup>
+                                                </Rectangle.RenderTransform>
+                                            </Rectangle>
+
+                                            <!-- Middle Line -->
+                                            <Rectangle x:Name="MiddleLine" Width="24" Height="2.5"
+                                                       Fill="#CDD6F4" RadiusX="1.25" RadiusY="1.25"
+                                                       Canvas.Top="7.5" Opacity="1"/>
+
+                                            <!-- Bottom Line -->
+                                            <Rectangle x:Name="BottomLine" Width="24" Height="2.5"
+                                                       Fill="#CDD6F4" RadiusX="1.25" RadiusY="1.25"
+                                                       Canvas.Top="15" RenderTransformOrigin="0.5,0.5">
+                                                <Rectangle.RenderTransform>
+                                                    <TransformGroup>
+                                                        <RotateTransform x:Name="BottomLineRotate" Angle="0"/>
+                                                        <TranslateTransform x:Name="BottomLineTranslate" Y="0"/>
+                                                    </TransformGroup>
+                                                </Rectangle.RenderTransform>
+                                            </Rectangle>
+                                        </Canvas>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="BtnBg" Property="Background" Value="#313244"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard Storyboard="{StaticResource ToX}"/>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard Storyboard="{StaticResource ToHamburger}"/>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ToggleButton.Style>
+            </ToggleButton>
+
+            <TextBlock Text="Click the icon to toggle" FontSize="13" Foreground="#585B70"
+                       HorizontalAlignment="Center" Margin="0,20,0,0"/>
+
+            <!-- Larger demo version -->
+            <TextBlock Text="Large Preview" FontSize="16" FontWeight="SemiBold"
+                       Foreground="#A6ADC8" HorizontalAlignment="Center" Margin="0,50,0,16"/>
+
+            <Border Background="#2A2A3E" CornerRadius="16" Width="120" Height="120"
+                    HorizontalAlignment="Center">
+                <Canvas Width="50" Height="38" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Rectangle Width="50" Height="5" Fill="#667eea" RadiusX="2.5" RadiusY="2.5" Canvas.Top="0"/>
+                    <Rectangle Width="50" Height="5" Fill="#CE93D8" RadiusX="2.5" RadiusY="2.5" Canvas.Top="16"/>
+                    <Rectangle Width="50" Height="5" Fill="#f093fb" RadiusX="2.5" RadiusY="2.5" Canvas.Top="32"/>
+                </Canvas>
+            </Border>
+        </StackPanel>
+    </Grid>
+</Window>

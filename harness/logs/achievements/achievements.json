@@ -1,0 +1,13 @@
+{
+  "categories": {
+    "UI컴포넌트": { "count": 1, "first_date": "2026-03-28", "milestones": ["first"] },
+    "애니메이션": { "count": 1, "first_date": "2026-03-28", "milestones": ["first"] },
+    "데이터시각화": { "count": 0, "first_date": null, "milestones": [] },
+    "인터랙션": { "count": 0, "first_date": null, "milestones": [] },
+    "배경효과": { "count": 0, "first_date": null, "milestones": [] },
+    "HTML구현": { "count": 0, "first_date": null, "milestones": [] }
+  },
+  "special": ["펜을 잡은 순간"],
+  "consecutive_a_grades": 0,
+  "last_updated": "2026-03-28"
+}
