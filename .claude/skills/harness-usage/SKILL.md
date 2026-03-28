@@ -74,6 +74,8 @@ wpf-animation.pen을 **참고 라이브러리**로 활용하여 프로젝트 요
 Phase 1 — Gather (researching):
   → 사용자 요구사항 파악 (페이지 구성, 기능, 유효검사, 룩앤필)
   → wpf-animation.pen 카테고리/카드 전체 파악 (어떤 기법을 적용할지 계획)
+  → design/xaml/sample/*.xaml 에서 적용할 기법의 정밀 파라미터 확인
+    ⚠️ .pen만 읽으면 "대략적 파악", .xaml까지 읽어야 "정확한 Duration/Easing/값" 확보
   → Pencil get_guidelines로 스타일/가이드 로딩 (룩앤필 방향 결정)
   → 프로젝트 .pen 파일 상태 확인
 
@@ -125,7 +127,12 @@ Phase 3 — Verify (design-evaluating):
 
 ```
 Phase 1 — Gather:
-  → .pen 파일의 카테고리/컴포넌트 파악
+  → .pen 파일의 카테고리/컴포넌트 파악 (batch_get으로 카드 구조/색상/레이아웃)
+  → design/xaml/sample/*.xaml 에서 해당 기법의 정밀 애니메이션 파라미터 읽기
+    ⚠️ 이중 참조 필수:
+      .pen → 어떤 기법인지, 시각 구조, 색상 체계 파악
+      .xaml → Duration, EasingFunction, From/To, BeginTime 등 정밀 수치 확보
+      .pen만 읽으면 퀄리티가 떨어진다! 반드시 .xaml까지 읽어야 정확한 WPF→Web 매핑 가능
   → 애니메이션 가이드 카드 확인 (Case B 산출물이 있으면 참조)
   → get_screenshot()으로 시각 요소 확인
 

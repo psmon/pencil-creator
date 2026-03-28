@@ -7417,6 +7417,639 @@
           ]
         }
       ]
+    },
+    {
+      "type": "frame",
+      "id": "El91t",
+      "x": 0,
+      "y": 8083,
+      "name": "CAT12 — Spring & Nature Particle",
+      "width": 1400,
+      "fill": "#0A0F1C",
+      "layout": "vertical",
+      "gap": 28,
+      "padding": [
+        40,
+        48,
+        48,
+        48
+      ],
+      "children": [
+        {
+          "type": "frame",
+          "id": "Up4Lu",
+          "name": "c12h",
+          "width": "fill_container",
+          "gap": 12,
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "dxBQg",
+              "name": "c12b",
+              "width": 36,
+              "height": 36,
+              "fill": "#FFB7C5",
+              "cornerRadius": 18,
+              "layout": "vertical",
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "NOMsu",
+                  "fill": "#0A0F1C",
+                  "content": "12",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 14,
+                  "fontWeight": "bold"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "sbrlq",
+              "name": "c12t",
+              "fill": "#E2E8F0",
+              "content": "SPRING & NATURE PARTICLE  봄 & 자연 파티클",
+              "fontFamily": "JetBrains Mono",
+              "fontSize": 20,
+              "fontWeight": "bold"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "FZumO",
+          "name": "c12s",
+          "fill": "#64748B",
+          "content": "Cherry Blossom Fall · Petal Scatter Wind · Spring Breeze Sway",
+          "fontFamily": "Inter",
+          "fontSize": 13,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "frame",
+          "id": "AHJiU",
+          "name": "cat12-cards",
+          "width": "fill_container",
+          "gap": 24,
+          "children": [
+            {
+              "type": "frame",
+              "id": "kUTHd",
+              "name": "Card 12-1 CHERRY BLOSSOM FALL",
+              "width": "fill_container",
+              "fill": "#1E293B",
+              "cornerRadius": 12,
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "XdtGQ",
+                  "name": "t121",
+                  "fill": "#FFB7C5",
+                  "content": "12-1  CHERRY BLOSSOM FALL",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 14,
+                  "fontWeight": "bold",
+                  "letterSpacing": 2
+                },
+                {
+                  "type": "text",
+                  "id": "5vNYw",
+                  "name": "d121",
+                  "fill": "#94A3B8",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Canvas + TranslateTransform Y\nRotateTransform + OpacityAnimation\nQuadraticEase · BeginTime stagger",
+                  "lineHeight": 1.5,
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "83WkU",
+                  "name": "pv121",
+                  "width": "fill_container",
+                  "height": 120,
+                  "fill": "#0F172A",
+                  "cornerRadius": 8,
+                  "layout": "none",
+                  "children": [
+                    {
+                      "type": "path",
+                      "id": "u4hJY",
+                      "x": 30,
+                      "y": 15,
+                      "name": "petal1",
+                      "opacity": 0.9,
+                      "rotation": 14.999999999999998,
+                      "geometry": "M9 0c5 3 9 10 5 17-2 3-8 3-10 0-4-7 0-14 5-17z",
+                      "fill": "#FFB7C5",
+                      "width": 18,
+                      "height": 20
+                    },
+                    {
+                      "type": "path",
+                      "id": "Hb6tx",
+                      "x": 80,
+                      "y": 35,
+                      "name": "petal2",
+                      "opacity": 0.7,
+                      "rotation": -20,
+                      "geometry": "M7 0c4 2 7 8 4 14-2 2-6 2-8 0-3-6 0-12 4-14z",
+                      "fill": "#FF91A4",
+                      "width": 14,
+                      "height": 16
+                    },
+                    {
+                      "type": "path",
+                      "id": "avMe0",
+                      "x": 140,
+                      "y": 20,
+                      "name": "petal3",
+                      "opacity": 0.85,
+                      "rotation": 35,
+                      "geometry": "M8 0c4 3 8 9 4 15-2 3-6 3-8 0-4-6 0-12 4-15z",
+                      "fill": "#FFD1DC",
+                      "width": 16,
+                      "height": 18
+                    },
+                    {
+                      "type": "path",
+                      "id": "VoUdv",
+                      "x": 200,
+                      "y": 55,
+                      "name": "petal4",
+                      "opacity": 0.6,
+                      "rotation": -40,
+                      "geometry": "M6 0c3 2 6 7 3 12-1 2-5 2-6 0-3-5 0-10 3-12z",
+                      "fill": "#FFB7C5",
+                      "width": 12,
+                      "height": 14
+                    },
+                    {
+                      "type": "path",
+                      "id": "1yQ4z",
+                      "x": 260,
+                      "y": 10,
+                      "name": "petal5",
+                      "opacity": 0.8,
+                      "rotation": 50,
+                      "geometry": "M7.5 0c3.5 2.5 7.5 8.5 3.5 14-1.5 3-5.5 3-7 0-4-5.5 0-11.5 3.5-14z",
+                      "fill": "#FF91A4",
+                      "width": 15,
+                      "height": 17
+                    },
+                    {
+                      "type": "path",
+                      "id": "anYJp",
+                      "x": 110,
+                      "y": 75,
+                      "name": "petal6",
+                      "opacity": 0.65,
+                      "rotation": -25,
+                      "geometry": "M6.5 0c3.5 2 6.5 7.5 3.5 12.5-1.5 2.5-5.5 2.5-7 0-3-5 0-10.5 3.5-12.5z",
+                      "fill": "#FFD1DC",
+                      "width": 13,
+                      "height": 15
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "dmc7r",
+                  "name": "cb121",
+                  "width": "fill_container",
+                  "fill": "#0A0F1C",
+                  "cornerRadius": 6,
+                  "layout": "vertical",
+                  "gap": 4,
+                  "padding": [
+                    10,
+                    14
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "gj0f5",
+                      "fill": "#FFB7C5",
+                      "content": "TranslateTransform.Y + RotateTransform",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "0K3sR",
+                      "fill": "#4ECDC4",
+                      "content": "QuadraticEase · BeginTime stagger 0.3s",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "EN1r4",
+              "name": "Card 12-2 PETAL SCATTER WIND",
+              "width": "fill_container",
+              "fill": "#1E293B",
+              "cornerRadius": 12,
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "KPctK",
+                  "name": "t122",
+                  "fill": "#FFB7C5",
+                  "content": "12-2  PETAL SCATTER WIND",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 14,
+                  "fontWeight": "bold",
+                  "letterSpacing": 2
+                },
+                {
+                  "type": "text",
+                  "id": "8fh5T",
+                  "name": "d122",
+                  "fill": "#94A3B8",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Canvas particle + wind force\nTranslateTransform X/Y combined\nScaleTransform shrink on distance",
+                  "lineHeight": 1.5,
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "GCXBg",
+                  "name": "pv122",
+                  "width": "fill_container",
+                  "height": 120,
+                  "fill": "#0F172A",
+                  "cornerRadius": 8,
+                  "layout": "none",
+                  "children": [
+                    {
+                      "type": "path",
+                      "id": "jn5F5",
+                      "x": 20,
+                      "y": 30,
+                      "name": "sw1",
+                      "opacity": 0.9,
+                      "rotation": 59.99999999999999,
+                      "geometry": "M8 0c4 3 8 9 4 15-2 3-6 3-8 0-4-6 0-12 4-15z",
+                      "fill": "#FFB7C5",
+                      "width": 16,
+                      "height": 18
+                    },
+                    {
+                      "type": "path",
+                      "id": "rfxTh",
+                      "x": 70,
+                      "y": 15,
+                      "name": "sw2",
+                      "opacity": 0.75,
+                      "rotation": -35,
+                      "geometry": "M6 0c3 2 6 7 3 12-1 2-5 2-6 0-3-5 0-10 3-12z",
+                      "fill": "#FF91A4",
+                      "width": 12,
+                      "height": 14
+                    },
+                    {
+                      "type": "path",
+                      "id": "aTs9K",
+                      "x": 130,
+                      "y": 60,
+                      "name": "sw3",
+                      "opacity": 0.5,
+                      "rotation": 80,
+                      "geometry": "M5 0c2.5 1.5 5 6 2.5 10-1 2-4 2-5 0-2.5-4 0-8.5 2.5-10z",
+                      "fill": "#FFD1DC",
+                      "width": 10,
+                      "height": 12
+                    },
+                    {
+                      "type": "path",
+                      "id": "bDcsY",
+                      "x": 190,
+                      "y": 25,
+                      "name": "sw4",
+                      "opacity": 0.85,
+                      "rotation": -55,
+                      "geometry": "M7 0c4 2 7 8 4 14-2 2-6 2-8 0-3-6 0-12 4-14z",
+                      "fill": "#FFB7C5",
+                      "width": 14,
+                      "height": 16
+                    },
+                    {
+                      "type": "path",
+                      "id": "RalDP",
+                      "x": 250,
+                      "y": 70,
+                      "name": "sw5",
+                      "opacity": 0.6,
+                      "rotation": 40,
+                      "geometry": "M5.5 0c3 2 5.5 6.5 3 11-1.5 2-4.5 2-6 0-2.5-4.5 0-9 3-11z",
+                      "fill": "#FF91A4",
+                      "width": 11,
+                      "height": 13
+                    },
+                    {
+                      "type": "line",
+                      "id": "c42lZ",
+                      "x": 50,
+                      "y": 50,
+                      "name": "wind1",
+                      "width": 80,
+                      "height": 0,
+                      "stroke": {
+                        "align": "center",
+                        "thickness": 1,
+                        "fill": "#FFB7C580"
+                      }
+                    },
+                    {
+                      "type": "line",
+                      "id": "TB7hG",
+                      "x": 160,
+                      "y": 40,
+                      "name": "wind2",
+                      "width": 70,
+                      "height": 0,
+                      "stroke": {
+                        "align": "center",
+                        "thickness": 1,
+                        "fill": "#FFB7C560"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "Nvebb",
+                  "name": "cb122",
+                  "width": "fill_container",
+                  "fill": "#0A0F1C",
+                  "cornerRadius": 6,
+                  "layout": "vertical",
+                  "gap": 4,
+                  "padding": [
+                    10,
+                    14
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "4jWKK",
+                      "fill": "#FFB7C5",
+                      "content": "TranslateTransform X/Y + ScaleTransform",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "VX2nb",
+                      "fill": "#4ECDC4",
+                      "content": "Random velocity · wind-force offset",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "zvS6M",
+              "name": "Card 12-3 SPRING BREEZE SWAY",
+              "width": "fill_container",
+              "fill": "#1E293B",
+              "cornerRadius": 12,
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "8EFfX",
+                  "name": "t123",
+                  "fill": "#FFB7C5",
+                  "content": "12-3  SPRING BREEZE SWAY",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 14,
+                  "fontWeight": "bold",
+                  "letterSpacing": 2
+                },
+                {
+                  "type": "text",
+                  "id": "z4rxm",
+                  "name": "d123",
+                  "fill": "#94A3B8",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "DoubleAnimation AutoReverse + Forever\nTranslateTransform.X oscillation\nSineEase gentle swaying motion",
+                  "lineHeight": 1.5,
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "diAA6",
+                  "name": "pv123",
+                  "width": "fill_container",
+                  "height": 120,
+                  "fill": "#0F172A",
+                  "cornerRadius": 8,
+                  "layout": "none",
+                  "children": [
+                    {
+                      "type": "line",
+                      "id": "zUpbc",
+                      "x": 60,
+                      "y": 30,
+                      "name": "stem1",
+                      "width": 2,
+                      "height": 70,
+                      "stroke": {
+                        "align": "center",
+                        "thickness": 2,
+                        "fill": "#4ADE80"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "id": "XinT3",
+                      "x": 50,
+                      "y": 25,
+                      "name": "leaf1a",
+                      "opacity": 0.85,
+                      "rotation": 10,
+                      "geometry": "M0 7c5-7 15-7 20 0-5 7-15 7-20 0z",
+                      "fill": "#4ADE80",
+                      "width": 20,
+                      "height": 14
+                    },
+                    {
+                      "type": "path",
+                      "id": "FRpIc",
+                      "x": 62,
+                      "y": 40,
+                      "name": "leaf1b",
+                      "opacity": 0.7,
+                      "rotation": -14.999999999999998,
+                      "geometry": "M0 6c4-6 14-6 18 0-4 6-14 6-18 0z",
+                      "fill": "#86EFAC",
+                      "width": 18,
+                      "height": 12
+                    },
+                    {
+                      "type": "line",
+                      "id": "VeG0o",
+                      "x": 160,
+                      "y": 20,
+                      "name": "stem2",
+                      "width": 2,
+                      "height": 80,
+                      "stroke": {
+                        "align": "center",
+                        "thickness": 2,
+                        "fill": "#4ADE80"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "id": "FpsxL",
+                      "x": 148,
+                      "y": 18,
+                      "name": "leaf2a",
+                      "opacity": 0.9,
+                      "rotation": 20,
+                      "geometry": "M0 7.5c5.5-7.5 16.5-7.5 22 0-5.5 7.5-16.5 7.5-22 0z",
+                      "fill": "#4ADE80",
+                      "width": 22,
+                      "height": 15
+                    },
+                    {
+                      "type": "path",
+                      "id": "RRkaA",
+                      "x": 162,
+                      "y": 45,
+                      "name": "leaf2b",
+                      "opacity": 0.65,
+                      "rotation": -25,
+                      "geometry": "M0 5.5c4-5.5 12-5.5 16 0-4 5.5-12 5.5-16 0z",
+                      "fill": "#86EFAC",
+                      "width": 16,
+                      "height": 11
+                    },
+                    {
+                      "type": "path",
+                      "id": "HsmIL",
+                      "x": 52,
+                      "y": 10,
+                      "name": "flower1",
+                      "opacity": 0.9,
+                      "geometry": "M10 0c3 4 6 7 10 10-4 3-7 6-10 10-3-4-6-7-10-10 4-3 7-6 10-10z",
+                      "fill": "#FFB7C5",
+                      "width": 20,
+                      "height": 20
+                    },
+                    {
+                      "type": "path",
+                      "id": "cxE3H",
+                      "x": 152,
+                      "y": 5,
+                      "name": "flower2",
+                      "opacity": 0.85,
+                      "geometry": "M9 0c3 3.5 5.5 6.5 9 9-3.5 3-6 5.5-9 9-3-3.5-5.5-6-9-9 3.5-2.5 6-5.5 9-9z",
+                      "fill": "#FF91A4",
+                      "width": 18,
+                      "height": 18
+                    },
+                    {
+                      "type": "line",
+                      "id": "mNyS1",
+                      "x": 90,
+                      "y": 55,
+                      "name": "breeze1",
+                      "width": 50,
+                      "height": 0,
+                      "stroke": {
+                        "align": "center",
+                        "thickness": 1,
+                        "fill": "#94A3B850"
+                      }
+                    },
+                    {
+                      "type": "line",
+                      "id": "4jxE1",
+                      "x": 200,
+                      "y": 35,
+                      "name": "breeze2",
+                      "width": 60,
+                      "height": 0,
+                      "stroke": {
+                        "align": "center",
+                        "thickness": 1,
+                        "fill": "#94A3B840"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "cx0Xi",
+                  "name": "cb123",
+                  "width": "fill_container",
+                  "fill": "#0A0F1C",
+                  "cornerRadius": 6,
+                  "layout": "vertical",
+                  "gap": 4,
+                  "padding": [
+                    10,
+                    14
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "XQtpR",
+                      "fill": "#FFB7C5",
+                      "content": "DoubleAnimation AutoReverse Forever",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "n7gk2",
+                      "fill": "#4ECDC4",
+                      "content": "SineEase · TranslateTransform.X ±15px",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ]
 }

@@ -1,6 +1,6 @@
 {
   "name": "pencil-design-harness",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Pencil Design 품질 하네스 — Case A(WPF→템플릿), Case B(템플릿참고→프로젝트 디자인), Case W(Pencil→HTML) 평가",
   "scope": "pencil-design",
   "layers": {
@@ -55,7 +55,7 @@
     },
     "harness-usage": {
       "path": ".claude/skills/harness-usage/",
-      "current_version": "2.1.0"
+      "current_version": "2.2.0"
     }
   }
 }
