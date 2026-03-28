@@ -1,6 +1,9 @@
 # Pencil Creator
 
+![Pencil Creator](design/img/intro.png)
+
 **Look & Feel + Animation First Design** ― 웹 애플리케이션을 만들기 전에, 룩앤필과 애니메이션을 먼저 디자인하고 검증하는 Claude Code 프로젝트
+11종(지속발굴)의 애니메이션가능 컨트롤을 기본 제공하며 이 디자인 하네스를 이용하면 위와같은 컨트롤을 프롬프트만으로 발굴하고 추가할수 있습니다.
 
 ---
 
