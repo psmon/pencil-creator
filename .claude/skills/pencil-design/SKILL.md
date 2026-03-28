@@ -438,29 +438,7 @@ Case P와 Case W가 같은 세션에서 연속 발동 시:
 
 ## 10. 디자인 익스포트 & HTML 생성 워크플로우
 
-### 10.1 Pencil 프레임 → PNG 익스포트
-
-.pen 파일의 각 프레임(카테고리)을 개별 PNG 이미지로 익스포트하여 위키/문서에 삽입한다.
-
-```
-익스포트 방법:
-  1. Pencil 앱에서 프레임별 레이어 익스포트 (수동)
-  2. 저장 경로: tmp/playwright/sample{N}/{프레임명}.png
-     예: tmp/playwright/sample1/CAT5 — 3D Transform & Shape Morph.png
-
-디렉토리 구조:
-  tmp/playwright/
-  ├── sample1/          ← wpf-animation.pen의 전체 프레임 익스포트
-  │   ├── WPF Animation Ideas.png
-  │   ├── CAT1 — Data Input Controls.png
-  │   └── ...
-  └── sample2/          ← HTML 페이지 섹션별 Playwright 캡처
-      ├── 01-hero.png
-      ├── 02-about.png
-      └── ...
-```
-
-### 10.2 .pen → HTML 변환 워크플로우
+### 10.1 .pen → HTML 변환 워크플로우
 
 Pencil 디자인 파일의 애니메이션 컴포넌트를 실제 HTML/CSS/JS로 구현하는 워크플로우.
 
@@ -498,19 +476,18 @@ Step 5. 위키 게시
   → 각 섹션 이미지에 적용된 애니메이션 설명 추가
 ```
 
-### 10.3 output 디렉토리 구조
+### 10.2 output 디렉토리 구조
 
 ```
 design/xaml/output/
-├── sample1/              ← AICC 전화상담 랜딩페이지
-│   └── index.html
-├── sample2/              ← 노리의 여행 에필로그 홈페이지
+├── sample00/             ← 디자인 테스트 샘플 페이지
 │   ├── index.html
-│   └── nori-homepage.html (위키 첨부용 별칭)
-└── sample{N}/            ← 추가 샘플 페이지
+│   ├── style.css
+│   └── app.js
+└── sample{N}/            ← 추가 테스트 샘플 페이지
 ```
 
-### 10.4 Playwright 섹션별 캡처 패턴
+### 10.3 Playwright 섹션별 캡처 패턴
 
 ```javascript
 // 1. 로컬 서버 시작
@@ -526,3 +503,10 @@ for each section_id in [hero, about, travels, gallery, stats, journey, contact]:
   browser_run_code(async (page) => await page.waitForTimeout(1500))
   browser_take_screenshot(filename: "tmp/playwright/sample{N}/{순번}-{section}.png")
 ```
+
+### 10.4 Playwright 동영상 녹화 (WebM)
+
+애니메이션 시연을 동영상으로 녹화하고 싶은 경우, `browser_run_code`를 통해 WebM 비디오 녹화가 가능하다.
+설치 절차 및 GIF/MOV 변환 방법은 `tools/tools-window.md`를 참조한다.
+
+⚠️ **주의**: 이 프로젝트는 Windows 환경 기준이다. ffmpeg 설치 시 OS를 판별하여 호환성을 고려할 것 (npm `ffmpeg-static` 패키지는 OS별 바이너리를 자동 선택하므로 권장).

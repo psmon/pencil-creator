@@ -5,7 +5,22 @@
       "mcp__playwright__browser_navigate",
       "mcp__playwright__browser_take_screenshot",
       "mcp__playwright__browser_evaluate",
-      "mcp__playwright__browser_wait_for"
+      "mcp__playwright__browser_wait_for",
+      "mcp__playwright__browser_run_code",
+      "Bash(ffmpeg -version)",
+      "Bash(winget install:*)",
+      "Read(//c/ProgramData/Microsoft/Windows/Start Menu/Programs/**)",
+      "Read(//c/ProgramData/chocolatey/**)",
+      "Bash(powershell.exe -Command \"Get-Command ffmpeg -ErrorAction SilentlyContinue | Select-Object Source\")",
+      "Bash(powershell.exe -Command \"\\(Get-Command ffmpeg -ErrorAction SilentlyContinue\\).Source\")",
+      "Bash(npx --yes @nicolo-ribaudo/chokidar-cli --version)",
+      "Bash(npm list:*)",
+      "Bash(npx --yes ffmpeg-static)",
+      "Bash(npm install:*)",
+      "Bash(node -e \"console.log\\(require\\(''''ffmpeg-static''''\\)\\)\")",
+      "Bash(FFMPEG=\"/c/Users/psmon/AppData/Roaming/npm/node_modules/ffmpeg-static/ffmpeg.exe\")",
+      "Bash(\"$FFMPEG\" -version)",
+      "Bash(ls:*)"
     ]
   }
 }
