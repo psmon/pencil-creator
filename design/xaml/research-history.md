@@ -194,6 +194,45 @@
 
 ---
 
+---
+
+# 3차 조사 — 봄 & 자연 파티클 애니메이션 (2026-03-28)
+
+> 목적: 봄 시즌 테마(벚꽃, 꽃잎, 봄바람) WPF 파티클 애니메이션 기법 조사 및 CAT12 추가
+
+---
+
+## CAT12: 봄 & 자연 파티클 (Spring & Nature Particle)
+
+### 18. Cherry Blossom Petal Fall (벚꽃 꽃잎 낙하)
+
+| 항목 | 내용 |
+|------|------|
+| 출처 | [Microsoft Learn - DoubleAnimation](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/graphics-multimedia/how-to-animate-a-property-by-using-a-storyboard), [CodeProject - Animation using Storyboards](https://www.codeproject.com/Articles/364529/Animation-using-Storyboards-in-WPF) |
+| 핵심 기술 | Canvas + TranslateTransform Y, RotateTransform, OpacityAnimation, QuadraticEase |
+| 애니메이션 | 꽃잎 Path 요소가 위→아래 낙하 + 회전 + 투명도 감소, BeginTime stagger로 순차 등장 |
+| 샘플 파일 | [`sample/18-cherry-blossom-fall.xaml`](sample/18-cherry-blossom-fall.xaml) |
+
+### 19. Petal Scatter Wind (꽃잎 흩날리기)
+
+| 항목 | 내용 |
+|------|------|
+| 출처 | [Medium - Moving Elements with TranslateTransform Animation](https://medium.com/@artillustration391/moving-elements-with-storyboards-translatetransform-animation-in-wpf-0ac391441b37), [Medium - Scale & Rotate with WPF Storyboards](https://medium.com/@artillustration391/scale-rotate-your-ui-dynamic-transforms-with-wpf-storyboards-602bcbc061f3) |
+| 핵심 기술 | TranslateTransform X/Y 복합, ScaleTransform 원근 축소, RotateTransform 회전 |
+| 애니메이션 | 바람에 날리는 꽃잎: 좌→우 수평 이동 + 약간의 수직 드리프트 + 크기 축소(원거리 효과) + 페이드아웃 |
+| 샘플 파일 | [`sample/19-petal-scatter-wind.xaml`](sample/19-petal-scatter-wind.xaml) |
+
+### 20. Spring Breeze Sway (봄바람 흔들림)
+
+| 항목 | 내용 |
+|------|------|
+| 출처 | [Microsoft Learn - Animation Overview](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/graphics-multimedia/animation-overview), [Microsoft Learn - Transforms Overview](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/graphics-multimedia/transforms-overview) |
+| 핵심 기술 | DoubleAnimation AutoReverse + Forever, SineEase, TranslateTransform.X 진동 |
+| 애니메이션 | 꽃줄기/잎사귀가 SineEase로 좌우 ±5~15° 부드럽게 흔들림, 꽃봉오리도 연동 진동 |
+| 샘플 파일 | [`sample/20-spring-breeze-sway.xaml`](sample/20-spring-breeze-sway.xaml) |
+
+---
+
 ## 추가 참고 자료
 
 | 리소스 | URL |

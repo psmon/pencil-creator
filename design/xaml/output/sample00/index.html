@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spring Animation Playground</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Global falling petals (background layer) -->
+  <canvas id="bgPetals"></canvas>
+
+  <!-- Header -->
+  <header id="header">
+    <div class="header-inner">
+      <h1 class="logo">
+        <svg class="logo-blossom" viewBox="0 0 32 32" width="32" height="32">
+          <path d="M16 2 C20 8 24 12 30 16 C24 20 20 24 16 30 C12 24 8 20 2 16 C8 12 12 8 16 2Z" fill="#FFB7C5"/>
+          <circle cx="16" cy="16" r="4" fill="#FF91A4"/>
+        </svg>
+        Spring Playground
+      </h1>
+      <nav>
+        <a href="#section-fall" class="nav-link">Petal Fall</a>
+        <a href="#section-wind" class="nav-link">Wind Scatter</a>
+        <a href="#section-sway" class="nav-link">Breeze Sway</a>
+        <a href="#section-bloom" class="nav-link">AI Bloom</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section id="hero">
+    <div class="hero-content">
+      <p class="hero-tag">WPF CAT12 &rarr; Web Animation</p>
+      <h2 class="hero-title">Cherry Blossom<br>Animation Playground</h2>
+      <p class="hero-desc">WPF Storyboard 애니메이션 기법을 바닐라 JS + CSS로 구현한 봄 테마 플레이그라운드</p>
+      <div class="hero-chips">
+        <span class="chip">TranslateTransform</span>
+        <span class="chip">RotateTransform</span>
+        <span class="chip">ScaleTransform</span>
+        <span class="chip">SineEase</span>
+        <span class="chip">QuadraticEase</span>
+      </div>
+    </div>
+    <canvas id="heroCanvas"></canvas>
+  </section>
+
+  <!-- Section 1: Cherry Blossom Fall -->
+  <section id="section-fall" class="playground-section">
+    <div class="section-header">
+      <span class="section-badge">12-1</span>
+      <div>
+        <h2 class="section-title">Cherry Blossom Petal Fall</h2>
+        <p class="section-sub">TranslateTransform.Y + RotateTransform + OpacityAnimation + QuadraticEase</p>
+      </div>
+    </div>
+    <div class="canvas-wrapper">
+      <canvas id="fallCanvas"></canvas>
+      <div class="control-panel">
+        <label>Petal Count
+          <input type="range" id="fallCount" min="5" max="80" value="30">
+          <span id="fallCountVal">30</span>
+        </label>
+        <label>Fall Speed
+          <input type="range" id="fallSpeed" min="20" max="200" value="80">
+          <span id="fallSpeedVal">80</span>
+        </label>
+        <label>Wind Drift
+          <input type="range" id="fallDrift" min="0" max="100" value="40">
+          <span id="fallDriftVal">40</span>
+        </label>
+        <button id="fallReset" class="btn-reset">Reset</button>
+      </div>
+    </div>
+    <div class="xaml-ref">
+      <div class="xaml-badge">WPF XAML Reference</div>
+      <pre><code>&lt;DoubleAnimation Storyboard.TargetProperty="Y"
+  From="0" To="650" Duration="0:0:4"&gt;
+  &lt;DoubleAnimation.EasingFunction&gt;
+    &lt;QuadraticEase EasingMode="EaseIn"/&gt;
+  &lt;/DoubleAnimation.EasingFunction&gt;
+&lt;/DoubleAnimation&gt;
+&lt;DoubleAnimation TargetProperty="Angle"
+  From="0" To="360" RepeatBehavior="Forever"/&gt;</code></pre>
+    </div>
+  </section>
+
+  <!-- Section 2: Petal Scatter Wind -->
+  <section id="section-wind" class="playground-section">
+    <div class="section-header">
+      <span class="section-badge">12-2</span>
+      <div>
+        <h2 class="section-title">Petal Scatter Wind</h2>
+        <p class="section-sub">TranslateTransform X/Y + ScaleTransform + Random Velocity + Wind Force</p>
+      </div>
+    </div>
+    <div class="canvas-wrapper">
+      <canvas id="windCanvas"></canvas>
+      <div class="control-panel">
+        <label>Wind Force
+          <input type="range" id="windForce" min="10" max="200" value="80">
+          <span id="windForceVal">80</span>
+        </label>
+        <label>Spawn Rate
+          <input type="range" id="windSpawn" min="1" max="20" value="6">
+          <span id="windSpawnVal">6</span>
+        </label>
+        <label>Turbulence
+          <input type="range" id="windTurb" min="0" max="100" value="40">
+          <span id="windTurbVal">40</span>
+        </label>
+        <button id="windReset" class="btn-reset">Reset</button>
+      </div>
+    </div>
+    <div class="xaml-ref">
+      <div class="xaml-badge">WPF XAML Reference</div>
+      <pre><code>&lt;DoubleAnimation TargetProperty="X"
+  From="0" To="900" Duration="0:0:5"/&gt;
+&lt;DoubleAnimation TargetProperty="ScaleX"
+  From="1" To="0.3" Duration="0:0:5"/&gt;
+&lt;DoubleAnimation TargetProperty="Opacity"
+  From="0.9" To="0" Duration="0:0:5"/&gt;</code></pre>
+    </div>
+  </section>
+
+  <!-- Section 3: Spring Breeze Sway -->
+  <section id="section-sway" class="playground-section">
+    <div class="section-header">
+      <span class="section-badge">12-3</span>
+      <div>
+        <h2 class="section-title">Spring Breeze Sway</h2>
+        <p class="section-sub">DoubleAnimation AutoReverse Forever + SineEase + TranslateTransform.X Oscillation</p>
+      </div>
+    </div>
+    <div class="sway-stage" id="swayStage">
+      <!-- Generated by JS: SVG flowers with CSS sway animations -->
+    </div>
+    <div class="control-panel sway-controls">
+      <label>Sway Angle
+        <input type="range" id="swayAngle" min="2" max="25" value="8">
+        <span id="swayAngleVal">8</span>&deg;
+      </label>
+      <label>Duration
+        <input type="range" id="swayDuration" min="10" max="50" value="25">
+        <span id="swayDurationVal">2.5</span>s
+      </label>
+      <label>Flowers
+        <input type="range" id="swayFlowers" min="2" max="12" value="5">
+        <span id="swayFlowersVal">5</span>
+      </label>
+      <button id="swayReset" class="btn-reset">Reset</button>
+    </div>
+    <div class="xaml-ref">
+      <div class="xaml-badge">WPF XAML Reference</div>
+      <pre><code>&lt;DoubleAnimation TargetProperty="Angle"
+  From="-8" To="8" Duration="0:0:2.5"
+  AutoReverse="True" RepeatBehavior="Forever"&gt;
+  &lt;DoubleAnimation.EasingFunction&gt;
+    &lt;SineEase EasingMode="EaseInOut"/&gt;
+  &lt;/DoubleAnimation.EasingFunction&gt;
+&lt;/DoubleAnimation&gt;</code></pre>
+    </div>
+  </section>
+
+  <!-- Section 4: AI Bloom — "AI가 꽃을 피우는" -->
+  <section id="section-bloom" class="playground-section">
+    <div class="section-header">
+      <span class="section-badge bloom-badge">AI</span>
+      <div>
+        <h2 class="section-title">AI Blooms a Flower</h2>
+        <p class="section-sub">PathAnimation + ScaleTransform + ColorAnimation + StaggeredSequence + ConfettiBurst</p>
+      </div>
+    </div>
+    <div class="bloom-stage" id="bloomStage">
+      <svg id="bloomSvg" viewBox="0 0 800 520" preserveAspectRatio="xMidYMax meet">
+        <defs>
+          <!-- Realistic petal gradient -->
+          <radialGradient id="petalGrad1" cx="30%" cy="30%">
+            <stop offset="0%" stop-color="#FFE4EC"/>
+            <stop offset="60%" stop-color="#FFB7C5"/>
+            <stop offset="100%" stop-color="#FF91A4"/>
+          </radialGradient>
+          <radialGradient id="petalGrad2" cx="40%" cy="30%">
+            <stop offset="0%" stop-color="#FFF0F5"/>
+            <stop offset="50%" stop-color="#FFD1DC"/>
+            <stop offset="100%" stop-color="#FFB7C5"/>
+          </radialGradient>
+          <radialGradient id="petalGrad3" cx="35%" cy="25%">
+            <stop offset="0%" stop-color="#FFFFFF"/>
+            <stop offset="40%" stop-color="#FFE4EC"/>
+            <stop offset="100%" stop-color="#FF91A4"/>
+          </radialGradient>
+          <radialGradient id="leafGrad" cx="30%" cy="40%">
+            <stop offset="0%" stop-color="#A7F3D0"/>
+            <stop offset="60%" stop-color="#4ADE80"/>
+            <stop offset="100%" stop-color="#16A34A"/>
+          </radialGradient>
+          <!-- Glow filter (CAT10: Pulsing Glow) -->
+          <filter id="bloomGlow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur"/>
+            <feMerge>
+              <feMergeNode in="blur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+          <filter id="softGlow" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="3"/>
+          </filter>
+        </defs>
+
+        <!-- Ground line -->
+        <ellipse cx="400" cy="510" rx="200" ry="12" fill="#86EFAC" opacity="0.4"/>
+
+        <!-- Main stem (drawn via stroke-dashoffset) -->
+        <path id="bloomStem" d="M400 510 Q395 420 400 340 Q405 280 398 220 Q394 180 400 140"
+              fill="none" stroke="#22C55E" stroke-width="4" stroke-linecap="round"
+              opacity="0"/>
+
+        <!-- Leaves (hidden initially, unfold via transform) -->
+        <g id="bloomLeafL" opacity="0" transform="translate(385, 350)">
+          <path d="M0 0 Q-30 -15 -45 -5 Q-30 5 0 0Z" fill="url(#leafGrad)"/>
+          <line x1="0" y1="0" x2="-38" y2="-4" stroke="#16A34A" stroke-width="0.5" opacity="0.4"/>
+        </g>
+        <g id="bloomLeafR" opacity="0" transform="translate(415, 300)">
+          <path d="M0 0 Q30 -18 50 -8 Q35 8 0 0Z" fill="url(#leafGrad)"/>
+          <line x1="0" y1="0" x2="42" y2="-6" stroke="#16A34A" stroke-width="0.5" opacity="0.4"/>
+        </g>
+        <g id="bloomLeafL2" opacity="0" transform="translate(390, 240)">
+          <path d="M0 0 Q-25 -12 -38 -3 Q-25 6 0 0Z" fill="url(#leafGrad)" opacity="0.8"/>
+        </g>
+
+        <!-- Petals (5 petals arranged radially, hidden initially) -->
+        <g id="bloomPetals" transform="translate(400, 130)">
+          <path class="bloom-petal" data-angle="0"
+                d="M0 -8 Q10 -40 4 -65 Q0 -72 -4 -65 Q-10 -40 0 -8Z"
+                fill="url(#petalGrad1)" opacity="0" transform="rotate(0)"/>
+          <path class="bloom-petal" data-angle="72"
+                d="M0 -8 Q10 -40 4 -65 Q0 -72 -4 -65 Q-10 -40 0 -8Z"
+                fill="url(#petalGrad2)" opacity="0" transform="rotate(72)"/>
+          <path class="bloom-petal" data-angle="144"
+                d="M0 -8 Q10 -40 4 -65 Q0 -72 -4 -65 Q-10 -40 0 -8Z"
+                fill="url(#petalGrad3)" opacity="0" transform="rotate(144)"/>
+          <path class="bloom-petal" data-angle="216"
+                d="M0 -8 Q10 -40 4 -65 Q0 -72 -4 -65 Q-10 -40 0 -8Z"
+                fill="url(#petalGrad1)" opacity="0" transform="rotate(216)"/>
+          <path class="bloom-petal" data-angle="288"
+                d="M0 -8 Q10 -40 4 -65 Q0 -72 -4 -65 Q-10 -40 0 -8Z"
+                fill="url(#petalGrad2)" opacity="0" transform="rotate(288)"/>
+          <!-- Center pistil -->
+          <circle id="bloomCenter" cx="0" cy="0" r="0" fill="#FFE66D" opacity="0"/>
+          <circle id="bloomCenterInner" cx="0" cy="0" r="0" fill="#FFA94D" opacity="0"/>
+        </g>
+
+        <!-- Particle burst container -->
+        <g id="bloomParticles"></g>
+
+        <!-- AI cursor / seed -->
+        <g id="bloomCursor" opacity="0">
+          <circle cx="400" cy="510" r="6" fill="#FFB7C5" filter="url(#bloomGlow)"/>
+          <circle cx="400" cy="510" r="3" fill="#FFFFFF"/>
+        </g>
+
+        <!-- Progress text -->
+        <text id="bloomStageText" x="400" y="30" text-anchor="middle"
+              font-family="'Segoe UI', system-ui, sans-serif" font-size="14"
+              fill="#FF91A4" opacity="0"></text>
+      </svg>
+
+      <!-- Overlay: bloom stage indicator -->
+      <div class="bloom-progress" id="bloomProgress">
+        <div class="bloom-step active" data-step="0">Seed</div>
+        <div class="bloom-step" data-step="1">Stem</div>
+        <div class="bloom-step" data-step="2">Leaves</div>
+        <div class="bloom-step" data-step="3">Bloom</div>
+        <div class="bloom-step" data-step="4">Celebrate</div>
+      </div>
+    </div>
+    <div class="control-panel bloom-controls">
+      <label>Speed
+        <input type="range" id="bloomSpeed" min="5" max="30" value="10">
+        <span id="bloomSpeedVal">1.0</span>x
+      </label>
+      <button id="bloomPlay" class="btn-play">Play Bloom</button>
+      <button id="bloomReset" class="btn-reset">Reset</button>
+    </div>
+    <div class="xaml-ref">
+      <div class="xaml-badge">WPF XAML Reference — Multi-Category</div>
+      <pre><code>&lt;!-- CAT5: ScaleTransform morph (petal unfold) --&gt;
+&lt;DoubleAnimation TargetProperty="ScaleY" From="0" To="1"
+  Duration="0:0:0.8"&gt;
+  &lt;DoubleAnimation.EasingFunction&gt;
+    &lt;ElasticEase Oscillations="1" Springiness="4"/&gt;
+  &lt;/DoubleAnimation.EasingFunction&gt;
+&lt;/DoubleAnimation&gt;
+&lt;!-- CAT7: Staggered sequence (BeginTime per petal) --&gt;
+&lt;DoubleAnimation BeginTime="0:0:0.3" .../&gt;
+&lt;!-- CAT10: Glow pulse (DropShadowEffect) --&gt;
+&lt;DoubleAnimation TargetProperty="BlurRadius"
+  From="5" To="20" AutoReverse="True"/&gt;
+&lt;!-- CAT11: Confetti burst (random particles) --&gt;
+&lt;DoubleAnimationUsingKeyFrames .../&gt;</code></pre>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="footer">
+    <p>Spring Animation Playground &mdash; WPF CAT1~12 &rarr; Vanilla JS + CSS</p>
+    <p class="footer-sub">Cherry Blossom Fall &middot; Petal Scatter Wind &middot; Spring Breeze Sway &middot; AI Bloom</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

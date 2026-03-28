@@ -1,0 +1,159 @@
+<Window x:Class="SpringAnimations.PetalScatterWind"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Petal Scatter Wind" Height="600" Width="800"
+        Background="#0A0F1C">
+
+    <Canvas x:Name="WindCanvas" ClipToBounds="True">
+
+        <!-- Petal A: blown right-downward -->
+        <Path x:Name="PetalA" Canvas.Left="-20" Canvas.Top="100"
+              Data="M8 0 C12 3 16 9 12 15 C10 18 6 18 4 15 C0 9 4 3 8 0 Z"
+              Fill="#FFB7C5" Opacity="0.9" RenderTransformOrigin="0.5,0.5">
+            <Path.RenderTransform>
+                <TransformGroup>
+                    <TranslateTransform x:Name="PetalATranslate"/>
+                    <RotateTransform x:Name="PetalARotate"/>
+                    <ScaleTransform x:Name="PetalAScale"/>
+                </TransformGroup>
+            </Path.RenderTransform>
+            <Path.Triggers>
+                <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                    <BeginStoryboard>
+                        <Storyboard RepeatBehavior="Forever">
+                            <!-- Horizontal wind push -->
+                            <DoubleAnimation
+                                Storyboard.TargetName="PetalATranslate"
+                                Storyboard.TargetProperty="X"
+                                From="0" To="900" Duration="0:0:5"/>
+                            <!-- Slight vertical drift -->
+                            <DoubleAnimation
+                                Storyboard.TargetName="PetalATranslate"
+                                Storyboard.TargetProperty="Y"
+                                From="0" To="200" Duration="0:0:5"/>
+                            <!-- Tumble rotation -->
+                            <DoubleAnimation
+                                Storyboard.TargetName="PetalARotate"
+                                Storyboard.TargetProperty="Angle"
+                                From="0" To="540" Duration="0:0:5"/>
+                            <!-- Shrink as it flies away -->
+                            <DoubleAnimation
+                                Storyboard.TargetName="PetalAScale"
+                                Storyboard.TargetProperty="ScaleX"
+                                From="1" To="0.3" Duration="0:0:5"/>
+                            <DoubleAnimation
+                                Storyboard.TargetName="PetalAScale"
+                                Storyboard.TargetProperty="ScaleY"
+                                From="1" To="0.3" Duration="0:0:5"/>
+                            <!-- Fade out -->
+                            <DoubleAnimation
+                                Storyboard.TargetProperty="Opacity"
+                                From="0.9" To="0" Duration="0:0:5"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Path.Triggers>
+        </Path>
+
+        <!-- Petal B: blown with different trajectory -->
+        <Path x:Name="PetalB" Canvas.Left="-30" Canvas.Top="250"
+              Data="M6 0 C9 2 12 7 9 12 C8 14 4 14 3 12 C0 7 3 2 6 0 Z"
+              Fill="#FF91A4" Opacity="0.8" RenderTransformOrigin="0.5,0.5">
+            <Path.RenderTransform>
+                <TransformGroup>
+                    <TranslateTransform x:Name="PetalBTranslate"/>
+                    <RotateTransform x:Name="PetalBRotate"/>
+                    <ScaleTransform x:Name="PetalBScale"/>
+                </TransformGroup>
+            </Path.RenderTransform>
+            <Path.Triggers>
+                <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                    <BeginStoryboard>
+                        <Storyboard RepeatBehavior="Forever">
+                            <DoubleAnimation
+                                Storyboard.TargetName="PetalBTranslate"
+                                Storyboard.TargetProperty="X"
+                                From="0" To="850" Duration="0:0:6"
+                                BeginTime="0:0:1"/>
+                            <DoubleAnimation
+                                Storyboard.TargetName="PetalBTranslate"
+                                Storyboard.TargetProperty="Y"
+                                From="0" To="150" Duration="0:0:6"
+                                BeginTime="0:0:1"/>
+                            <DoubleAnimation
+                                Storyboard.TargetName="PetalBRotate"
+                                Storyboard.TargetProperty="Angle"
+                                From="0" To="-720" Duration="0:0:6"
+                                BeginTime="0:0:1"/>
+                            <DoubleAnimation
+                                Storyboard.TargetName="PetalBScale"
+                                Storyboard.TargetProperty="ScaleX"
+                                From="1" To="0.2" Duration="0:0:6"
+                                BeginTime="0:0:1"/>
+                            <DoubleAnimation
+                                Storyboard.TargetName="PetalBScale"
+                                Storyboard.TargetProperty="ScaleY"
+                                From="1" To="0.2" Duration="0:0:6"
+                                BeginTime="0:0:1"/>
+                            <DoubleAnimation
+                                Storyboard.TargetProperty="Opacity"
+                                From="0.8" To="0" Duration="0:0:6"
+                                BeginTime="0:0:1"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Path.Triggers>
+        </Path>
+
+        <!-- Petal C: higher arc -->
+        <Path x:Name="PetalC" Canvas.Left="-10" Canvas.Top="400"
+              Data="M7 0 C10.5 2.5 14 8 10.5 13 C9 15 5 15 3.5 13 C0 8 3.5 2.5 7 0 Z"
+              Fill="#FFD1DC" Opacity="0.75" RenderTransformOrigin="0.5,0.5">
+            <Path.RenderTransform>
+                <TransformGroup>
+                    <TranslateTransform x:Name="PetalCTranslate"/>
+                    <RotateTransform x:Name="PetalCRotate"/>
+                    <ScaleTransform x:Name="PetalCScale"/>
+                </TransformGroup>
+            </Path.RenderTransform>
+            <Path.Triggers>
+                <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                    <BeginStoryboard>
+                        <Storyboard RepeatBehavior="Forever">
+                            <DoubleAnimation
+                                Storyboard.TargetName="PetalCTranslate"
+                                Storyboard.TargetProperty="X"
+                                From="0" To="950" Duration="0:0:7"
+                                BeginTime="0:0:2"/>
+                            <DoubleAnimation
+                                Storyboard.TargetName="PetalCTranslate"
+                                Storyboard.TargetProperty="Y"
+                                From="0" To="-80" Duration="0:0:7"
+                                BeginTime="0:0:2"/>
+                            <DoubleAnimation
+                                Storyboard.TargetName="PetalCRotate"
+                                Storyboard.TargetProperty="Angle"
+                                From="0" To="900" Duration="0:0:7"
+                                BeginTime="0:0:2"/>
+                            <DoubleAnimation
+                                Storyboard.TargetName="PetalCScale"
+                                Storyboard.TargetProperty="ScaleX"
+                                From="1" To="0.15" Duration="0:0:7"
+                                BeginTime="0:0:2"/>
+                            <DoubleAnimation
+                                Storyboard.TargetName="PetalCScale"
+                                Storyboard.TargetProperty="ScaleY"
+                                From="1" To="0.15" Duration="0:0:7"
+                                BeginTime="0:0:2"/>
+                            <DoubleAnimation
+                                Storyboard.TargetProperty="Opacity"
+                                From="0.75" To="0" Duration="0:0:7"
+                                BeginTime="0:0:2"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Path.Triggers>
+        </Path>
+
+    </Canvas>
+</Window>

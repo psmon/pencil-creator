@@ -130,15 +130,33 @@ Phase 1 — Gather:
   → get_screenshot()으로 시각 요소 확인
 
 Phase 2 — Action (designing):
-  → .pen 정적 디자인을 HTML/CSS/JS로 변환
-  → 애니메이션 가이드 카드의 XAML → CSS/JS 매핑:
-    WPF DoubleAnimation → CSS transition
+  → .pen 정적 디자인을 HTML/CSS/JS로 변환 (JS/CSS 분리 구현)
+  → XAML → Web 매핑 (확장 테이블):
+    WPF DoubleAnimation → CSS transition 또는 WAAPI
+    QuadraticEase EaseIn → JS quadratic easing (t*t)
+    SineEase EaseInOut → CSS ease-in-out 또는 cubic-bezier(0.445,0.05,0.55,0.95)
     ScaleTransform → transform: scale()
     ColorAnimation → CSS color transition
-    OpacityAnimation → opacity transition
-    TranslateTransform → transform: translateX/Y()
-    ElasticEase → cubic-bezier() 또는 JS spring
-    Stagger BeginTime → animation-delay 증분
+    OpacityAnimation → opacity transition 또는 JS globalAlpha
+    TranslateTransform → transform: translateX/Y() 또는 JS rAF
+    RotateTransform → transform: rotate() + @keyframes
+    ElasticEase → cubic-bezier(0.175, 0.885, 0.32, 1.275)
+    Stagger BeginTime → animation-delay 증분 또는 WAAPI Promise chain
+    AutoReverse + Forever → CSS alternate infinite
+    RepeatBehavior="Forever" → animation: infinite 또는 rAF loop
+    Path stroke animation → SVG stroke-dasharray/dashoffset
+    DropShadowEffect Glow → filter: drop-shadow() animation
+    Confetti Burst → WAAPI particle system
+  → SVG 리얼리티 필수 규칙:
+    ⚠️ 자연물(꽃잎, 잎 등)은 radialGradient 적용 (flat fill 금지 = 종이조가리)
+    ⚠️ 복합 요소(꽃+줄기+잎)는 통합 SVG 1개로 구성 (분리하면 따로 놈)
+    ⚠️ Canvas 파티클 초기 등장 시 fade-in 지연 적용 (떨림 방지)
+    ⚠️ 외부 이미지(PNG) 대신 SVG Blob URL, Base64, CSS로 자체 생성
+  → 순차 시퀀스 애니메이션 (WAAPI 권장):
+    Web Animations API의 .animate().finished로 Promise chain 구성
+    스테이지별 진행 표시기 UI 제공 (Seed→Grow→Bloom 등)
+  → 파라미터 제어 UI: 슬라이더로 speed/count/force 실시간 조절
+  → 다중 CAT 활용: wpf-animation.pen의 4개+ 카테고리 기법 통합
   → 저장: design/xaml/output/sample{N}/index.html
   → 최대한 많은 애니메이션 가이드 카드를 실제 구현
 
@@ -164,7 +182,8 @@ HTML 데모의 각 섹션을 스크린샷으로 캡처하는 워크플로우.
 4. 각 섹션별:
    browser_evaluate(() => document.getElementById('{id}').scrollIntoView())
    waitForTimeout(1500)
-   browser_take_screenshot(filename: "image/pencil/sample{N}/{순번}-{섹션}.png")
+   browser_take_screenshot(filename: "tmp/playwright/sample{N}/{순번}-{섹션}.png")
+⚠️ 스크린샷은 tmp/playwright/ 이하에 저장 (git 커밋 대상 아님, 파일 크기 이슈)
 ```
 
 ---
@@ -187,5 +206,6 @@ HTML 데모의 각 섹션을 스크린샷으로 캡처하는 워크플로우.
 | 파이프라인 | 조건 | 보너스 |
 |-----------|------|--------|
 | A → B | 양쪽 60점+ | 각 XP × 1.2 |
+| A → W | 양쪽 60점+ | 각 XP × 1.2 |
 | B → W | 양쪽 60점+ | 각 XP × 1.3 |
 | A → B → W | 전체 60점+ | 각 XP × 1.5 |

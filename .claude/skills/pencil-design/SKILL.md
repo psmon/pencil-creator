@@ -445,11 +445,11 @@ Case P와 Case W가 같은 세션에서 연속 발동 시:
 ```
 익스포트 방법:
   1. Pencil 앱에서 프레임별 레이어 익스포트 (수동)
-  2. 저장 경로: image/pencil/sample{N}/{프레임명}.png
-     예: image/pencil/sample1/CAT5 — 3D Transform & Shape Morph.png
+  2. 저장 경로: tmp/playwright/sample{N}/{프레임명}.png
+     예: tmp/playwright/sample1/CAT5 — 3D Transform & Shape Morph.png
 
 디렉토리 구조:
-  image/pencil/
+  tmp/playwright/
   ├── sample1/          ← wpf-animation.pen의 전체 프레임 익스포트
   │   ├── WPF Animation Ideas.png
   │   ├── CAT1 — Data Input Controls.png
@@ -491,7 +491,7 @@ Step 3. HTML 생성
 Step 4. Playwright 캡처 (위키 게시용)
   → python -m http.server로 로컬 서버 시작
   → browser_navigate → 섹션별 scrollIntoView → waitForTimeout → take_screenshot
-  → image/pencil/sample{N}/에 섹션별 PNG 저장
+  → tmp/playwright/sample{N}/에 섹션별 PNG 저장
 
 Step 5. 위키 게시
   → 캡처 이미지 + HTML 파일을 wiki에 attach
@@ -524,5 +524,5 @@ browser_navigate("http://localhost:8765/")
 for each section_id in [hero, about, travels, gallery, stats, journey, contact]:
   browser_evaluate(() => document.getElementById(section_id).scrollIntoView())
   browser_run_code(async (page) => await page.waitForTimeout(1500))
-  browser_take_screenshot(filename: "image/pencil/sample{N}/{순번}-{section}.png")
+  browser_take_screenshot(filename: "tmp/playwright/sample{N}/{순번}-{section}.png")
 ```
