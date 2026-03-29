@@ -14,6 +14,10 @@ description: |
   - "WPF 애니메이션 조사해서 펜슬로 그려줘", "WPF 컨트롤 디자인 아이디어"
   - "XAML Storyboard 시각화", "WPF Blend 애니메이션 서칭해서 디자인"
   - WPF/XAML 컨트롤의 애니메이션 상태 전환을 시각적으로 표현할 때
+  - "WPF 템플릿 마이그레이션", "XAML을 WPF앱에 마이그레이션 해줘"
+  - "Blend에서 편집할 수 있게 변환해줘", "design-wpf-app에 추가해줘"
+  - "WPF 애니메이션 Blend 호환으로 변환", "XAML UserControl로 변환"
+  - design/xaml/sample/ 의 XAML을 design-wpf-app/migrated/ 로 전환 요청 시
   펜슬이나 .pen 파일이 언급되지 않은 일반 이미지 생성은 image-gen 스킬을 사용한다.
 allowed-tools: mcp__pencil__get_guidelines, mcp__pencil__open_document, mcp__pencil__get_editor_state, mcp__pencil__batch_design, mcp__pencil__get_screenshot, mcp__pencil__find_empty_space_on_canvas, mcp__pencil__snapshot_layout, mcp__pencil__batch_get, mcp__pencil__get_style_guide_tags, mcp__pencil__get_style_guide, Read, Write, Glob, Grep, WebSearch, WebFetch, Agent, Bash
 ---
@@ -510,3 +514,98 @@ for each section_id in [hero, about, travels, gallery, stats, journey, contact]:
 설치 절차 및 GIF/MOV 변환 방법은 `tools/tools-window.md`를 참조한다.
 
 ⚠️ **주의**: 이 프로젝트는 Windows 환경 기준이다. ffmpeg 설치 시 OS를 판별하여 호환성을 고려할 것 (npm `ffmpeg-static` 패키지는 OS별 바이너리를 자동 선택하므로 권장).
+
+---
+
+## 11. WPF App 마이그레이션 워크플로우 (XAML → Blend 편집용)
+
+수집한 WPF XAML 애니메이션을 **Blend for Visual Studio**에서 열람/편집 가능한 형태로 변환하는 워크플로우.
+목적은 다른 플랫폼에서 애니메이션을 셀프 구현할 때 Blend 타임라인으로 키프레임/이징을 시각적으로 확인하는 것이다.
+
+### 11.1 핵심 참조 문서
+
+변환 작업 전 반드시 이 가이드를 읽고 규칙을 따른다:
+
+```
+design-wpf-app/docs/animation-migration-guide.md
+```
+
+이 문서에 다음 내용이 정의되어 있다:
+- Window → UserControl 변환 규칙
+- ControlTemplate 해체 → 루트 Grid 직접 배치
+- Transform에 x:Name 부여 (인덱스 사용 금지)
+- Storyboard 이중 구조 (Resources x:Key + EventTrigger 인라인)
+- DemoSequence 의도 기반 설계 프로세스
+- 이벤트 트리거 주의사항
+- 변환 체크리스트 8단계
+
+### 11.2 프로젝트 구조
+
+```
+design-wpf-app/
+├── design-wpf-app.slnx          ← Blend에서 이 파일을 열어 작업
+├── MainWindow.xaml               ← 좌측 네비게이션 + 우측 컨텐츠 뷰어
+├── MainWindow.xaml.cs            ← CreateSampleControl() 에 신규 항목 등록
+├── migrated/                     ← 변환된 UserControl XAML
+│   ├── Sample{NN}_{PascalName}.xaml
+│   └── Sample{NN}_{PascalName}.xaml.cs
+├── db/
+│   ├── migration-db.json         ← 마이그레이션 현황 DB (v2 스키마)
+│   └── README.md
+└── docs/
+    └── animation-migration-guide.md  ← 변환 핵심 지침
+```
+
+### 11.3 워크플로우 단계
+
+```
+Step 1. 원본 XAML 분석
+  → design/xaml/sample/{NN}-{name}.xaml 읽기
+  → 트리거/속성변화/이징 파악 (5가지 질문 — 가이드 참조)
+  → 애니메이션 유형 판별 (인터랙션형/자동반복형/시퀀스형/코드생성형)
+
+Step 2. UserControl 변환
+  → animation-migration-guide.md 의 변환 체크리스트 8단계 수행
+  → migrated/Sample{NN}_{PascalName}.xaml + .xaml.cs 생성
+  → Resources에 개별 Storyboard x:Key 정의
+  → DemoSequence: 원본 의도 분석 → Phase 매핑 → 보강 연출 추가
+  → EventTrigger에 인라인 Storyboard 복제
+
+Step 3. MainWindow 등록
+  → MainWindow.xaml.cs의 CreateSampleControl() switch에 신규 항목 추가
+
+Step 4. 빌드 확인
+  → dotnet build 실행, 오류 0 확인
+
+Step 5. DB 업데이트
+  → db/migration-db.json 항목 업데이트:
+    - status: "빌드성공"
+    - animationSummary: 사용자 관점 시나리오 한 줄 요약
+    - coreAnimations: 핵심 기법 배열
+    - triggerType: 발동 유형
+  → migrationLog에 변환 로그 추가 (핵심기능 제목 요약 포함)
+```
+
+### 11.4 Blend 활용 팁
+
+- `design-wpf-app/design-wpf-app.slnx`를 Blend for Visual Studio에서 열면 바로 작업 가능
+- 각 UserControl의 **타임라인 드롭다운**에서 Storyboard 선택 가능
+- `DemoSequence`를 선택하고 재생(▶)하면 전체 애니메이션 흐름을 한 번에 확인
+- 개별 Storyboard 선택 시 키프레임 편집/이징 수정 가능
+- 디자인 서피스에서 마우스 인터랙션으로 런타임과 동일한 동작 확인
+
+### 11.5 배치 변환 전략
+
+27개 이상의 XAML을 효율적으로 변환하는 전략:
+
+```
+Phase 1: 첫 1개 변환 + 빌드 확인 (프로토타입)
+Phase 2: 유사 형태 5개씩 배치 변환 + 빌드
+Phase 3: 특이 형태 개별 변환 + 빌드
+Phase 4: 전체 DB 업데이트 + 사용자 피드백
+```
+
+- 자동반복형(Loaded+Forever)은 가장 단순 — 배치 처리에 적합
+- 인터랙션형(호버/클릭)은 투명 Button 히트 영역 패턴 적용
+- 코드생성형(동적 요소)은 개별 주의 필요
+- Agent 도구로 4~5개를 병렬 생성하면 속도 향상
