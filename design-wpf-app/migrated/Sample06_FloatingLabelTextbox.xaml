@@ -1,0 +1,193 @@
+<UserControl x:Class="design_wpf_app.Migrated.Sample06_FloatingLabelTextbox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="400" d:DesignWidth="500"
+             Background="#1E1E2E">
+
+    <UserControl.Resources>
+        <!-- ★ Blend 타임라인용 -->
+        <Storyboard x:Key="LabelFloatUp">
+            <DoubleAnimation Storyboard.TargetName="labelTranslate"
+                Storyboard.TargetProperty="Y"
+                From="0" To="-18" Duration="0:0:0.25">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseOut" />
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Storyboard.TargetName="labelScale"
+                Storyboard.TargetProperty="ScaleX"
+                From="1" To="0.75" Duration="0:0:0.25">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseOut" />
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Storyboard.TargetName="labelScale"
+                Storyboard.TargetProperty="ScaleY"
+                From="1" To="0.75" Duration="0:0:0.25">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseOut" />
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <ColorAnimation Storyboard.TargetName="labelBrush"
+                Storyboard.TargetProperty="Color"
+                To="#2196F3" Duration="0:0:0.25" />
+            <DoubleAnimation Storyboard.TargetName="focusBorder"
+                Storyboard.TargetProperty="Opacity"
+                From="0" To="1" Duration="0:0:0.25" />
+            <DoubleAnimation Storyboard.TargetName="focusBorderScale"
+                Storyboard.TargetProperty="ScaleX"
+                From="0" To="1" Duration="0:0:0.3">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseOut" />
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+
+        <Storyboard x:Key="LabelFloatDown">
+            <DoubleAnimation Storyboard.TargetName="labelTranslate"
+                Storyboard.TargetProperty="Y"
+                To="0" Duration="0:0:0.2" />
+            <DoubleAnimation Storyboard.TargetName="labelScale"
+                Storyboard.TargetProperty="ScaleX"
+                To="1" Duration="0:0:0.2" />
+            <DoubleAnimation Storyboard.TargetName="labelScale"
+                Storyboard.TargetProperty="ScaleY"
+                To="1" Duration="0:0:0.2" />
+            <ColorAnimation Storyboard.TargetName="labelBrush"
+                Storyboard.TargetProperty="Color"
+                To="Gray" Duration="0:0:0.2" />
+            <DoubleAnimation Storyboard.TargetName="focusBorder"
+                Storyboard.TargetProperty="Opacity"
+                To="0" Duration="0:0:0.2" />
+            <DoubleAnimation Storyboard.TargetName="focusBorderScale"
+                Storyboard.TargetProperty="ScaleX"
+                To="0" Duration="0:0:0.2" />
+        </Storyboard>
+
+        <!-- ★ DemoSequence
+             원본 의도: 플로팅 라벨 텍스트박스 (Material Design 패턴)
+             시나리오: 포커스 → 라벨이 위로 떠오르며 축소(75%) + 파란색 전환
+                       + 하단 포커스 보더가 중앙에서 양쪽으로 펼쳐짐
+                       → 포커스 해제 → 라벨 원위치, 보더 수축
+             핵심 기법: TranslateTransform.Y(부상) + ScaleTransform(축소)
+                        + ColorAnimation(색전환) + ScaleTransform.ScaleX(보더 펼침)
+                        CubicEase EaseOut으로 자연스러운 감속
+             다른 플랫폼:
+               - 웹: CSS transform: translateY + scale + color transition
+                     :focus-within pseudo-class로 라벨 제어
+               - 모바일: Material TextInputLayout 네이티브 컴포넌트
+        -->
+        <Storyboard x:Key="DemoSequence">
+            <!-- Phase 1: 라벨 부상+축소+색전환 (0~0.3s) -->
+            <DoubleAnimation Storyboard.TargetName="labelTranslate"
+                Storyboard.TargetProperty="Y"
+                From="0" To="-18" Duration="0:0:0.25"
+                BeginTime="0:0:0" FillBehavior="HoldEnd">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseOut" />
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Storyboard.TargetName="labelScale"
+                Storyboard.TargetProperty="ScaleX"
+                From="1" To="0.75" Duration="0:0:0.25"
+                BeginTime="0:0:0" FillBehavior="HoldEnd" />
+            <DoubleAnimation Storyboard.TargetName="labelScale"
+                Storyboard.TargetProperty="ScaleY"
+                From="1" To="0.75" Duration="0:0:0.25"
+                BeginTime="0:0:0" FillBehavior="HoldEnd" />
+            <ColorAnimation Storyboard.TargetName="labelBrush"
+                Storyboard.TargetProperty="Color"
+                From="Gray" To="#2196F3" Duration="0:0:0.25"
+                BeginTime="0:0:0" FillBehavior="HoldEnd" />
+            <!-- Phase 2: 포커스 보더 중앙→양쪽 펼침 (0~0.3s, 병렬) -->
+            <DoubleAnimation Storyboard.TargetName="focusBorder"
+                Storyboard.TargetProperty="Opacity"
+                From="0" To="1" Duration="0:0:0.25"
+                BeginTime="0:0:0" FillBehavior="HoldEnd" />
+            <DoubleAnimation Storyboard.TargetName="focusBorderScale"
+                Storyboard.TargetProperty="ScaleX"
+                From="0" To="1" Duration="0:0:0.3"
+                BeginTime="0:0:0" FillBehavior="HoldEnd" />
+            <!-- Phase 3: 복원 (1.5~1.7s) -->
+            <DoubleAnimation Storyboard.TargetName="labelTranslate"
+                Storyboard.TargetProperty="Y"
+                To="0" Duration="0:0:0.2"
+                BeginTime="0:0:1.5" FillBehavior="HoldEnd" />
+            <DoubleAnimation Storyboard.TargetName="labelScale"
+                Storyboard.TargetProperty="ScaleX"
+                To="1" Duration="0:0:0.2"
+                BeginTime="0:0:1.5" FillBehavior="HoldEnd" />
+            <DoubleAnimation Storyboard.TargetName="labelScale"
+                Storyboard.TargetProperty="ScaleY"
+                To="1" Duration="0:0:0.2"
+                BeginTime="0:0:1.5" FillBehavior="HoldEnd" />
+            <ColorAnimation Storyboard.TargetName="labelBrush"
+                Storyboard.TargetProperty="Color"
+                To="Gray" Duration="0:0:0.2"
+                BeginTime="0:0:1.5" FillBehavior="HoldEnd" />
+            <DoubleAnimation Storyboard.TargetName="focusBorder"
+                Storyboard.TargetProperty="Opacity"
+                To="0" Duration="0:0:0.2"
+                BeginTime="0:0:1.5" FillBehavior="HoldEnd" />
+            <DoubleAnimation Storyboard.TargetName="focusBorderScale"
+                Storyboard.TargetProperty="ScaleX"
+                To="0" Duration="0:0:0.2"
+                BeginTime="0:0:1.5" FillBehavior="HoldEnd" />
+        </Storyboard>
+    </UserControl.Resources>
+
+    <Grid>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="350">
+            <TextBlock Text="Floating Label TextBox"
+                       Foreground="#CDD6F4" FontSize="24" FontWeight="SemiBold"
+                       HorizontalAlignment="Center" Margin="0,0,0,40" />
+
+            <!-- Demo Field (ControlTemplate 해체 → 직접 배치) -->
+            <Grid Margin="0,20,0,0" Height="40">
+                <!-- Floating Label -->
+                <TextBlock x:Name="floatingLabel" Text="Email Address"
+                           FontSize="16" VerticalAlignment="Center"
+                           Margin="4,0,0,0" IsHitTestVisible="False"
+                           RenderTransformOrigin="0,0.5">
+                    <TextBlock.Foreground>
+                        <SolidColorBrush x:Name="labelBrush" Color="Gray" />
+                    </TextBlock.Foreground>
+                    <TextBlock.RenderTransform>
+                        <TransformGroup>
+                            <TranslateTransform x:Name="labelTranslate" Y="0" />
+                            <ScaleTransform x:Name="labelScale" ScaleX="1" ScaleY="1" />
+                        </TransformGroup>
+                    </TextBlock.RenderTransform>
+                </TextBlock>
+
+                <!-- Bottom Border -->
+                <Border BorderBrush="#555" BorderThickness="0,0,0,2"
+                        VerticalAlignment="Bottom" />
+
+                <!-- Focus Highlight Border -->
+                <Border x:Name="focusBorder"
+                        BorderBrush="#2196F3" BorderThickness="0,0,0,2"
+                        VerticalAlignment="Bottom" Opacity="0"
+                        RenderTransformOrigin="0.5,0.5">
+                    <Border.RenderTransform>
+                        <ScaleTransform x:Name="focusBorderScale" ScaleX="0" />
+                    </Border.RenderTransform>
+                </Border>
+
+                <!-- TextBox -->
+                <TextBox Background="Transparent" BorderThickness="0"
+                         Foreground="White" CaretBrush="White"
+                         FontSize="16" Padding="4,8,4,4"
+                         VerticalAlignment="Center"
+                         GotFocus="Field_GotFocus" LostFocus="Field_LostFocus" />
+            </Grid>
+
+            <TextBlock Text="Click on the field to see floating label animation"
+                       Foreground="#6C7086" FontSize="12"
+                       HorizontalAlignment="Center" Margin="0,30,0,0" />
+        </StackPanel>
+    </Grid>
+</UserControl>

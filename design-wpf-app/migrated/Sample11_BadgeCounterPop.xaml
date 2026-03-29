@@ -1,0 +1,413 @@
+<UserControl x:Class="design_wpf_app.Migrated.Sample11_BadgeCounterPop"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="500"
+             Background="#1E1E2E">
+
+    <UserControl.Resources>
+        <!-- Badge 1 Pop -->
+        <Storyboard x:Key="Badge1Pop">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="badge1Scale"
+                Storyboard.TargetProperty="ScaleX">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1.3" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1.0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <ElasticEase EasingMode="EaseOut" Oscillations="1" Springiness="5" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="badge1Scale"
+                Storyboard.TargetProperty="ScaleY">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1.3" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1.0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <ElasticEase EasingMode="EaseOut" Oscillations="1" Springiness="5" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+
+        <!-- Badge 2 Pop -->
+        <Storyboard x:Key="Badge2Pop">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="badge2Scale"
+                Storyboard.TargetProperty="ScaleX">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1.3" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1.0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <ElasticEase EasingMode="EaseOut" Oscillations="1" Springiness="5" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="badge2Scale"
+                Storyboard.TargetProperty="ScaleY">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1.3" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1.0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <ElasticEase EasingMode="EaseOut" Oscillations="1" Springiness="5" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+
+        <!-- Badge 3 Pop -->
+        <Storyboard x:Key="Badge3Pop">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="badge3Scale"
+                Storyboard.TargetProperty="ScaleX">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1.3" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1.0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <ElasticEase EasingMode="EaseOut" Oscillations="1" Springiness="5" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="badge3Scale"
+                Storyboard.TargetProperty="ScaleY">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1.3" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1.0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <ElasticEase EasingMode="EaseOut" Oscillations="1" Springiness="5" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+
+        <!-- ★ DemoSequence
+             원본 의도: 배지 카운터 팝 애니메이션 — 알림 배지가 튀어오르며 나타남
+             시나리오: 배지1 팝(0→1.3→1.0, ElasticEase) → 0.3s 딜레이 → 배지2 팝
+                       → 0.3s 딜레이 → 배지3 팝 (순차 스태거 효과)
+             핵심 기법: ScaleTransform + DoubleAnimationUsingKeyFrames(오버슈트 바운스),
+                        ElasticEase로 탄성 효과, BeginTime으로 스태거 딜레이
+             다른 플랫폼:
+               - 웹: CSS @keyframes scale(0→1.3→1) + animation-delay로 스태거
+               - 모바일: spring 애니메이션(iOS UIView.animate dampingRatio, Android SpringAnimation)
+        -->
+        <Storyboard x:Key="DemoSequence">
+            <!-- Badge 1 pop at 0s -->
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="badge1Scale"
+                Storyboard.TargetProperty="ScaleX" BeginTime="0:0:0">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1.3" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1.0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <ElasticEase EasingMode="EaseOut" Oscillations="1" Springiness="5" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="badge1Scale"
+                Storyboard.TargetProperty="ScaleY" BeginTime="0:0:0">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1.3" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1.0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <ElasticEase EasingMode="EaseOut" Oscillations="1" Springiness="5" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+
+            <!-- Badge 2 pop at 0.3s -->
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="badge2Scale"
+                Storyboard.TargetProperty="ScaleX" BeginTime="0:0:0.3">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1.3" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1.0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <ElasticEase EasingMode="EaseOut" Oscillations="1" Springiness="5" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="badge2Scale"
+                Storyboard.TargetProperty="ScaleY" BeginTime="0:0:0.3">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1.3" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1.0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <ElasticEase EasingMode="EaseOut" Oscillations="1" Springiness="5" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+
+            <!-- Badge 3 pop at 0.6s -->
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="badge3Scale"
+                Storyboard.TargetProperty="ScaleX" BeginTime="0:0:0.6">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1.3" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1.0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <ElasticEase EasingMode="EaseOut" Oscillations="1" Springiness="5" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="badge3Scale"
+                Storyboard.TargetProperty="ScaleY" BeginTime="0:0:0.6">
+                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1.3" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1.0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <ElasticEase EasingMode="EaseOut" Oscillations="1" Springiness="5" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+
+        <Style x:Key="HitButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="4" Padding="12,6">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="Badge Counter Pop" Foreground="#94A3B8" FontSize="14"
+                       HorizontalAlignment="Center" Margin="0,0,0,30" />
+
+            <!-- Badge items row -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <!-- Item 1: Inbox with badge -->
+                <Grid Margin="0,0,40,0">
+                    <Border Background="#2E333A" CornerRadius="8"
+                            Width="60" Height="60">
+                        <TextBlock Text="&#x2709;" FontSize="24"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                                   Foreground="#94A3B8" />
+                    </Border>
+                    <!-- Badge 1 -->
+                    <Border x:Name="badge1"
+                            Background="#EF4444" CornerRadius="10"
+                            MinWidth="20" Height="20"
+                            HorizontalAlignment="Right" VerticalAlignment="Top"
+                            Margin="0,-5,-5,0" Padding="4,0"
+                            RenderTransformOrigin="0.5,0.5">
+                        <Border.RenderTransform>
+                            <ScaleTransform x:Name="badge1Scale" ScaleX="0" ScaleY="0" />
+                        </Border.RenderTransform>
+                        <TextBlock Text="3" Foreground="White" FontSize="11"
+                                   FontWeight="Bold" HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" />
+                    </Border>
+                </Grid>
+
+                <!-- Item 2: Bell with badge -->
+                <Grid Margin="0,0,40,0">
+                    <Border Background="#2E333A" CornerRadius="8"
+                            Width="60" Height="60">
+                        <TextBlock Text="&#x1F514;" FontSize="24"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                                   Foreground="#94A3B8" />
+                    </Border>
+                    <!-- Badge 2 -->
+                    <Border x:Name="badge2"
+                            Background="#F59E0B" CornerRadius="10"
+                            MinWidth="20" Height="20"
+                            HorizontalAlignment="Right" VerticalAlignment="Top"
+                            Margin="0,-5,-5,0" Padding="4,0"
+                            RenderTransformOrigin="0.5,0.5">
+                        <Border.RenderTransform>
+                            <ScaleTransform x:Name="badge2Scale" ScaleX="0" ScaleY="0" />
+                        </Border.RenderTransform>
+                        <TextBlock Text="12" Foreground="White" FontSize="11"
+                                   FontWeight="Bold" HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" />
+                    </Border>
+                </Grid>
+
+                <!-- Item 3: Chat with badge -->
+                <Grid>
+                    <Border Background="#2E333A" CornerRadius="8"
+                            Width="60" Height="60">
+                        <TextBlock Text="&#x1F4AC;" FontSize="24"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                                   Foreground="#94A3B8" />
+                    </Border>
+                    <!-- Badge 3 -->
+                    <Border x:Name="badge3"
+                            Background="#22C55E" CornerRadius="10"
+                            MinWidth="20" Height="20"
+                            HorizontalAlignment="Right" VerticalAlignment="Top"
+                            Margin="0,-5,-5,0" Padding="4,0"
+                            RenderTransformOrigin="0.5,0.5">
+                        <Border.RenderTransform>
+                            <ScaleTransform x:Name="badge3Scale" ScaleX="0" ScaleY="0" />
+                        </Border.RenderTransform>
+                        <TextBlock Text="5" Foreground="White" FontSize="11"
+                                   FontWeight="Bold" HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" />
+                    </Border>
+                </Grid>
+            </StackPanel>
+
+            <!-- Replay button -->
+            <Button x:Name="btnReplay" Content="Replay Pop"
+                    Style="{StaticResource HitButtonStyle}"
+                    Background="#475569" Margin="0,30,0,0"
+                    HorizontalAlignment="Center">
+                <Button.Triggers>
+                    <EventTrigger RoutedEvent="Button.Click">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <!-- Badge 1 -->
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="badge1Scale"
+                                    Storyboard.TargetProperty="ScaleX">
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1.3" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1.0">
+                                        <EasingDoubleKeyFrame.EasingFunction>
+                                            <ElasticEase EasingMode="EaseOut" Oscillations="1" Springiness="5" />
+                                        </EasingDoubleKeyFrame.EasingFunction>
+                                    </EasingDoubleKeyFrame>
+                                </DoubleAnimationUsingKeyFrames>
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="badge1Scale"
+                                    Storyboard.TargetProperty="ScaleY">
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1.3" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1.0">
+                                        <EasingDoubleKeyFrame.EasingFunction>
+                                            <ElasticEase EasingMode="EaseOut" Oscillations="1" Springiness="5" />
+                                        </EasingDoubleKeyFrame.EasingFunction>
+                                    </EasingDoubleKeyFrame>
+                                </DoubleAnimationUsingKeyFrames>
+                                <!-- Badge 2 (staggered 0.3s) -->
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="badge2Scale"
+                                    Storyboard.TargetProperty="ScaleX" BeginTime="0:0:0.3">
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1.3" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1.0">
+                                        <EasingDoubleKeyFrame.EasingFunction>
+                                            <ElasticEase EasingMode="EaseOut" Oscillations="1" Springiness="5" />
+                                        </EasingDoubleKeyFrame.EasingFunction>
+                                    </EasingDoubleKeyFrame>
+                                </DoubleAnimationUsingKeyFrames>
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="badge2Scale"
+                                    Storyboard.TargetProperty="ScaleY" BeginTime="0:0:0.3">
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1.3" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1.0">
+                                        <EasingDoubleKeyFrame.EasingFunction>
+                                            <ElasticEase EasingMode="EaseOut" Oscillations="1" Springiness="5" />
+                                        </EasingDoubleKeyFrame.EasingFunction>
+                                    </EasingDoubleKeyFrame>
+                                </DoubleAnimationUsingKeyFrames>
+                                <!-- Badge 3 (staggered 0.6s) -->
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="badge3Scale"
+                                    Storyboard.TargetProperty="ScaleX" BeginTime="0:0:0.6">
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1.3" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1.0">
+                                        <EasingDoubleKeyFrame.EasingFunction>
+                                            <ElasticEase EasingMode="EaseOut" Oscillations="1" Springiness="5" />
+                                        </EasingDoubleKeyFrame.EasingFunction>
+                                    </EasingDoubleKeyFrame>
+                                </DoubleAnimationUsingKeyFrames>
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="badge3Scale"
+                                    Storyboard.TargetProperty="ScaleY" BeginTime="0:0:0.6">
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1.3" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1.0">
+                                        <EasingDoubleKeyFrame.EasingFunction>
+                                            <ElasticEase EasingMode="EaseOut" Oscillations="1" Springiness="5" />
+                                        </EasingDoubleKeyFrame.EasingFunction>
+                                    </EasingDoubleKeyFrame>
+                                </DoubleAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Button.Triggers>
+            </Button>
+        </StackPanel>
+
+        <!-- Loaded trigger for initial pop animation -->
+        <Grid.Triggers>
+            <EventTrigger RoutedEvent="Loaded">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <!-- Badge 1 -->
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="badge1Scale"
+                            Storyboard.TargetProperty="ScaleX" BeginTime="0:0:0.5">
+                            <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                            <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1.3" />
+                            <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1.0">
+                                <EasingDoubleKeyFrame.EasingFunction>
+                                    <ElasticEase EasingMode="EaseOut" Oscillations="1" Springiness="5" />
+                                </EasingDoubleKeyFrame.EasingFunction>
+                            </EasingDoubleKeyFrame>
+                        </DoubleAnimationUsingKeyFrames>
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="badge1Scale"
+                            Storyboard.TargetProperty="ScaleY" BeginTime="0:0:0.5">
+                            <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                            <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1.3" />
+                            <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1.0">
+                                <EasingDoubleKeyFrame.EasingFunction>
+                                    <ElasticEase EasingMode="EaseOut" Oscillations="1" Springiness="5" />
+                                </EasingDoubleKeyFrame.EasingFunction>
+                            </EasingDoubleKeyFrame>
+                        </DoubleAnimationUsingKeyFrames>
+                        <!-- Badge 2 -->
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="badge2Scale"
+                            Storyboard.TargetProperty="ScaleX" BeginTime="0:0:0.8">
+                            <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                            <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1.3" />
+                            <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1.0">
+                                <EasingDoubleKeyFrame.EasingFunction>
+                                    <ElasticEase EasingMode="EaseOut" Oscillations="1" Springiness="5" />
+                                </EasingDoubleKeyFrame.EasingFunction>
+                            </EasingDoubleKeyFrame>
+                        </DoubleAnimationUsingKeyFrames>
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="badge2Scale"
+                            Storyboard.TargetProperty="ScaleY" BeginTime="0:0:0.8">
+                            <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                            <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1.3" />
+                            <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1.0">
+                                <EasingDoubleKeyFrame.EasingFunction>
+                                    <ElasticEase EasingMode="EaseOut" Oscillations="1" Springiness="5" />
+                                </EasingDoubleKeyFrame.EasingFunction>
+                            </EasingDoubleKeyFrame>
+                        </DoubleAnimationUsingKeyFrames>
+                        <!-- Badge 3 -->
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="badge3Scale"
+                            Storyboard.TargetProperty="ScaleX" BeginTime="0:0:1.1">
+                            <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                            <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1.3" />
+                            <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1.0">
+                                <EasingDoubleKeyFrame.EasingFunction>
+                                    <ElasticEase EasingMode="EaseOut" Oscillations="1" Springiness="5" />
+                                </EasingDoubleKeyFrame.EasingFunction>
+                            </EasingDoubleKeyFrame>
+                        </DoubleAnimationUsingKeyFrames>
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="badge3Scale"
+                            Storyboard.TargetProperty="ScaleY" BeginTime="0:0:1.1">
+                            <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                            <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1.3" />
+                            <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1.0">
+                                <EasingDoubleKeyFrame.EasingFunction>
+                                    <ElasticEase EasingMode="EaseOut" Oscillations="1" Springiness="5" />
+                                </EasingDoubleKeyFrame.EasingFunction>
+                            </EasingDoubleKeyFrame>
+                        </DoubleAnimationUsingKeyFrames>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Grid.Triggers>
+    </Grid>
+</UserControl>

@@ -1,0 +1,150 @@
+<UserControl x:Class="design_wpf_app.Migrated.Sample21_RadialVoiceWave"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="450"
+             Background="Transparent">
+
+    <UserControl.Resources>
+        <!-- ═══ VoiceLine Style ═══ -->
+        <Style x:Key="VoiceLineStyle" TargetType="Line">
+            <Setter Property="X1" Value="0"/>
+            <Setter Property="Y1" Value="-126"/>
+            <Setter Property="X2" Value="0"/>
+            <Setter Property="Y2" Value="-105.75"/>
+            <Setter Property="StrokeThickness" Value="4"/>
+            <Setter Property="StrokeDashArray" Value="20.25"/>
+            <Setter Property="StrokeDashCap" Value="Round"/>
+            <Setter Property="Stroke" Value="#D8D8D8"/>
+            <Setter Property="RenderTransformOrigin" Value="0,0"/>
+        </Style>
+
+        <!-- ═══ TrimPathPulse: StrokeDashOffset animation ═══ -->
+        <Storyboard x:Key="TrimPathPulse">
+            <DoubleAnimation
+                Storyboard.TargetProperty="StrokeDashOffset"
+                From="18.225" To="0.2025"
+                Duration="0:0:0.25"
+                AutoReverse="True"
+                RepeatBehavior="Forever">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseInOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+
+        <!-- ═══ ColorCascade: Stroke color animation ═══ -->
+        <Storyboard x:Key="ColorCascade">
+            <ColorAnimationUsingKeyFrames
+                Storyboard.TargetProperty="(Shape.Stroke).(SolidColorBrush.Color)"
+                Duration="0:0:0.5"
+                AutoReverse="True"
+                RepeatBehavior="Forever">
+                <SplineColorKeyFrame KeyTime="0:0:0" Value="#D8D8D8"/>
+                <SplineColorKeyFrame KeyTime="0:0:0.14" Value="#E55A71"
+                    KeySpline="0.333,0,0.667,1"/>
+                <SplineColorKeyFrame KeyTime="0:0:0.2" Value="#DB1E3E"
+                    KeySpline="0.333,0,0.667,1"/>
+                <SplineColorKeyFrame KeyTime="0:0:0.25" Value="#E4324F"
+                    KeySpline="0.333,0,0.667,1"/>
+            </ColorAnimationUsingKeyFrames>
+        </Storyboard>
+
+        <!--
+        ═══ DemoSequence (representative 4-line pattern) ═══
+        원본 의도: 60개 방사형 라인이 음성 파동처럼 순차 펄스 — TrimPath + Color cascade
+        시나리오: 각 라인이 index*40ms 지연으로 StrokeDashOffset 펄스 + 색상 변화 (회색→빨강→회색)
+        핵심 기법: StrokeDashOffset 애니메이션 + ColorAnimationUsingKeyFrames, 40ms stagger
+        다른 플랫폼: CSS stroke-dashoffset animation + @keyframes color, animation-delay: calc(var(i)*40ms)
+        -->
+        <Storyboard x:Key="DemoSequence">
+            <!-- Line0 TrimPath (BeginTime=0ms) -->
+            <DoubleAnimation Storyboard.TargetName="DemoLine0" Storyboard.TargetProperty="StrokeDashOffset"
+                From="18.225" To="0.2025" Duration="0:0:0.25" AutoReverse="True" RepeatBehavior="Forever" BeginTime="0:0:0">
+                <DoubleAnimation.EasingFunction><CubicEase EasingMode="EaseInOut"/></DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <!-- Line0 Color (BeginTime=0ms) -->
+            <ColorAnimationUsingKeyFrames Storyboard.TargetName="DemoLine0"
+                Storyboard.TargetProperty="(Shape.Stroke).(SolidColorBrush.Color)"
+                Duration="0:0:0.5" AutoReverse="True" RepeatBehavior="Forever" BeginTime="0:0:0">
+                <SplineColorKeyFrame KeyTime="0:0:0" Value="#D8D8D8"/>
+                <SplineColorKeyFrame KeyTime="0:0:0.14" Value="#E55A71" KeySpline="0.333,0,0.667,1"/>
+                <SplineColorKeyFrame KeyTime="0:0:0.2" Value="#DB1E3E" KeySpline="0.333,0,0.667,1"/>
+                <SplineColorKeyFrame KeyTime="0:0:0.25" Value="#E4324F" KeySpline="0.333,0,0.667,1"/>
+            </ColorAnimationUsingKeyFrames>
+            <!-- Line1 TrimPath (BeginTime=200ms) -->
+            <DoubleAnimation Storyboard.TargetName="DemoLine1" Storyboard.TargetProperty="StrokeDashOffset"
+                From="18.225" To="0.2025" Duration="0:0:0.25" AutoReverse="True" RepeatBehavior="Forever" BeginTime="0:0:0.2">
+                <DoubleAnimation.EasingFunction><CubicEase EasingMode="EaseInOut"/></DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <!-- Line1 Color (BeginTime=200ms) -->
+            <ColorAnimationUsingKeyFrames Storyboard.TargetName="DemoLine1"
+                Storyboard.TargetProperty="(Shape.Stroke).(SolidColorBrush.Color)"
+                Duration="0:0:0.5" AutoReverse="True" RepeatBehavior="Forever" BeginTime="0:0:0.2">
+                <SplineColorKeyFrame KeyTime="0:0:0" Value="#D8D8D8"/>
+                <SplineColorKeyFrame KeyTime="0:0:0.14" Value="#E55A71" KeySpline="0.333,0,0.667,1"/>
+                <SplineColorKeyFrame KeyTime="0:0:0.2" Value="#DB1E3E" KeySpline="0.333,0,0.667,1"/>
+                <SplineColorKeyFrame KeyTime="0:0:0.25" Value="#E4324F" KeySpline="0.333,0,0.667,1"/>
+            </ColorAnimationUsingKeyFrames>
+            <!-- Line2 TrimPath (BeginTime=400ms) -->
+            <DoubleAnimation Storyboard.TargetName="DemoLine2" Storyboard.TargetProperty="StrokeDashOffset"
+                From="18.225" To="0.2025" Duration="0:0:0.25" AutoReverse="True" RepeatBehavior="Forever" BeginTime="0:0:0.4">
+                <DoubleAnimation.EasingFunction><CubicEase EasingMode="EaseInOut"/></DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <!-- Line2 Color (BeginTime=400ms) -->
+            <ColorAnimationUsingKeyFrames Storyboard.TargetName="DemoLine2"
+                Storyboard.TargetProperty="(Shape.Stroke).(SolidColorBrush.Color)"
+                Duration="0:0:0.5" AutoReverse="True" RepeatBehavior="Forever" BeginTime="0:0:0.4">
+                <SplineColorKeyFrame KeyTime="0:0:0" Value="#D8D8D8"/>
+                <SplineColorKeyFrame KeyTime="0:0:0.14" Value="#E55A71" KeySpline="0.333,0,0.667,1"/>
+                <SplineColorKeyFrame KeyTime="0:0:0.2" Value="#DB1E3E" KeySpline="0.333,0,0.667,1"/>
+                <SplineColorKeyFrame KeyTime="0:0:0.25" Value="#E4324F" KeySpline="0.333,0,0.667,1"/>
+            </ColorAnimationUsingKeyFrames>
+            <!-- Line3 TrimPath (BeginTime=600ms) -->
+            <DoubleAnimation Storyboard.TargetName="DemoLine3" Storyboard.TargetProperty="StrokeDashOffset"
+                From="18.225" To="0.2025" Duration="0:0:0.25" AutoReverse="True" RepeatBehavior="Forever" BeginTime="0:0:0.6">
+                <DoubleAnimation.EasingFunction><CubicEase EasingMode="EaseInOut"/></DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <!-- Line3 Color (BeginTime=600ms) -->
+            <ColorAnimationUsingKeyFrames Storyboard.TargetName="DemoLine3"
+                Storyboard.TargetProperty="(Shape.Stroke).(SolidColorBrush.Color)"
+                Duration="0:0:0.5" AutoReverse="True" RepeatBehavior="Forever" BeginTime="0:0:0.6">
+                <SplineColorKeyFrame KeyTime="0:0:0" Value="#D8D8D8"/>
+                <SplineColorKeyFrame KeyTime="0:0:0.14" Value="#E55A71" KeySpline="0.333,0,0.667,1"/>
+                <SplineColorKeyFrame KeyTime="0:0:0.2" Value="#DB1E3E" KeySpline="0.333,0,0.667,1"/>
+                <SplineColorKeyFrame KeyTime="0:0:0.25" Value="#E4324F" KeySpline="0.333,0,0.667,1"/>
+            </ColorAnimationUsingKeyFrames>
+        </Storyboard>
+    </UserControl.Resources>
+
+    <!-- Canvas for programmatic 60-line generation; 4 demo lines shown in XAML for designer preview -->
+    <Canvas x:Name="VoiceWaveCanvas" Width="400" Height="400">
+        <!-- Representative demo lines (designer preview only; code-behind generates full 60) -->
+        <Line x:Name="DemoLine0" Style="{StaticResource VoiceLineStyle}"
+              Canvas.Left="200" Canvas.Top="200">
+            <Line.RenderTransform>
+                <RotateTransform x:Name="DemoLine0Rotate" Angle="0"/>
+            </Line.RenderTransform>
+        </Line>
+        <Line x:Name="DemoLine1" Style="{StaticResource VoiceLineStyle}"
+              Canvas.Left="200" Canvas.Top="200">
+            <Line.RenderTransform>
+                <RotateTransform x:Name="DemoLine1Rotate" Angle="90"/>
+            </Line.RenderTransform>
+        </Line>
+        <Line x:Name="DemoLine2" Style="{StaticResource VoiceLineStyle}"
+              Canvas.Left="200" Canvas.Top="200">
+            <Line.RenderTransform>
+                <RotateTransform x:Name="DemoLine2Rotate" Angle="180"/>
+            </Line.RenderTransform>
+        </Line>
+        <Line x:Name="DemoLine3" Style="{StaticResource VoiceLineStyle}"
+              Canvas.Left="200" Canvas.Top="200">
+            <Line.RenderTransform>
+                <RotateTransform x:Name="DemoLine3Rotate" Angle="270"/>
+            </Line.RenderTransform>
+        </Line>
+    </Canvas>
+</UserControl>

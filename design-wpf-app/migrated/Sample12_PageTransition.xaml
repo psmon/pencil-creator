@@ -1,0 +1,214 @@
+<UserControl x:Class="design_wpf_app.Migrated.Sample12_PageTransition"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="500" d:DesignWidth="700"
+             Background="#1E1E2E">
+
+    <UserControl.Resources>
+        <!-- Page 1 Content -->
+        <Border x:Key="Page1" Background="#2A2A3E" CornerRadius="12" Padding="40">
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock Text="Page 1" FontSize="36" FontWeight="Bold" Foreground="#CDD6F4" HorizontalAlignment="Center"/>
+                <TextBlock Text="This is the first page content." FontSize="16" Foreground="#A6ADC8" Margin="0,12,0,0" HorizontalAlignment="Center"/>
+                <Ellipse Width="80" Height="80" Margin="0,24,0,0" HorizontalAlignment="Center">
+                    <Ellipse.Fill>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#667eea" Offset="0"/>
+                            <GradientStop Color="#764ba2" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Ellipse.Fill>
+                </Ellipse>
+            </StackPanel>
+        </Border>
+
+        <!-- Page 2 Content -->
+        <Border x:Key="Page2" Background="#2A2A3E" CornerRadius="12" Padding="40">
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock Text="Page 2" FontSize="36" FontWeight="Bold" Foreground="#CDD6F4" HorizontalAlignment="Center"/>
+                <TextBlock Text="This is the second page content." FontSize="16" Foreground="#A6ADC8" Margin="0,12,0,0" HorizontalAlignment="Center"/>
+                <Rectangle Width="80" Height="80" RadiusX="12" RadiusY="12" Margin="0,24,0,0" HorizontalAlignment="Center">
+                    <Rectangle.Fill>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#f093fb" Offset="0"/>
+                            <GradientStop Color="#f5576c" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Rectangle.Fill>
+                </Rectangle>
+            </StackPanel>
+        </Border>
+
+        <!-- Slide Out Left + Fade Out -->
+        <Storyboard x:Key="SlideOutLeft">
+            <DoubleAnimation Storyboard.TargetName="ContentArea"
+                             Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                             To="-300" Duration="0:0:0.4">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseIn"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Storyboard.TargetName="ContentArea"
+                             Storyboard.TargetProperty="Opacity"
+                             To="0" Duration="0:0:0.4">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseIn"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+
+        <!-- Slide In From Right + Fade In -->
+        <Storyboard x:Key="SlideInFromRight">
+            <DoubleAnimation Storyboard.TargetName="ContentArea"
+                             Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                             From="300" To="0" Duration="0:0:0.4">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Storyboard.TargetName="ContentArea"
+                             Storyboard.TargetProperty="Opacity"
+                             From="0" To="1" Duration="0:0:0.4">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+
+        <!-- ★ DemoSequence
+             원본 의도: 페이지 전환 애니메이션 — 콘텐츠가 왼쪽으로 슬라이드 아웃 후 오른쪽에서 슬라이드 인
+             시나리오: 콘텐츠가 현재 위치에 1초간 표시
+                       → 왼쪽으로 -300px 슬라이드 + 페이드아웃(1~1.4s)
+                       → 오른쪽 +300px에서 슬라이드 인 + 페이드인(1.6~2.0s)
+                       → 최종 위치에 정착
+             핵심 기법: TranslateTransform.X 슬라이드, Opacity 페이드, CubicEase 가감속
+             다른 플랫폼:
+               - 웹: CSS transform translateX + opacity transition, 또는 View Transitions API
+               - 모바일: UIPageViewController(iOS), ViewPager2(Android), 또는 Navigation 애니메이션
+        -->
+        <Storyboard x:Key="DemoSequence">
+            <!-- Phase 1: Slide out left + fade out (1~1.4s) -->
+            <DoubleAnimation Storyboard.TargetName="ContentArea"
+                             Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                             From="0" To="-300" Duration="0:0:0.4"
+                             BeginTime="0:0:1" FillBehavior="HoldEnd">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseIn"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Storyboard.TargetName="ContentArea"
+                             Storyboard.TargetProperty="Opacity"
+                             From="1" To="0" Duration="0:0:0.4"
+                             BeginTime="0:0:1" FillBehavior="HoldEnd">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseIn"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+
+            <!-- Phase 2: Slide in from right + fade in (1.6~2.0s) -->
+            <DoubleAnimation Storyboard.TargetName="ContentArea"
+                             Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                             From="300" To="0" Duration="0:0:0.4"
+                             BeginTime="0:0:1.6" FillBehavior="HoldEnd">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Storyboard.TargetName="ContentArea"
+                             Storyboard.TargetProperty="Opacity"
+                             From="0" To="1" Duration="0:0:0.4"
+                             BeginTime="0:0:1.6" FillBehavior="HoldEnd">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+    </UserControl.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Content Area -->
+        <ContentControl x:Name="ContentArea" Grid.Row="0"
+                        Content="{StaticResource Page1}"
+                        ClipToBounds="True">
+            <ContentControl.RenderTransform>
+                <TranslateTransform x:Name="ContentAreaTranslate" X="0" Y="0"/>
+            </ContentControl.RenderTransform>
+        </ContentControl>
+
+        <!-- Navigation Button -->
+        <Button x:Name="SwitchButton" Grid.Row="1" Content="Switch Page"
+                HorizontalAlignment="Center" Margin="0,16,0,0"
+                Padding="24,12" FontSize="15" FontWeight="SemiBold"
+                Foreground="White" Cursor="Hand"
+                BorderThickness="0">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Border x:Name="BtnBorder" CornerRadius="8" Padding="{TemplateBinding Padding}" Cursor="Hand">
+                                    <Border.Background>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                            <GradientStop Color="#667eea" Offset="0"/>
+                                            <GradientStop Color="#764ba2" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Border.Background>
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="BtnBorder" Property="Opacity" Value="0.85"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Button.Style>
+            <Button.Triggers>
+                <EventTrigger RoutedEvent="Button.Click">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="ContentArea"
+                                             Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                                             To="-300" Duration="0:0:0.4">
+                                <DoubleAnimation.EasingFunction>
+                                    <CubicEase EasingMode="EaseIn"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                            <DoubleAnimation Storyboard.TargetName="ContentArea"
+                                             Storyboard.TargetProperty="Opacity"
+                                             To="0" Duration="0:0:0.4">
+                                <DoubleAnimation.EasingFunction>
+                                    <CubicEase EasingMode="EaseIn"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                            <DoubleAnimation Storyboard.TargetName="ContentArea"
+                                             Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                                             From="300" To="0" Duration="0:0:0.4"
+                                             BeginTime="0:0:0.4">
+                                <DoubleAnimation.EasingFunction>
+                                    <CubicEase EasingMode="EaseOut"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                            <DoubleAnimation Storyboard.TargetName="ContentArea"
+                                             Storyboard.TargetProperty="Opacity"
+                                             From="0" To="1" Duration="0:0:0.4"
+                                             BeginTime="0:0:0.4">
+                                <DoubleAnimation.EasingFunction>
+                                    <CubicEase EasingMode="EaseOut"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Button.Triggers>
+        </Button>
+    </Grid>
+</UserControl>

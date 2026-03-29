@@ -1,0 +1,536 @@
+{
+  "schemaVersion": 2,
+  "lastUpdated": "2026-03-30",
+  "items": [
+    {
+      "id": 1,
+      "sourceFile": "01-glass-effect-button.xaml",
+      "migratedFile": "migrated/Sample01_GlassEffectButton.xaml",
+      "displayName": "01. Glass Effect Button",
+      "category": "Button",
+      "status": "빌드성공",
+      "animationSummary": "호버→유리질감 오버레이 페이드인+미세축소, 클릭→360도 회전, 이탈→복원",
+      "coreAnimations": ["Opacity 페이드", "ScaleTransform 축소", "RotateTransform 360도"],
+      "triggerType": "인터랙션형 (호버+클릭)",
+      "notes": ""
+    },
+    {
+      "id": 2,
+      "sourceFile": "02-animated-sidebar-menu.xaml",
+      "migratedFile": "migrated/Sample02_AnimatedSidebarMenu.xaml",
+      "displayName": "02. Animated Sidebar Menu",
+      "category": "Navigation",
+      "status": "빌드성공",
+      "animationSummary": "토글 클릭→사이드바 65→230px 확장(CubicEase), 재클릭→축소",
+      "coreAnimations": ["Width DoubleAnimation", "CubicEase EaseOut/EaseIn"],
+      "triggerType": "인터랙션형 (토글)",
+      "notes": ""
+    },
+    {
+      "id": 3,
+      "sourceFile": "03-rotating-loading-spinner.xaml",
+      "migratedFile": "migrated/Sample03_RotatingLoadingSpinner.xaml",
+      "displayName": "03. Rotating Loading Spinner",
+      "category": "Loading",
+      "status": "빌드성공",
+      "animationSummary": "3종 스피너: 대시원형 회전(1s), 아크 회전(0.8s), 도트 시차 펄스(0.2s간격)",
+      "coreAnimations": ["RotateTransform 360도", "Opacity 시차 펄스", "StrokeDashArray"],
+      "triggerType": "자동반복형 (Loaded+Forever)",
+      "notes": ""
+    },
+    {
+      "id": 4,
+      "sourceFile": "04-sliding-expandable-panel.xaml",
+      "migratedFile": "migrated/Sample04_SlidingExpandablePanel.xaml",
+      "displayName": "04. Sliding Expandable Panel",
+      "category": "Panel",
+      "status": "빌드성공",
+      "animationSummary": "탭 클릭→우측 프로퍼티 패널 슬라이드인(250→0), 재클릭→슬라이드아웃",
+      "coreAnimations": ["TranslateTransform.X", "AccelerationRatio/DecelerationRatio"],
+      "triggerType": "인터랙션형 (클릭 토글)",
+      "notes": ""
+    },
+    {
+      "id": 5,
+      "sourceFile": "05-color-animated-control.xaml",
+      "migratedFile": "migrated/Sample05_ColorAnimatedControl.xaml",
+      "displayName": "05. Color Animated Control",
+      "category": "Animation",
+      "status": "빌드성공",
+      "animationSummary": "2계층 색상 반응: 외곽 White→LightBlue(3s 자동역재생) + 내부 White→Purple(1s)",
+      "coreAnimations": ["ColorAnimation", "SolidColorBrush.Color 전환", "AutoReverse"],
+      "triggerType": "인터랙션형 (호버, 2계층 독립)",
+      "notes": ""
+    },
+    {
+      "id": 6,
+      "sourceFile": "06-floating-label-textbox.xaml",
+      "migratedFile": "migrated/Sample06_FloatingLabelTextbox.xaml",
+      "displayName": "06. Floating Label Textbox",
+      "category": "Input",
+      "status": "빌드성공",
+      "animationSummary": "포커스→라벨 부상(-18px)+축소(75%)+파란색 전환+보더 중앙펼침, 해제→복원",
+      "coreAnimations": ["TranslateTransform.Y 부상", "ScaleTransform 축소", "ColorAnimation", "ScaleTransform.ScaleX 보더펼침"],
+      "triggerType": "인터랙션형 (포커스/블러)",
+      "notes": ""
+    },
+    {
+      "id": 7,
+      "sourceFile": "07-animated-combobox.xaml",
+      "migratedFile": "migrated/Sample07_AnimatedCombobox.xaml",
+      "displayName": "07. Animated Combobox",
+      "category": "Input",
+      "status": "빌드성공",
+      "animationSummary": "드롭다운 열기→화살표 0→180도 회전+목록 ScaleY 0→1 확장+투명도+보더 하이라이트, 닫기→복원",
+      "coreAnimations": ["RotateTransform 0→180도", "ScaleTransform.ScaleY 확장", "Opacity 페이드인", "ColorAnimation 보더 하이라이트"],
+      "triggerType": "인터랙션형 (클릭)",
+      "notes": ""
+    },
+    {
+      "id": 8,
+      "sourceFile": "08-toggle-switch.xaml",
+      "migratedFile": "migrated/Sample08_ToggleSwitch.xaml",
+      "displayName": "08. Toggle Switch",
+      "category": "Input",
+      "status": "빌드성공",
+      "animationSummary": "토글 클릭→노브 X 0→22 슬라이드+트랙 Gray→Green 전환+호버 시 노브 확대",
+      "coreAnimations": ["TranslateTransform.X 슬라이드", "ColorAnimation Gray→Green", "ScaleTransform 호버 확대"],
+      "triggerType": "인터랙션형 (토글)",
+      "notes": ""
+    },
+    {
+      "id": 9,
+      "sourceFile": "09-snackbar-toast.xaml",
+      "migratedFile": "migrated/Sample09_SnackbarToast.xaml",
+      "displayName": "09. Snackbar Toast",
+      "category": "Notification",
+      "status": "빌드성공",
+      "animationSummary": "3종 토스트가 아래에서 위로 슬라이드(Y 60→0)+페이드인, 3초 후 자동 숨김",
+      "coreAnimations": ["TranslateTransform.Y 슬라이드업", "Opacity 페이드인", "자동숨김 타이머 3s"],
+      "triggerType": "인터랙션형 (클릭)",
+      "notes": ""
+    },
+    {
+      "id": 10,
+      "sourceFile": "10-animated-progressbar.xaml",
+      "migratedFile": "migrated/Sample10_AnimatedProgressbar.xaml",
+      "displayName": "10. Animated Progressbar",
+      "category": "Progress",
+      "status": "빌드성공",
+      "animationSummary": "불확정 모드 슬라이딩 바+값 기반 너비 채움+글로우 펄스 효과",
+      "coreAnimations": ["TranslateTransform 슬라이딩", "Width DoubleAnimation 채움", "DropShadowEffect 글로우 펄스"],
+      "triggerType": "자동반복형 (Loaded+Forever)",
+      "notes": ""
+    },
+    {
+      "id": 11,
+      "sourceFile": "11-badge-counter-pop.xaml",
+      "migratedFile": "migrated/Sample11_BadgeCounterPop.xaml",
+      "displayName": "11. Badge Counter Pop",
+      "category": "Badge",
+      "status": "빌드성공",
+      "animationSummary": "ElasticEase 오버슈트로 Scale 0→1.3→1.0 팝 애니메이션, 시차 적용",
+      "coreAnimations": ["ScaleTransform 0→1.3→1.0", "ElasticEase 오버슈트", "시차(Staggered) BeginTime"],
+      "triggerType": "자동반복형 (Loaded+Forever)",
+      "notes": ""
+    },
+    {
+      "id": 12,
+      "sourceFile": "12-page-transition.xaml",
+      "migratedFile": "migrated/Sample12_PageTransition.xaml",
+      "displayName": "12. Page Transition",
+      "category": "Transition",
+      "status": "빌드성공",
+      "animationSummary": "현재 페이지 왼쪽으로 슬라이드아웃+새 페이지 오른쪽에서 슬라이드인, CubicEase 적용",
+      "coreAnimations": ["TranslateTransform.X 슬라이드아웃", "TranslateTransform.X 슬라이드인", "CubicEase 이징"],
+      "triggerType": "인터랙션형 (클릭)",
+      "notes": ""
+    },
+    {
+      "id": 13,
+      "sourceFile": "13-tab-slide.xaml",
+      "migratedFile": "migrated/Sample13_TabSlide.xaml",
+      "displayName": "13. Tab Slide",
+      "category": "Tab",
+      "status": "빌드성공",
+      "animationSummary": "탭 전환 시 방향감 있는 슬라이드 전환, QuadraticEase 적용",
+      "coreAnimations": ["TranslateTransform.X 방향별 슬라이드", "QuadraticEase 이징"],
+      "triggerType": "인터랙션형 (클릭)",
+      "notes": ""
+    },
+    {
+      "id": 14,
+      "sourceFile": "14-hamburger-to-x.xaml",
+      "migratedFile": "migrated/Sample14_HamburgerToX.xaml",
+      "displayName": "14. Hamburger to X",
+      "category": "Icon",
+      "status": "빌드성공",
+      "animationSummary": "3개 라인이 회전+이동+투명도 변화로 X 형태로 모핑",
+      "coreAnimations": ["RotateTransform 회전", "TranslateTransform 이동", "Opacity 페이드"],
+      "triggerType": "인터랙션형 (토글)",
+      "notes": ""
+    },
+    {
+      "id": 15,
+      "sourceFile": "15-animated-gradient-bg.xaml",
+      "migratedFile": "migrated/Sample15_AnimatedGradientBg.xaml",
+      "displayName": "15. Animated Gradient BG",
+      "category": "Background",
+      "status": "빌드성공",
+      "animationSummary": "3개 그라데이션 스톱의 색상 순환+오프셋 애니메이션으로 배경 흐름 효과",
+      "coreAnimations": ["ColorAnimation 색상 순환", "DoubleAnimation GradientStop.Offset"],
+      "triggerType": "자동반복형 (Loaded+Forever)",
+      "notes": ""
+    },
+    {
+      "id": 16,
+      "sourceFile": "16-particle-floating-dots.xaml",
+      "migratedFile": "migrated/Sample16_ParticleFloatingDots.xaml",
+      "displayName": "16. Particle Floating Dots",
+      "category": "Particle",
+      "status": "빌드성공",
+      "animationSummary": "10개 도트가 위로 상승하며 좌우 드리프트+투명도 페이드 파티클 효과",
+      "coreAnimations": ["TranslateTransform.Y 상승", "TranslateTransform.X 드리프트", "Opacity 페이드"],
+      "triggerType": "자동반복형 (Loaded+Forever)",
+      "notes": ""
+    },
+    {
+      "id": 17,
+      "sourceFile": "17-pulsing-glow.xaml",
+      "migratedFile": "migrated/Sample17_PulsingGlow.xaml",
+      "displayName": "17. Pulsing Glow",
+      "category": "Effect",
+      "status": "빌드성공",
+      "animationSummary": "5개 버튼에 DropShadowEffect BlurRadius+Opacity 펄스, SineEase 적용",
+      "coreAnimations": ["DropShadowEffect.BlurRadius 펄스", "DropShadowEffect.Opacity 펄스", "SineEase 이징"],
+      "triggerType": "자동반복형 (Loaded+Forever)",
+      "notes": ""
+    },
+    {
+      "id": 18,
+      "sourceFile": "18-cherry-blossom-fall.xaml",
+      "migratedFile": "migrated/Sample18_CherryBlossomFall.xaml",
+      "displayName": "18. Cherry Blossom Fall",
+      "category": "Nature",
+      "status": "빌드성공",
+      "animationSummary": "3개 꽃잎이 아래로 낙하하며 회전+바람 드리프트+투명도 페이드",
+      "coreAnimations": ["TranslateTransform.Y 낙하", "RotateTransform 회전", "TranslateTransform.X 바람 드리프트", "Opacity 페이드"],
+      "triggerType": "자동반복형 (Loaded+Forever)",
+      "notes": ""
+    },
+    {
+      "id": 19,
+      "sourceFile": "19-petal-scatter-wind.xaml",
+      "migratedFile": "migrated/Sample19_PetalScatterWind.xaml",
+      "displayName": "19. Petal Scatter Wind",
+      "category": "Nature",
+      "status": "빌드성공",
+      "animationSummary": "3개 꽃잎이 바람에 수평으로 날리며 회전+축소+투명도 페이드",
+      "coreAnimations": ["TranslateTransform.X 수평 날림", "RotateTransform 회전", "ScaleTransform 축소", "Opacity 페이드"],
+      "triggerType": "자동반복형 (Loaded+Forever)",
+      "notes": ""
+    },
+    {
+      "id": 20,
+      "sourceFile": "20-spring-breeze-sway.xaml",
+      "migratedFile": "migrated/Sample20_SpringBreezeSway.xaml",
+      "displayName": "20. Spring Breeze Sway",
+      "category": "Nature",
+      "status": "빌드성공",
+      "animationSummary": "꽃 줄기+잎사귀가 SineEase로 좌우 흔들리는 봄바람 효과",
+      "coreAnimations": ["RotateTransform 좌우 흔들림", "SineEase 이징", "AutoReverse"],
+      "triggerType": "자동반복형 (Loaded+Forever)",
+      "notes": ""
+    },
+    {
+      "id": 21,
+      "sourceFile": "21-radial-voice-wave.xaml",
+      "migratedFile": "migrated/Sample21_RadialVoiceWave.xaml",
+      "displayName": "21. Radial Voice Wave",
+      "category": "Audio",
+      "status": "빌드성공",
+      "animationSummary": "60개 방사형 라인의 StrokeDashOffset 펄스+색상 캐스케이드, 코드 생성 방식",
+      "coreAnimations": ["StrokeDashOffset 펄스", "ColorAnimation 색상 캐스케이드", "코드 생성 60라인"],
+      "triggerType": "코드생성형 (Loaded+코드)",
+      "notes": ""
+    },
+    {
+      "id": 22,
+      "sourceFile": "22-glitch-jitter.xaml",
+      "migratedFile": "migrated/Sample22_GlitchJitter.xaml",
+      "displayName": "22. Glitch Jitter",
+      "category": "Cyberpunk",
+      "status": "빌드성공",
+      "animationSummary": "DiscreteDoubleKeyFrame으로 급속 X/Y 지터+투명도 깜빡임+ScaleX 왜곡",
+      "coreAnimations": ["DiscreteDoubleKeyFrame X/Y 지터", "Opacity 깜빡임", "ScaleTransform.ScaleX 왜곡"],
+      "triggerType": "자동반복형 (Loaded+Forever)",
+      "notes": ""
+    },
+    {
+      "id": 23,
+      "sourceFile": "23-neon-glow-pulse.xaml",
+      "migratedFile": "migrated/Sample23_NeonGlowPulse.xaml",
+      "displayName": "23. Neon Glow Pulse",
+      "category": "Cyberpunk",
+      "status": "빌드성공",
+      "animationSummary": "DropShadowEffect BlurRadius 브리딩+색상 Cyan↔Magenta 순환 네온 효과",
+      "coreAnimations": ["DropShadowEffect.BlurRadius 브리딩", "ColorAnimation Cyan↔Magenta 순환"],
+      "triggerType": "자동반복형 (Loaded+Forever)",
+      "notes": ""
+    },
+    {
+      "id": 24,
+      "sourceFile": "24-rgb-split-chromatic.xaml",
+      "migratedFile": "migrated/Sample24_RgbSplitChromatic.xaml",
+      "displayName": "24. RGB Split Chromatic",
+      "category": "Cyberpunk",
+      "status": "빌드성공",
+      "animationSummary": "3개 텍스트 레이어의 DiscreteDoubleKeyFrame 오프셋 지터로 색수차 효과",
+      "coreAnimations": ["DiscreteDoubleKeyFrame 오프셋 지터", "3레이어 RGB 분리"],
+      "triggerType": "자동반복형 (Loaded+Forever)",
+      "notes": ""
+    },
+    {
+      "id": 25,
+      "sourceFile": "25-scanline-sweep.xaml",
+      "migratedFile": "migrated/Sample25_ScanlineSweep.xaml",
+      "displayName": "25. Scanline Sweep",
+      "category": "Cyberpunk",
+      "status": "빌드성공",
+      "animationSummary": "수평 라인이 위→아래로 스윕+CRT 오버레이 패턴 스캔라인 효과",
+      "coreAnimations": ["TranslateTransform.Y 스윕", "CRT 오버레이 패턴"],
+      "triggerType": "자동반복형 (Loaded+Forever)",
+      "notes": ""
+    },
+    {
+      "id": 26,
+      "sourceFile": "26-digital-matrix-rain.xaml",
+      "migratedFile": "migrated/Sample26_DigitalMatrixRain.xaml",
+      "displayName": "26. Digital Matrix Rain",
+      "category": "Cyberpunk",
+      "status": "빌드성공",
+      "animationSummary": "6개 텍스트 컬럼이 서로 다른 속도/딜레이로 수직 스크롤하는 매트릭스 비 효과",
+      "coreAnimations": ["TranslateTransform.Y 수직 스크롤", "시차 BeginTime/Duration"],
+      "triggerType": "자동반복형 (Loaded+Forever)",
+      "notes": ""
+    },
+    {
+      "id": 27,
+      "sourceFile": "27-holographic-shimmer.xaml",
+      "migratedFile": "migrated/Sample27_HolographicShimmer.xaml",
+      "displayName": "27. Holographic Shimmer",
+      "category": "Cyberpunk",
+      "status": "빌드성공",
+      "animationSummary": "그라데이션 스톱 색상 순환+오프셋 스윕으로 홀로그래픽 무지개빛 효과",
+      "coreAnimations": ["ColorAnimation 색상 순환", "DoubleAnimation GradientStop.Offset 스윕"],
+      "triggerType": "자동반복형 (Loaded+Forever)",
+      "notes": ""
+    }
+  ],
+  "migrationLog": [
+    {
+      "version": 1,
+      "date": "2026-03-30",
+      "description": "초기 스키마 생성 - 27개 XAML 항목 등록, 상태 추적 시작"
+    },
+    {
+      "version": 2,
+      "date": "2026-03-30",
+      "description": "스키마 v2 업그레이드 - animationSummary/coreAnimations/triggerType 필드 추가. 변환 시 핵심 애니메이션 기능을 요약 기록",
+      "schemaChanges": [
+        "items[].animationSummary: 사용자 관점의 애니메이션 시나리오 한 줄 요약",
+        "items[].coreAnimations: 사용된 핵심 애니메이션 기법 배열",
+        "items[].triggerType: 발동 유형 (인터랙션형/자동반복형/시퀀스형/코드생성형)"
+      ]
+    },
+    {
+      "version": 2,
+      "date": "2026-03-30",
+      "itemId": 1,
+      "action": "변환완료",
+      "summary": "Glass Effect Button — 호버→유리질감 페이드인+축소, 클릭→360도 회전, 이탈→복원. Opacity+Scale+Rotate 3종 조합 인터랙션"
+    },
+    {
+      "version": 2,
+      "date": "2026-03-30",
+      "itemId": 2,
+      "action": "변환완료",
+      "summary": "Animated Sidebar Menu — 토글→사이드바 Width 65↔230px 확장축소. CubicEase 이징 적용 드로어 패턴"
+    },
+    {
+      "version": 2,
+      "date": "2026-03-30",
+      "itemId": 3,
+      "action": "변환완료",
+      "summary": "Rotating Loading Spinner — 3종 스피너(대시회전/아크회전/도트펄스). RotateTransform+Opacity 시차 펄스 조합"
+    },
+    {
+      "version": 2,
+      "date": "2026-03-30",
+      "itemId": 4,
+      "action": "변환완료",
+      "summary": "Sliding Expandable Panel — 우측 슬라이딩 프로퍼티 패널. TranslateTransform.X + Acceleration/Deceleration 이징"
+    },
+    {
+      "version": 2,
+      "date": "2026-03-30",
+      "itemId": 5,
+      "action": "변환완료",
+      "summary": "Color Animated Control — 2계층 색상 반응 카드. 외곽 White→Blue(3s자동역재생) + 내부 White→Purple(1s)"
+    },
+    {
+      "version": 2,
+      "date": "2026-03-30",
+      "itemId": 6,
+      "action": "변환완료",
+      "summary": "Floating Label TextBox — Material 패턴. 포커스→라벨 부상+축소75%+파란색+보더 중앙펼침, 해제→복원"
+    },
+    {
+      "version": 2,
+      "date": "2026-03-30",
+      "itemId": 7,
+      "action": "변환완료",
+      "summary": "Animated Combobox — 드롭다운 열기→화살표 180도 회전+ScaleY 확장+보더 하이라이트, 닫기→복원"
+    },
+    {
+      "version": 2,
+      "date": "2026-03-30",
+      "itemId": 8,
+      "action": "변환완료",
+      "summary": "Toggle Switch — 노브 X 0→22 슬라이드+트랙 Gray→Green 전환+호버 시 노브 확대 인터랙션"
+    },
+    {
+      "version": 2,
+      "date": "2026-03-30",
+      "itemId": 9,
+      "action": "변환완료",
+      "summary": "Snackbar Toast — 3종 토스트 Y 60→0 슬라이드업+페이드인, 3초 후 자동숨김 알림 패턴"
+    },
+    {
+      "version": 2,
+      "date": "2026-03-30",
+      "itemId": 10,
+      "action": "변환완료",
+      "summary": "Animated Progressbar — 불확정 슬라이딩 바+값 기반 너비 채움+글로우 펄스 프로그레스 패턴"
+    },
+    {
+      "version": 2,
+      "date": "2026-03-30",
+      "itemId": 11,
+      "action": "변환완료",
+      "summary": "Badge Counter Pop — ElasticEase 오버슈트 Scale 0→1.3→1.0 팝+시차 적용 뱃지 애니메이션"
+    },
+    {
+      "version": 2,
+      "date": "2026-03-30",
+      "itemId": 12,
+      "action": "변환완료",
+      "summary": "Page Transition — 현재 페이지 좌측 슬라이드아웃+새 페이지 우측 슬라이드인, CubicEase 페이지 전환"
+    },
+    {
+      "version": 2,
+      "date": "2026-03-30",
+      "itemId": 13,
+      "action": "변환완료",
+      "summary": "Tab Slide — 탭 전환 시 방향감 슬라이드+QuadraticEase 이징 탭 전환 패턴"
+    },
+    {
+      "version": 2,
+      "date": "2026-03-30",
+      "itemId": 14,
+      "action": "변환완료",
+      "summary": "Hamburger to X — 3개 라인 회전+이동+투명도로 X 모핑 아이콘 토글 패턴"
+    },
+    {
+      "version": 2,
+      "date": "2026-03-30",
+      "itemId": 15,
+      "action": "변환완료",
+      "summary": "Animated Gradient BG — 3개 그라데이션 스톱 색상순환+오프셋 애니메이션 배경 흐름 효과"
+    },
+    {
+      "version": 2,
+      "date": "2026-03-30",
+      "itemId": 16,
+      "action": "변환완료",
+      "summary": "Particle Floating Dots — 10개 도트 상승+좌우 드리프트+투명도 페이드 파티클 효과"
+    },
+    {
+      "version": 2,
+      "date": "2026-03-30",
+      "itemId": 17,
+      "action": "변환완료",
+      "summary": "Pulsing Glow — 5개 버튼 DropShadowEffect BlurRadius+Opacity 펄스, SineEase 글로우 효과"
+    },
+    {
+      "version": 2,
+      "date": "2026-03-30",
+      "itemId": 18,
+      "action": "변환완료",
+      "summary": "Cherry Blossom Fall — 3개 꽃잎 낙하+회전+바람 드리프트+페이드 벚꽃 자연 효과"
+    },
+    {
+      "version": 2,
+      "date": "2026-03-30",
+      "itemId": 19,
+      "action": "변환완료",
+      "summary": "Petal Scatter Wind — 3개 꽃잎 수평 날림+회전+축소+페이드 바람 산란 효과"
+    },
+    {
+      "version": 2,
+      "date": "2026-03-30",
+      "itemId": 20,
+      "action": "변환완료",
+      "summary": "Spring Breeze Sway — 꽃 줄기+잎사귀 SineEase 좌우 흔들림 봄바람 효과"
+    },
+    {
+      "version": 2,
+      "date": "2026-03-30",
+      "itemId": 21,
+      "action": "변환완료",
+      "summary": "Radial Voice Wave — 60개 방사형 라인 StrokeDashOffset 펄스+색상 캐스케이드, 코드 생성 방식"
+    },
+    {
+      "version": 2,
+      "date": "2026-03-30",
+      "itemId": 22,
+      "action": "변환완료",
+      "summary": "Glitch Jitter — DiscreteDoubleKeyFrame 급속 X/Y 지터+투명도 깜빡임+ScaleX 왜곡 글리치 효과"
+    },
+    {
+      "version": 2,
+      "date": "2026-03-30",
+      "itemId": 23,
+      "action": "변환완료",
+      "summary": "Neon Glow Pulse — DropShadowEffect BlurRadius 브리딩+Cyan↔Magenta 색상 순환 네온 효과"
+    },
+    {
+      "version": 2,
+      "date": "2026-03-30",
+      "itemId": 24,
+      "action": "변환완료",
+      "summary": "RGB Split Chromatic — 3개 텍스트 레이어 DiscreteDoubleKeyFrame 오프셋 지터 색수차 효과"
+    },
+    {
+      "version": 2,
+      "date": "2026-03-30",
+      "itemId": 25,
+      "action": "변환완료",
+      "summary": "Scanline Sweep — 수평 라인 위→아래 스윕+CRT 오버레이 패턴 스캔라인 효과"
+    },
+    {
+      "version": 2,
+      "date": "2026-03-30",
+      "itemId": 26,
+      "action": "변환완료",
+      "summary": "Digital Matrix Rain — 6개 텍스트 컬럼 서로 다른 속도/딜레이 수직 스크롤 매트릭스 비 효과"
+    },
+    {
+      "version": 2,
+      "date": "2026-03-30",
+      "itemId": 27,
+      "action": "변환완료",
+      "summary": "Holographic Shimmer — 그라데이션 스톱 색상 순환+오프셋 스윕 홀로그래픽 무지개빛 효과"
+    }
+  ]
+}

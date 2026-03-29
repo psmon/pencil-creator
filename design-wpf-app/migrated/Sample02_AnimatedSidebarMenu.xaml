@@ -1,0 +1,135 @@
+<UserControl x:Class="design_wpf_app.Migrated.Sample02_AnimatedSidebarMenu"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="600"
+             Background="#1E1E2E">
+
+    <UserControl.Resources>
+        <!-- ★ Blend 타임라인용 Storyboard -->
+        <Storyboard x:Key="SidebarExpand">
+            <DoubleAnimation Storyboard.TargetName="nav_pnl"
+                Storyboard.TargetProperty="Width"
+                From="65" To="230" Duration="0:0:0.3">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseOut" />
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+
+        <Storyboard x:Key="SidebarCollapse">
+            <DoubleAnimation Storyboard.TargetName="nav_pnl"
+                Storyboard.TargetProperty="Width"
+                From="230" To="65" Duration="0:0:0.2">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseIn" />
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+
+        <!-- ★ DemoSequence
+             원본 의도: 햄버거 토글로 사이드바 확장/축소 네비게이션
+             시나리오: 토글 클릭 → 사이드바 65→230px 확장(아이콘+텍스트 표시)
+                       → 재클릭 → 230→65px 축소(아이콘만)
+             핵심 기법: Width DoubleAnimation + CubicEase
+             다른 플랫폼: CSS width transition + ease-out, 모바일 drawer 패턴
+        -->
+        <Storyboard x:Key="DemoSequence">
+            <DoubleAnimation Storyboard.TargetName="nav_pnl"
+                Storyboard.TargetProperty="Width"
+                From="65" To="230" Duration="0:0:0.3"
+                BeginTime="0:0:0" FillBehavior="HoldEnd">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseOut" />
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Storyboard.TargetName="nav_pnl"
+                Storyboard.TargetProperty="Width"
+                From="230" To="65" Duration="0:0:0.2"
+                BeginTime="0:0:1.5" FillBehavior="HoldEnd">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseIn" />
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <StackPanel x:Name="nav_pnl" Width="65" Background="#2E333A" Grid.Column="0">
+            <ToggleButton x:Name="menuToggle"
+                Height="50" Width="65"
+                Background="Transparent" BorderThickness="0"
+                Foreground="White" Content="☰" FontSize="20">
+                <ToggleButton.Triggers>
+                    <EventTrigger RoutedEvent="ToggleButton.Checked">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetName="nav_pnl"
+                                    Storyboard.TargetProperty="Width"
+                                    From="65" To="230" Duration="0:0:0.3">
+                                    <DoubleAnimation.EasingFunction>
+                                        <CubicEase EasingMode="EaseOut" />
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                    <EventTrigger RoutedEvent="ToggleButton.Unchecked">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetName="nav_pnl"
+                                    Storyboard.TargetProperty="Width"
+                                    From="230" To="65" Duration="0:0:0.2">
+                                    <DoubleAnimation.EasingFunction>
+                                        <CubicEase EasingMode="EaseIn" />
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </ToggleButton.Triggers>
+            </ToggleButton>
+
+            <ListView Background="Transparent" BorderThickness="0"
+                      Foreground="White" FontFamily="Segoe UI" FontSize="14">
+                <ListViewItem Height="40">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="🏠" Width="24" Margin="12,0,0,0" />
+                        <TextBlock Text="Home" Margin="25,0,0,0" VerticalAlignment="Center" />
+                    </StackPanel>
+                </ListViewItem>
+                <ListViewItem Height="40">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="👥" Width="24" Margin="12,0,0,0" />
+                        <TextBlock Text="Contacts" Margin="25,0,0,0" VerticalAlignment="Center" />
+                    </StackPanel>
+                </ListViewItem>
+                <ListViewItem Height="40">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="✉️" Width="24" Margin="12,0,0,0" />
+                        <TextBlock Text="Messages" Margin="25,0,0,0" VerticalAlignment="Center" />
+                    </StackPanel>
+                </ListViewItem>
+                <ListViewItem Height="40">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="⚙️" Width="24" Margin="12,0,0,0" />
+                        <TextBlock Text="Settings" Margin="25,0,0,0" VerticalAlignment="Center" />
+                    </StackPanel>
+                </ListViewItem>
+            </ListView>
+        </StackPanel>
+
+        <Grid Grid.Column="1" Background="#1E1E2E">
+            <TextBlock Text="Main Content Area"
+                       Foreground="#666" FontSize="20"
+                       HorizontalAlignment="Center" VerticalAlignment="Center" />
+        </Grid>
+    </Grid>
+</UserControl>

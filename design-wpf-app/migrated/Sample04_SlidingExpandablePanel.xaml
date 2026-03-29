@@ -1,0 +1,145 @@
+<UserControl x:Class="design_wpf_app.Migrated.Sample04_SlidingExpandablePanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="400" d:DesignWidth="700"
+             Background="#1E1E2E">
+
+    <UserControl.Resources>
+        <Storyboard x:Key="ExpandPanel">
+            <DoubleAnimation Storyboard.TargetName="panelTranslate"
+                Storyboard.TargetProperty="X"
+                From="250" To="0" Duration="0:0:0.6"
+                AccelerationRatio="0.4" DecelerationRatio="0.4" />
+        </Storyboard>
+
+        <Storyboard x:Key="CollapsePanel">
+            <DoubleAnimation Storyboard.TargetName="panelTranslate"
+                Storyboard.TargetProperty="X"
+                From="0" To="250" Duration="0:0:0.6"
+                AccelerationRatio="0.4" DecelerationRatio="0.4" />
+        </Storyboard>
+
+        <!-- ★ DemoSequence
+             원본 의도: 우측 슬라이딩 프로퍼티 패널 (IDE 인스펙터 스타일)
+             시나리오: 탭 클릭 → 패널이 우측에서 슬라이드인(250→0)
+                       → 재클릭 → 슬라이드아웃(0→250)
+             핵심 기법: TranslateTransform.X + AccelerationRatio/DecelerationRatio 이징
+             다른 플랫폼:
+               - 웹: transform: translateX() + CSS transition ease-in-out
+               - 모바일: 우측 드로어 패턴, 스와이프 제스처
+        -->
+        <Storyboard x:Key="DemoSequence">
+            <DoubleAnimation Storyboard.TargetName="panelTranslate"
+                Storyboard.TargetProperty="X"
+                From="250" To="0" Duration="0:0:0.6"
+                BeginTime="0:0:0" FillBehavior="HoldEnd"
+                AccelerationRatio="0.4" DecelerationRatio="0.4" />
+            <DoubleAnimation Storyboard.TargetName="panelTranslate"
+                Storyboard.TargetProperty="X"
+                From="0" To="250" Duration="0:0:0.6"
+                BeginTime="0:0:2" FillBehavior="HoldEnd"
+                AccelerationRatio="0.4" DecelerationRatio="0.4" />
+        </Storyboard>
+
+        <Style x:Key="HitButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid ClipToBounds="True">
+        <!-- Main Content -->
+        <StackPanel Margin="30">
+            <TextBlock Text="Main Content Area"
+                       Foreground="#94A3B8" FontSize="18" FontWeight="SemiBold" />
+            <Rectangle Height="10" Fill="#2E333A" RadiusX="4" RadiusY="4"
+                       Margin="0,20,200,0" />
+            <Rectangle Height="10" Fill="#2E333A" RadiusX="4" RadiusY="4"
+                       Margin="0,10,240,0" />
+            <Rectangle Height="10" Fill="#2E333A" RadiusX="4" RadiusY="4"
+                       Margin="0,10,220,0" />
+        </StackPanel>
+
+        <!-- Sliding Side Panel -->
+        <StackPanel x:Name="sidePanel"
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal">
+            <StackPanel.RenderTransform>
+                <TranslateTransform x:Name="panelTranslate" X="250" />
+            </StackPanel.RenderTransform>
+
+            <!-- Tab Button (현재 열기만 구현, 원본은 MouseDown 코드비하인드 토글이나 EventTrigger 제약으로 단방향) -->
+            <Button x:Name="tabButton"
+                Style="{StaticResource HitButtonStyle}"
+                Background="#22D3EE"
+                Width="24" Height="60"
+                VerticalAlignment="Top" Margin="0,30,0,0">
+                <Button.Triggers>
+                    <EventTrigger RoutedEvent="Button.Click">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetName="panelTranslate"
+                                    Storyboard.TargetProperty="X"
+                                    From="250" To="0" Duration="0:0:0.6"
+                                    AccelerationRatio="0.4" DecelerationRatio="0.4" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Button.Triggers>
+            </Button>
+
+            <!-- Properties Panel -->
+            <Border Width="250" Background="#1E293B"
+                    BorderBrush="#22D3EE" BorderThickness="2,0,0,0">
+                <StackPanel Margin="20">
+                    <TextBlock Text="Properties"
+                               Foreground="White" FontSize="16"
+                               FontWeight="SemiBold" Margin="0,0,0,20" />
+                    <Grid Margin="0,0,0,12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Width" Foreground="#64748B" FontFamily="Consolas" FontSize="13" />
+                        <TextBlock Text="320px" Foreground="#22D3EE" Grid.Column="1" FontFamily="Consolas" FontSize="13" TextAlignment="Right" />
+                    </Grid>
+                    <Grid Margin="0,0,0,12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Height" Foreground="#64748B" FontFamily="Consolas" FontSize="13" />
+                        <TextBlock Text="240px" Foreground="#22D3EE" Grid.Column="1" FontFamily="Consolas" FontSize="13" TextAlignment="Right" />
+                    </Grid>
+                    <Grid Margin="0,0,0,12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Opacity" Foreground="#64748B" FontFamily="Consolas" FontSize="13" />
+                        <TextBlock Text="1.0" Foreground="#22D3EE" Grid.Column="1" FontFamily="Consolas" FontSize="13" TextAlignment="Right" />
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Rotation" Foreground="#64748B" FontFamily="Consolas" FontSize="13" />
+                        <TextBlock Text="0°" Foreground="#22D3EE" Grid.Column="1" FontFamily="Consolas" FontSize="13" TextAlignment="Right" />
+                    </Grid>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -1,0 +1,219 @@
+<UserControl x:Class="design_wpf_app.Migrated.Sample01_GlassEffectButton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="400"
+             Background="#1E1E2E">
+
+    <UserControl.Resources>
+        <!-- Glass Gradient Brush -->
+        <GradientStopCollection x:Key="MyGlassGradientStops">
+            <GradientStop Color="WhiteSmoke" Offset="0.2" />
+            <GradientStop Color="Transparent" Offset="0.4" />
+            <GradientStop Color="WhiteSmoke" Offset="0.5" />
+            <GradientStop Color="Transparent" Offset="0.75" />
+            <GradientStop Color="WhiteSmoke" Offset="0.9" />
+            <GradientStop Color="Transparent" Offset="1" />
+        </GradientStopCollection>
+
+        <LinearGradientBrush x:Key="MyGlassBrush"
+            StartPoint="0,0" EndPoint="1,1" Opacity="0.75"
+            GradientStops="{StaticResource MyGlassGradientStops}" />
+
+        <!-- ★ Blend 타임라인 드롭다운에 표시되는 Storyboard 정의 -->
+
+        <Storyboard x:Key="GlassHoverIn">
+            <DoubleAnimation Storyboard.TargetName="glassCube"
+                Storyboard.TargetProperty="Opacity"
+                To="1" Duration="0:0:0.5" />
+            <DoubleAnimation Storyboard.TargetName="glassScale"
+                Storyboard.TargetProperty="ScaleX"
+                To="0.9" Duration="0:0:0.5" />
+            <DoubleAnimation Storyboard.TargetName="glassScale"
+                Storyboard.TargetProperty="ScaleY"
+                To="0.9" Duration="0:0:0.5" />
+        </Storyboard>
+
+        <Storyboard x:Key="GlassHoverOut">
+            <DoubleAnimation Storyboard.TargetName="glassCube"
+                Storyboard.TargetProperty="Opacity"
+                To="0" Duration="0:0:0.3" />
+            <DoubleAnimation Storyboard.TargetName="glassScale"
+                Storyboard.TargetProperty="ScaleX"
+                To="1" Duration="0:0:0.3" />
+            <DoubleAnimation Storyboard.TargetName="glassScale"
+                Storyboard.TargetProperty="ScaleY"
+                To="1" Duration="0:0:0.3" />
+        </Storyboard>
+
+        <Storyboard x:Key="GlassSpinClick">
+            <DoubleAnimation Storyboard.TargetName="glassRotate"
+                Storyboard.TargetProperty="Angle"
+                From="0" To="360" Duration="0:0:0.5" />
+        </Storyboard>
+
+        <!-- ★ 전체 애니메이션 시퀀스 (Blend에서 이것만 재생하면 전체 흐름 확인)
+             원본 의도: 글래스 이펙트 버튼
+             시나리오: 마우스 호버 → 유리질감 오버레이가 페이드인하며 버튼이 미세하게 축소
+                       → 클릭 → 유리 오버레이가 360도 회전 (피드백)
+                       → 마우스 떠남 → 오버레이 페이드아웃, 원래 크기로 복원
+             핵심 기법: Opacity + ScaleTransform + RotateTransform 조합
+                        LinearGradientBrush로 유리 반사 질감 표현
+             다른 플랫폼 구현 포인트:
+               - 웹: hover 시 ::after pseudo-element에 linear-gradient 오버레이
+                     + transform: scale(0.9) + opacity transition
+               - 클릭: transform: rotate(360deg) with transition 0.5s
+               - 모바일: 터치다운=호버, 터치업=클릭 매핑
+        -->
+        <Storyboard x:Key="DemoSequence">
+            <!-- Phase 1: HoverIn (0~0.5s) -->
+            <DoubleAnimation Storyboard.TargetName="glassCube"
+                Storyboard.TargetProperty="Opacity"
+                From="0" To="1" Duration="0:0:0.5"
+                BeginTime="0:0:0" FillBehavior="HoldEnd" />
+            <DoubleAnimation Storyboard.TargetName="glassScale"
+                Storyboard.TargetProperty="ScaleX"
+                From="1" To="0.9" Duration="0:0:0.5"
+                BeginTime="0:0:0" FillBehavior="HoldEnd" />
+            <DoubleAnimation Storyboard.TargetName="glassScale"
+                Storyboard.TargetProperty="ScaleY"
+                From="1" To="0.9" Duration="0:0:0.5"
+                BeginTime="0:0:0" FillBehavior="HoldEnd" />
+
+            <!-- Phase 2: Spin (0.7~1.2s) — HoverIn 상태 유지한 채 회전 -->
+            <DoubleAnimation Storyboard.TargetName="glassRotate"
+                Storyboard.TargetProperty="Angle"
+                From="0" To="360" Duration="0:0:0.5"
+                BeginTime="0:0:0.7" FillBehavior="HoldEnd" />
+
+            <!-- Phase 3: HoverOut (1.5~1.8s) — 복원 -->
+            <DoubleAnimation Storyboard.TargetName="glassCube"
+                Storyboard.TargetProperty="Opacity"
+                To="0" Duration="0:0:0.3"
+                BeginTime="0:0:1.5" FillBehavior="HoldEnd" />
+            <DoubleAnimation Storyboard.TargetName="glassScale"
+                Storyboard.TargetProperty="ScaleX"
+                To="1" Duration="0:0:0.3"
+                BeginTime="0:0:1.5" FillBehavior="HoldEnd" />
+            <DoubleAnimation Storyboard.TargetName="glassScale"
+                Storyboard.TargetProperty="ScaleY"
+                To="1" Duration="0:0:0.3"
+                BeginTime="0:0:1.5" FillBehavior="HoldEnd" />
+        </Storyboard>
+
+        <!-- 투명 버튼 스타일 -->
+        <Style x:Key="HitButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="Transparent" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Cursor="">
+        <!-- Outer Border -->
+        <Rectangle x:Name="outerRectangle"
+            HorizontalAlignment="Center" VerticalAlignment="Center"
+            Width="200" Height="60"
+            RadiusX="20" RadiusY="20"
+            StrokeThickness="4" Fill="Transparent">
+            <Rectangle.Stroke>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#3B82F6" Offset="0" />
+                    <GradientStop Color="#8B5CF6" Offset="1" />
+                </LinearGradientBrush>
+            </Rectangle.Stroke>
+        </Rectangle>
+
+        <!-- Inner Fill -->
+        <Rectangle x:Name="innerRectangle"
+            HorizontalAlignment="Center" VerticalAlignment="Center"
+            Width="200" Height="60"
+            RadiusX="20" RadiusY="20">
+            <Rectangle.Fill>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#3B82F6" Offset="0" />
+                    <GradientStop Color="#8B5CF6" Offset="1" />
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+
+        <!-- Glass Overlay -->
+        <Rectangle x:Name="glassCube"
+            HorizontalAlignment="Center" VerticalAlignment="Center"
+            Width="200" Height="60"
+            StrokeThickness="2" RadiusX="10" RadiusY="10"
+            Opacity="0"
+            Fill="{StaticResource MyGlassBrush}"
+            RenderTransformOrigin="0.5,0.5">
+            <Rectangle.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform x:Name="glassScale" />
+                    <RotateTransform x:Name="glassRotate" />
+                </TransformGroup>
+            </Rectangle.RenderTransform>
+        </Rectangle>
+
+        <!-- Label -->
+        <TextBlock Text="CLICK ME"
+            HorizontalAlignment="Center" VerticalAlignment="Center"
+            Foreground="White" FontFamily="Segoe UI"
+            FontSize="16" FontWeight="Bold" IsHitTestVisible="False" />
+
+        <!-- 히트 영역 (Button → Click EventTrigger 가능) -->
+        <Button x:Name="hitArea"
+            Style="{StaticResource HitButtonStyle}"
+            HorizontalAlignment="Center" VerticalAlignment="Center"
+            Width="200" Height="60">
+            <Button.Triggers>
+                <EventTrigger RoutedEvent="MouseEnter">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="glassCube"
+                                Storyboard.TargetProperty="Opacity"
+                                To="1" Duration="0:0:0.5" />
+                            <DoubleAnimation Storyboard.TargetName="glassScale"
+                                Storyboard.TargetProperty="ScaleX"
+                                To="0.9" Duration="0:0:0.5" />
+                            <DoubleAnimation Storyboard.TargetName="glassScale"
+                                Storyboard.TargetProperty="ScaleY"
+                                To="0.9" Duration="0:0:0.5" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="MouseLeave">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="glassCube"
+                                Storyboard.TargetProperty="Opacity"
+                                To="0" Duration="0:0:0.3" />
+                            <DoubleAnimation Storyboard.TargetName="glassScale"
+                                Storyboard.TargetProperty="ScaleX"
+                                To="1" Duration="0:0:0.3" />
+                            <DoubleAnimation Storyboard.TargetName="glassScale"
+                                Storyboard.TargetProperty="ScaleY"
+                                To="1" Duration="0:0:0.3" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="Button.Click">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="glassRotate"
+                                Storyboard.TargetProperty="Angle"
+                                From="0" To="360" Duration="0:0:0.5" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Button.Triggers>
+        </Button>
+    </Grid>
+</UserControl>

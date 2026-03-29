@@ -1,0 +1,417 @@
+<UserControl x:Class="design_wpf_app.Migrated.Sample16_ParticleFloatingDots"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="500" d:DesignWidth="700"
+             Background="#1E1E2E">
+
+    <UserControl.Resources>
+        <!-- Dot1 Float Up -->
+        <Storyboard x:Key="Dot1Float">
+            <DoubleAnimation Storyboard.TargetName="Dot1"
+                             Storyboard.TargetProperty="(Canvas.Top)"
+                             From="450" To="-20" Duration="0:0:6"
+                             RepeatBehavior="Forever"/>
+            <DoubleAnimation Storyboard.TargetName="Dot1"
+                             Storyboard.TargetProperty="(Canvas.Left)"
+                             From="100" To="120" Duration="0:0:6"
+                             RepeatBehavior="Forever" AutoReverse="True"/>
+            <DoubleAnimation Storyboard.TargetName="Dot1"
+                             Storyboard.TargetProperty="Opacity"
+                             From="0" To="0.9" Duration="0:0:1"/>
+            <DoubleAnimation Storyboard.TargetName="Dot1"
+                             Storyboard.TargetProperty="Opacity"
+                             From="0.9" To="0" Duration="0:0:1"
+                             BeginTime="0:0:5" RepeatBehavior="Forever"/>
+        </Storyboard>
+
+        <!-- Dot2 Float Up -->
+        <Storyboard x:Key="Dot2Float">
+            <DoubleAnimation Storyboard.TargetName="Dot2"
+                             Storyboard.TargetProperty="(Canvas.Top)"
+                             From="460" To="-20" Duration="0:0:7"
+                             RepeatBehavior="Forever"/>
+            <DoubleAnimation Storyboard.TargetName="Dot2"
+                             Storyboard.TargetProperty="(Canvas.Left)"
+                             From="200" To="180" Duration="0:0:7"
+                             RepeatBehavior="Forever" AutoReverse="True"/>
+            <DoubleAnimation Storyboard.TargetName="Dot2"
+                             Storyboard.TargetProperty="Opacity"
+                             From="0" To="0.8" Duration="0:0:1.2"/>
+            <DoubleAnimation Storyboard.TargetName="Dot2"
+                             Storyboard.TargetProperty="Opacity"
+                             From="0.8" To="0" Duration="0:0:1.2"
+                             BeginTime="0:0:5.8" RepeatBehavior="Forever"/>
+        </Storyboard>
+
+        <!-- Dot3 Float Up -->
+        <Storyboard x:Key="Dot3Float">
+            <DoubleAnimation Storyboard.TargetName="Dot3"
+                             Storyboard.TargetProperty="(Canvas.Top)"
+                             From="440" To="-10" Duration="0:0:5.5"
+                             RepeatBehavior="Forever"/>
+            <DoubleAnimation Storyboard.TargetName="Dot3"
+                             Storyboard.TargetProperty="(Canvas.Left)"
+                             From="320" To="340" Duration="0:0:5.5"
+                             RepeatBehavior="Forever" AutoReverse="True"/>
+            <DoubleAnimation Storyboard.TargetName="Dot3"
+                             Storyboard.TargetProperty="Opacity"
+                             From="0" To="0.85" Duration="0:0:0.8"/>
+            <DoubleAnimation Storyboard.TargetName="Dot3"
+                             Storyboard.TargetProperty="Opacity"
+                             From="0.85" To="0" Duration="0:0:0.8"
+                             BeginTime="0:0:4.7" RepeatBehavior="Forever"/>
+        </Storyboard>
+
+        <!-- Dot4 Float Up -->
+        <Storyboard x:Key="Dot4Float">
+            <DoubleAnimation Storyboard.TargetName="Dot4"
+                             Storyboard.TargetProperty="(Canvas.Top)"
+                             From="470" To="-20" Duration="0:0:8"
+                             RepeatBehavior="Forever"/>
+            <DoubleAnimation Storyboard.TargetName="Dot4"
+                             Storyboard.TargetProperty="(Canvas.Left)"
+                             From="450" To="430" Duration="0:0:8"
+                             RepeatBehavior="Forever" AutoReverse="True"/>
+            <DoubleAnimation Storyboard.TargetName="Dot4"
+                             Storyboard.TargetProperty="Opacity"
+                             From="0" To="0.7" Duration="0:0:1.5"/>
+            <DoubleAnimation Storyboard.TargetName="Dot4"
+                             Storyboard.TargetProperty="Opacity"
+                             From="0.7" To="0" Duration="0:0:1.5"
+                             BeginTime="0:0:6.5" RepeatBehavior="Forever"/>
+        </Storyboard>
+
+        <!-- Dot5 Float Up -->
+        <Storyboard x:Key="Dot5Float">
+            <DoubleAnimation Storyboard.TargetName="Dot5"
+                             Storyboard.TargetProperty="(Canvas.Top)"
+                             From="430" To="-10" Duration="0:0:6.5"
+                             RepeatBehavior="Forever"/>
+            <DoubleAnimation Storyboard.TargetName="Dot5"
+                             Storyboard.TargetProperty="(Canvas.Left)"
+                             From="550" To="570" Duration="0:0:6.5"
+                             RepeatBehavior="Forever" AutoReverse="True"/>
+            <DoubleAnimation Storyboard.TargetName="Dot5"
+                             Storyboard.TargetProperty="Opacity"
+                             From="0" To="0.9" Duration="0:0:1"/>
+            <DoubleAnimation Storyboard.TargetName="Dot5"
+                             Storyboard.TargetProperty="Opacity"
+                             From="0.9" To="0" Duration="0:0:1"
+                             BeginTime="0:0:5.5" RepeatBehavior="Forever"/>
+        </Storyboard>
+
+        <!-- ★ DemoSequence
+             원본 의도: 파티클 플로팅 도트 — 다양한 크기/색상의 점들이 하단에서 상단으로 부유하며 떠오름
+             시나리오: Dot1(파란, 6px) 상승 시작 → 0.5s 후 Dot2(초록, 5px) → 1s 후 Dot3(보라, 4px)
+                       → 1.5s 후 Dot4(주황, 8px) 순차 상승, 각 dot은 좌우 미세 흔들림 + 페이드인/아웃
+             핵심 기법: Canvas.Top/Left DoubleAnimation으로 상승+좌우 드리프트,
+                        Opacity 페이드인/아웃, BeginTime 스태거로 시차 효과
+             다른 플랫폼:
+               - 웹: CSS @keyframes translateY + opacity + animation-delay, 또는 Canvas/requestAnimationFrame 파티클 시스템
+               - 모바일: CAEmitterLayer(iOS) / ParticleSystem(Android), 또는 커스텀 View 애니메이션
+        -->
+        <Storyboard x:Key="DemoSequence">
+            <!-- Dot1: float up 6s, begin at 0s -->
+            <DoubleAnimation Storyboard.TargetName="Dot1"
+                             Storyboard.TargetProperty="(Canvas.Top)"
+                             From="450" To="-20" Duration="0:0:6"
+                             BeginTime="0:0:0" FillBehavior="HoldEnd"/>
+            <DoubleAnimation Storyboard.TargetName="Dot1"
+                             Storyboard.TargetProperty="(Canvas.Left)"
+                             From="100" To="120" Duration="0:0:6"
+                             BeginTime="0:0:0" FillBehavior="HoldEnd"/>
+            <DoubleAnimation Storyboard.TargetName="Dot1"
+                             Storyboard.TargetProperty="Opacity"
+                             From="0" To="0.9" Duration="0:0:1"
+                             BeginTime="0:0:0" FillBehavior="HoldEnd"/>
+            <DoubleAnimation Storyboard.TargetName="Dot1"
+                             Storyboard.TargetProperty="Opacity"
+                             From="0.9" To="0" Duration="0:0:1"
+                             BeginTime="0:0:5" FillBehavior="HoldEnd"/>
+
+            <!-- Dot2: float up 7s, begin at 0.5s -->
+            <DoubleAnimation Storyboard.TargetName="Dot2"
+                             Storyboard.TargetProperty="(Canvas.Top)"
+                             From="460" To="-20" Duration="0:0:7"
+                             BeginTime="0:0:0.5" FillBehavior="HoldEnd"/>
+            <DoubleAnimation Storyboard.TargetName="Dot2"
+                             Storyboard.TargetProperty="(Canvas.Left)"
+                             From="200" To="180" Duration="0:0:7"
+                             BeginTime="0:0:0.5" FillBehavior="HoldEnd"/>
+            <DoubleAnimation Storyboard.TargetName="Dot2"
+                             Storyboard.TargetProperty="Opacity"
+                             From="0" To="0.8" Duration="0:0:1.2"
+                             BeginTime="0:0:0.5" FillBehavior="HoldEnd"/>
+            <DoubleAnimation Storyboard.TargetName="Dot2"
+                             Storyboard.TargetProperty="Opacity"
+                             From="0.8" To="0" Duration="0:0:1.2"
+                             BeginTime="0:0:6.3" FillBehavior="HoldEnd"/>
+
+            <!-- Dot3: float up 5.5s, begin at 1s -->
+            <DoubleAnimation Storyboard.TargetName="Dot3"
+                             Storyboard.TargetProperty="(Canvas.Top)"
+                             From="440" To="-10" Duration="0:0:5.5"
+                             BeginTime="0:0:1" FillBehavior="HoldEnd"/>
+            <DoubleAnimation Storyboard.TargetName="Dot3"
+                             Storyboard.TargetProperty="(Canvas.Left)"
+                             From="320" To="340" Duration="0:0:5.5"
+                             BeginTime="0:0:1" FillBehavior="HoldEnd"/>
+            <DoubleAnimation Storyboard.TargetName="Dot3"
+                             Storyboard.TargetProperty="Opacity"
+                             From="0" To="0.85" Duration="0:0:0.8"
+                             BeginTime="0:0:1" FillBehavior="HoldEnd"/>
+            <DoubleAnimation Storyboard.TargetName="Dot3"
+                             Storyboard.TargetProperty="Opacity"
+                             From="0.85" To="0" Duration="0:0:0.8"
+                             BeginTime="0:0:5.7" FillBehavior="HoldEnd"/>
+
+            <!-- Dot4: float up 8s, begin at 1.5s -->
+            <DoubleAnimation Storyboard.TargetName="Dot4"
+                             Storyboard.TargetProperty="(Canvas.Top)"
+                             From="470" To="-20" Duration="0:0:8"
+                             BeginTime="0:0:1.5" FillBehavior="HoldEnd"/>
+            <DoubleAnimation Storyboard.TargetName="Dot4"
+                             Storyboard.TargetProperty="(Canvas.Left)"
+                             From="450" To="430" Duration="0:0:8"
+                             BeginTime="0:0:1.5" FillBehavior="HoldEnd"/>
+            <DoubleAnimation Storyboard.TargetName="Dot4"
+                             Storyboard.TargetProperty="Opacity"
+                             From="0" To="0.7" Duration="0:0:1.5"
+                             BeginTime="0:0:1.5" FillBehavior="HoldEnd"/>
+            <DoubleAnimation Storyboard.TargetName="Dot4"
+                             Storyboard.TargetProperty="Opacity"
+                             From="0.7" To="0" Duration="0:0:1.5"
+                             BeginTime="0:0:8" FillBehavior="HoldEnd"/>
+        </Storyboard>
+    </UserControl.Resources>
+
+    <!-- Loaded trigger: auto-play all 10 dots forever -->
+    <UserControl.Triggers>
+        <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+            <BeginStoryboard>
+                <Storyboard>
+                    <!-- Dot 1: #4FC3F7 - 6px -->
+                    <DoubleAnimation Storyboard.TargetName="Dot1"
+                                     Storyboard.TargetProperty="(Canvas.Top)"
+                                     From="450" To="-20" Duration="0:0:6"
+                                     RepeatBehavior="Forever" BeginTime="0:0:0"/>
+                    <DoubleAnimation Storyboard.TargetName="Dot1"
+                                     Storyboard.TargetProperty="(Canvas.Left)"
+                                     From="100" To="120" Duration="0:0:6"
+                                     RepeatBehavior="Forever" AutoReverse="True" BeginTime="0:0:0"/>
+                    <DoubleAnimation Storyboard.TargetName="Dot1"
+                                     Storyboard.TargetProperty="Opacity"
+                                     From="0" To="0.9" Duration="0:0:1"
+                                     BeginTime="0:0:0"/>
+                    <DoubleAnimation Storyboard.TargetName="Dot1"
+                                     Storyboard.TargetProperty="Opacity"
+                                     From="0.9" To="0" Duration="0:0:1"
+                                     BeginTime="0:0:5" RepeatBehavior="Forever"/>
+
+                    <!-- Dot 2: #81C784 - 5px -->
+                    <DoubleAnimation Storyboard.TargetName="Dot2"
+                                     Storyboard.TargetProperty="(Canvas.Top)"
+                                     From="460" To="-20" Duration="0:0:7"
+                                     RepeatBehavior="Forever" BeginTime="0:0:0.5"/>
+                    <DoubleAnimation Storyboard.TargetName="Dot2"
+                                     Storyboard.TargetProperty="(Canvas.Left)"
+                                     From="200" To="180" Duration="0:0:7"
+                                     RepeatBehavior="Forever" AutoReverse="True" BeginTime="0:0:0.5"/>
+                    <DoubleAnimation Storyboard.TargetName="Dot2"
+                                     Storyboard.TargetProperty="Opacity"
+                                     From="0" To="0.8" Duration="0:0:1.2"
+                                     BeginTime="0:0:0.5"/>
+                    <DoubleAnimation Storyboard.TargetName="Dot2"
+                                     Storyboard.TargetProperty="Opacity"
+                                     From="0.8" To="0" Duration="0:0:1.2"
+                                     BeginTime="0:0:5.8" RepeatBehavior="Forever"/>
+
+                    <!-- Dot 3: #CE93D8 - 4px -->
+                    <DoubleAnimation Storyboard.TargetName="Dot3"
+                                     Storyboard.TargetProperty="(Canvas.Top)"
+                                     From="440" To="-10" Duration="0:0:5.5"
+                                     RepeatBehavior="Forever" BeginTime="0:0:1"/>
+                    <DoubleAnimation Storyboard.TargetName="Dot3"
+                                     Storyboard.TargetProperty="(Canvas.Left)"
+                                     From="320" To="340" Duration="0:0:5.5"
+                                     RepeatBehavior="Forever" AutoReverse="True" BeginTime="0:0:1"/>
+                    <DoubleAnimation Storyboard.TargetName="Dot3"
+                                     Storyboard.TargetProperty="Opacity"
+                                     From="0" To="0.85" Duration="0:0:0.8"
+                                     BeginTime="0:0:1"/>
+                    <DoubleAnimation Storyboard.TargetName="Dot3"
+                                     Storyboard.TargetProperty="Opacity"
+                                     From="0.85" To="0" Duration="0:0:0.8"
+                                     BeginTime="0:0:5.7" RepeatBehavior="Forever"/>
+
+                    <!-- Dot 4: #FFB74D - 8px -->
+                    <DoubleAnimation Storyboard.TargetName="Dot4"
+                                     Storyboard.TargetProperty="(Canvas.Top)"
+                                     From="470" To="-20" Duration="0:0:8"
+                                     RepeatBehavior="Forever" BeginTime="0:0:1.5"/>
+                    <DoubleAnimation Storyboard.TargetName="Dot4"
+                                     Storyboard.TargetProperty="(Canvas.Left)"
+                                     From="450" To="430" Duration="0:0:8"
+                                     RepeatBehavior="Forever" AutoReverse="True" BeginTime="0:0:1.5"/>
+                    <DoubleAnimation Storyboard.TargetName="Dot4"
+                                     Storyboard.TargetProperty="Opacity"
+                                     From="0" To="0.7" Duration="0:0:1.5"
+                                     BeginTime="0:0:1.5"/>
+                    <DoubleAnimation Storyboard.TargetName="Dot4"
+                                     Storyboard.TargetProperty="Opacity"
+                                     From="0.7" To="0" Duration="0:0:1.5"
+                                     BeginTime="0:0:8" RepeatBehavior="Forever"/>
+
+                    <!-- Dot 5: #4FC3F7 - 5px -->
+                    <DoubleAnimation Storyboard.TargetName="Dot5"
+                                     Storyboard.TargetProperty="(Canvas.Top)"
+                                     From="430" To="-10" Duration="0:0:6.5"
+                                     RepeatBehavior="Forever" BeginTime="0:0:2"/>
+                    <DoubleAnimation Storyboard.TargetName="Dot5"
+                                     Storyboard.TargetProperty="(Canvas.Left)"
+                                     From="550" To="570" Duration="0:0:6.5"
+                                     RepeatBehavior="Forever" AutoReverse="True" BeginTime="0:0:2"/>
+                    <DoubleAnimation Storyboard.TargetName="Dot5"
+                                     Storyboard.TargetProperty="Opacity"
+                                     From="0" To="0.9" Duration="0:0:1"
+                                     BeginTime="0:0:2"/>
+                    <DoubleAnimation Storyboard.TargetName="Dot5"
+                                     Storyboard.TargetProperty="Opacity"
+                                     From="0.9" To="0" Duration="0:0:1"
+                                     BeginTime="0:0:7.5" RepeatBehavior="Forever"/>
+
+                    <!-- Dot 6: #CE93D8 - 7px -->
+                    <DoubleAnimation Storyboard.TargetName="Dot6"
+                                     Storyboard.TargetProperty="(Canvas.Top)"
+                                     From="455" To="-15" Duration="0:0:7.5"
+                                     RepeatBehavior="Forever" BeginTime="0:0:2.5"/>
+                    <DoubleAnimation Storyboard.TargetName="Dot6"
+                                     Storyboard.TargetProperty="(Canvas.Left)"
+                                     From="150" To="130" Duration="0:0:7.5"
+                                     RepeatBehavior="Forever" AutoReverse="True" BeginTime="0:0:2.5"/>
+                    <DoubleAnimation Storyboard.TargetName="Dot6"
+                                     Storyboard.TargetProperty="Opacity"
+                                     From="0" To="0.75" Duration="0:0:1.3"
+                                     BeginTime="0:0:2.5"/>
+                    <DoubleAnimation Storyboard.TargetName="Dot6"
+                                     Storyboard.TargetProperty="Opacity"
+                                     From="0.75" To="0" Duration="0:0:1.3"
+                                     BeginTime="0:0:8.7" RepeatBehavior="Forever"/>
+
+                    <!-- Dot 7: #81C784 - 4px -->
+                    <DoubleAnimation Storyboard.TargetName="Dot7"
+                                     Storyboard.TargetProperty="(Canvas.Top)"
+                                     From="465" To="-10" Duration="0:0:5"
+                                     RepeatBehavior="Forever" BeginTime="0:0:3"/>
+                    <DoubleAnimation Storyboard.TargetName="Dot7"
+                                     Storyboard.TargetProperty="(Canvas.Left)"
+                                     From="400" To="415" Duration="0:0:5"
+                                     RepeatBehavior="Forever" AutoReverse="True" BeginTime="0:0:3"/>
+                    <DoubleAnimation Storyboard.TargetName="Dot7"
+                                     Storyboard.TargetProperty="Opacity"
+                                     From="0" To="0.85" Duration="0:0:0.9"
+                                     BeginTime="0:0:3"/>
+                    <DoubleAnimation Storyboard.TargetName="Dot7"
+                                     Storyboard.TargetProperty="Opacity"
+                                     From="0.85" To="0" Duration="0:0:0.9"
+                                     BeginTime="0:0:7.1" RepeatBehavior="Forever"/>
+
+                    <!-- Dot 8: #FFB74D - 6px -->
+                    <DoubleAnimation Storyboard.TargetName="Dot8"
+                                     Storyboard.TargetProperty="(Canvas.Top)"
+                                     From="445" To="-15" Duration="0:0:6"
+                                     RepeatBehavior="Forever" BeginTime="0:0:3.5"/>
+                    <DoubleAnimation Storyboard.TargetName="Dot8"
+                                     Storyboard.TargetProperty="(Canvas.Left)"
+                                     From="270" To="250" Duration="0:0:6"
+                                     RepeatBehavior="Forever" AutoReverse="True" BeginTime="0:0:3.5"/>
+                    <DoubleAnimation Storyboard.TargetName="Dot8"
+                                     Storyboard.TargetProperty="Opacity"
+                                     From="0" To="0.8" Duration="0:0:1.1"
+                                     BeginTime="0:0:3.5"/>
+                    <DoubleAnimation Storyboard.TargetName="Dot8"
+                                     Storyboard.TargetProperty="Opacity"
+                                     From="0.8" To="0" Duration="0:0:1.1"
+                                     BeginTime="0:0:8.4" RepeatBehavior="Forever"/>
+
+                    <!-- Dot 9: #4FC3F7 - 4px -->
+                    <DoubleAnimation Storyboard.TargetName="Dot9"
+                                     Storyboard.TargetProperty="(Canvas.Top)"
+                                     From="475" To="-10" Duration="0:0:7"
+                                     RepeatBehavior="Forever" BeginTime="0:0:4"/>
+                    <DoubleAnimation Storyboard.TargetName="Dot9"
+                                     Storyboard.TargetProperty="(Canvas.Left)"
+                                     From="600" To="615" Duration="0:0:7"
+                                     RepeatBehavior="Forever" AutoReverse="True" BeginTime="0:0:4"/>
+                    <DoubleAnimation Storyboard.TargetName="Dot9"
+                                     Storyboard.TargetProperty="Opacity"
+                                     From="0" To="0.7" Duration="0:0:1"
+                                     BeginTime="0:0:4"/>
+                    <DoubleAnimation Storyboard.TargetName="Dot9"
+                                     Storyboard.TargetProperty="Opacity"
+                                     From="0.7" To="0" Duration="0:0:1"
+                                     BeginTime="0:0:10" RepeatBehavior="Forever"/>
+
+                    <!-- Dot 10: #CE93D8 - 5px -->
+                    <DoubleAnimation Storyboard.TargetName="Dot10"
+                                     Storyboard.TargetProperty="(Canvas.Top)"
+                                     From="460" To="-15" Duration="0:0:5.8"
+                                     RepeatBehavior="Forever" BeginTime="0:0:4.5"/>
+                    <DoubleAnimation Storyboard.TargetName="Dot10"
+                                     Storyboard.TargetProperty="(Canvas.Left)"
+                                     From="50" To="65" Duration="0:0:5.8"
+                                     RepeatBehavior="Forever" AutoReverse="True" BeginTime="0:0:4.5"/>
+                    <DoubleAnimation Storyboard.TargetName="Dot10"
+                                     Storyboard.TargetProperty="Opacity"
+                                     From="0" To="0.9" Duration="0:0:1"
+                                     BeginTime="0:0:4.5"/>
+                    <DoubleAnimation Storyboard.TargetName="Dot10"
+                                     Storyboard.TargetProperty="Opacity"
+                                     From="0.9" To="0" Duration="0:0:1"
+                                     BeginTime="0:0:9.3" RepeatBehavior="Forever"/>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </UserControl.Triggers>
+
+    <Grid>
+        <!-- Particle Canvas -->
+        <Canvas ClipToBounds="True">
+            <Ellipse x:Name="Dot1" Width="6" Height="6" Fill="#4FC3F7" Opacity="0"
+                     Canvas.Left="100" Canvas.Top="450"/>
+            <Ellipse x:Name="Dot2" Width="5" Height="5" Fill="#81C784" Opacity="0"
+                     Canvas.Left="200" Canvas.Top="460"/>
+            <Ellipse x:Name="Dot3" Width="4" Height="4" Fill="#CE93D8" Opacity="0"
+                     Canvas.Left="320" Canvas.Top="440"/>
+            <Ellipse x:Name="Dot4" Width="8" Height="8" Fill="#FFB74D" Opacity="0"
+                     Canvas.Left="450" Canvas.Top="470"/>
+            <Ellipse x:Name="Dot5" Width="5" Height="5" Fill="#4FC3F7" Opacity="0"
+                     Canvas.Left="550" Canvas.Top="430"/>
+            <Ellipse x:Name="Dot6" Width="7" Height="7" Fill="#CE93D8" Opacity="0"
+                     Canvas.Left="150" Canvas.Top="455"/>
+            <Ellipse x:Name="Dot7" Width="4" Height="4" Fill="#81C784" Opacity="0"
+                     Canvas.Left="400" Canvas.Top="465"/>
+            <Ellipse x:Name="Dot8" Width="6" Height="6" Fill="#FFB74D" Opacity="0"
+                     Canvas.Left="270" Canvas.Top="445"/>
+            <Ellipse x:Name="Dot9" Width="4" Height="4" Fill="#4FC3F7" Opacity="0"
+                     Canvas.Left="600" Canvas.Top="475"/>
+            <Ellipse x:Name="Dot10" Width="5" Height="5" Fill="#CE93D8" Opacity="0"
+                     Canvas.Left="50" Canvas.Top="460"/>
+        </Canvas>
+
+        <!-- Overlay Text -->
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" IsHitTestVisible="False">
+            <TextBlock Text="Floating Particles" FontSize="32" FontWeight="Bold"
+                       Foreground="#CDD6F4" HorizontalAlignment="Center">
+                <TextBlock.Effect>
+                    <DropShadowEffect ShadowDepth="0" BlurRadius="15" Color="#4FC3F7" Opacity="0.5"/>
+                </TextBlock.Effect>
+            </TextBlock>
+            <TextBlock Text="10 dots with staggered timing, varied sizes and colors"
+                       FontSize="14" Foreground="#585B70" HorizontalAlignment="Center" Margin="0,8,0,0"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

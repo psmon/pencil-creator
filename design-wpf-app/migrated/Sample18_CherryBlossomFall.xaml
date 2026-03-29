@@ -1,0 +1,287 @@
+<UserControl x:Class="design_wpf_app.Migrated.Sample18_CherryBlossomFall"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="600" d:DesignWidth="800"
+             Background="#0A0F1C">
+
+    <UserControl.Resources>
+        <!-- Petal1 Fall -->
+        <Storyboard x:Key="Petal1Fall" RepeatBehavior="Forever">
+            <DoubleAnimation Storyboard.TargetName="Petal1Translate"
+                             Storyboard.TargetProperty="Y"
+                             From="0" To="650" Duration="0:0:4" BeginTime="0:0:0">
+                <DoubleAnimation.EasingFunction>
+                    <QuadraticEase EasingMode="EaseIn"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Storyboard.TargetName="Petal1Translate"
+                             Storyboard.TargetProperty="X"
+                             From="0" To="80" Duration="0:0:4" BeginTime="0:0:0"/>
+            <DoubleAnimation Storyboard.TargetName="Petal1Rotate"
+                             Storyboard.TargetProperty="Angle"
+                             From="0" To="360" Duration="0:0:3"
+                             RepeatBehavior="Forever"/>
+            <DoubleAnimation Storyboard.TargetName="Petal1"
+                             Storyboard.TargetProperty="Opacity"
+                             From="0.9" To="0.2" Duration="0:0:4" BeginTime="0:0:0"/>
+        </Storyboard>
+
+        <!-- Petal2 Fall -->
+        <Storyboard x:Key="Petal2Fall" RepeatBehavior="Forever">
+            <DoubleAnimation Storyboard.TargetName="Petal2Translate"
+                             Storyboard.TargetProperty="Y"
+                             From="0" To="650" Duration="0:0:5" BeginTime="0:0:0.3">
+                <DoubleAnimation.EasingFunction>
+                    <QuadraticEase EasingMode="EaseIn"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Storyboard.TargetName="Petal2Translate"
+                             Storyboard.TargetProperty="X"
+                             From="0" To="-60" Duration="0:0:5" BeginTime="0:0:0.3"/>
+            <DoubleAnimation Storyboard.TargetName="Petal2Rotate"
+                             Storyboard.TargetProperty="Angle"
+                             From="0" To="-270" Duration="0:0:4"
+                             RepeatBehavior="Forever"/>
+            <DoubleAnimation Storyboard.TargetName="Petal2"
+                             Storyboard.TargetProperty="Opacity"
+                             From="0.8" To="0.1" Duration="0:0:5" BeginTime="0:0:0.3"/>
+        </Storyboard>
+
+        <!-- Petal3 Fall -->
+        <Storyboard x:Key="Petal3Fall" RepeatBehavior="Forever">
+            <DoubleAnimation Storyboard.TargetName="Petal3Translate"
+                             Storyboard.TargetProperty="Y"
+                             From="0" To="680" Duration="0:0:6" BeginTime="0:0:0.8">
+                <DoubleAnimation.EasingFunction>
+                    <QuadraticEase EasingMode="EaseIn"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Storyboard.TargetName="Petal3Translate"
+                             Storyboard.TargetProperty="X"
+                             From="0" To="100" Duration="0:0:6" BeginTime="0:0:0.8"/>
+            <DoubleAnimation Storyboard.TargetName="Petal3Rotate"
+                             Storyboard.TargetProperty="Angle"
+                             From="0" To="450" Duration="0:0:5"
+                             RepeatBehavior="Forever"/>
+            <DoubleAnimation Storyboard.TargetName="Petal3"
+                             Storyboard.TargetProperty="Opacity"
+                             From="0.85" To="0.15" Duration="0:0:6" BeginTime="0:0:0.8"/>
+        </Storyboard>
+
+        <!-- ★ DemoSequence
+             원본 의도: 벚꽃 꽃잎 낙하 — 3개의 꽃잎이 화면 상단에서 하단으로 회전하며 떨어짐
+             시나리오: Petal1(분홍 #FFB7C5) 낙하 시작(Y 0→650, 우측 드리프트 80px, 360도 회전)
+                       → 0.3s 후 Petal2(짙은분홍 #FF91A4, 좌측 드리프트 -60px, -270도 역회전)
+                       → 0.8s 후 Petal3(연분홍 #FFD1DC, 우측 드리프트 100px, 450도 회전)
+                       각 꽃잎 페이드아웃, 1사이클 후 HoldEnd
+             핵심 기법: TranslateTransform Y(낙하) + X(바람 드리프트) + RotateTransform(회전),
+                        QuadraticEase EaseIn으로 가속 낙하, Opacity 페이드아웃
+             다른 플랫폼:
+               - 웹: CSS transform: translateY + rotate + opacity keyframes, 또는 Canvas 파티클 시스템
+               - 모바일: CAEmitterLayer(iOS 벚꽃 파티클), SpriteKit/SceneKit, Android Canvas drawPath + ValueAnimator
+        -->
+        <Storyboard x:Key="DemoSequence">
+            <!-- Petal1: fall 4s, begin at 0s -->
+            <DoubleAnimation Storyboard.TargetName="Petal1Translate"
+                             Storyboard.TargetProperty="Y"
+                             From="0" To="650" Duration="0:0:4"
+                             BeginTime="0:0:0" FillBehavior="HoldEnd">
+                <DoubleAnimation.EasingFunction>
+                    <QuadraticEase EasingMode="EaseIn"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Storyboard.TargetName="Petal1Translate"
+                             Storyboard.TargetProperty="X"
+                             From="0" To="80" Duration="0:0:4"
+                             BeginTime="0:0:0" FillBehavior="HoldEnd"/>
+            <DoubleAnimation Storyboard.TargetName="Petal1Rotate"
+                             Storyboard.TargetProperty="Angle"
+                             From="0" To="360" Duration="0:0:4"
+                             BeginTime="0:0:0" FillBehavior="HoldEnd"/>
+            <DoubleAnimation Storyboard.TargetName="Petal1"
+                             Storyboard.TargetProperty="Opacity"
+                             From="0.9" To="0.2" Duration="0:0:4"
+                             BeginTime="0:0:0" FillBehavior="HoldEnd"/>
+
+            <!-- Petal2: fall 5s, begin at 0.3s -->
+            <DoubleAnimation Storyboard.TargetName="Petal2Translate"
+                             Storyboard.TargetProperty="Y"
+                             From="0" To="650" Duration="0:0:5"
+                             BeginTime="0:0:0.3" FillBehavior="HoldEnd">
+                <DoubleAnimation.EasingFunction>
+                    <QuadraticEase EasingMode="EaseIn"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Storyboard.TargetName="Petal2Translate"
+                             Storyboard.TargetProperty="X"
+                             From="0" To="-60" Duration="0:0:5"
+                             BeginTime="0:0:0.3" FillBehavior="HoldEnd"/>
+            <DoubleAnimation Storyboard.TargetName="Petal2Rotate"
+                             Storyboard.TargetProperty="Angle"
+                             From="0" To="-270" Duration="0:0:5"
+                             BeginTime="0:0:0.3" FillBehavior="HoldEnd"/>
+            <DoubleAnimation Storyboard.TargetName="Petal2"
+                             Storyboard.TargetProperty="Opacity"
+                             From="0.8" To="0.1" Duration="0:0:5"
+                             BeginTime="0:0:0.3" FillBehavior="HoldEnd"/>
+
+            <!-- Petal3: fall 6s, begin at 0.8s -->
+            <DoubleAnimation Storyboard.TargetName="Petal3Translate"
+                             Storyboard.TargetProperty="Y"
+                             From="0" To="680" Duration="0:0:6"
+                             BeginTime="0:0:0.8" FillBehavior="HoldEnd">
+                <DoubleAnimation.EasingFunction>
+                    <QuadraticEase EasingMode="EaseIn"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Storyboard.TargetName="Petal3Translate"
+                             Storyboard.TargetProperty="X"
+                             From="0" To="100" Duration="0:0:6"
+                             BeginTime="0:0:0.8" FillBehavior="HoldEnd"/>
+            <DoubleAnimation Storyboard.TargetName="Petal3Rotate"
+                             Storyboard.TargetProperty="Angle"
+                             From="0" To="450" Duration="0:0:6"
+                             BeginTime="0:0:0.8" FillBehavior="HoldEnd"/>
+            <DoubleAnimation Storyboard.TargetName="Petal3"
+                             Storyboard.TargetProperty="Opacity"
+                             From="0.85" To="0.15" Duration="0:0:6"
+                             BeginTime="0:0:0.8" FillBehavior="HoldEnd"/>
+        </Storyboard>
+    </UserControl.Resources>
+
+    <Canvas x:Name="PetalCanvas" ClipToBounds="True">
+
+        <!-- Petal 1 -->
+        <Path x:Name="Petal1" Canvas.Left="100" Canvas.Top="-30"
+              Data="M10 0 C15 4 20 12 15 20 C12 24 8 24 5 20 C0 12 5 4 10 0 Z"
+              Fill="#FFB7C5" Opacity="0.9" RenderTransformOrigin="0.5,0.5">
+            <Path.RenderTransform>
+                <TransformGroup>
+                    <TranslateTransform x:Name="Petal1Translate"/>
+                    <RotateTransform x:Name="Petal1Rotate"/>
+                </TransformGroup>
+            </Path.RenderTransform>
+            <Path.Triggers>
+                <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                    <BeginStoryboard>
+                        <Storyboard RepeatBehavior="Forever">
+                            <DoubleAnimation
+                                Storyboard.TargetName="Petal1Translate"
+                                Storyboard.TargetProperty="Y"
+                                From="0" To="650" Duration="0:0:4"
+                                BeginTime="0:0:0">
+                                <DoubleAnimation.EasingFunction>
+                                    <QuadraticEase EasingMode="EaseIn"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                            <DoubleAnimation
+                                Storyboard.TargetName="Petal1Translate"
+                                Storyboard.TargetProperty="X"
+                                From="0" To="80" Duration="0:0:4"
+                                AutoReverse="False" BeginTime="0:0:0"/>
+                            <DoubleAnimation
+                                Storyboard.TargetName="Petal1Rotate"
+                                Storyboard.TargetProperty="Angle"
+                                From="0" To="360" Duration="0:0:3"
+                                RepeatBehavior="Forever"/>
+                            <DoubleAnimation
+                                Storyboard.TargetProperty="Opacity"
+                                From="0.9" To="0.2" Duration="0:0:4"
+                                BeginTime="0:0:0"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Path.Triggers>
+        </Path>
+
+        <!-- Petal 2 -->
+        <Path x:Name="Petal2" Canvas.Left="300" Canvas.Top="-20"
+              Data="M8 0 C12 3 16 10 12 16 C10 20 6 20 4 16 C0 10 4 3 8 0 Z"
+              Fill="#FF91A4" Opacity="0.8" RenderTransformOrigin="0.5,0.5">
+            <Path.RenderTransform>
+                <TransformGroup>
+                    <TranslateTransform x:Name="Petal2Translate"/>
+                    <RotateTransform x:Name="Petal2Rotate"/>
+                </TransformGroup>
+            </Path.RenderTransform>
+            <Path.Triggers>
+                <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                    <BeginStoryboard>
+                        <Storyboard RepeatBehavior="Forever">
+                            <DoubleAnimation
+                                Storyboard.TargetName="Petal2Translate"
+                                Storyboard.TargetProperty="Y"
+                                From="0" To="650" Duration="0:0:5"
+                                BeginTime="0:0:0.3">
+                                <DoubleAnimation.EasingFunction>
+                                    <QuadraticEase EasingMode="EaseIn"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                            <DoubleAnimation
+                                Storyboard.TargetName="Petal2Translate"
+                                Storyboard.TargetProperty="X"
+                                From="0" To="-60" Duration="0:0:5"
+                                BeginTime="0:0:0.3"/>
+                            <DoubleAnimation
+                                Storyboard.TargetName="Petal2Rotate"
+                                Storyboard.TargetProperty="Angle"
+                                From="0" To="-270" Duration="0:0:4"
+                                RepeatBehavior="Forever"/>
+                            <DoubleAnimation
+                                Storyboard.TargetProperty="Opacity"
+                                From="0.8" To="0.1" Duration="0:0:5"
+                                BeginTime="0:0:0.3"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Path.Triggers>
+        </Path>
+
+        <!-- Petal 3 -->
+        <Path x:Name="Petal3" Canvas.Left="550" Canvas.Top="-40"
+              Data="M12 0 C18 5 24 14 18 24 C15 28 9 28 6 24 C0 14 6 5 12 0 Z"
+              Fill="#FFD1DC" Opacity="0.85" RenderTransformOrigin="0.5,0.5">
+            <Path.RenderTransform>
+                <TransformGroup>
+                    <TranslateTransform x:Name="Petal3Translate"/>
+                    <RotateTransform x:Name="Petal3Rotate"/>
+                </TransformGroup>
+            </Path.RenderTransform>
+            <Path.Triggers>
+                <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                    <BeginStoryboard>
+                        <Storyboard RepeatBehavior="Forever">
+                            <DoubleAnimation
+                                Storyboard.TargetName="Petal3Translate"
+                                Storyboard.TargetProperty="Y"
+                                From="0" To="680" Duration="0:0:6"
+                                BeginTime="0:0:0.8">
+                                <DoubleAnimation.EasingFunction>
+                                    <QuadraticEase EasingMode="EaseIn"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                            <DoubleAnimation
+                                Storyboard.TargetName="Petal3Translate"
+                                Storyboard.TargetProperty="X"
+                                From="0" To="100" Duration="0:0:6"
+                                BeginTime="0:0:0.8"/>
+                            <DoubleAnimation
+                                Storyboard.TargetName="Petal3Rotate"
+                                Storyboard.TargetProperty="Angle"
+                                From="0" To="450" Duration="0:0:5"
+                                RepeatBehavior="Forever"/>
+                            <DoubleAnimation
+                                Storyboard.TargetProperty="Opacity"
+                                From="0.85" To="0.15" Duration="0:0:6"
+                                BeginTime="0:0:0.8"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Path.Triggers>
+        </Path>
+
+    </Canvas>
+</UserControl>

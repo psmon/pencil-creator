@@ -1,0 +1,195 @@
+<UserControl x:Class="design_wpf_app.Migrated.Sample03_RotatingLoadingSpinner"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="600"
+             Background="#1E1E2E">
+
+    <UserControl.Resources>
+        <!-- ★ Blend 타임라인용 개별 Storyboard -->
+        <Storyboard x:Key="DashedSpinnerRotate">
+            <DoubleAnimation Storyboard.TargetName="rotate1"
+                Storyboard.TargetProperty="Angle"
+                From="0" To="360" Duration="0:0:1" />
+        </Storyboard>
+
+        <Storyboard x:Key="ArcSpinnerRotate">
+            <DoubleAnimation Storyboard.TargetName="rotate2"
+                Storyboard.TargetProperty="Angle"
+                From="0" To="360" Duration="0:0:0.8" />
+        </Storyboard>
+
+        <Storyboard x:Key="DotsOpacityPulse">
+            <DoubleAnimation Storyboard.TargetName="dot1"
+                Storyboard.TargetProperty="Opacity"
+                From="0.3" To="1" Duration="0:0:0.6"
+                AutoReverse="True" />
+            <DoubleAnimation Storyboard.TargetName="dot2"
+                Storyboard.TargetProperty="Opacity"
+                From="0.3" To="1" Duration="0:0:0.6"
+                AutoReverse="True" BeginTime="0:0:0.2" />
+            <DoubleAnimation Storyboard.TargetName="dot3"
+                Storyboard.TargetProperty="Opacity"
+                From="0.3" To="1" Duration="0:0:0.6"
+                AutoReverse="True" BeginTime="0:0:0.4" />
+        </Storyboard>
+
+        <!-- ★ DemoSequence
+             원본 의도: 3종 로딩 스피너 (대시 원형, 그라데이션 아크, 바운싱 도트)
+             시나리오: 페이지 로드 시 자동 회전/펄스 시작, 무한 반복
+             핵심 기법: RotateTransform 360도 + StrokeDashArray 시각효과,
+                        Opacity 시차 펄스(stagger 0.2s)
+             다른 플랫폼:
+               - 웹: CSS @keyframes rotate + border-style dashed
+               - 도트: opacity animation-delay로 시차 표현
+        -->
+        <Storyboard x:Key="DemoSequence">
+            <!-- Phase 1: 대시 스피너 느린 1회전 (0~2s) -->
+            <DoubleAnimation Storyboard.TargetName="rotate1"
+                Storyboard.TargetProperty="Angle"
+                From="0" To="360" Duration="0:0:2"
+                BeginTime="0:0:0" FillBehavior="HoldEnd" />
+            <!-- Phase 2: 아크 스피너 1회전 (0.5~1.8s, 병렬) -->
+            <DoubleAnimation Storyboard.TargetName="rotate2"
+                Storyboard.TargetProperty="Angle"
+                From="0" To="360" Duration="0:0:1.3"
+                BeginTime="0:0:0.5" FillBehavior="HoldEnd" />
+            <!-- Phase 3: 도트 펄스 1사이클 (0~1.6s, 병렬) -->
+            <DoubleAnimation Storyboard.TargetName="dot1"
+                Storyboard.TargetProperty="Opacity"
+                From="0.3" To="1" Duration="0:0:0.6"
+                AutoReverse="True" BeginTime="0:0:0" FillBehavior="HoldEnd" />
+            <DoubleAnimation Storyboard.TargetName="dot2"
+                Storyboard.TargetProperty="Opacity"
+                From="0.3" To="1" Duration="0:0:0.6"
+                AutoReverse="True" BeginTime="0:0:0.2" FillBehavior="HoldEnd" />
+            <DoubleAnimation Storyboard.TargetName="dot3"
+                Storyboard.TargetProperty="Opacity"
+                From="0.3" To="1" Duration="0:0:0.6"
+                AutoReverse="True" BeginTime="0:0:0.4" FillBehavior="HoldEnd" />
+        </Storyboard>
+    </UserControl.Resources>
+
+    <StackPanel Orientation="Horizontal"
+                HorizontalAlignment="Center" VerticalAlignment="Center">
+
+        <!-- Spinner 1: Dashed Circle -->
+        <StackPanel Margin="30,0">
+            <Canvas Width="80" Height="80">
+                <Ellipse Width="60" Height="60"
+                         Canvas.Left="10" Canvas.Top="10"
+                         Stroke="#333" StrokeThickness="4" />
+                <Ellipse x:Name="spinner1"
+                         Width="60" Height="60"
+                         Canvas.Left="10" Canvas.Top="10"
+                         Stroke="DodgerBlue" StrokeThickness="4"
+                         StrokeDashArray="3 2" StrokeDashCap="Round"
+                         RenderTransformOrigin="0.5,0.5">
+                    <Ellipse.RenderTransform>
+                        <RotateTransform x:Name="rotate1" />
+                    </Ellipse.RenderTransform>
+                    <Ellipse.Triggers>
+                        <EventTrigger RoutedEvent="Loaded">
+                            <BeginStoryboard>
+                                <Storyboard RepeatBehavior="Forever">
+                                    <DoubleAnimation Storyboard.TargetName="rotate1"
+                                        Storyboard.TargetProperty="Angle"
+                                        From="0" To="360" Duration="0:0:1" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Ellipse.Triggers>
+                </Ellipse>
+            </Canvas>
+            <TextBlock Text="Dashed" Foreground="#666"
+                       HorizontalAlignment="Center" FontSize="12" />
+        </StackPanel>
+
+        <!-- Spinner 2: Gradient Arc -->
+        <StackPanel Margin="30,0">
+            <Canvas Width="80" Height="80">
+                <Ellipse Width="60" Height="60"
+                         Canvas.Left="10" Canvas.Top="10"
+                         Stroke="#333" StrokeThickness="5" />
+                <Ellipse x:Name="spinner2"
+                         Width="60" Height="60"
+                         Canvas.Left="10" Canvas.Top="10"
+                         Stroke="#8B5CF6" StrokeThickness="5"
+                         StrokeDashArray="2.5 5" StrokeDashCap="Round"
+                         RenderTransformOrigin="0.5,0.5">
+                    <Ellipse.RenderTransform>
+                        <RotateTransform x:Name="rotate2" />
+                    </Ellipse.RenderTransform>
+                    <Ellipse.Triggers>
+                        <EventTrigger RoutedEvent="Loaded">
+                            <BeginStoryboard>
+                                <Storyboard RepeatBehavior="Forever">
+                                    <DoubleAnimation Storyboard.TargetName="rotate2"
+                                        Storyboard.TargetProperty="Angle"
+                                        From="0" To="360" Duration="0:0:0.8" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Ellipse.Triggers>
+                </Ellipse>
+            </Canvas>
+            <TextBlock Text="Arc" Foreground="#666"
+                       HorizontalAlignment="Center" FontSize="12" />
+        </StackPanel>
+
+        <!-- Spinner 3: Bouncing Dots -->
+        <StackPanel Margin="30,0">
+            <Canvas Width="80" Height="80">
+                <Ellipse x:Name="dot1" Width="14" Height="14"
+                         Canvas.Left="10" Canvas.Top="33" Fill="DodgerBlue">
+                    <Ellipse.Triggers>
+                        <EventTrigger RoutedEvent="Loaded">
+                            <BeginStoryboard>
+                                <Storyboard RepeatBehavior="Forever">
+                                    <DoubleAnimation Storyboard.TargetName="dot1"
+                                        Storyboard.TargetProperty="Opacity"
+                                        From="0.3" To="1" Duration="0:0:0.6"
+                                        AutoReverse="True" BeginTime="0:0:0" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Ellipse.Triggers>
+                </Ellipse>
+                <Ellipse x:Name="dot2" Width="14" Height="14"
+                         Canvas.Left="33" Canvas.Top="33" Fill="DodgerBlue">
+                    <Ellipse.Triggers>
+                        <EventTrigger RoutedEvent="Loaded">
+                            <BeginStoryboard>
+                                <Storyboard RepeatBehavior="Forever">
+                                    <DoubleAnimation Storyboard.TargetName="dot2"
+                                        Storyboard.TargetProperty="Opacity"
+                                        From="0.3" To="1" Duration="0:0:0.6"
+                                        AutoReverse="True" BeginTime="0:0:0.2" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Ellipse.Triggers>
+                </Ellipse>
+                <Ellipse x:Name="dot3" Width="14" Height="14"
+                         Canvas.Left="56" Canvas.Top="33" Fill="DodgerBlue">
+                    <Ellipse.Triggers>
+                        <EventTrigger RoutedEvent="Loaded">
+                            <BeginStoryboard>
+                                <Storyboard RepeatBehavior="Forever">
+                                    <DoubleAnimation Storyboard.TargetName="dot3"
+                                        Storyboard.TargetProperty="Opacity"
+                                        From="0.3" To="1" Duration="0:0:0.6"
+                                        AutoReverse="True" BeginTime="0:0:0.4" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Ellipse.Triggers>
+                </Ellipse>
+            </Canvas>
+            <TextBlock Text="Dots" Foreground="#666"
+                       HorizontalAlignment="Center" FontSize="12" />
+        </StackPanel>
+    </StackPanel>
+</UserControl>

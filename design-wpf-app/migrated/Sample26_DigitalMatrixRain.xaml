@@ -1,0 +1,254 @@
+<UserControl x:Class="design_wpf_app.Migrated.Sample26_DigitalMatrixRain"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="400" d:DesignWidth="600"
+             Background="#0A0F1C">
+
+    <UserControl.Resources>
+        <!-- Column 1 fall animation -->
+        <Storyboard x:Key="Col1Fall">
+            <DoubleAnimation Storyboard.TargetName="Col1Trans"
+                             Storyboard.TargetProperty="Y"
+                             From="0" To="800"
+                             Duration="0:0:4"/>
+            <DoubleAnimation Storyboard.TargetName="Col1"
+                             Storyboard.TargetProperty="Opacity"
+                             From="0.8" To="0.2"
+                             Duration="0:0:4"/>
+        </Storyboard>
+
+        <!-- Column 2 fall animation -->
+        <Storyboard x:Key="Col2Fall">
+            <DoubleAnimation Storyboard.TargetName="Col2Trans"
+                             Storyboard.TargetProperty="Y"
+                             From="0" To="700"
+                             Duration="0:0:3.2"/>
+            <DoubleAnimation Storyboard.TargetName="Col2"
+                             Storyboard.TargetProperty="Opacity"
+                             From="0.7" To="0.15"
+                             Duration="0:0:3.2"/>
+        </Storyboard>
+
+        <!-- Column 3 fall animation -->
+        <Storyboard x:Key="Col3Fall">
+            <DoubleAnimation Storyboard.TargetName="Col3Trans"
+                             Storyboard.TargetProperty="Y"
+                             From="0" To="750"
+                             Duration="0:0:5"/>
+        </Storyboard>
+
+        <!-- Column 4 fall animation -->
+        <Storyboard x:Key="Col4Fall">
+            <DoubleAnimation Storyboard.TargetName="Col4Trans"
+                             Storyboard.TargetProperty="Y"
+                             From="0" To="680"
+                             Duration="0:0:3.8"/>
+        </Storyboard>
+
+        <!-- Column 5 fall animation -->
+        <Storyboard x:Key="Col5Fall">
+            <DoubleAnimation Storyboard.TargetName="Col5Trans"
+                             Storyboard.TargetProperty="Y"
+                             From="0" To="760"
+                             Duration="0:0:4.5"/>
+        </Storyboard>
+
+        <!-- Column 6 fall animation -->
+        <Storyboard x:Key="Col6Fall">
+            <DoubleAnimation Storyboard.TargetName="Col6Trans"
+                             Storyboard.TargetProperty="Y"
+                             From="0" To="720"
+                             Duration="0:0:3.5"/>
+        </Storyboard>
+
+        <!-- ★ DemoSequence
+             원본 의도: 디지털 매트릭스 비 효과 — 세로 텍스트 열이 위에서 아래로 떨어지며 페이드아웃
+             시나리오: 6개 컬럼이 각기 다른 속도와 딜레이로 하강,
+                       Col1(4s, 즉시) → Col2(3.2s, 0.5s딜레이) → Col3(5s, 0.2s) →
+                       Col4(3.8s, 0.8s) → Col5(4.5s, 0.3s) → Col6(3.5s, 1.0s),
+                       Col1/Col2는 Opacity 페이드아웃 동반, 1사이클 후 정지
+             핵심 기법: Canvas + TranslateTransform Y로 수직 이동,
+                        BeginTime으로 컬럼별 스태거, Opacity 페이드로 소멸감
+             다른 플랫폼:
+               - 웹: CSS @keyframes translateY + opacity + animation-delay 스태거
+               - 모바일: CABasicAnimation position.y + opacity, stagger via beginTime
+        -->
+        <Storyboard x:Key="DemoSequence" FillBehavior="HoldEnd">
+            <!-- Column 1: speed 4s -->
+            <DoubleAnimation Storyboard.TargetName="Col1Trans"
+                             Storyboard.TargetProperty="Y"
+                             From="0" To="800"
+                             Duration="0:0:4"
+                             BeginTime="0:0:0"/>
+            <DoubleAnimation Storyboard.TargetName="Col1"
+                             Storyboard.TargetProperty="Opacity"
+                             From="0.8" To="0.2"
+                             Duration="0:0:4"
+                             BeginTime="0:0:0"/>
+
+            <!-- Column 2: speed 3.2s, delay 0.5s -->
+            <DoubleAnimation Storyboard.TargetName="Col2Trans"
+                             Storyboard.TargetProperty="Y"
+                             From="0" To="700"
+                             Duration="0:0:3.2"
+                             BeginTime="0:0:0.5"/>
+            <DoubleAnimation Storyboard.TargetName="Col2"
+                             Storyboard.TargetProperty="Opacity"
+                             From="0.7" To="0.15"
+                             Duration="0:0:3.2"
+                             BeginTime="0:0:0.5"/>
+
+            <!-- Column 3: speed 5s, delay 0.2s -->
+            <DoubleAnimation Storyboard.TargetName="Col3Trans"
+                             Storyboard.TargetProperty="Y"
+                             From="0" To="750"
+                             Duration="0:0:5"
+                             BeginTime="0:0:0.2"/>
+
+            <!-- Column 4: speed 3.8s, delay 0.8s -->
+            <DoubleAnimation Storyboard.TargetName="Col4Trans"
+                             Storyboard.TargetProperty="Y"
+                             From="0" To="680"
+                             Duration="0:0:3.8"
+                             BeginTime="0:0:0.8"/>
+
+            <!-- Column 5: speed 4.5s, delay 0.3s -->
+            <DoubleAnimation Storyboard.TargetName="Col5Trans"
+                             Storyboard.TargetProperty="Y"
+                             From="0" To="760"
+                             Duration="0:0:4.5"
+                             BeginTime="0:0:0.3"/>
+
+            <!-- Column 6: speed 3.5s, delay 1.0s -->
+            <DoubleAnimation Storyboard.TargetName="Col6Trans"
+                             Storyboard.TargetProperty="Y"
+                             From="0" To="720"
+                             Duration="0:0:3.5"
+                             BeginTime="0:0:1.0"/>
+        </Storyboard>
+    </UserControl.Resources>
+
+    <!-- Digital Matrix Rain: vertical text columns with cascading opacity on Canvas -->
+    <Canvas ClipToBounds="True">
+        <!-- Column 1 (x=50) -->
+        <TextBlock x:Name="Col1" Canvas.Left="50" Canvas.Top="-400"
+                   Text="0x4F&#10;DATA&#10;0xFF&#10;NULL&#10;SYS&#10;0x1A&#10;ERR&#10;LOAD&#10;0xBE"
+                   FontFamily="JetBrains Mono" FontSize="14"
+                   Foreground="#22D3EE" Opacity="0.7" LineHeight="28">
+            <TextBlock.RenderTransform>
+                <TranslateTransform x:Name="Col1Trans" Y="0"/>
+            </TextBlock.RenderTransform>
+        </TextBlock>
+
+        <!-- Column 2 (x=130) -->
+        <TextBlock x:Name="Col2" Canvas.Left="130" Canvas.Top="-300"
+                   Text="SYNC&#10;0xAC&#10;PORT&#10;0x7D&#10;SCAN&#10;INIT&#10;0x3F&#10;BOOT"
+                   FontFamily="JetBrains Mono" FontSize="14"
+                   Foreground="#00FF41" Opacity="0.5" LineHeight="28">
+            <TextBlock.RenderTransform>
+                <TranslateTransform x:Name="Col2Trans" Y="0"/>
+            </TextBlock.RenderTransform>
+        </TextBlock>
+
+        <!-- Column 3 (x=220) -->
+        <TextBlock x:Name="Col3" Canvas.Left="220" Canvas.Top="-350"
+                   Text="0xF1&#10;PROC&#10;MEM&#10;0x2C&#10;HEAP&#10;0x9E&#10;EXEC&#10;LINK&#10;0xD4"
+                   FontFamily="JetBrains Mono" FontSize="14"
+                   Foreground="#22D3EE" Opacity="0.6" LineHeight="28">
+            <TextBlock.RenderTransform>
+                <TranslateTransform x:Name="Col3Trans" Y="0"/>
+            </TextBlock.RenderTransform>
+        </TextBlock>
+
+        <!-- Column 4 (x=320) -->
+        <TextBlock x:Name="Col4" Canvas.Left="320" Canvas.Top="-280"
+                   Text="GRID&#10;0x55&#10;AUTH&#10;NODE&#10;0xBB&#10;CORE&#10;0x12"
+                   FontFamily="JetBrains Mono" FontSize="14"
+                   Foreground="#00FF41" Opacity="0.4" LineHeight="28">
+            <TextBlock.RenderTransform>
+                <TranslateTransform x:Name="Col4Trans" Y="0"/>
+            </TextBlock.RenderTransform>
+        </TextBlock>
+
+        <!-- Column 5 (x=420) -->
+        <TextBlock x:Name="Col5" Canvas.Left="420" Canvas.Top="-360"
+                   Text="0x8A&#10;DUMP&#10;CALL&#10;0xE7&#10;TASK&#10;PIPE&#10;0x6C&#10;RECV&#10;0xAA"
+                   FontFamily="JetBrains Mono" FontSize="14"
+                   Foreground="#22D3EE" Opacity="0.55" LineHeight="28">
+            <TextBlock.RenderTransform>
+                <TranslateTransform x:Name="Col5Trans" Y="0"/>
+            </TextBlock.RenderTransform>
+        </TextBlock>
+
+        <!-- Column 6 (x=510) -->
+        <TextBlock x:Name="Col6" Canvas.Left="510" Canvas.Top="-320"
+                   Text="FLUX&#10;0xC3&#10;WAVE&#10;0x41&#10;HASH&#10;PULL&#10;0x7F&#10;SEND"
+                   FontFamily="JetBrains Mono" FontSize="14"
+                   Foreground="#00FF41" Opacity="0.45" LineHeight="28">
+            <TextBlock.RenderTransform>
+                <TranslateTransform x:Name="Col6Trans" Y="0"/>
+            </TextBlock.RenderTransform>
+        </TextBlock>
+
+        <Canvas.Triggers>
+            <EventTrigger RoutedEvent="Canvas.Loaded">
+                <BeginStoryboard>
+                    <Storyboard RepeatBehavior="Forever">
+                        <!-- Column 1: speed 4s -->
+                        <DoubleAnimation Storyboard.TargetName="Col1Trans"
+                                         Storyboard.TargetProperty="Y"
+                                         From="0" To="800"
+                                         Duration="0:0:4"/>
+                        <DoubleAnimation Storyboard.TargetName="Col1"
+                                         Storyboard.TargetProperty="Opacity"
+                                         From="0.8" To="0.2"
+                                         Duration="0:0:4"/>
+
+                        <!-- Column 2: speed 3.2s, delay 0.5s -->
+                        <DoubleAnimation Storyboard.TargetName="Col2Trans"
+                                         Storyboard.TargetProperty="Y"
+                                         From="0" To="700"
+                                         Duration="0:0:3.2"
+                                         BeginTime="0:0:0.5"/>
+                        <DoubleAnimation Storyboard.TargetName="Col2"
+                                         Storyboard.TargetProperty="Opacity"
+                                         From="0.7" To="0.15"
+                                         Duration="0:0:3.2"
+                                         BeginTime="0:0:0.5"/>
+
+                        <!-- Column 3: speed 5s, delay 0.2s -->
+                        <DoubleAnimation Storyboard.TargetName="Col3Trans"
+                                         Storyboard.TargetProperty="Y"
+                                         From="0" To="750"
+                                         Duration="0:0:5"
+                                         BeginTime="0:0:0.2"/>
+
+                        <!-- Column 4: speed 3.8s, delay 0.8s -->
+                        <DoubleAnimation Storyboard.TargetName="Col4Trans"
+                                         Storyboard.TargetProperty="Y"
+                                         From="0" To="680"
+                                         Duration="0:0:3.8"
+                                         BeginTime="0:0:0.8"/>
+
+                        <!-- Column 5: speed 4.5s, delay 0.3s -->
+                        <DoubleAnimation Storyboard.TargetName="Col5Trans"
+                                         Storyboard.TargetProperty="Y"
+                                         From="0" To="760"
+                                         Duration="0:0:4.5"
+                                         BeginTime="0:0:0.3"/>
+
+                        <!-- Column 6: speed 3.5s, delay 1.0s -->
+                        <DoubleAnimation Storyboard.TargetName="Col6Trans"
+                                         Storyboard.TargetProperty="Y"
+                                         From="0" To="720"
+                                         Duration="0:0:3.5"
+                                         BeginTime="0:0:1.0"/>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Canvas.Triggers>
+    </Canvas>
+</UserControl>

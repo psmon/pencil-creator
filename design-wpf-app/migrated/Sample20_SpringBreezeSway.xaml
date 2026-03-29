@@ -1,0 +1,347 @@
+<UserControl x:Class="design_wpf_app.Migrated.Sample20_SpringBreezeSway"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="600" d:DesignWidth="800"
+             Background="#0A0F1C">
+
+    <UserControl.Resources>
+        <!-- ═══ Stem1 Sway ═══ -->
+        <Storyboard x:Key="Stem1Sway">
+            <DoubleAnimation
+                Storyboard.TargetName="Stem1Rotate"
+                Storyboard.TargetProperty="Angle"
+                From="-5" To="5" Duration="0:0:2.5"
+                AutoReverse="True" RepeatBehavior="Forever">
+                <DoubleAnimation.EasingFunction>
+                    <SineEase EasingMode="EaseInOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+
+        <!-- ═══ Flower1 Sway ═══ -->
+        <Storyboard x:Key="Flower1Sway">
+            <DoubleAnimation
+                Storyboard.TargetName="Flower1Rotate"
+                Storyboard.TargetProperty="Angle"
+                From="-8" To="8" Duration="0:0:2.5"
+                AutoReverse="True" RepeatBehavior="Forever">
+                <DoubleAnimation.EasingFunction>
+                    <SineEase EasingMode="EaseInOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation
+                Storyboard.TargetName="Flower1Translate"
+                Storyboard.TargetProperty="X"
+                From="-10" To="10" Duration="0:0:2.5"
+                AutoReverse="True" RepeatBehavior="Forever">
+                <DoubleAnimation.EasingFunction>
+                    <SineEase EasingMode="EaseInOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+
+        <!-- ═══ Leaf1 Sway ═══ -->
+        <Storyboard x:Key="Leaf1Sway">
+            <DoubleAnimation
+                Storyboard.TargetName="Leaf1Rotate"
+                Storyboard.TargetProperty="Angle"
+                From="-12" To="12" Duration="0:0:2"
+                AutoReverse="True" RepeatBehavior="Forever">
+                <DoubleAnimation.EasingFunction>
+                    <SineEase EasingMode="EaseInOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+
+        <!-- ═══ Stem2 Sway ═══ -->
+        <Storyboard x:Key="Stem2Sway">
+            <DoubleAnimation
+                Storyboard.TargetName="Stem2Rotate"
+                Storyboard.TargetProperty="Angle"
+                From="-6" To="6" Duration="0:0:3"
+                AutoReverse="True" RepeatBehavior="Forever"
+                BeginTime="0:0:0.5">
+                <DoubleAnimation.EasingFunction>
+                    <SineEase EasingMode="EaseInOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+
+        <!-- ═══ Flower2 Sway ═══ -->
+        <Storyboard x:Key="Flower2Sway">
+            <DoubleAnimation
+                Storyboard.TargetName="Flower2Rotate"
+                Storyboard.TargetProperty="Angle"
+                From="-10" To="10" Duration="0:0:3"
+                AutoReverse="True" RepeatBehavior="Forever"
+                BeginTime="0:0:0.5">
+                <DoubleAnimation.EasingFunction>
+                    <SineEase EasingMode="EaseInOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation
+                Storyboard.TargetName="Flower2Translate"
+                Storyboard.TargetProperty="X"
+                From="-15" To="15" Duration="0:0:3"
+                AutoReverse="True" RepeatBehavior="Forever"
+                BeginTime="0:0:0.5">
+                <DoubleAnimation.EasingFunction>
+                    <SineEase EasingMode="EaseInOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+
+        <!-- ═══ Leaf2 Sway ═══ -->
+        <Storyboard x:Key="Leaf2Sway">
+            <DoubleAnimation
+                Storyboard.TargetName="Leaf2Rotate"
+                Storyboard.TargetProperty="Angle"
+                From="-15" To="15" Duration="0:0:2.8"
+                AutoReverse="True" RepeatBehavior="Forever"
+                BeginTime="0:0:0.3">
+                <DoubleAnimation.EasingFunction>
+                    <SineEase EasingMode="EaseInOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+
+        <!--
+        ═══ DemoSequence ═══
+        원본 의도: 봄바람에 흔들리는 꽃과 줄기 — 자연스러운 SineEase 좌우 흔들림
+        시나리오: 두 줄기가 각각 다른 타이밍으로 흔들리며, 꽃잎과 잎사귀가 독립적으로 함께 움직임
+        핵심 기법: RotateTransform + TranslateTransform, SineEase EaseInOut, AutoReverse Forever
+        다른 플랫폼: CSS — transform: rotate() + translateX(), animation-timing-function: ease-in-out
+        -->
+        <Storyboard x:Key="DemoSequence">
+            <!-- Stem1 -->
+            <DoubleAnimation Storyboard.TargetName="Stem1Rotate" Storyboard.TargetProperty="Angle"
+                From="-5" To="5" Duration="0:0:2.5" AutoReverse="True" RepeatBehavior="Forever">
+                <DoubleAnimation.EasingFunction><SineEase EasingMode="EaseInOut"/></DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <!-- Flower1 -->
+            <DoubleAnimation Storyboard.TargetName="Flower1Rotate" Storyboard.TargetProperty="Angle"
+                From="-8" To="8" Duration="0:0:2.5" AutoReverse="True" RepeatBehavior="Forever">
+                <DoubleAnimation.EasingFunction><SineEase EasingMode="EaseInOut"/></DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Storyboard.TargetName="Flower1Translate" Storyboard.TargetProperty="X"
+                From="-10" To="10" Duration="0:0:2.5" AutoReverse="True" RepeatBehavior="Forever">
+                <DoubleAnimation.EasingFunction><SineEase EasingMode="EaseInOut"/></DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <!-- Leaf1 -->
+            <DoubleAnimation Storyboard.TargetName="Leaf1Rotate" Storyboard.TargetProperty="Angle"
+                From="-12" To="12" Duration="0:0:2" AutoReverse="True" RepeatBehavior="Forever">
+                <DoubleAnimation.EasingFunction><SineEase EasingMode="EaseInOut"/></DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <!-- Stem2 -->
+            <DoubleAnimation Storyboard.TargetName="Stem2Rotate" Storyboard.TargetProperty="Angle"
+                From="-6" To="6" Duration="0:0:3" AutoReverse="True" RepeatBehavior="Forever" BeginTime="0:0:0.5">
+                <DoubleAnimation.EasingFunction><SineEase EasingMode="EaseInOut"/></DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <!-- Flower2 -->
+            <DoubleAnimation Storyboard.TargetName="Flower2Rotate" Storyboard.TargetProperty="Angle"
+                From="-10" To="10" Duration="0:0:3" AutoReverse="True" RepeatBehavior="Forever" BeginTime="0:0:0.5">
+                <DoubleAnimation.EasingFunction><SineEase EasingMode="EaseInOut"/></DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Storyboard.TargetName="Flower2Translate" Storyboard.TargetProperty="X"
+                From="-15" To="15" Duration="0:0:3" AutoReverse="True" RepeatBehavior="Forever" BeginTime="0:0:0.5">
+                <DoubleAnimation.EasingFunction><SineEase EasingMode="EaseInOut"/></DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <!-- Leaf2 -->
+            <DoubleAnimation Storyboard.TargetName="Leaf2Rotate" Storyboard.TargetProperty="Angle"
+                From="-15" To="15" Duration="0:0:2.8" AutoReverse="True" RepeatBehavior="Forever" BeginTime="0:0:0.3">
+                <DoubleAnimation.EasingFunction><SineEase EasingMode="EaseInOut"/></DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+    </UserControl.Resources>
+
+    <Canvas x:Name="GardenCanvas" ClipToBounds="True">
+
+        <!-- Flower Stem 1 -->
+        <Line X1="200" Y1="580" X2="200" Y2="300"
+              Stroke="#4ADE80" StrokeThickness="3"
+              RenderTransformOrigin="0.5,1">
+            <Line.RenderTransform>
+                <RotateTransform x:Name="Stem1Rotate"/>
+            </Line.RenderTransform>
+            <Line.Triggers>
+                <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation
+                                Storyboard.TargetName="Stem1Rotate"
+                                Storyboard.TargetProperty="Angle"
+                                From="-5" To="5" Duration="0:0:2.5"
+                                AutoReverse="True" RepeatBehavior="Forever">
+                                <DoubleAnimation.EasingFunction>
+                                    <SineEase EasingMode="EaseInOut"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Line.Triggers>
+        </Line>
+
+        <!-- Cherry Blossom on Stem 1 -->
+        <Path Canvas.Left="185" Canvas.Top="280"
+              Data="M15 0 C20 6 25 11 30 15 C25 20 20 25 15 30 C10 25 5 20 0 15 C5 11 10 6 15 0 Z"
+              Fill="#FFB7C5" RenderTransformOrigin="0.5,1">
+            <Path.RenderTransform>
+                <TransformGroup>
+                    <RotateTransform x:Name="Flower1Rotate"/>
+                    <TranslateTransform x:Name="Flower1Translate"/>
+                </TransformGroup>
+            </Path.RenderTransform>
+            <Path.Triggers>
+                <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation
+                                Storyboard.TargetName="Flower1Rotate"
+                                Storyboard.TargetProperty="Angle"
+                                From="-8" To="8" Duration="0:0:2.5"
+                                AutoReverse="True" RepeatBehavior="Forever">
+                                <DoubleAnimation.EasingFunction>
+                                    <SineEase EasingMode="EaseInOut"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                            <DoubleAnimation
+                                Storyboard.TargetName="Flower1Translate"
+                                Storyboard.TargetProperty="X"
+                                From="-10" To="10" Duration="0:0:2.5"
+                                AutoReverse="True" RepeatBehavior="Forever">
+                                <DoubleAnimation.EasingFunction>
+                                    <SineEase EasingMode="EaseInOut"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Path.Triggers>
+        </Path>
+
+        <!-- Leaf on Stem 1 -->
+        <Path Canvas.Left="205" Canvas.Top="400"
+              Data="M0 8 C6 0 18 0 24 8 C18 16 6 16 0 8 Z"
+              Fill="#86EFAC" Opacity="0.8" RenderTransformOrigin="0,0.5">
+            <Path.RenderTransform>
+                <RotateTransform x:Name="Leaf1Rotate"/>
+            </Path.RenderTransform>
+            <Path.Triggers>
+                <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation
+                                Storyboard.TargetName="Leaf1Rotate"
+                                Storyboard.TargetProperty="Angle"
+                                From="-12" To="12" Duration="0:0:2"
+                                AutoReverse="True" RepeatBehavior="Forever">
+                                <DoubleAnimation.EasingFunction>
+                                    <SineEase EasingMode="EaseInOut"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Path.Triggers>
+        </Path>
+
+        <!-- Flower Stem 2 -->
+        <Line X1="500" Y1="580" X2="500" Y2="250"
+              Stroke="#4ADE80" StrokeThickness="3"
+              RenderTransformOrigin="0.5,1">
+            <Line.RenderTransform>
+                <RotateTransform x:Name="Stem2Rotate"/>
+            </Line.RenderTransform>
+            <Line.Triggers>
+                <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation
+                                Storyboard.TargetName="Stem2Rotate"
+                                Storyboard.TargetProperty="Angle"
+                                From="-6" To="6" Duration="0:0:3"
+                                AutoReverse="True" RepeatBehavior="Forever"
+                                BeginTime="0:0:0.5">
+                                <DoubleAnimation.EasingFunction>
+                                    <SineEase EasingMode="EaseInOut"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Line.Triggers>
+        </Line>
+
+        <!-- Cherry Blossom on Stem 2 -->
+        <Path Canvas.Left="483" Canvas.Top="228"
+              Data="M17 0 C23 7 28 12 34 17 C28 23 23 28 17 34 C11 28 6 23 0 17 C6 12 11 7 17 0 Z"
+              Fill="#FF91A4" RenderTransformOrigin="0.5,1">
+            <Path.RenderTransform>
+                <TransformGroup>
+                    <RotateTransform x:Name="Flower2Rotate"/>
+                    <TranslateTransform x:Name="Flower2Translate"/>
+                </TransformGroup>
+            </Path.RenderTransform>
+            <Path.Triggers>
+                <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation
+                                Storyboard.TargetName="Flower2Rotate"
+                                Storyboard.TargetProperty="Angle"
+                                From="-10" To="10" Duration="0:0:3"
+                                AutoReverse="True" RepeatBehavior="Forever"
+                                BeginTime="0:0:0.5">
+                                <DoubleAnimation.EasingFunction>
+                                    <SineEase EasingMode="EaseInOut"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                            <DoubleAnimation
+                                Storyboard.TargetName="Flower2Translate"
+                                Storyboard.TargetProperty="X"
+                                From="-15" To="15" Duration="0:0:3"
+                                AutoReverse="True" RepeatBehavior="Forever"
+                                BeginTime="0:0:0.5">
+                                <DoubleAnimation.EasingFunction>
+                                    <SineEase EasingMode="EaseInOut"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Path.Triggers>
+        </Path>
+
+        <!-- Leaf on Stem 2 -->
+        <Path Canvas.Left="470" Canvas.Top="380"
+              Data="M0 7 C5 0 15 0 20 7 C15 14 5 14 0 7 Z"
+              Fill="#4ADE80" Opacity="0.85" RenderTransformOrigin="1,0.5">
+            <Path.RenderTransform>
+                <RotateTransform x:Name="Leaf2Rotate"/>
+            </Path.RenderTransform>
+            <Path.Triggers>
+                <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation
+                                Storyboard.TargetName="Leaf2Rotate"
+                                Storyboard.TargetProperty="Angle"
+                                From="-15" To="15" Duration="0:0:2.8"
+                                AutoReverse="True" RepeatBehavior="Forever"
+                                BeginTime="0:0:0.3">
+                                <DoubleAnimation.EasingFunction>
+                                    <SineEase EasingMode="EaseInOut"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Path.Triggers>
+        </Path>
+
+    </Canvas>
+</UserControl>

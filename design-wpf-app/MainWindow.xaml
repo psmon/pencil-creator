@@ -1,0 +1,71 @@
+<Window x:Class="design_wpf_app.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="WPF Animation Gallery" Height="700" Width="1100"
+        Background="#1A1A2E" WindowStartupLocation="CenterScreen">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="280" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Left Navigation Panel -->
+        <Border Grid.Column="0" Background="#16213E" BorderBrush="#0F3460" BorderThickness="0,0,1,0">
+            <DockPanel>
+                <TextBlock DockPanel.Dock="Top" Text="XAML Gallery"
+                           Foreground="#E94560" FontSize="20" FontWeight="Bold"
+                           Margin="16,16,16,8" FontFamily="Segoe UI" />
+                <TextBlock DockPanel.Dock="Top" Text="27 Animation Samples"
+                           Foreground="#666" FontSize="12" Margin="16,0,16,12" />
+
+                <ListBox x:Name="NavList" Background="Transparent" BorderThickness="0"
+                         Foreground="White" FontFamily="Segoe UI" FontSize="13"
+                         SelectionChanged="NavList_SelectionChanged"
+                         ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="Padding" Value="12,8" />
+                            <Setter Property="Margin" Value="4,1" />
+                            <Setter Property="Cursor" Value="Hand" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ListBoxItem">
+                                        <Border x:Name="Bd" Background="Transparent"
+                                                CornerRadius="6" Padding="{TemplateBinding Padding}"
+                                                Margin="{TemplateBinding Margin}">
+                                            <ContentPresenter />
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="Bd" Property="Background" Value="#1F3460" />
+                                            </Trigger>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter TargetName="Bd" Property="Background" Value="#0F3460" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                </ListBox>
+            </DockPanel>
+        </Border>
+
+        <!-- Right Content Panel -->
+        <Border Grid.Column="1" Background="#1A1A2E">
+            <DockPanel>
+                <Border DockPanel.Dock="Top" Background="#16213E" Padding="16,10">
+                    <TextBlock x:Name="ContentTitle" Text="Select a sample from the left panel"
+                               Foreground="#E94560" FontSize="16" FontWeight="SemiBold"
+                               FontFamily="Segoe UI" />
+                </Border>
+                <ContentControl x:Name="ContentArea" Margin="0" />
+            </DockPanel>
+        </Border>
+    </Grid>
+</Window>

@@ -1,0 +1,220 @@
+<UserControl x:Class="design_wpf_app.Migrated.Sample10_AnimatedProgressbar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="400" d:DesignWidth="600"
+             Background="#1E1E2E">
+
+    <UserControl.Resources>
+        <!-- Indeterminate sliding bar -->
+        <Storyboard x:Key="IndeterminateSlide" RepeatBehavior="Forever">
+            <DoubleAnimation Storyboard.TargetName="indeterminateTranslate"
+                Storyboard.TargetProperty="X"
+                From="-200" To="500" Duration="0:0:1.5">
+                <DoubleAnimation.EasingFunction>
+                    <SineEase EasingMode="EaseInOut" />
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+
+        <!-- Value-based width fill -->
+        <Storyboard x:Key="ValueProgress">
+            <DoubleAnimation Storyboard.TargetName="valueBar"
+                Storyboard.TargetProperty="Width"
+                From="0" To="400" Duration="0:0:5">
+                <DoubleAnimation.EasingFunction>
+                    <QuadraticEase EasingMode="EaseOut" />
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+
+        <!-- Glow pulse on accent bar -->
+        <Storyboard x:Key="GlowPulse" RepeatBehavior="Forever">
+            <DoubleAnimation Storyboard.TargetName="glowBar"
+                Storyboard.TargetProperty="Opacity"
+                From="0.3" To="0.8" Duration="0:0:1"
+                AutoReverse="True" />
+        </Storyboard>
+
+        <!-- ★ DemoSequence
+             원본 의도: 애니메이션 프로그레스바 — 인디터미네이트 슬라이딩 + 값 기반 채움
+             시나리오: 인디터미네이트 바가 좌→우 1회 슬라이드(-200→500)
+                       → 값 기반 바가 0→200(절반) 부분 채움 + 글로우 펄스
+             핵심 기법: TranslateTransform.X(인디터미네이트 슬라이딩), Width 애니메이션(값 기반),
+                        Opacity 펄스(글로우), ClipToBounds로 오버플로 숨김
+             다른 플랫폼:
+               - 웹: CSS @keyframes translateX + width transition, 글로우는 box-shadow pulse
+               - 모바일: 네이티브 ProgressBar/ProgressView, 커스텀 시 레이어 애니메이션
+        -->
+        <Storyboard x:Key="DemoSequence">
+            <!-- Phase 1: Indeterminate 1 cycle (0~1.5s) -->
+            <DoubleAnimation Storyboard.TargetName="indeterminateTranslate"
+                Storyboard.TargetProperty="X"
+                From="-200" To="500" Duration="0:0:1.5"
+                BeginTime="0:0:0" FillBehavior="HoldEnd">
+                <DoubleAnimation.EasingFunction>
+                    <SineEase EasingMode="EaseInOut" />
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+
+            <!-- Phase 2: Value progress partial fill (2~4.5s) — fills to 200 (half) -->
+            <DoubleAnimation Storyboard.TargetName="valueBar"
+                Storyboard.TargetProperty="Width"
+                From="0" To="200" Duration="0:0:2.5"
+                BeginTime="0:0:2" FillBehavior="HoldEnd">
+                <DoubleAnimation.EasingFunction>
+                    <QuadraticEase EasingMode="EaseOut" />
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+
+            <!-- Glow pulse during value progress (2~5s) -->
+            <DoubleAnimation Storyboard.TargetName="glowBar"
+                Storyboard.TargetProperty="Opacity"
+                From="0.3" To="0.8" Duration="0:0:1"
+                BeginTime="0:0:2" AutoReverse="True"
+                FillBehavior="HoldEnd" />
+        </Storyboard>
+
+        <Style x:Key="HitButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="4" Padding="12,6">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"
+                    Width="450">
+
+            <!-- Section 1: Indeterminate Progress Bar -->
+            <TextBlock Text="Indeterminate" Foreground="#94A3B8" FontSize="13"
+                       Margin="0,0,0,8" />
+            <Border Background="#2E333A" CornerRadius="4" Height="6"
+                    ClipToBounds="True" Margin="0,0,0,30">
+                <Grid>
+                    <!-- Sliding bar -->
+                    <Border x:Name="indeterminateBar"
+                            Width="120" Height="6" CornerRadius="4"
+                            HorizontalAlignment="Left">
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                <GradientStop Color="#3B82F6" Offset="0" />
+                                <GradientStop Color="#8B5CF6" Offset="1" />
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <Border.RenderTransform>
+                            <TranslateTransform x:Name="indeterminateTranslate" X="-200" />
+                        </Border.RenderTransform>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- Section 2: Value-based Progress Bar -->
+            <TextBlock Text="Value Progress" Foreground="#94A3B8" FontSize="13"
+                       Margin="0,0,0,8" />
+            <Border Background="#2E333A" CornerRadius="4" Height="8"
+                    ClipToBounds="True" Margin="0,0,0,8">
+                <Grid>
+                    <!-- Value fill bar -->
+                    <Border x:Name="valueBar"
+                            Width="0" Height="8" CornerRadius="4"
+                            HorizontalAlignment="Left"
+                            Background="#3B82F6" />
+                    <!-- Glow overlay -->
+                    <Border x:Name="glowBar"
+                            Width="0" Height="8" CornerRadius="4"
+                            HorizontalAlignment="Left" Opacity="0.3">
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                <GradientStop Color="White" Offset="0.5" />
+                                <GradientStop Color="Transparent" Offset="1" />
+                            </LinearGradientBrush>
+                        </Border.Background>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- Section 3: Thin Accent Bar -->
+            <TextBlock Text="Accent Bar" Foreground="#94A3B8" FontSize="13"
+                       Margin="0,20,0,8" />
+            <Border Background="#2E333A" CornerRadius="2" Height="3"
+                    ClipToBounds="True">
+                <Border x:Name="accentBar"
+                        Width="0" Height="3" CornerRadius="2"
+                        HorizontalAlignment="Left">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                            <GradientStop Color="#22D3EE" Offset="0" />
+                            <GradientStop Color="#3B82F6" Offset="0.5" />
+                            <GradientStop Color="#8B5CF6" Offset="1" />
+                        </LinearGradientBrush>
+                    </Border.Background>
+                </Border>
+            </Border>
+
+            <!-- Control Buttons -->
+            <StackPanel Orientation="Horizontal" Margin="0,30,0,0"
+                        HorizontalAlignment="Center">
+                <Button x:Name="btnIndeterminate" Content="Start Indeterminate"
+                        Style="{StaticResource HitButtonStyle}"
+                        Background="#475569" Margin="0,0,10,0">
+                    <Button.Triggers>
+                        <EventTrigger RoutedEvent="Button.Click">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="indeterminateTranslate"
+                                        Storyboard.TargetProperty="X"
+                                        From="-200" To="500" Duration="0:0:1.5"
+                                        RepeatBehavior="Forever">
+                                        <DoubleAnimation.EasingFunction>
+                                            <SineEase EasingMode="EaseInOut" />
+                                        </DoubleAnimation.EasingFunction>
+                                    </DoubleAnimation>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Button.Triggers>
+                </Button>
+
+                <Button x:Name="btnValueProgress" Content="Start Value Fill"
+                        Style="{StaticResource HitButtonStyle}"
+                        Background="#3B82F6">
+                    <Button.Triggers>
+                        <EventTrigger RoutedEvent="Button.Click">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="valueBar"
+                                        Storyboard.TargetProperty="Width"
+                                        From="0" To="400" Duration="0:0:5">
+                                        <DoubleAnimation.EasingFunction>
+                                            <QuadraticEase EasingMode="EaseOut" />
+                                        </DoubleAnimation.EasingFunction>
+                                    </DoubleAnimation>
+                                    <DoubleAnimation Storyboard.TargetName="glowBar"
+                                        Storyboard.TargetProperty="Opacity"
+                                        From="0.3" To="0.8" Duration="0:0:1"
+                                        AutoReverse="True" RepeatBehavior="Forever" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Button.Triggers>
+                </Button>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>
