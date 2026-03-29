@@ -2,139 +2,157 @@
 
 ![Pencil Creator](design/img/intro.png)
 
-**Look & Feel + Animation First Design** ― 웹 애플리케이션을 만들기 전에, 룩앤필과 애니메이션을 먼저 디자인하고 검증하는 Claude Code 프로젝트
-11종(지속발굴)의 애니메이션가능 컨트롤을 기본 제공하며 이 디자인 하네스를 이용하면 위와같은 컨트롤을 프롬프트만으로 발굴하고 추가할수 있습니다.
+**Look & Feel + Animation First Design** — A Claude Code project for designing and validating look & feel and animations before building web applications.
+It provides 11+ (and growing) animatable controls out of the box, and with this design harness you can discover and add controls like the above using only prompts.
+
+# MS Blend for Visual Studio
+
+![Pencil Creator](design/img/blend-xaml.png)
+
+Pencil can implement animated web content using definition files alone.
+
+Optionally, by using the **Blend tool** in addition,
+you can control the detailed movements of animations more directly.
+It serves as a **complement to Pencil's timeline & storyboard features**.
 
 ---
 
-## Pencil 디자인 파일 (.pen)
+## Pencil Design Files (.pen)
 
-이 프로젝트의 디자인 산출물은 [Pencil](https://pencil.elpass.app/) 에디터의 `.pen` 파일로 관리됩니다.
-아래 파일을 다운로드하여 Pencil 에디터에서 열면 애니메이션 템플릿과 프로젝트 디자인을 확인할 수 있습니다.
+The design artifacts of this project are managed as `.pen` files for the [Pencil](https://pencil.elpass.app/) editor.
+Download the files below and open them in the Pencil editor to explore the animation templates and project designs.
 
-| 파일 | 설명 | 다운로드 |
-|------|------|----------|
-| WPF 애니메이션 템플릿 | 12개 CAT, 40개+ 기법 카드 라이브러리 | [`design/wpf-animation.pen`](design/wpf-animation.pen) |
-| Publisher App 디자인 | 웹 ZIP 퍼블리셔 앱 (4화면 + 애니메이션 가이드 12카드) | [`projects/design/publisher-app.pen`](projects/design/publisher-app.pen) |
+| File | Description | Download |
+|------|-------------|----------|
+| WPF Animation Template | 12 CATs, 40+ technique card library | [`design/wpf-animation.pen`](design/wpf-animation.pen) |
+| Publisher App Design | Web ZIP publisher app (4 screens + 12 animation guide cards) | [`projects/design/publisher-app.pen`](projects/design/publisher-app.pen) |
 
 ---
 
-## Design-First 컨셉
+## Design-First Concept
 
-이 프로젝트의 핵심 철학은 **"코드 전에 디자인, 정적 디자인 전에 애니메이션 설계"** 입니다.
+The core philosophy of this project is **"Design before code, animation design before static design."**
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                    ANIMATION-FIRST DESIGN                       │
-│                                                                 │
-│  1. WPF 애니메이션 조사     DoubleAnimation, ScaleTransform,    │
-│     (Case A)               Easing, Storyboard 패턴 수집        │
-│           ↓                                                     │
-│  2. 애니메이션 템플릿       wpf-animation.pen                   │
-│     라이브러리 구축         10개 CAT, 37개 기법 카드             │
-│           ↓                                                     │
-│  3. 프로젝트 디자인         정적 룩앤필 화면                     │
-│     (Case B)               + 애니메이션 가이드 (분리!)          │
-│           ↓                                                     │
-│  4. HTML 구현              CSS/JS 애니메이션으로 변환            │
-│     (Case W)               WPF → CSS 매핑 규칙 적용             │
-│           ↓                                                     │
-│  5. 하네스 평가 & 개선     3축 채점 + RPG 경험치                 │
-│           ↓                                                     │
-│        반복                                                     │
-└─────────────────────────────────────────────────────────────────┘
++----------------------------------------------------------------+
+|                    ANIMATION-FIRST DESIGN                       |
+|                                                                 |
+|  1. WPF Animation Research   DoubleAnimation, ScaleTransform,   |
+|     (Case A)                 Easing, Storyboard pattern mining  |
+|           |                                                     |
+|           v                                                     |
+|  2. Animation Template       wpf-animation.pen                  |
+|     Library Build            10 CATs, 37 technique cards        |
+|           |                                                     |
+|           v                                                     |
+|  3. Project Design           Static look & feel screens         |
+|     (Case B)                 + Animation guides (separated!)    |
+|           |                                                     |
+|           v                                                     |
+|  4. HTML Implementation      Convert to CSS/JS animations       |
+|     (Case W)                 Apply WPF -> CSS mapping rules     |
+|           |                                                     |
+|           v                                                     |
+|  5. Harness Evaluation       3-axis scoring + RPG experience    |
+|     & Improvement                                               |
+|           |                                                     |
+|           v                                                     |
+|        Iterate                                                  |
++----------------------------------------------------------------+
 ```
 
-**왜 애니메이션을 먼저 설계하는가?**
+**Why design animations first?**
 
-- 애니메이션은 나중에 덧붙이면 어색해진다. 처음부터 **상태 전환(Before→After)**을 설계해야 자연스러운 UX가 된다.
-- WPF Storyboard 패턴은 애니메이션의 속성(대상, 시간, 이징)을 명시적으로 정의하는 최고의 레퍼런스다.
-- 정적 디자인과 동적 정의를 **분리**하면, 룩앤필 변경 시 애니메이션을 독립적으로 유지할 수 있다.
+- Animations feel awkward when added later. You need to design **state transitions (Before -> After)** from the start for a natural UX.
+- WPF Storyboard patterns are the best reference for explicitly defining animation properties (target, duration, easing).
+- **Separating** static design from dynamic definitions allows animations to remain independent when the look & feel changes.
 
 ---
 
-## Application Layout — 프로젝트 디자인 산출물
+## Application Layout — Project Design Artifacts
 
-### Publisher App (웹 ZIP 퍼블리셔)
+### Publisher App (Web ZIP Publisher)
 
-ZIP 파일을 업로드하여 웹사이트를 게시·관리하는 애플리케이션.
+An application for uploading ZIP files to publish and manage websites.
 
-**정적 디자인 (4개 화면):**
+**Static Design (4 screens):**
 
-| 화면 | 주요 구성 |
-|------|----------|
-| Dashboard | 통계 카드 4개 + 게시 사이트 테이블 |
-| Upload | 드래그&드롭 영역 + 프로그레스바 + 완료 목록 |
-| Publish | 폼(이름/게시자/소개/파비콘) + 유효검사 + 게시 버튼 |
-| View Sites | 6개 사이트 카드 그리드(3x2) + 새창 열기/삭제 |
+| Screen | Key Components |
+|--------|---------------|
+| Dashboard | 4 stat cards + published sites table |
+| Upload | Drag & drop zone + progress bar + completed file list |
+| Publish | Form (name/publisher/description/favicon) + validation + publish button |
+| View Sites | 6 site card grid (3x2) + open in new window / delete |
 
-**애니메이션 가이드 (4개 카테고리, 12개 카드):**
+**Animation Guide (4 categories, 12 cards):**
 
-| 카테고리 | 카드 | WPF 기법 | 적용 대상 |
-|----------|------|---------|----------|
-| CAT-A Dashboard | Counter Roll-Up | DoubleAnimation + CubicEaseOut | 통계 값 텍스트 |
-| | Staggered Row Entrance | TranslateY + Opacity Stagger | 테이블 행 |
-| | Skeleton Shimmer | GradientStop + Forever | 로딩 상태 |
-| CAT-B Upload | Dropzone Pulse Glow | Opacity + Shadow AutoReverse | 드롭존 테두리 |
-| | Progress Bar Gradient | Width DoubleAnimation | 프로그레스 Fill |
-| | File Card Slide-In | TranslateX + ElasticEase | 완료 파일카드 |
-| CAT-C Publish | Floating Label Input | Y + Scale + ColorAnimation | 입력 필드 |
-| | Validation Stagger Check | Scale + BounceEase | 검증 항목 |
-| | Publish Button Ripple | Ellipse Scale + Opacity | 게시 버튼 |
-| CAT-D View Sites | Card Hover Scale + Lift | ScaleTransform + Shadow | 사이트 카드 |
-| | Gradient Background Shift | PointAnimation + Forever | 카드 썸네일 |
-| | Delete Bounce Shrink | BackEaseIn + Opacity | 삭제 동작 |
+| Category | Card | WPF Technique | Target Element |
+|----------|------|---------------|----------------|
+| CAT-A Dashboard | Counter Roll-Up | DoubleAnimation + CubicEaseOut | Stat value text |
+| | Staggered Row Entrance | TranslateY + Opacity Stagger | Table rows |
+| | Skeleton Shimmer | GradientStop + Forever | Loading state |
+| CAT-B Upload | Dropzone Pulse Glow | Opacity + Shadow AutoReverse | Dropzone border |
+| | Progress Bar Gradient | Width DoubleAnimation | Progress fill |
+| | File Card Slide-In | TranslateX + ElasticEase | Completed file cards |
+| CAT-C Publish | Floating Label Input | Y + Scale + ColorAnimation | Input fields |
+| | Validation Stagger Check | Scale + BounceEase | Validation items |
+| | Publish Button Ripple | Ellipse Scale + Opacity | Publish button |
+| CAT-D View Sites | Card Hover Scale + Lift | ScaleTransform + Shadow | Site cards |
+| | Gradient Background Shift | PointAnimation + Forever | Card thumbnails |
+| | Delete Bounce Shrink | BackEaseIn + Opacity | Delete action |
 
-파일: `projects/design/publisher-app.pen`
+File: `projects/design/publisher-app.pen`
 
 ---
 
-## WPF 애니메이션 조사 기법
+## WPF Animation Research Techniques
 
-### 조사 → 시각화 파이프라인
+### Research -> Visualization Pipeline
 
-WPF의 Storyboard/DoubleAnimation/Transform 패턴을 조사하여, Pencil 디자인 카드로 **정적 시각화**합니다.
+WPF Storyboard/DoubleAnimation/Transform patterns are researched and **statically visualized** as Pencil design cards.
 
 ```
-WebSearch XAML 예제
-    ↓
-핵심 속성 추출
+WebSearch XAML examples
+    |
+    v
+Extract key properties
   - TargetProperty (Opacity, ScaleX, TranslateX...)
   - Duration, BeginTime
   - EasingFunction (CubicEaseOut, ElasticEase, BounceEase...)
   - RepeatBehavior, AutoReverse
-    ↓
-Pencil 카드 생성
-  ┌──────────────────────────────┐
-  │ 1-1  FLOATING LABEL TEXTBOX │  ← 번호 + 제목
-  │                              │
-  │ Focus → Label Y↑18px        │  ← 동작 설명
-  │ Scale 75%, Color transition  │
-  │                              │
-  │ ┌─────────┐  →  ┌─────────┐ │  ← Before → After
-  │ │Username │     │Username │ │
-  │ │         │     │█        │ │
-  │ └─────────┘     └─────────┘ │
-  │                              │
-  │ <DoubleAnimation             │  ← XAML 코드
-  │   TargetProperty="Y"        │
-  │   To="-18" Duration="0.2"/> │
-  └──────────────────────────────┘
+    |
+    v
+Create Pencil card
+  +------------------------------+
+  | 1-1  FLOATING LABEL TEXTBOX  |  <- Number + Title
+  |                               |
+  | Focus -> Label Y^18px        |  <- Behavior description
+  | Scale 75%, Color transition   |
+  |                               |
+  | +----------+  ->  +----------+|  <- Before -> After
+  | | Username |      | Username ||
+  | |          |      | #        ||
+  | +----------+      +----------+|
+  |                               |
+  | <DoubleAnimation              |  <- XAML code
+  |   TargetProperty="Y"         |
+  |   To="-18" Duration="0.2"/>  |
+  +------------------------------+
 ```
 
-### 현재 템플릿 라이브러리
+### Current Template Library
 
-| 자료 | 경로 | 규모 |
-|------|------|------|
-| 애니메이션 템플릿 | `design/wpf-animation.pen` | 12개 CAT, 40개+ 카드 |
-| XAML 샘플 | `design/xaml/sample/*.xaml` | 27개 독립 실행 파일 |
-| 조사 이력 | `design/xaml/research-history.md` | 20개 출처/기법 기록 |
-| **WPF App (Blend용)** | `design-wpf-app/` | **27개 UserControl (Blend 타임라인 편집 가능)** |
+| Resource | Path | Scale |
+|----------|------|-------|
+| Animation Template | `design/wpf-animation.pen` | 12 CATs, 40+ cards |
+| XAML Samples | `design/xaml/sample/*.xaml` | 27 standalone files |
+| Research History | `design/xaml/research-history.md` | 20 sources/techniques recorded |
+| **WPF App (for Blend)** | `design-wpf-app/` | **27 UserControls (Blend timeline editable)** |
 
-**카테고리 목록:**
+**Category List:**
 
-| CAT | 주제 | 대표 기법 |
-|-----|------|----------|
+| CAT | Topic | Key Techniques |
+|-----|-------|---------------|
 | 1 | Data Input Controls | Floating Label, ComboBox, Toggle |
 | 2 | Feedback & Notification | Snackbar, Progress Bar, Badge |
 | 3 | Navigation & Transitions | Page Transition, Tab Slide, Hamburger Morph |
@@ -150,195 +168,199 @@ Pencil 카드 생성
 
 ---
 
-## 3-Case Harness 워크플로우
+## 3-Case Harness Workflow
 
-### Case A: WPF 템플릿 보강
-
-```bash
-> "wpf-템플릿조사 후 템플릿보강해"
-> "WPF Elastic/Spring 효과를 조사해서 wpf-animation.pen에 추가해줘"
-```
-
-WebSearch로 WPF XAML을 직접 조사하여 `design/wpf-animation.pen`에 카드를 추가합니다.
-
-| 평가 축 | 만점 | 핵심 |
-|---------|------|------|
-| A1 리서치 신규성 | 35 | 기존 중복 없이 새 기법 추가했나 |
-| A2 시각화 표현력 | 35 | Before→After 전환이 직관적인가 |
-| A3 메타 완결성 | 30 | XAML 코드와 출처가 정확한가 |
-
-### Case B: 프로젝트 디자인 (Design-First)
+### Case A: WPF Template Enrichment
 
 ```bash
-> "wpf-animation 이펙트를 참고해 퍼블리셔 앱을 펜슬로 디자인해줘"
-> "wpf-animation 참고해서 쇼핑몰 관리자 페이지 디자인해줘"
+> "Research WPF templates and enrich them"
+> "Research WPF Elastic/Spring effects and add them to wpf-animation.pen"
 ```
 
-wpf-animation.pen을 **참고 라이브러리**로 활용하여, 정적 룩앤필 + 애니메이션 가이드를 **분리 설계**합니다.
+Directly researches WPF XAML via WebSearch and adds cards to `design/wpf-animation.pen`.
 
-| 평가 축 | 만점 | 핵심 |
-|---------|------|------|
-| B1 요구사항 충실도 | 35 | 요구된 페이지/기능이 모두 디자인되었나 |
-| B2 애니메이션 가이드 풍부성 | 35 | 다양한 WPF 기법 매핑 + Target 명시 |
-| B3 디자인 품질 & 분리 기법 | 30 | 룩앤필 일관성 + 정적/동적 분리 |
+| Evaluation Axis | Max Score | Key Criteria |
+|-----------------|-----------|-------------|
+| A1 Research Novelty | 35 | Were new techniques added without duplicating existing ones? |
+| A2 Visualization Expressiveness | 35 | Is the Before->After transition intuitive? |
+| A3 Metadata Completeness | 30 | Are the XAML code and sources accurate? |
 
-### Case W: HTML 구현
+### Case B: Project Design (Design-First)
 
 ```bash
-> "펜슬 참고해서 HTML 만들어줘"
-> "publisher-app.pen 디자인을 웹으로 구현해줘"
+> "Design a publisher app in Pencil referencing wpf-animation effects"
+> "Design a shopping mall admin page referencing wpf-animation"
 ```
 
-.pen 파일의 정적 디자인 + 애니메이션 가이드를 HTML/CSS/JS로 변환합니다.
+Uses wpf-animation.pen as a **reference library** to create separated static look & feel + animation guide designs.
 
-| 평가 축 | 만점 | 핵심 |
-|---------|------|------|
-| W1 디자인 커버리지 | 35 | .pen 요소를 얼마나 반영했나 |
-| W2 애니메이션 충실도 | 35 | 애니메이션 가이드를 실제 구현했나 |
-| W3 독창적 확장 | 30 | 디자인에 없는 인터랙션 추가했나 |
+| Evaluation Axis | Max Score | Key Criteria |
+|-----------------|-----------|-------------|
+| B1 Requirements Fidelity | 35 | Were all required pages/features designed? |
+| B2 Animation Guide Richness | 35 | Diverse WPF technique mapping + target specification |
+| B3 Design Quality & Separation | 30 | Look & feel consistency + static/dynamic separation |
 
-### Pipeline 보너스
+### Case W: HTML Implementation
 
-| 경로 | 조건 | XP 보너스 |
-|------|------|----------|
-| A → B | 양쪽 60점+ | x1.2 |
-| A → W | 양쪽 60점+ | x1.2 |
-| B → W | 양쪽 60점+ | x1.3 |
-| A → B → W | 전체 60점+ | x1.5 |
+```bash
+> "Create HTML referencing the Pencil design"
+> "Implement the publisher-app.pen design as a web page"
+```
+
+Converts the .pen file's static design + animation guide into HTML/CSS/JS.
+
+| Evaluation Axis | Max Score | Key Criteria |
+|-----------------|-----------|-------------|
+| W1 Design Coverage | 35 | How much of the .pen elements were reflected? |
+| W2 Animation Fidelity | 35 | Were the animation guides actually implemented? |
+| W3 Creative Extension | 30 | Were interactions beyond the design added? |
+
+### Pipeline Bonus
+
+| Path | Condition | XP Bonus |
+|------|-----------|----------|
+| A -> B | Both 60+ pts | x1.2 |
+| A -> W | Both 60+ pts | x1.2 |
+| B -> W | Both 60+ pts | x1.3 |
+| A -> B -> W | All 60+ pts | x1.5 |
 
 ---
 
-## RPG 시스템
+## RPG System
 
-작업 완료 시 XP를 획득하고 레벨이 올라갑니다.
+Earn XP upon task completion and level up.
 
 ```
-획득XP = 기본XP(점수x10) x 등급배율(A:x5 B:x3 C:x1 D:x0.5) x 유형배율(x1.2)
+Earned XP = Base XP (score x 10) x Grade multiplier (A:x5 B:x3 C:x1 D:x0.5) x Type multiplier (x1.2)
 
-등급: A(80-100) B(60-79) C(40-59) D(0-39)
+Grades: A (80-100) B (60-79) C (40-59) D (0-39)
 
-현재 상태: Lv.20 "키보드 워리어" | 총 XP: 12,708
+Current Status: Lv.20 "Keyboard Warrior" | Total XP: 12,708
 ```
 
 ---
 
-## 스킬 구성
+## Skill Configuration
 
-| 스킬 | 역할 | 트리거 |
-|------|------|--------|
-| `harness-usage` | Case A/B/W 실행 + 평가 | "wpf-템플릿 보강해", "디자인해줘", "HTML 만들어줘" |
-| `pencil-design` | Pencil MCP 다이어그램/설계도 + WPF App 마이그레이션 | "펜슬로 아키텍처 그려줘", "XAML 마이그레이션 해줘" |
-| `harness-creator` | 하네스 구조 개선 | "하네스 업그레이드해줘" |
+| Skill | Role | Trigger |
+|-------|------|---------|
+| `harness-usage` | Execute Case A/B/W + evaluation | "Enrich WPF template", "Design it", "Create HTML" |
+| `pencil-design` | Pencil MCP diagrams/blueprints + WPF App migration | "Draw architecture in Pencil", "Migrate XAML" |
+| `harness-creator` | Harness structure improvement | "Upgrade the harness" |
 
 ---
 
-## 디렉토리 구조
+## Directory Structure
 
 ```
 pencil-creator/
 ├── .claude/skills/
-│   ├── pencil-design/         ← Pencil MCP 디자인 스킬
-│   ├── harness-usage/         ← Case A/B/W 워크플로우 + 평가
-│   └── harness-creator/       ← 하네스 구조 개선
+│   ├── pencil-design/         <- Pencil MCP design skill
+│   ├── harness-usage/         <- Case A/B/W workflow + evaluation
+│   └── harness-creator/       <- Harness structure improvement
 ├── design/
-│   ├── wpf-animation.pen      ← WPF 애니메이션 템플릿 (10 CAT, 37카드)
+│   ├── wpf-animation.pen      <- WPF animation template (10 CATs, 37 cards)
 │   └── xaml/
-│       ├── research-history.md ← WPF 조사 이력
-│       ├── sample/*.xaml       ← XAML 샘플 17개
-│       └── output/sample{N}/   ← HTML 산출물
+│       ├── research-history.md <- WPF research history
+│       ├── sample/*.xaml       <- 17 XAML samples
+│       └── output/sample{N}/   <- HTML output
 ├── design-wpf-app/
-│   ├── design-wpf-app.slnx    ← Blend for Visual Studio에서 열기
-│   ├── migrated/               ← 27개 변환된 UserControl (Blend 타임라인 편집)
-│   ├── db/migration-db.json    ← 마이그레이션 현황 DB (v2 스키마)
-│   └── docs/                   ← 변환 핵심 지침
+│   ├── design-wpf-app.slnx    <- Open in Blend for Visual Studio
+│   ├── migrated/               <- 27 converted UserControls (Blend timeline editable)
+│   ├── db/migration-db.json    <- Migration status DB (v2 schema)
+│   └── docs/                   <- Core conversion guide
 ├── projects/
-│   ├── design/*.pen            ← 프로젝트별 디자인 (정적+애니가이드)
-│   └── prompt/                 ← 프로젝트 프롬프트 기록
+│   ├── design/*.pen            <- Per-project designs (static + animation guide)
+│   └── prompt/                 <- Project prompt history
 ├── harness/
-│   ├── knowledge/              ← 평가 기준 (design-craft.md)
-│   ├── agents/                 ← 평가 에이전트
-│   ├── engine/                 ← RPG 규칙 + 상태 모델
-│   ├── logs/                   ← 작업 로그 + RPG 상태
-│   └── docs/                   ← 버전 변경 이력
-├── CLAUDE.md                   ← Claude Code 프로젝트 지침
+│   ├── knowledge/              <- Evaluation criteria (design-craft.md)
+│   ├── agents/                 <- Evaluation agents
+│   ├── engine/                 <- RPG rules + state model
+│   ├── logs/                   <- Work logs + RPG state
+│   └── docs/                   <- Version change history
+├── CLAUDE.md                   <- Claude Code project instructions
 └── README.md
 ```
 
 ---
 
-## WPF App 마이그레이션 (Blend 편집용)
+## WPF App Migration (for Blend Editing)
 
-수집한 27개 XAML 애니메이션을 **Blend for Visual Studio**에서 타임라인 편집 가능한 WPF App으로 변환한 프로젝트.
-다른 플랫폼(웹, 모바일)에서 애니메이션을 구현할 때, Blend 타임라인에서 키프레임/이징을 시각적으로 확인하는 용도.
+A project that converts 27 collected XAML animations into a WPF App editable via **Blend for Visual Studio** timeline.
+When implementing animations on other platforms (web, mobile), use the Blend timeline to visually inspect keyframes and easing.
 
-### 사용법
+### Usage
 
 ```bash
-# Blend에서 열기
-design-wpf-app/design-wpf-app.slnx   # ← Blend for Visual Studio에서 이 파일 열기
+# Open in Blend
+design-wpf-app/design-wpf-app.slnx   # <- Open this file in Blend for Visual Studio
 
-# 런타임 실행 (갤러리 뷰어)
+# Runtime execution (Gallery Viewer)
 cd design-wpf-app && dotnet run
 
-# 새 XAML 마이그레이션 요청 (Claude Code)
-> "XAML을 WPF앱에 마이그레이션 해줘"
-> "design/xaml/sample/28-xxx.xaml을 Blend 호환으로 변환해줘"
+# Request new XAML migration (Claude Code)
+> "Migrate XAML to WPF app"
+> "Convert design/xaml/sample/28-xxx.xaml to Blend-compatible format"
 ```
 
-### Blend 타임라인 사용법
+### Blend Timeline Usage
 
-1. `migrated/Sample{NN}_*.xaml` 파일을 Blend에서 열기
-2. **타임라인 드롭다운**에서 Storyboard 선택 (GlassHoverIn, SpinnerRotate 등)
-3. **DemoSequence** 선택 시 전체 애니메이션 흐름을 한 번에 재생
-4. 키프레임 클릭으로 이징/타이밍/값 수정 가능
+1. Open `migrated/Sample{NN}_*.xaml` files in Blend
+2. Select a Storyboard from the **timeline dropdown** (GlassHoverIn, SpinnerRotate, etc.)
+3. Select **DemoSequence** to play the full animation flow at once
+4. Click keyframes to modify easing, timing, and values
 
-### 프로젝트 구조
+### Project Structure
 
 ```
 design-wpf-app/
-├── design-wpf-app.slnx     ← Blend에서 열기
-├── MainWindow.xaml          ← 좌측 네비게이션 + 우측 컨텐츠 뷰어
-├── migrated/                ← 27개 변환된 UserControl
-├── db/migration-db.json     ← 마이그레이션 현황 DB (v2)
-└── docs/animation-migration-guide.md  ← 변환 핵심 지침
+├── design-wpf-app.slnx     <- Open in Blend
+├── MainWindow.xaml          <- Left navigation + right content viewer
+├── migrated/                <- 27 converted UserControls
+├── db/migration-db.json     <- Migration status DB (v2)
+└── docs/animation-migration-guide.md  <- Core conversion guide
 ```
 
 ---
 
 ## Roadmap
 
-이 프로젝트는 **하네스 디자인 업그레이드와 함께 지속적으로 샘플 웹을 추가**해 나갈 예정입니다.
+This project will **continuously add sample web pages alongside harness design upgrades**.
 
-- [ ] **Publisher App HTML 구현** (Case W) ― publisher-app.pen 디자인 + 12개 애니메이션 가이드를 실제 웹으로 구현
-- [ ] **WPF 템플릿 확장** (Case A) ― CAT 10+ 추가 (Scroll-driven Animation, View Transition 등)
-- [ ] **신규 프로젝트 디자인** (Case B) ― 대시보드, 이커머스, SaaS 랜딩 등 다양한 앱 레이아웃
-- [ ] **하네스 v3.0** ― Case B→W 파이프라인 자동 연결, 접근성 평가 축 추가
-- [ ] **디자인 시스템** ― 프로젝트 간 공유 가능한 재사용 컴포넌트 라이브러리
+- [ ] **Publisher App HTML Implementation** (Case W) — Implement publisher-app.pen design + 12 animation guides as an actual web page
+- [ ] **WPF Template Expansion** (Case A) — Add CAT 10+ (Scroll-driven Animation, View Transition, etc.)
+- [ ] **New Project Designs** (Case B) — Various app layouts: dashboards, e-commerce, SaaS landing pages, and more
+- [ ] **Harness v3.0** — Auto-connect Case B->W pipeline, add accessibility evaluation axis
+- [ ] **Design System** — Reusable component library shareable across projects
 
-> 모든 샘플은 **Animation-First Design** 원칙에 따라, 룩앤필과 애니메이션 가이드를 먼저 설계한 뒤 구현합니다.
+> All samples follow the **Animation-First Design** principle: look & feel and animation guides are designed first, then implemented.
 
 ---
 
-## 시작하기
+## Getting Started
 
 ```bash
-# 1. 사전 준비
-# Claude Code + Pencil 설치
+# 1. Prerequisites
+# Install Claude Code + Pencil
 
-# 2. 프로젝트 열기
+# 2. Open the project
 cd pencil-creator
 claude
 
-# 3. 첫 작업 시작
-> "wpf-animation 참고해서 포트폴리오 앱을 펜슬로 디자인해줘"  # Case B
-> "wpf-템플릿조사 후 보강해"                                   # Case A
-> "펜슬 참고해서 HTML 만들어줘"                                # Case W
-> "XAML을 WPF앱에 마이그레이션 해줘"                           # Blend 편집용 변환
-> "하네스가 뭐야?"                                            # 사용법 안내
+# 3. Start your first task
+> "Design a portfolio app in Pencil referencing wpf-animation"  # Case B
+> "Research and enrich WPF templates"                            # Case A
+> "Create HTML referencing the Pencil design"                    # Case W
+> "Migrate XAML to WPF app"                                      # Blend editing
+> "What is the harness?"                                         # Usage guide
 ```
 
 ---
 
-## 라이선스
+## License
 
 MIT
+
+---
+
+> **[Korean / 한국어 README](README-KR.md)**
