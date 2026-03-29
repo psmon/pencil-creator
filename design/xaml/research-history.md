@@ -241,3 +241,87 @@
 | WPF Material Design Toggle Button | https://mharwood.uk/wpf-material-design-toggle-button/ |
 | WPF UI (Fluent Design) | https://github.com/lepoco/wpfui |
 | Storyboard 가이드 (moldstud) | https://moldstud.com/articles/p-step-by-step-guide-to-building-simple-storyboards-in-xaml-your-ultimate-tutorial |
+
+---
+
+# 4차 조사 — 사이버 & 디지털 애니메이션 (2026-03-29)
+
+> 목적: Cyberpunk/Futuristic UI 감성의 WPF 애니메이션 기법 6종 조사 및 CAT13 추가
+
+---
+
+## CAT13: 사이버 & 디지털 효과 (Cyber & Digital Effects)
+
+### 22. Glitch Jitter (글리치 떨림)
+
+| 항목 | 내용 |
+|------|------|
+| 출처 | [Microsoft Learn - Animation Tips](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/graphics-multimedia/animation-tips-and-tricks), [Medium - TranslateTransform Animation](https://medium.com/@artillustration391/moving-elements-with-storyboards-translatetransform-animation-in-wpf-0ac391441b37) |
+| 핵심 기술 | TranslateTransform X/Y, DiscreteDoubleKeyFrame, OpacityAnimation, ScaleTransform |
+| 애니메이션 | 급격한 X/Y 오프셋(±8~12px) + Opacity 플리커(0.3↔1.0) + ScaleX 왜곡(±3%), 1초 간격 반복 |
+| 샘플 파일 | [`sample/22-glitch-jitter.xaml`](sample/22-glitch-jitter.xaml) |
+
+### 23. Neon Glow Pulse (네온 글로우 펄스)
+
+| 항목 | 내용 |
+|------|------|
+| 출처 | [Infragistics - Glow Effect](https://www.infragistics.com/blogs/drop-shadow-glow-effect-xaml/), [Microsoft Learn - DropShadowEffect](https://learn.microsoft.com/en-us/previous-versions/windows/silverlight/dotnet-windows-silverlight/cc490119(v=vs.95)) |
+| 핵심 기술 | DropShadowEffect (ShadowDepth=0), BlurRadius/Opacity DoubleAnimation, ColorAnimation |
+| 애니메이션 | BlurRadius 15→40 breathing + Color Cyan↔Magenta cycling (SineEase, 1.5s, AutoReverse ∞) |
+| 샘플 파일 | [`sample/23-neon-glow-pulse.xaml`](sample/23-neon-glow-pulse.xaml) |
+
+### 24. RGB Split / Chromatic Aberration (색수차 분리)
+
+| 항목 | 내용 |
+|------|------|
+| 출처 | [Microsoft Learn - Transforms Overview](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/graphics-multimedia/transforms-overview), [GitHub - WPF-Samples](https://github.com/microsoft/WPF-Samples) |
+| 핵심 기술 | 3-layer TranslateTransform (R/G/B 채널 분리), DiscreteDoubleKeyFrame |
+| 애니메이션 | Red X-3~-8px, Green Y±4px, Blue X+3~+8px 오프셋 + 메인 White 레이어 상단, 3초 주기 |
+| 샘플 파일 | [`sample/24-rgb-split-chromatic.xaml`](sample/24-rgb-split-chromatic.xaml) |
+
+### 25. Scanline Sweep (스캔라인 스윕)
+
+| 항목 | 내용 |
+|------|------|
+| 출처 | [Microsoft Learn - Opacity Animation](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/graphics-multimedia/how-to-animate-the-opacity-of-an-element-or-brush), [CodeGuru - WPF Animation Effects](https://www.codeguru.com/dotnet/interesting-animation-effects-with-wpf/) |
+| 핵심 기술 | TranslateTransform.Y sweep, LinearGradientBrush (cyan glow), DrawingBrush CRT 오버레이 |
+| 애니메이션 | Y -20→400px QuadraticEase 2.5s + Opacity pulse 0.3↔0.9 + 정적 CRT 줄무늬 8% |
+| 샘플 파일 | [`sample/25-scanline-sweep.xaml`](sample/25-scanline-sweep.xaml) |
+
+### 26. Digital Matrix Rain (디지털 매트릭스 레인)
+
+| 항목 | 내용 |
+|------|------|
+| 출처 | [CodeProject - Advanced Animations in WPF](https://www.codeproject.com/Articles/376163/Advanced-Animations-in-WPF), [Microsoft Learn - Storyboards Overview](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/graphics-multimedia/storyboards-overview) |
+| 핵심 기술 | Canvas TextBlock columns, TranslateTransform.Y cascade, staggered BeginTime, Opacity lifecycle |
+| 애니메이션 | 6개 컬럼 하강 (3.2~5s), BeginTime 0~1s stagger, Opacity 0.8→0.2 fade, Cyan/Green 교차 |
+| 샘플 파일 | [`sample/26-digital-matrix-rain.xaml`](sample/26-digital-matrix-rain.xaml) |
+
+### 27. Holographic Shimmer (홀로그래픽 쉬머)
+
+| 항목 | 내용 |
+|------|------|
+| 출처 | [Microsoft Learn - Animate GradientStop](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/graphics-multimedia/how-to-animate-the-position-or-color-of-a-gradient-stop), [C# Corner - Color Animation](https://www.c-sharpcorner.com/Resources/893/) |
+| 핵심 기술 | LinearGradientBrush 4-stop, ColorAnimation iridescent, DoubleAnimation Offset sweep |
+| 애니메이션 | Cyan↔Purple↔Lime↔Amber 무지개빛 전환 + Offset 0.2↔0.8 SineEase 2s AutoReverse ∞ |
+| 샘플 파일 | [`sample/27-holographic-shimmer.xaml`](sample/27-holographic-shimmer.xaml) |
+
+---
+
+## COMBINED SAMPLE: Cyberpunk HUD Panel
+
+| 항목 | 내용 |
+|------|------|
+| 조합 기법 | Glitch Jitter + Neon Glow Pulse + RGB Split + Scanline Sweep |
+| 파이프라인 | Phase 1 글리치(0~200ms) → Phase 2 네온 안정화(200ms~∞) → Phase 3 RGB 분리(500ms~∞) → Phase 4 스캔라인(0~∞) |
+| 가치 | 4개 기법의 통합 구현 예시, Case W에서 즉시 HTML 변환 가능 |
+
+---
+
+## 추가 참고 자료
+
+| 리소스 | URL |
+|--------|-----|
+| XamlFlair Animation Library | https://github.com/XamlFlair/XamlFlair |
+| WPF Advanced Animation Effects | http://shashtricodewiki.blogspot.com/2015/08/wpf-advanced-xaml-animation-effects.html |
+| WPF Fluid Segmented Control | https://medium.com/@artillustration391/mastering-modern-ui-creating-a-fluid-animated-segmented-control-in-wpf-4db952ddeac3 |

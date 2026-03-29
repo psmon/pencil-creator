@@ -1,0 +1,94 @@
+<Window x:Class="CyberEffects.ScanlineSweepDemo"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Scanline Sweep Effect" Height="400" Width="600"
+        Background="#0A0F1C">
+
+    <!-- Scanline Sweep: horizontal line translating vertically + repeating scanline pattern -->
+    <Grid ClipToBounds="True">
+        <!-- Content behind scanlines -->
+        <Border Width="400" Height="250"
+                Background="#1E293B" CornerRadius="12">
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock Text="INTERFACE ACTIVE"
+                           FontFamily="JetBrains Mono" FontSize="24" FontWeight="Bold"
+                           Foreground="#22D3EE" HorizontalAlignment="Center"/>
+                <TextBlock Text="Scanning system modules..."
+                           FontFamily="Inter" FontSize="14"
+                           Foreground="#64748B" HorizontalAlignment="Center" Margin="0,8,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Single bright scanline sweeping top→bottom -->
+        <Rectangle x:Name="ScanLine"
+                   Width="400" Height="3"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top"
+                   Opacity="0.7"
+                   RenderTransformOrigin="0.5,0.5">
+            <Rectangle.Fill>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                    <GradientStop Color="#0022D3EE" Offset="0"/>
+                    <GradientStop Color="#AA22D3EE" Offset="0.3"/>
+                    <GradientStop Color="#FF22D3EE" Offset="0.5"/>
+                    <GradientStop Color="#AA22D3EE" Offset="0.7"/>
+                    <GradientStop Color="#0022D3EE" Offset="1"/>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+            <Rectangle.RenderTransform>
+                <TranslateTransform x:Name="ScanTranslate" Y="-20"/>
+            </Rectangle.RenderTransform>
+            <Rectangle.Triggers>
+                <EventTrigger RoutedEvent="Rectangle.Loaded">
+                    <BeginStoryboard>
+                        <Storyboard RepeatBehavior="Forever">
+                            <!-- Sweep Y from top to bottom -->
+                            <DoubleAnimation
+                                Storyboard.TargetName="ScanTranslate"
+                                Storyboard.TargetProperty="Y"
+                                From="-20" To="400"
+                                Duration="0:0:2.5">
+                                <DoubleAnimation.EasingFunction>
+                                    <QuadraticEase EasingMode="EaseInOut"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+
+                            <!-- Opacity pulse during sweep -->
+                            <DoubleAnimationUsingKeyFrames
+                                Storyboard.TargetName="ScanLine"
+                                Storyboard.TargetProperty="Opacity">
+                                <LinearDoubleKeyFrame KeyTime="0:0:0.0" Value="0.3"/>
+                                <LinearDoubleKeyFrame KeyTime="0:0:1.0" Value="0.9"/>
+                                <LinearDoubleKeyFrame KeyTime="0:0:2.0" Value="0.5"/>
+                                <LinearDoubleKeyFrame KeyTime="0:0:2.5" Value="0.2"/>
+                            </DoubleAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Rectangle.Triggers>
+        </Rectangle>
+
+        <!-- Static scanline overlay (CRT effect) -->
+        <Rectangle Width="400" Height="250"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Opacity="0.08"
+                   IsHitTestVisible="False">
+            <Rectangle.Fill>
+                <DrawingBrush TileMode="Tile"
+                              Viewport="0,0,1,4" ViewportUnits="Absolute">
+                    <DrawingBrush.Drawing>
+                        <GeometryDrawing>
+                            <GeometryDrawing.Geometry>
+                                <RectangleGeometry Rect="0,0,1,2"/>
+                            </GeometryDrawing.Geometry>
+                            <GeometryDrawing.Brush>
+                                <SolidColorBrush Color="#000000"/>
+                            </GeometryDrawing.Brush>
+                        </GeometryDrawing>
+                    </DrawingBrush.Drawing>
+                </DrawingBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+    </Grid>
+</Window>

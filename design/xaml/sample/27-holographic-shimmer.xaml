@@ -1,0 +1,107 @@
+<Window x:Class="CyberEffects.HolographicShimmerDemo"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Holographic Shimmer" Height="400" Width="600"
+        Background="#0A0F1C">
+
+    <!-- Holographic Shimmer: LinearGradientBrush offset animation + iridescent ColorAnimation -->
+    <Grid>
+        <Border Width="360" Height="200"
+                CornerRadius="16"
+                BorderThickness="2">
+            <Border.BorderBrush>
+                <LinearGradientBrush x:Name="HoloBrush"
+                                     StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop x:Name="HoloStop1" Color="#22D3EE" Offset="0"/>
+                    <GradientStop x:Name="HoloStop2" Color="#E040FB" Offset="0.33"/>
+                    <GradientStop x:Name="HoloStop3" Color="#22D3EE" Offset="0.66"/>
+                    <GradientStop x:Name="HoloStop4" Color="#E040FB" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.BorderBrush>
+            <Border.Background>
+                <LinearGradientBrush x:Name="HoloBg"
+                                     StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop x:Name="BgStop1" Color="#1A22D3EE" Offset="0"/>
+                    <GradientStop x:Name="BgStop2" Color="#1AE040FB" Offset="0.5"/>
+                    <GradientStop x:Name="BgStop3" Color="#1A22D3EE" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock Text="HOLOGRAPHIC"
+                           FontFamily="JetBrains Mono" FontSize="28" FontWeight="Bold"
+                           Foreground="#FFFFFF" HorizontalAlignment="Center"/>
+                <TextBlock Text="iridescent shimmer effect"
+                           FontFamily="Inter" FontSize="14"
+                           Foreground="#94A3B8" HorizontalAlignment="Center" Margin="0,8,0,0"/>
+            </StackPanel>
+            <Border.Triggers>
+                <EventTrigger RoutedEvent="Border.Loaded">
+                    <BeginStoryboard>
+                        <Storyboard RepeatBehavior="Forever" AutoReverse="True">
+                            <!-- Color cycling: Cyan ↔ Magenta ↔ Lime -->
+                            <ColorAnimation
+                                Storyboard.TargetName="HoloStop1"
+                                Storyboard.TargetProperty="Color"
+                                From="#22D3EE" To="#A855F7"
+                                Duration="0:0:2">
+                                <ColorAnimation.EasingFunction>
+                                    <SineEase EasingMode="EaseInOut"/>
+                                </ColorAnimation.EasingFunction>
+                            </ColorAnimation>
+                            <ColorAnimation
+                                Storyboard.TargetName="HoloStop2"
+                                Storyboard.TargetProperty="Color"
+                                From="#E040FB" To="#22D3EE"
+                                Duration="0:0:2">
+                                <ColorAnimation.EasingFunction>
+                                    <SineEase EasingMode="EaseInOut"/>
+                                </ColorAnimation.EasingFunction>
+                            </ColorAnimation>
+                            <ColorAnimation
+                                Storyboard.TargetName="HoloStop3"
+                                Storyboard.TargetProperty="Color"
+                                From="#22D3EE" To="#10B981"
+                                Duration="0:0:2">
+                                <ColorAnimation.EasingFunction>
+                                    <SineEase EasingMode="EaseInOut"/>
+                                </ColorAnimation.EasingFunction>
+                            </ColorAnimation>
+                            <ColorAnimation
+                                Storyboard.TargetName="HoloStop4"
+                                Storyboard.TargetProperty="Color"
+                                From="#E040FB" To="#F59E0B"
+                                Duration="0:0:2">
+                                <ColorAnimation.EasingFunction>
+                                    <SineEase EasingMode="EaseInOut"/>
+                                </ColorAnimation.EasingFunction>
+                            </ColorAnimation>
+
+                            <!-- Offset animation for shimmer sweep -->
+                            <DoubleAnimation
+                                Storyboard.TargetName="HoloStop2"
+                                Storyboard.TargetProperty="Offset"
+                                From="0.2" To="0.8"
+                                Duration="0:0:3">
+                                <DoubleAnimation.EasingFunction>
+                                    <SineEase EasingMode="EaseInOut"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+
+                            <!-- Background color sync -->
+                            <ColorAnimation
+                                Storyboard.TargetName="BgStop1"
+                                Storyboard.TargetProperty="Color"
+                                From="#1A22D3EE" To="#1AA855F7"
+                                Duration="0:0:2"/>
+                            <ColorAnimation
+                                Storyboard.TargetName="BgStop2"
+                                Storyboard.TargetProperty="Color"
+                                From="#1AE040FB" To="#1A22D3EE"
+                                Duration="0:0:2"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Border.Triggers>
+        </Border>
+    </Grid>
+</Window>

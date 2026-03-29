@@ -8,3 +8,5 @@
 | 2026-03-29 | W | Four Seasons 종합 쇼케이스 (CAT1~12 전체 36기법) | 94/100 A | [로그](2026-03-29-four-seasons-caseW.md) |
 | 2026-03-29 | C | blumn.ai 원형음성파동 분석 (3JSON+3카드+통합SAMPLE) | 94/100 A | [로그](2026-03-29-radial-voice-wave-caseC.md) |
 | 2026-03-29 | W | AI컴포넌트 샘플페이지 (VoiceWave+3변형+챗봇+상담사+DC) | 90/100 A | [로그](2026-03-29-ai-components-caseW.md) |
+| 2026-03-29 | A | 사이버&디지털 애니메이션 (CAT13 신규, 6카드+6XAML+COMBINED) | 93/100 A | [로그](2026-03-29-cyber-digital-caseA.md) |
+| 2026-03-29 | W | Cyberpunk HUD 5-Theme 페이지 (6FX+테마5종+제어패널) | 92/100 A | [로그](2026-03-29-cyberpunk-hud-caseW.md) |

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="cybertic">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CYBERPUNK HUD PANEL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="bg-gradient-overlay"></div>
+
+<div class="app-container">
+
+  <!-- ===== HEADER ===== -->
+  <header class="header">
+    <div>
+      <div class="header-title">CYBERPUNK HUD PANEL</div>
+      <div class="header-status">STATUS: ONLINE &bull; SYS.NOMINAL &bull; 6 FX MODULES ACTIVE</div>
+    </div>
+    <div style="text-align:right">
+      <div style="font-size:10px;color:var(--text-dim);letter-spacing:1px;">THEME SYSTEM v3.0</div>
+      <div style="font-size:10px;color:var(--accent-3);letter-spacing:1px;">5 MODES AVAILABLE</div>
+    </div>
+  </header>
+
+  <!-- ===== THEME SWITCHER ===== -->
+  <div class="theme-bar">
+    <button class="theme-btn" data-theme="metal">METAL</button>
+    <button class="theme-btn" data-theme="gray">GRAY</button>
+    <button class="theme-btn active" data-theme="cybertic">CYBERTIC</button>
+    <button class="theme-btn" data-theme="neon">NEON</button>
+    <button class="theme-btn" data-theme="plasma">PLASMA</button>
+  </div>
+
+  <!-- ===== ANIMATION CONTROLS ===== -->
+  <div class="controls-panel">
+    <div class="controls-title">ANIMATION CONTROL PANEL</div>
+    <div class="controls-grid">
+
+      <!-- Glitch -->
+      <div class="control-item">
+        <div class="control-toggle" data-toggle="glitch">
+          <div class="toggle-switch on"></div>
+          <span style="font-size:10px;color:var(--text-secondary);letter-spacing:1px;">GLITCH JITTER</span>
+        </div>
+      </div>
+      <div class="control-item">
+        <div class="control-label">GLITCH SPEED <span>1.0</span></div>
+        <input type="range" min="0.2" max="3.0" step="0.1" value="1.0" data-slider="glitch.speed">
+      </div>
+
+      <!-- Neon -->
+      <div class="control-item">
+        <div class="control-toggle" data-toggle="neon">
+          <div class="toggle-switch on"></div>
+          <span style="font-size:10px;color:var(--text-secondary);letter-spacing:1px;">NEON GLOW</span>
+        </div>
+      </div>
+      <div class="control-item">
+        <div class="control-label">NEON SPEED <span>1.5</span></div>
+        <input type="range" min="0.3" max="4.0" step="0.1" value="1.5" data-slider="neon.speed">
+      </div>
+
+      <!-- RGB Split -->
+      <div class="control-item">
+        <div class="control-toggle" data-toggle="rgb">
+          <div class="toggle-switch on"></div>
+          <span style="font-size:10px;color:var(--text-secondary);letter-spacing:1px;">RGB SPLIT</span>
+        </div>
+      </div>
+      <div class="control-item">
+        <div class="control-label">RGB SPEED <span>3.0</span></div>
+        <input type="range" min="0.5" max="6.0" step="0.1" value="3.0" data-slider="rgb.speed">
+      </div>
+
+      <!-- Scanline -->
+      <div class="control-item">
+        <div class="control-toggle" data-toggle="scanline">
+          <div class="toggle-switch on"></div>
+          <span style="font-size:10px;color:var(--text-secondary);letter-spacing:1px;">SCANLINE</span>
+        </div>
+      </div>
+      <div class="control-item">
+        <div class="control-label">SCAN SPEED <span>2.5</span></div>
+        <input type="range" min="0.5" max="5.0" step="0.1" value="2.5" data-slider="scanline.speed">
+      </div>
+
+      <!-- Matrix -->
+      <div class="control-item">
+        <div class="control-toggle" data-toggle="matrix">
+          <div class="toggle-switch on"></div>
+          <span style="font-size:10px;color:var(--text-secondary);letter-spacing:1px;">MATRIX RAIN</span>
+        </div>
+      </div>
+      <div class="control-item">
+        <div class="control-label">RAIN SPEED <span>1.0</span></div>
+        <input type="range" min="0.2" max="3.0" step="0.1" value="1.0" data-slider="matrix.speed">
+      </div>
+      <div class="control-item">
+        <div class="control-label">RAIN DENSITY <span>1.0</span></div>
+        <input type="range" min="0.3" max="2.0" step="0.1" value="1.0" data-slider="matrix.density">
+      </div>
+
+      <!-- Holo -->
+      <div class="control-item">
+        <div class="control-toggle" data-toggle="holo">
+          <div class="toggle-switch on"></div>
+          <span style="font-size:10px;color:var(--text-secondary);letter-spacing:1px;">HOLO SHIMMER</span>
+        </div>
+      </div>
+      <div class="control-item">
+        <div class="control-label">HOLO SPEED <span>2.0</span></div>
+        <input type="range" min="0.5" max="5.0" step="0.1" value="2.0" data-slider="holo.speed">
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== HUD GRID ===== -->
+  <div class="hud-grid">
+
+    <!-- 1. GLITCH JITTER -->
+    <div class="hud-panel glitch-active">
+      <div class="panel-badge" style="background:var(--accent-2);color:#fff;">FX-01</div>
+      <div class="panel-title">GLITCH JITTER</div>
+      <div class="panel-desc">
+        DiscreteDoubleKeyFrame &bull; X/Y Translate + Opacity Flicker + ScaleX Distortion
+        <br>WPF: 1.0s cycle, burst at 0-0.2s &amp; 0.8-0.95s
+      </div>
+      <div class="glitch-container">
+        <div class="glitch-text" data-text="SYSTEM//ERR">SYSTEM//ERR</div>
+      </div>
+    </div>
+
+    <!-- 2. NEON GLOW PULSE -->
+    <div class="hud-panel neon-active">
+      <div class="panel-badge" style="background:var(--accent-1);color:#000;">FX-02</div>
+      <div class="panel-title">NEON GLOW PULSE</div>
+      <div class="panel-desc">
+        DoubleAnimation + ColorAnimation &bull; SineEase EaseInOut
+        <br>BlurRadius 15→40, Opacity 0.5→1.0, Color #22D3EE→#E040FB
+      </div>
+      <div class="neon-container neon-active">
+        <div class="neon-box">CORE</div>
+        <div class="neon-box">LINK</div>
+        <div class="neon-box">NODE</div>
+        <div class="neon-box">SYNC</div>
+      </div>
+    </div>
+
+    <!-- 3. RGB SPLIT / CHROMATIC -->
+    <div class="hud-panel rgb-active">
+      <div class="panel-badge" style="background:#F59E0B;color:#000;">FX-03</div>
+      <div class="panel-title">RGB SPLIT CHROMATIC</div>
+      <div class="panel-desc">
+        TranslateTransform &bull; 3 color layers, Discrete keyframes
+        <br>Red/Blue mirror X offsets, Green Y offset, 3.0s cycle
+      </div>
+      <div class="rgb-container rgb-active">
+        <div class="rgb-text">
+          CHROMATIC
+          <span class="rgb-layer red">CHROMATIC</span>
+          <span class="rgb-layer blue">CHROMATIC</span>
+          <span class="rgb-layer green">CHROMATIC</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. SCANLINE SWEEP -->
+    <div class="hud-panel scanline-active">
+      <div class="panel-badge" style="background:var(--accent-3);color:#000;">FX-04</div>
+      <div class="panel-title">SCANLINE SWEEP</div>
+      <div class="panel-desc">
+        TranslateY -20→400 &bull; QuadraticEase EaseInOut &bull; 2.5s
+        <br>CRT overlay + opacity pulse 0.3→0.9→0.2
+      </div>
+      <div class="scanline-container scanline-active">
+        <div class="scanline-bar"></div>
+        <div class="scanline-content">
+          <h3>SCANNING SUBSYSTEM</h3>
+          <p>VERTICAL SWEEP ACTIVE // CRT EMULATION ON</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. MATRIX RAIN (full width) -->
+    <div class="hud-panel full-width matrix-active">
+      <div class="panel-badge" style="background:var(--accent-3);color:#000;">FX-05</div>
+      <div class="panel-title">DIGITAL MATRIX RAIN</div>
+      <div class="panel-desc">
+        Canvas rAF &bull; 6 columns, staggered BeginTime (0-1.0s), Duration 3.2-5.0s
+        <br>TranslateY 0→800, varied speeds + opacity fade on lead columns
+      </div>
+      <div class="matrix-container matrix-active">
+        <canvas class="matrix-canvas"></canvas>
+      </div>
+    </div>
+
+    <!-- 6. HOLOGRAPHIC SHIMMER -->
+    <div class="hud-panel full-width holo-active">
+      <div class="panel-badge" style="background:var(--accent-2);color:#fff;">FX-06</div>
+      <div class="panel-title">HOLOGRAPHIC SHIMMER</div>
+      <div class="panel-desc">
+        ColorAnimation &bull; 4 gradient stops cycle (cyan/magenta/purple/emerald/amber)
+        <br>Offset sweep 0.2→0.8, 3.0s &bull; SineEase EaseInOut &bull; AutoReverse
+      </div>
+      <div class="holo-container holo-active">
+        <div class="holo-card">HOLO-A</div>
+        <div class="holo-card">HOLO-B</div>
+        <div class="holo-card">HOLO-C</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== STATUS BAR ===== -->
+  <div class="status-bar">
+    <div class="status-item">
+      <div class="status-dot"></div>
+      <span class="status-label">SYS</span>
+      <span class="status-value">ONLINE</span>
+    </div>
+    <div class="status-item">
+      <span class="status-label">FX MODULES</span>
+      <span class="status-value">6 / 6</span>
+    </div>
+    <div class="status-item">
+      <span class="status-label">THEME</span>
+      <span class="status-value" id="theme-display">CYBERTIC</span>
+    </div>
+    <div class="status-item">
+      <span class="status-label">FPS</span>
+      <span class="status-value" id="fps-value">--</span>
+    </div>
+    <div class="status-item">
+      <span class="status-label">WPF→WEB</span>
+      <span class="status-value">WAAPI + CSS + CANVAS</span>
+    </div>
+  </div>
+
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

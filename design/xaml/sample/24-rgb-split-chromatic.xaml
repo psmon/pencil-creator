@@ -1,0 +1,97 @@
+<Window x:Class="CyberEffects.RGBSplitDemo"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="RGB Split / Chromatic Aberration" Height="400" Width="600"
+        Background="#0A0F1C">
+
+    <!-- RGB Split: 3 color-channel layers with offset TranslateTransform -->
+    <Grid>
+        <!-- Red channel (offset left) -->
+        <TextBlock x:Name="RedLayer"
+                   Text="CYBER" FontFamily="JetBrains Mono"
+                   FontSize="64" FontWeight="Bold"
+                   Foreground="#FF000044"
+                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                   RenderTransformOrigin="0.5,0.5">
+            <TextBlock.RenderTransform>
+                <TranslateTransform x:Name="RedOffset" X="-3" Y="0"/>
+            </TextBlock.RenderTransform>
+        </TextBlock>
+
+        <!-- Green channel (center, full opacity) -->
+        <TextBlock x:Name="GreenLayer"
+                   Text="CYBER" FontFamily="JetBrains Mono"
+                   FontSize="64" FontWeight="Bold"
+                   Foreground="#00FF0044"
+                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                   RenderTransformOrigin="0.5,0.5">
+            <TextBlock.RenderTransform>
+                <TranslateTransform x:Name="GreenOffset" X="0" Y="-2"/>
+            </TextBlock.RenderTransform>
+        </TextBlock>
+
+        <!-- Blue/Cyan channel (offset right) -->
+        <TextBlock x:Name="BlueLayer"
+                   Text="CYBER" FontFamily="JetBrains Mono"
+                   FontSize="64" FontWeight="Bold"
+                   Foreground="#22D3EEAA"
+                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                   RenderTransformOrigin="0.5,0.5">
+            <TextBlock.RenderTransform>
+                <TranslateTransform x:Name="BlueOffset" X="3" Y="1"/>
+            </TextBlock.RenderTransform>
+        </TextBlock>
+
+        <!-- Main white text on top -->
+        <TextBlock Text="CYBER" FontFamily="JetBrains Mono"
+                   FontSize="64" FontWeight="Bold"
+                   Foreground="#FFFFFFCC"
+                   HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock.Triggers>
+                <EventTrigger RoutedEvent="TextBlock.Loaded">
+                    <BeginStoryboard>
+                        <Storyboard RepeatBehavior="Forever">
+                            <!-- Red channel X oscillation -->
+                            <DoubleAnimationUsingKeyFrames
+                                Storyboard.TargetName="RedOffset"
+                                Storyboard.TargetProperty="X">
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:0.0" Value="-3"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:0.1" Value="-8"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:0.2" Value="-2"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:0.5" Value="-3"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:2.0" Value="-3"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:2.1" Value="-6"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:2.2" Value="-3"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:3.0" Value="-3"/>
+                            </DoubleAnimationUsingKeyFrames>
+
+                            <!-- Blue channel X oscillation (opposite) -->
+                            <DoubleAnimationUsingKeyFrames
+                                Storyboard.TargetName="BlueOffset"
+                                Storyboard.TargetProperty="X">
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:0.0" Value="3"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:0.1" Value="8"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:0.2" Value="2"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:0.5" Value="3"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:2.0" Value="3"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:2.1" Value="6"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:2.2" Value="3"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:3.0" Value="3"/>
+                            </DoubleAnimationUsingKeyFrames>
+
+                            <!-- Green channel Y jitter -->
+                            <DoubleAnimationUsingKeyFrames
+                                Storyboard.TargetName="GreenOffset"
+                                Storyboard.TargetProperty="Y">
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:0.0" Value="-2"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:0.1" Value="4"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:0.2" Value="-2"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:3.0" Value="-2"/>
+                            </DoubleAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </TextBlock.Triggers>
+        </TextBlock>
+    </Grid>
+</Window>

@@ -1,0 +1,86 @@
+<Window x:Class="CyberEffects.NeonGlowPulseDemo"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Neon Glow Pulse" Height="400" Width="600"
+        Background="#0A0F1C">
+
+    <!-- Neon Glow Pulse: DropShadowEffect BlurRadius + Color cycling -->
+    <Grid>
+        <Border x:Name="NeonBorder"
+                Width="320" Height="90"
+                Background="Transparent"
+                BorderBrush="#22D3EE" BorderThickness="2"
+                CornerRadius="12">
+            <Border.Effect>
+                <DropShadowEffect x:Name="NeonShadow"
+                                  ShadowDepth="0"
+                                  BlurRadius="20"
+                                  Color="#22D3EE"
+                                  Opacity="0.8"/>
+            </Border.Effect>
+            <TextBlock Text="NEON PULSE"
+                       FontFamily="JetBrains Mono" FontSize="28" FontWeight="Bold"
+                       Foreground="#22D3EE"
+                       HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock.Effect>
+                    <DropShadowEffect x:Name="TextGlow"
+                                      ShadowDepth="0"
+                                      BlurRadius="15"
+                                      Color="#22D3EE"
+                                      Opacity="0.9"/>
+                </TextBlock.Effect>
+            </TextBlock>
+            <Border.Triggers>
+                <EventTrigger RoutedEvent="Border.Loaded">
+                    <BeginStoryboard>
+                        <Storyboard RepeatBehavior="Forever" AutoReverse="True">
+                            <!-- BlurRadius breathing 15→40 -->
+                            <DoubleAnimation
+                                Storyboard.TargetName="NeonShadow"
+                                Storyboard.TargetProperty="BlurRadius"
+                                From="15" To="40"
+                                Duration="0:0:1.5">
+                                <DoubleAnimation.EasingFunction>
+                                    <SineEase EasingMode="EaseInOut"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+
+                            <!-- Opacity pulse 0.5→1.0 -->
+                            <DoubleAnimation
+                                Storyboard.TargetName="NeonShadow"
+                                Storyboard.TargetProperty="Opacity"
+                                From="0.5" To="1.0"
+                                Duration="0:0:1.5">
+                                <DoubleAnimation.EasingFunction>
+                                    <SineEase EasingMode="EaseInOut"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+
+                            <!-- Color cycle: Cyan → Magenta → Cyan -->
+                            <ColorAnimation
+                                Storyboard.TargetName="NeonShadow"
+                                Storyboard.TargetProperty="Color"
+                                From="#22D3EE" To="#E040FB"
+                                Duration="0:0:3.0">
+                                <ColorAnimation.EasingFunction>
+                                    <SineEase EasingMode="EaseInOut"/>
+                                </ColorAnimation.EasingFunction>
+                            </ColorAnimation>
+
+                            <!-- Text glow sync -->
+                            <DoubleAnimation
+                                Storyboard.TargetName="TextGlow"
+                                Storyboard.TargetProperty="BlurRadius"
+                                From="10" To="30"
+                                Duration="0:0:1.5">
+                                <DoubleAnimation.EasingFunction>
+                                    <SineEase EasingMode="EaseInOut"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Border.Triggers>
+        </Border>
+    </Grid>
+</Window>
