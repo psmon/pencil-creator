@@ -124,6 +124,88 @@
       color: var(--text-sub);
       font-size: 14px;
     }
+
+    /* ── Divider ── */
+    .section-divider {
+      width: 100%; max-width: 900px;
+      margin: 72px 0 0;
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--pink-light), transparent);
+    }
+
+    /* ── About Section ── */
+    .about { width: 100%; max-width: 900px; margin-top: 48px; }
+    .about-intro { text-align: center; margin-bottom: 40px; }
+    .about-intro h2 { font-size: 22px; font-weight: 800; margin-bottom: 8px; }
+    .about-intro p { font-size: 13px; color: var(--text-sub); line-height: 1.75; max-width: 540px; margin: 0 auto; }
+
+    /* Staggered entrance (CAT7 Staggered List) */
+    .fade-up { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── Prompt Cards ── */
+    .prompt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 32px; }
+    @media (max-width: 640px) { .prompt-grid { grid-template-columns: 1fr; } }
+
+    .prompt-card {
+      background: var(--surface);
+      border-radius: 14px;
+      border: 1px solid rgba(255,183,197,.2);
+      padding: 20px 22px;
+      transition: box-shadow .3s, transform .3s;
+    }
+    .prompt-card:hover { box-shadow: 0 6px 24px rgba(255,145,164,.14); transform: translateY(-2px); }
+    .prompt-card h3 { font-size: 14px; font-weight: 700; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+    .prompt-card h3 .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .prompt-card .label { font-family: var(--mono); font-size: 10px; color: var(--pink); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+    .prompt-card code {
+      display: block; font-family: var(--mono); font-size: 11px;
+      background: rgba(255,145,164,.05); border: 1px solid rgba(255,145,164,.1);
+      border-radius: 8px; padding: 12px; line-height: 1.7; white-space: pre-wrap; word-break: break-word;
+      min-height: 3.4em;
+    }
+    .prompt-card code .typewriter-cursor {
+      display: inline-block; width: 2px; height: 1.1em;
+      background: var(--pink); vertical-align: text-bottom;
+      animation: blink .6s step-end infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+    .prompt-card .output-tag {
+      display: inline-block; font-family: var(--mono); font-size: 10px;
+      padding: 3px 8px; border-radius: 10px; margin-top: 10px;
+      background: rgba(34,197,94,.1); color: #16a34a;
+    }
+
+    /* ── Clone Banner (CAT4 Pulsing Glow) ── */
+    .clone-banner {
+      background: linear-gradient(135deg, rgba(255,145,164,.07), rgba(139,92,246,.07));
+      border: 1px solid rgba(255,183,197,.18);
+      border-radius: 14px; padding: 28px; text-align: center;
+      animation: pulseGlow 4s ease-in-out infinite;
+    }
+    @keyframes pulseGlow {
+      0%,100% { box-shadow: 0 0 0 rgba(255,145,164,0); }
+      50% { box-shadow: 0 0 32px rgba(255,145,164,.1); }
+    }
+    .clone-banner p { font-size: 13px; color: var(--text-sub); line-height: 1.7; margin-bottom: 14px; }
+    .clone-banner .badge { font-family: var(--mono); font-size: 10px; padding: 3px 10px; border-radius: 10px; background: rgba(139,92,246,.1); color: #8B5CF6; margin-bottom: 10px; display: inline-block; }
+    .clone-banner .clone-cmd {
+      display: inline-block; font-family: var(--mono); font-size: 12px;
+      background: var(--surface); border: 1px solid rgba(255,183,197,.25);
+      border-radius: 8px; padding: 8px 18px; user-select: all; cursor: pointer;
+      transition: box-shadow .3s;
+    }
+    .clone-banner .clone-cmd:hover { box-shadow: 0 4px 16px rgba(255,145,164,.15); }
+
+    /* ── Cherry Blossom Canvas (CAT12) ── */
+    #petalCanvas {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 0; opacity: 0;
+      transition: opacity 2s ease;
+    }
+    #petalCanvas.active { opacity: 1; }
+    body > *:not(#petalCanvas) { position: relative; z-index: 1; }
   </style>
 </head>
 <body>
@@ -138,8 +220,95 @@
     <!-- Demos are rendered by JS below -->
   </div>
 
+  <!-- CAT12: Cherry Blossom Background -->
+  <canvas id="petalCanvas"></canvas>
+
+  <!-- ── About & Prompt Guide ── -->
+  <hr class="section-divider">
+
+  <section class="about">
+    <div class="about-intro fade-up">
+      <h2>Pencil Creator</h2>
+      <p>WPF 애니메이션 기법을 디자인 템플릿으로 관리하고, 프롬프트 한 줄로 웹 페이지를 생성하는 Claude Code 전용 디자인 하네스입니다.</p>
+    </div>
+
+    <!-- 템플릿 셀프강화 -->
+    <h3 class="fade-up" style="font-size:15px;font-weight:700;margin-bottom:16px;">
+      <span style="color:var(--pink);">&mdash;</span> 디자인 템플릿 셀프강화
+    </h3>
+    <div class="prompt-grid">
+      <div class="prompt-card fade-up">
+        <div class="label">Case A &middot; WPF 리서칭 &rarr; 템플릿 보강</div>
+        <h3><span class="dot" style="background:#FF91A4;"></span>디자인 조사기능</h3>
+        <code>봄시즌이니 꽃이 날리는, 벚꽃이 흩날리는 등
+봄과 관련된 wpf 애니메이션을 조사한 후
+wpf 관리되는 펜슬 애니메이션 템플릿을 보강해줘</code>
+        <span class="output-tag">&#x2192; wpf-animation.pen CAT12 추가</span>
+      </div>
+      <div class="prompt-card fade-up">
+        <div class="label">웹분석 &rarr; 템플릿 반영</div>
+        <h3><span class="dot" style="background:#8B5CF6;"></span>디자인 분석기능</h3>
+        <code>웹에서 디자인 리소스 딥서칭해서
+애니메이션에 어울릴만한 자료를 찾고
+펜슬 템플릿에 반영해줘</code>
+        <span class="output-tag">&#x2192; 템플릿 품질 자동 강화</span>
+      </div>
+    </div>
+
+    <!-- 페이지 생성 사례 -->
+    <h3 class="fade-up" style="font-size:15px;font-weight:700;margin:28px 0 16px;">
+      <span style="color:var(--pink);">&mdash;</span> 디자인 템플릿으로 페이지 생성
+    </h3>
+    <div class="prompt-grid">
+      <div class="prompt-card fade-up">
+        <div class="label">Case W &middot; sample00</div>
+        <h3><span class="dot" style="background:#FFB7C5;"></span>봄 애니메이션 플레이그라운드</h3>
+        <code>방금 작성한 wpf-봄시즌 애니메이션을 활용해
+봄 애니메이션을 적극 활용하는
+바닐라 JS 웹페이지를 만들어줘</code>
+        <span class="output-tag">&#x2192; sample00/ &middot; 벚꽃·바람·bloom</span>
+      </div>
+      <div class="prompt-card fade-up">
+        <div class="label">Case W &middot; sample01</div>
+        <h3><span class="dot" style="background:#8B5CF6;"></span>사계절 종합 쇼케이스</h3>
+        <code>지금까지 보유한 wpf-애니메이션 템플릿을
+모두 활용해 선보이는 PlayGround 페이지를 만들고 싶습니다
+룩앤필은 봄·여름·가을·겨울 균형있게</code>
+        <span class="output-tag">&#x2192; sample01/ &middot; CAT1~12 전체 활용</span>
+      </div>
+      <div class="prompt-card fade-up">
+        <div class="label">Case W &middot; sample02</div>
+        <h3><span class="dot" style="background:#22D3EE;"></span>AI Voice 컴포넌트</h3>
+        <code>음성파동 통합 컴포넌트를
+펜슬-wpf-애니메이션을 활용해 구현
+고객 챗봇·상담사 AI 콘솔·데이터센터 다이어그램</code>
+        <span class="output-tag">&#x2192; sample02/ &middot; SVG Voice Wave</span>
+      </div>
+      <div class="prompt-card fade-up">
+        <div class="label">배포 &middot; pencil-deploy</div>
+        <h3><span class="dot" style="background:#F59E0B;"></span>원클릭 퍼블리싱</h3>
+        <code>디자인 샘플 배포준비해주세요
+디자인 샘플 퍼블리싱 해주세요</code>
+        <span class="output-tag">&#x2192; GitHub Pages 자동 배포</span>
+      </div>
+    </div>
+
+    <!-- Open Source Clone -->
+    <div class="clone-banner fade-up">
+      <div class="badge">Claude Code 전용 &middot; Open Source</div>
+      <p>클론해서 자신만의 디자인 성장 하네스를 운영할 수 있습니다.<br>WPF 애니메이션 템플릿이 쌓일수록 생성 품질이 함께 올라갑니다.</p>
+      <div class="clone-cmd">git clone https://github.com/psmon/pencil-creator.git</div>
+      <p style="margin-top:16px;margin-bottom:0;">
+        <a href="https://wiki.webnori.com/pages/viewpage.action?pageId=125731375" target="_blank" rel="noopener"
+           style="color:var(--pink);text-decoration:none;font-size:13px;border-bottom:1px dashed var(--pink-light);">
+          Pencil Creator 컨셉 소개 &rarr;
+        </a>
+      </p>
+    </div>
+  </section>
+
   <footer>
-    <p><a href="https://github.com/psmon/pencil-creator">Pencil Creator</a> &mdash; Animation-First Design</p>
+    <p><a href="https://github.com/psmon/pencil-creator">Pencil Creator</a> &mdash; Animation-First Design Harness</p>
   </footer>
 
   <script>
@@ -193,6 +362,133 @@
         grid.appendChild(card);
       });
     }
+    // ═══ CAT7: Scroll-triggered sequential animations ═══
+    // 1) 일반 fade-up (non-prompt-card) — 개별 스크롤 진입 시 fade-in
+    document.querySelectorAll('.fade-up:not(.prompt-card)').forEach(el => {
+      const obs = new IntersectionObserver(([e]) => {
+        if (e.isIntersecting) { el.classList.add('visible'); obs.disconnect(); }
+      }, { threshold: 0.15 });
+      obs.observe(el);
+    });
+
+    // 2) prompt-card — 각 카드가 뷰포트에 진입하면 fade-in → 타이핑 순차 실행
+    document.querySelectorAll('.prompt-card').forEach(card => {
+      const codeEl = card.querySelector('code');
+      if (codeEl) {
+        codeEl.dataset.fullText = codeEl.textContent;
+        codeEl.textContent = '';
+      }
+      const obs = new IntersectionObserver(([e]) => {
+        if (e.isIntersecting) {
+          obs.disconnect();
+          // fade-in
+          card.classList.add('visible');
+          // fade-in transition 완료 후 타이핑 시작 (0.7s)
+          if (codeEl && codeEl.dataset.fullText) {
+            setTimeout(() => {
+              const text = codeEl.dataset.fullText;
+              let i = 0;
+              const cursor = document.createElement('span');
+              cursor.className = 'typewriter-cursor';
+              codeEl.appendChild(cursor);
+              (function type() {
+                if (i < text.length) {
+                  codeEl.insertBefore(document.createTextNode(text[i]), cursor);
+                  i++;
+                  setTimeout(type, 22 + Math.random() * 18);
+                } else {
+                  setTimeout(() => cursor.remove(), 1200);
+                }
+              })();
+            }, 700);
+          }
+        }
+      }, { threshold: 0.4 });
+      obs.observe(card);
+    });
+
+    // ═══ CAT12: Cherry Blossom Petal Background ═══
+    (function initPetalBg() {
+      const canvas = document.getElementById('petalCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let W, H, dpr;
+
+      function resize() {
+        dpr = devicePixelRatio || 1;
+        W = innerWidth; H = innerHeight;
+        canvas.width = W * dpr; canvas.height = H * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      resize();
+      addEventListener('resize', resize);
+
+      // Activate after scroll past demo grid
+      const aboutSection = document.querySelector('.about');
+      const canvasObs = new IntersectionObserver(([e]) => {
+        if (e.isIntersecting) { canvas.classList.add('active'); canvasObs.disconnect(); }
+      }, { threshold: 0.05 });
+      if (aboutSection) canvasObs.observe(aboutSection);
+
+      const GRADS = [['#FFE4EC','#FFB7C5'],['#FFF0F5','#FF91A4'],['#FFDBE5','#FFD1DC']];
+      const rand = (a,b) => Math.random()*(b-a)+a;
+      const pick = arr => arr[Math.floor(Math.random()*arr.length)];
+
+      // SVG petal with radialGradient (same technique as sample00/01)
+      const petalCache = new Map();
+      let pid = 0;
+      function petalImg(sz, c1, c2) {
+        const k = `${sz}_${c1}`;
+        if (petalCache.has(k)) return petalCache.get(k);
+        const id = pid++;
+        const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${sz}" height="${Math.round(sz*1.3)}" viewBox="0 0 20 26">
+          <defs><radialGradient id="pg${id}" cx="35%" cy="30%"><stop offset="0%" stop-color="${c1}" stop-opacity=".9"/>
+          <stop offset="70%" stop-color="${c2}" stop-opacity=".7"/><stop offset="100%" stop-color="${c2}" stop-opacity=".4"/></radialGradient></defs>
+          <path d="M10 0C14 3 18 10 16 18C14 23 12 25 10 26C8 25 6 23 4 18C2 10 6 3 10 0Z" fill="url(#pg${id})"/>
+          <path d="M10 4C12 7 14 12 13 18C12 21 11 23 10 24C9 23 8 21 7 18C6 12 8 7 10 4Z" fill="white" opacity=".12"/></svg>`;
+        const img = new Image();
+        img.src = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml' }));
+        petalCache.set(k, img);
+        return img;
+      }
+
+      const petals = [];
+      const COUNT = 10;
+      function mkPetal(init) {
+        const g = pick(GRADS);
+        const sz = Math.round(rand(6, 13));
+        return {
+          x: rand(0, W), y: init ? rand(0, H) : rand(-30, -5),
+          sz, vy: rand(18, 40), vx: rand(-8, 8),
+          rot: rand(0, 360), rs: rand(20, 60) * (Math.random() > .5 ? 1 : -1),
+          op: rand(.25, .55), img: petalImg(sz, g[0], g[1]),
+          phase: rand(0, 6.28)
+        };
+      }
+      for (let i = 0; i < COUNT; i++) petals.push(mkPetal(true));
+
+      let last = performance.now();
+      function frame(now) {
+        const dt = (now - last) / 1000; last = now;
+        ctx.clearRect(0, 0, W, H);
+        for (const p of petals) {
+          p.y += p.vy * dt;
+          p.x += p.vx * dt + Math.sin(now * .001 + p.phase) * .25;
+          p.rot += p.rs * dt;
+          if (p.y > H + 20) Object.assign(p, mkPetal(false));
+          if (p.img.complete) {
+            ctx.save();
+            ctx.globalAlpha = p.op;
+            ctx.translate(p.x, p.y);
+            ctx.rotate(p.rot * Math.PI / 180);
+            ctx.drawImage(p.img, -p.sz / 2, -p.sz * .65, p.sz, p.sz * 1.3);
+            ctx.restore();
+          }
+        }
+        requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    })();
   </script>
 
 </body>
