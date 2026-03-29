@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pencil Creator — Animation Demos</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #FFFAF5;
+      --surface: #FFFFFF;
+      --pink: #FF91A4;
+      --pink-light: #FFD1DC;
+      --text: #3D2C2E;
+      --text-sub: #8B7073;
+      --mono: 'Cascadia Code', 'Fira Code', 'JetBrains Mono', monospace;
+    }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 80px 24px 48px;
+    }
+    header { text-align: center; margin-bottom: 48px; }
+    header h1 {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    header p {
+      font-size: 14px;
+      color: var(--text-sub);
+      max-width: 480px;
+    }
+    .tag {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--pink);
+      background: rgba(255, 145, 164, 0.1);
+      padding: 5px 14px;
+      border-radius: 16px;
+      margin-bottom: 16px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 24px;
+      width: 100%;
+      max-width: 900px;
+    }
+    .card {
+      background: var(--surface);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 183, 197, 0.25);
+      box-shadow: 0 4px 24px rgba(255, 145, 164, 0.08);
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 32px rgba(255, 145, 164, 0.18);
+    }
+    .card-badge {
+      padding: 16px 20px 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .badge-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .card-title { font-size: 17px; font-weight: 700; }
+    .card-desc {
+      padding: 0 20px 16px;
+      font-size: 13px;
+      color: var(--text-sub);
+      line-height: 1.6;
+    }
+    .card-tags {
+      padding: 0 20px 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .card-tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      padding: 3px 8px;
+      border-radius: 10px;
+      background: rgba(255, 145, 164, 0.08);
+      color: var(--pink);
+    }
+    footer {
+      margin-top: 64px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-sub);
+    }
+    footer a { color: var(--pink); text-decoration: none; }
+    .empty-state {
+      text-align: center;
+      padding: 48px;
+      color: var(--text-sub);
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="tag">Pencil Creator &mdash; Animation Demos</div>
+    <h1>Design Playground</h1>
+    <p>WPF 애니메이션 기법을 웹으로 구현한 데모 컬렉션. 각 카드를 클릭하면 데모 페이지로 이동합니다.</p>
+  </header>
+
+  <div class="grid" id="demoGrid">
+    <!-- Demos are rendered by JS below -->
+  </div>
+
+  <footer>
+    <p><a href="https://github.com/psmon/pencil-creator">Pencil Creator</a> &mdash; Animation-First Design</p>
+  </footer>
+
+  <script>
+    // Demo registry — 새 sample 추가 시 여기에 항목 추가
+    const demos = [
+      {
+        id: 'sample00',
+        title: 'Spring Animation Playground',
+        desc: 'CAT12 봄 & 자연 파티클 애니메이션 3종 + AI Bloom 시퀀스. 벚꽃 낙하, 바람 흩날림, 봄바람 흔들림, AI가 꽃을 피우는 장면.',
+        color: '#FFB7C5',
+        icon: '00',
+        tags: ['TranslateTransform', 'RotateTransform', 'ScaleTransform', 'SineEase', 'WAAPI', 'SVG'],
+      },
+      // 새 데모 추가 시:
+      // { id: 'sample01', title: '...', desc: '...', color: '...', icon: '01', tags: [...] },
+    ];
+
+    const grid = document.getElementById('demoGrid');
+
+    if (demos.length === 0) {
+      grid.innerHTML = '<div class="empty-state">아직 등록된 데모가 없습니다.</div>';
+    } else {
+      demos.forEach(d => {
+        const card = document.createElement('a');
+        card.className = 'card';
+        card.href = `${d.id}/`;
+        card.innerHTML = `
+          <div class="card-badge">
+            <div class="badge-icon" style="background:${d.color}">${d.icon}</div>
+            <div class="card-title">${d.title}</div>
+          </div>
+          <div class="card-desc">${d.desc}</div>
+          <div class="card-tags">
+            ${d.tags.map(t => `<span class="card-tag">${t}</span>`).join('')}
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+  </script>
+
+</body>
+</html>
