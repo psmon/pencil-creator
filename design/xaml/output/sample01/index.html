@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WPF Animation Showcase — Four Seasons</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Hero with animated gradient (CAT4-15) -->
+  <header id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <p class="hero-tag">WPF CAT 1~12 &mdash; 36 Animations</p>
+      <h1 id="heroTitle" class="hero-title"></h1>
+      <p class="hero-desc">12개 카테고리, 36가지 WPF Storyboard 애니메이션을 사계절 테마로 구현한 플레이그라운드</p>
+      <nav class="season-nav">
+        <a href="#spring" class="season-chip spring-chip">Spring</a>
+        <a href="#summer" class="season-chip summer-chip">Summer</a>
+        <a href="#autumn" class="season-chip autumn-chip">Autumn</a>
+        <a href="#winter" class="season-chip winter-chip">Winter</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ═══ SPRING 봄 ═══ CAT12 + CAT4 + CAT10 -->
+  <section id="spring" class="season spring-season">
+    <div class="season-header">
+      <h2 class="season-title">Spring</h2>
+      <p class="season-sub">CAT4 Decorative &middot; CAT10 Ambient &middot; CAT12 Nature Particle</p>
+    </div>
+    <div class="demo-grid">
+      <!-- CAT12: Cherry Blossom Fall -->
+      <div class="demo-card">
+        <div class="demo-badge">12-1</div>
+        <h3>Cherry Blossom Fall</h3>
+        <canvas id="demoFall" class="demo-canvas"></canvas>
+        <p class="demo-tech">TranslateY + RotateTransform + QuadraticEase</p>
+      </div>
+      <!-- CAT12: Petal Scatter -->
+      <div class="demo-card">
+        <div class="demo-badge">12-2</div>
+        <h3>Petal Scatter Wind</h3>
+        <canvas id="demoWind" class="demo-canvas"></canvas>
+        <p class="demo-tech">TranslateXY + ScaleTransform + WindForce</p>
+      </div>
+      <!-- CAT12: Breeze Sway -->
+      <div class="demo-card">
+        <div class="demo-badge">12-3</div>
+        <h3>Spring Breeze Sway</h3>
+        <div id="demoSway" class="demo-stage"></div>
+        <p class="demo-tech">SineEase + AutoReverse + Forever</p>
+      </div>
+      <!-- CAT4: Animated Gradient BG -->
+      <div class="demo-card">
+        <div class="demo-badge">4-1</div>
+        <h3>Gradient Background</h3>
+        <div id="demoGradient" class="demo-stage gradient-demo"></div>
+        <p class="demo-tech">ColorAnimation + GradientStop.Offset</p>
+      </div>
+      <!-- CAT4: Particle Floating Dots -->
+      <div class="demo-card">
+        <div class="demo-badge">4-2</div>
+        <h3>Floating Particles</h3>
+        <canvas id="demoDots" class="demo-canvas"></canvas>
+        <p class="demo-tech">Canvas.Top/Left + Opacity stagger</p>
+      </div>
+      <!-- CAT4: Pulsing Glow -->
+      <div class="demo-card">
+        <div class="demo-badge">4-3</div>
+        <h3>Pulsing Glow</h3>
+        <div id="demoGlow" class="demo-stage glow-demo"></div>
+        <p class="demo-tech">BlurRadius + Opacity SineEase</p>
+      </div>
+      <!-- CAT10: Wave Ripple -->
+      <div class="demo-card">
+        <div class="demo-badge">10-1</div>
+        <h3>Wave Ripple</h3>
+        <div id="demoWave" class="demo-stage wave-demo"></div>
+        <p class="demo-tech">SineWave + OpacityAnimation</p>
+      </div>
+      <!-- CAT10: Breathing Pulse -->
+      <div class="demo-card">
+        <div class="demo-badge">10-2</div>
+        <h3>Breathing Pulse</h3>
+        <div id="demoBreathe" class="demo-stage breathe-demo"></div>
+        <p class="demo-tech">ScaleTransform + AutoReverse Forever</p>
+      </div>
+      <!-- CAT10: Marching Ants -->
+      <div class="demo-card">
+        <div class="demo-badge">10-3</div>
+        <h3>Marching Ants Border</h3>
+        <div id="demoAnts" class="demo-stage ants-demo"></div>
+        <p class="demo-tech">StrokeDashOffset + Forever</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SUMMER 여름 ═══ CAT1 + CAT2 + CAT8 -->
+  <section id="summer" class="season summer-season">
+    <div class="season-header">
+      <h2 class="season-title">Summer</h2>
+      <p class="season-sub">CAT1 Data Input &middot; CAT2 Feedback &middot; CAT8 Interactive</p>
+    </div>
+    <div class="demo-grid">
+      <!-- CAT1: Floating Label -->
+      <div class="demo-card">
+        <div class="demo-badge">1-1</div>
+        <h3>Floating Label</h3>
+        <div class="demo-stage input-demo">
+          <div class="float-group">
+            <input type="text" id="floatInput" class="float-input" placeholder=" ">
+            <label class="float-label">Username</label>
+            <div class="float-bar"></div>
+          </div>
+        </div>
+        <p class="demo-tech">TranslateY -18px + Scale 0.75 + CubicEase</p>
+      </div>
+      <!-- CAT1: ComboBox -->
+      <div class="demo-card">
+        <div class="demo-badge">1-2</div>
+        <h3>Animated ComboBox</h3>
+        <div class="demo-stage input-demo">
+          <div class="combo-box" id="comboBox">
+            <div class="combo-selected">Select option <span class="combo-arrow">&#9662;</span></div>
+            <div class="combo-dropdown">
+              <div class="combo-option">Dashboard</div>
+              <div class="combo-option">Analytics</div>
+              <div class="combo-option">Settings</div>
+            </div>
+          </div>
+        </div>
+        <p class="demo-tech">ScaleY 0&rarr;1 + Opacity + CubicEase</p>
+      </div>
+      <!-- CAT1: Toggle Switch -->
+      <div class="demo-card">
+        <div class="demo-badge">1-3</div>
+        <h3>Toggle Switch</h3>
+        <div class="demo-stage input-demo">
+          <label class="toggle"><input type="checkbox" id="toggleCheck"><span class="toggle-track"><span class="toggle-knob"></span></span><span class="toggle-text">OFF</span></label>
+          <label class="toggle"><input type="checkbox" id="toggleCheck2" checked><span class="toggle-track"><span class="toggle-knob"></span></span><span class="toggle-text">ON</span></label>
+        </div>
+        <p class="demo-tech">TranslateX 0&rarr;22 + ColorAnimation</p>
+      </div>
+      <!-- CAT2: Snackbar Toast -->
+      <div class="demo-card">
+        <div class="demo-badge">2-1</div>
+        <h3>Snackbar Toast</h3>
+        <div class="demo-stage snack-demo" id="snackDemo">
+          <button class="demo-btn" id="snackBtn">Show Toast</button>
+          <div class="snackbar" id="snackbar">File uploaded successfully!</div>
+        </div>
+        <p class="demo-tech">TranslateY 60&rarr;0 + Opacity + CubicEase</p>
+      </div>
+      <!-- CAT2: Progress Bar -->
+      <div class="demo-card">
+        <div class="demo-badge">2-2</div>
+        <h3>Progress Bar</h3>
+        <div class="demo-stage progress-demo">
+          <div class="progress-track"><div class="progress-fill" id="progressFill"></div><div class="progress-glow"></div></div>
+          <div class="progress-track indeterminate"><div class="progress-slider"></div></div>
+        </div>
+        <p class="demo-tech">Width DoubleAnimation + SineEase</p>
+      </div>
+      <!-- CAT2: Badge Pop -->
+      <div class="demo-card">
+        <div class="demo-badge">2-3</div>
+        <h3>Badge Counter Pop</h3>
+        <div class="demo-stage badge-demo">
+          <button class="demo-btn badge-btn" id="badgeBtn">Notifications <span class="badge-count" id="badgeCount">3</span></button>
+        </div>
+        <p class="demo-tech">ScaleXY 0&rarr;1.3&rarr;1 + ElasticEase</p>
+      </div>
+      <!-- CAT8: Ripple Button -->
+      <div class="demo-card">
+        <div class="demo-badge">8-1</div>
+        <h3>Ripple Effect Button</h3>
+        <div class="demo-stage ripple-demo">
+          <button class="ripple-btn">Click Me</button>
+          <button class="ripple-btn alt">Submit</button>
+        </div>
+        <p class="demo-tech">Ellipse Scale + Opacity</p>
+      </div>
+      <!-- CAT8: Accordion -->
+      <div class="demo-card">
+        <div class="demo-badge">8-2</div>
+        <h3>Accordion</h3>
+        <div class="demo-stage accordion-demo">
+          <div class="accordion-item"><div class="accordion-header">Section A <span>+</span></div><div class="accordion-body">Content for section A with smooth height animation.</div></div>
+          <div class="accordion-item"><div class="accordion-header">Section B <span>+</span></div><div class="accordion-body">Content for section B slides down with easing.</div></div>
+        </div>
+        <p class="demo-tech">Height 0&rarr;auto + CubicEase</p>
+      </div>
+      <!-- CAT8: Tooltip -->
+      <div class="demo-card">
+        <div class="demo-badge">8-3</div>
+        <h3>Animated Tooltip</h3>
+        <div class="demo-stage tooltip-demo">
+          <button class="tooltip-trigger" data-tip="Hello! I'm a tooltip">Hover me</button>
+          <button class="tooltip-trigger" data-tip="Another tooltip here">And me</button>
+        </div>
+        <p class="demo-tech">TranslateY + Opacity + ScaleTransform</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ AUTUMN 가을 ═══ CAT3 + CAT6 + CAT9 -->
+  <section id="autumn" class="season autumn-season">
+    <div class="season-header">
+      <h2 class="season-title">Autumn</h2>
+      <p class="season-sub">CAT3 Navigation &middot; CAT6 Path &middot; CAT9 Data Viz</p>
+    </div>
+    <div class="demo-grid">
+      <!-- CAT3: Page Transition -->
+      <div class="demo-card">
+        <div class="demo-badge">3-1</div>
+        <h3>Page Transition</h3>
+        <div class="demo-stage page-demo" id="pageDemo">
+          <div class="page-content active" data-page="0"><h4>Page A</h4><p>Slide transitions</p></div>
+          <div class="page-content" data-page="1"><h4>Page B</h4><p>With CubicEase</p></div>
+          <div class="page-content" data-page="2"><h4>Page C</h4><p>Smooth fading</p></div>
+          <div class="page-nav"><button class="page-btn" data-to="0">A</button><button class="page-btn" data-to="1">B</button><button class="page-btn" data-to="2">C</button></div>
+        </div>
+        <p class="demo-tech">TranslateX &plusmn;300 + Opacity + CubicEase</p>
+      </div>
+      <!-- CAT3: Tab Slide -->
+      <div class="demo-card">
+        <div class="demo-badge">3-2</div>
+        <h3>Tab Slide</h3>
+        <div class="demo-stage tab-demo">
+          <div class="tab-bar"><button class="tab active" data-tab="0">Tab 1</button><button class="tab" data-tab="1">Tab 2</button><button class="tab" data-tab="2">Tab 3</button><div class="tab-indicator"></div></div>
+          <div class="tab-panels"><div class="tab-panel active">Dashboard content</div><div class="tab-panel">Analytics content</div><div class="tab-panel">Settings content</div></div>
+        </div>
+        <p class="demo-tech">TranslateX &plusmn;200 + QuadraticEase</p>
+      </div>
+      <!-- CAT3: Hamburger Morph -->
+      <div class="demo-card">
+        <div class="demo-badge">3-3</div>
+        <h3>Hamburger &harr; X</h3>
+        <div class="demo-stage hamburger-demo">
+          <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+          <button class="hamburger open"><span></span><span></span><span></span></button>
+        </div>
+        <p class="demo-tech">Rotate &plusmn;45&deg; + TranslateY + Opacity</p>
+      </div>
+      <!-- CAT6: Path Follower -->
+      <div class="demo-card">
+        <div class="demo-badge">6-1</div>
+        <h3>Path Follower</h3>
+        <div class="demo-stage">
+          <svg id="pathSvg" class="path-svg" viewBox="0 0 280 140">
+            <path id="followPath" d="M20 120 Q80 20 140 70 Q200 120 260 30" fill="none" stroke="#D97706" stroke-width="2" stroke-dasharray="4 4" opacity="0.4"/>
+            <circle id="follower" cx="20" cy="120" r="8" fill="#F59E0B"/>
+          </svg>
+        </div>
+        <p class="demo-tech">DoubleAnimationAlongPath</p>
+      </div>
+      <!-- CAT6: Parallax -->
+      <div class="demo-card">
+        <div class="demo-badge">6-2</div>
+        <h3>Parallax Layers</h3>
+        <div class="demo-stage parallax-demo" id="parallaxDemo">
+          <div class="parallax-layer" data-speed="0.2" style="background:#FDE68A;opacity:0.3;height:100%;border-radius:50%;width:60px;position:absolute;left:20px"></div>
+          <div class="parallax-layer" data-speed="0.5" style="background:#FBBF24;opacity:0.5;height:80%;border-radius:50%;width:40px;position:absolute;left:100px;top:10%"></div>
+          <div class="parallax-layer" data-speed="0.8" style="background:#F59E0B;opacity:0.7;height:60%;border-radius:50%;width:30px;position:absolute;left:180px;top:20%"></div>
+          <p style="position:absolute;bottom:8px;left:8px;font-size:11px;color:#92400E;opacity:0.6">Move mouse</p>
+        </div>
+        <p class="demo-tech">TranslateTransform + Speed ratio</p>
+      </div>
+      <!-- CAT6: Drag & Drop -->
+      <div class="demo-card">
+        <div class="demo-badge">6-3</div>
+        <h3>Drag &amp; Drop</h3>
+        <div class="demo-stage drag-demo" id="dragDemo">
+          <div class="drag-item" draggable="true" id="dragItem">Drag me</div>
+          <div class="drop-zone" id="dropZone">Drop here</div>
+        </div>
+        <p class="demo-tech">TranslateTransform + ElasticEase snap</p>
+      </div>
+      <!-- CAT9: Skeleton Shimmer -->
+      <div class="demo-card">
+        <div class="demo-badge">9-1</div>
+        <h3>Skeleton Shimmer</h3>
+        <div class="demo-stage skeleton-demo">
+          <div class="skeleton-line w70"></div>
+          <div class="skeleton-line w100"></div>
+          <div class="skeleton-line w85"></div>
+          <div class="skeleton-circle"></div>
+        </div>
+        <p class="demo-tech">GradientStop Offset + Forever</p>
+      </div>
+      <!-- CAT9: Circular Progress -->
+      <div class="demo-card">
+        <div class="demo-badge">9-2</div>
+        <h3>Circular Progress</h3>
+        <div class="demo-stage circular-demo">
+          <svg class="circular-svg" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="40" fill="none" stroke="#FDE68A" stroke-width="8"/>
+            <circle class="circular-fill" cx="50" cy="50" r="40" fill="none" stroke="#F59E0B" stroke-width="8" stroke-linecap="round" stroke-dasharray="251" stroke-dashoffset="251" transform="rotate(-90 50 50)"/>
+            <text x="50" y="55" text-anchor="middle" font-size="18" font-weight="700" fill="#92400E" id="circularText">0%</text>
+          </svg>
+        </div>
+        <p class="demo-tech">StrokeDashoffset + QuadraticEase</p>
+      </div>
+      <!-- CAT9: Bar Chart -->
+      <div class="demo-card">
+        <div class="demo-badge">9-3</div>
+        <h3>Animated Bar Chart</h3>
+        <div class="demo-stage barchart-demo" id="barChart">
+          <div class="bar" data-value="80" style="--bar-color:#F59E0B"></div>
+          <div class="bar" data-value="55" style="--bar-color:#FBBF24"></div>
+          <div class="bar" data-value="90" style="--bar-color:#D97706"></div>
+          <div class="bar" data-value="40" style="--bar-color:#FDE68A"></div>
+          <div class="bar" data-value="70" style="--bar-color:#F59E0B"></div>
+        </div>
+        <p class="demo-tech">Height DoubleAnimation + Stagger</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ WINTER 겨울 ═══ CAT5 + CAT7 + CAT11 -->
+  <section id="winter" class="season winter-season">
+    <div class="season-header">
+      <h2 class="season-title">Winter</h2>
+      <p class="season-sub">CAT5 3D Transform &middot; CAT7 Text &middot; CAT11 Celebration</p>
+    </div>
+    <div class="demo-grid">
+      <!-- CAT5: Flip Card -->
+      <div class="demo-card">
+        <div class="demo-badge">5-1</div>
+        <h3>Flip Card 3D</h3>
+        <div class="demo-stage flip-demo">
+          <div class="flip-card" id="flipCard">
+            <div class="flip-front">Front Side</div>
+            <div class="flip-back">Back Side</div>
+          </div>
+        </div>
+        <p class="demo-tech">RotateTransform3D + Perspective</p>
+      </div>
+      <!-- CAT5: Morphing Shape -->
+      <div class="demo-card">
+        <div class="demo-badge">5-2</div>
+        <h3>Morphing Shape</h3>
+        <div class="demo-stage morph-demo">
+          <svg viewBox="0 0 120 120" class="morph-svg">
+            <path id="morphPath" d="M60 10 L110 90 L10 90 Z" fill="#7DD3FC"/>
+          </svg>
+        </div>
+        <p class="demo-tech">PathGeometry Morph + SineEase</p>
+      </div>
+      <!-- CAT5: Elastic Spring -->
+      <div class="demo-card">
+        <div class="demo-badge">5-3</div>
+        <h3>Elastic Spring</h3>
+        <div class="demo-stage spring-demo">
+          <div class="spring-ball" id="springBall">Pull</div>
+        </div>
+        <p class="demo-tech">ElasticEase Oscillations=3</p>
+      </div>
+      <!-- CAT7: Typewriter -->
+      <div class="demo-card">
+        <div class="demo-badge">7-1</div>
+        <h3>Typewriter Text</h3>
+        <div class="demo-stage typewriter-demo">
+          <p class="typewriter" id="typewriter"></p>
+          <button class="demo-btn small" id="typeBtn">Replay</button>
+        </div>
+        <p class="demo-tech">StringAnimation + Caret blink</p>
+      </div>
+      <!-- CAT7: Marquee -->
+      <div class="demo-card">
+        <div class="demo-badge">7-2</div>
+        <h3>Marquee Ticker</h3>
+        <div class="demo-stage marquee-demo">
+          <div class="marquee-track"><div class="marquee-content">WPF DoubleAnimation &bull; ScaleTransform &bull; RotateTransform &bull; ElasticEase &bull; SineEase &bull; CubicEase &bull; </div><div class="marquee-content">WPF DoubleAnimation &bull; ScaleTransform &bull; RotateTransform &bull; ElasticEase &bull; SineEase &bull; CubicEase &bull; </div></div>
+        </div>
+        <p class="demo-tech">TranslateX + RepeatBehavior Forever</p>
+      </div>
+      <!-- CAT7: Staggered List -->
+      <div class="demo-card">
+        <div class="demo-badge">7-3</div>
+        <h3>Staggered List</h3>
+        <div class="demo-stage stagger-demo" id="staggerDemo">
+          <div class="stagger-item">Item 1</div>
+          <div class="stagger-item">Item 2</div>
+          <div class="stagger-item">Item 3</div>
+          <div class="stagger-item">Item 4</div>
+          <button class="demo-btn small" id="staggerBtn">Replay</button>
+        </div>
+        <p class="demo-tech">TranslateY + Opacity + BeginTime stagger</p>
+      </div>
+      <!-- CAT11: Confetti -->
+      <div class="demo-card">
+        <div class="demo-badge">11-1</div>
+        <h3>Confetti Burst</h3>
+        <div class="demo-stage confetti-demo" id="confettiDemo">
+          <button class="demo-btn" id="confettiBtn">Celebrate!</button>
+          <canvas id="confettiCanvas" class="confetti-canvas"></canvas>
+        </div>
+        <p class="demo-tech">Random velocity + gravity + KeyFrames</p>
+      </div>
+      <!-- CAT11: Zoom Pinch -->
+      <div class="demo-card">
+        <div class="demo-badge">11-2</div>
+        <h3>Zoom / Pinch</h3>
+        <div class="demo-stage zoom-demo">
+          <div class="zoom-target" id="zoomTarget">
+            <svg viewBox="0 0 60 60" width="60"><rect x="5" y="5" width="50" height="50" rx="8" fill="#BAE6FD" stroke="#7DD3FC" stroke-width="2"/><circle cx="30" cy="28" r="10" fill="#7DD3FC"/><path d="M15 45 Q30 35 45 45" fill="none" stroke="#7DD3FC" stroke-width="2"/></svg>
+          </div>
+          <div class="zoom-controls"><button class="zoom-btn" data-zoom="in">+</button><button class="zoom-btn" data-zoom="out">-</button></div>
+        </div>
+        <p class="demo-tech">ScaleTransform + CubicEase</p>
+      </div>
+      <!-- CAT11/1: Glass Button -->
+      <div class="demo-card">
+        <div class="demo-badge">1-G</div>
+        <h3>Glass Effect Button</h3>
+        <div class="demo-stage glass-demo">
+          <button class="glass-btn">Hover &amp; Click</button>
+        </div>
+        <p class="demo-tech">ScaleXY -0.1 + Rotate 360&deg;</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>WPF Animation Showcase &mdash; Four Seasons &times; 12 Categories &times; 36 Techniques</p>
+    <p class="footer-sub">Pencil Creator &mdash; Animation-First Design</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
