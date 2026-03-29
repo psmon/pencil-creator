@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Voice Components Showcase</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ═══ HERO ═══ -->
+  <header class="hero">
+    <span class="hero__eyebrow">+ AI VOICE COMPONENTS</span>
+    <h1 class="hero__title">음성파동 통합 컴포넌트 쇼케이스</h1>
+    <p class="hero__subtitle">Radial Voice Wave 기반 — AI Agent 인터페이스를 위한 고품질 애니메이션 컴포넌트 라이브러리</p>
+    <div class="hero__accent-line"></div>
+    <div class="hero__meta">
+      <span>CAT4 Decorative</span>
+      <span>CAT6 Path &amp; Trajectory</span>
+      <span>CAT7 Sequential</span>
+      <span>CAT8 Interactive</span>
+    </div>
+  </header>
+
+  <!-- ═══ SECTION 1: Core Voice Wave ═══ -->
+  <div class="section__divider"></div>
+  <section class="section" id="sec-core">
+    <span class="section__eyebrow text-purple">+ CORE COMPONENT</span>
+    <h2 class="section__title">01&emsp;Radial Voice Wave — 기본형</h2>
+    <p class="section__desc">60개 방사형 라인의 TrimPath 펄스 + 색상 캐스케이드 순차 파동 — blumn.ai AIVY Agent 분석 기반</p>
+
+    <div class="core-content">
+      <div class="voice-wave-canvas">
+        <svg id="coreWaveSvg" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"></svg>
+      </div>
+
+      <div class="spec-panel">
+        <div class="spec-card">
+          <div class="spec-card__title text-purple">ANIMATION SPEC</div>
+          <div class="spec-grid">
+            <div class="spec-row"><span class="spec-row__label">Lines</span><span class="spec-row__value">60 (6° increment)</span></div>
+            <div class="spec-row"><span class="spec-row__label">Duration</span><span class="spec-row__value">3.5s loop</span></div>
+            <div class="spec-row"><span class="spec-row__label">Trim Path</span><span class="spec-row__value spec-row__value--cyan">90% → 1% → 90%</span></div>
+            <div class="spec-row"><span class="spec-row__label">Color</span><span class="spec-row__value spec-row__value--red">#D8D8D8 → #E4324F</span></div>
+            <div class="spec-row"><span class="spec-row__label">Stagger</span><span class="spec-row__value">40ms / line (2.4s wave)</span></div>
+            <div class="spec-row"><span class="spec-row__label">Easing</span><span class="spec-row__value">cubic-bezier(0.33, 0, 0.67, 1)</span></div>
+          </div>
+        </div>
+
+        <div class="controls-card">
+          <div class="controls-card__title">PARAMETER CONTROLS</div>
+          <div class="slider-row">
+            <span class="slider-row__label">Line Count</span>
+            <input type="range" id="lineCount" min="12" max="120" value="60" step="4">
+            <span class="slider-row__value" id="lineCountVal">60</span>
+          </div>
+          <div class="slider-row">
+            <span class="slider-row__label">Speed</span>
+            <input type="range" id="speed" min="0.2" max="3.0" value="1.0" step="0.1">
+            <span class="slider-row__value" id="speedVal">1.0x</span>
+          </div>
+          <div class="slider-row">
+            <span class="slider-row__label">Stagger</span>
+            <input type="range" id="stagger" min="10" max="100" value="40" step="5" class="cyan">
+            <span class="slider-row__value" id="staggerVal">40ms</span>
+          </div>
+          <div class="color-picker-row">
+            <span class="color-picker-row__label">Active Color</span>
+            <input type="color" id="activeColor" value="#E4324F">
+            <span class="color-picker-row__value text-red" id="activeColorVal">#E4324F</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SECTION 2: Extended Variants ═══ -->
+  <div class="section__divider"></div>
+  <section class="section" id="sec-variants">
+    <span class="section__eyebrow text-purple">+ EXTENDED VARIANTS</span>
+    <h2 class="section__title">02&emsp;확장 변형 컴포넌트</h2>
+    <p class="section__desc">기본 Voice Wave에 CAT4(Glow) · CAT6(Path/Particle) · CAT5(Morph) 기법을 조합한 3가지 변형</p>
+
+    <div class="variant-cards">
+      <!-- Variant A -->
+      <div class="variant-card">
+        <div class="variant-card__badge">
+          <span class="variant-card__tag bg-purple">A</span>
+          <span class="variant-card__name">Glow Pulse Wave</span>
+        </div>
+        <div class="variant-card__canvas" style="background:#0A0F1C">
+          <svg id="glowWaveSvg" viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg"></svg>
+        </div>
+        <p class="variant-card__desc">Voice Wave + Pulsing Glow<br>CAT4 글로우 효과로 외곽 발광 표현</p>
+        <span class="variant-card__tech">CAT4 + CAT6 · filter: drop-shadow() + WAAPI</span>
+      </div>
+
+      <!-- Variant B -->
+      <div class="variant-card">
+        <div class="variant-card__badge">
+          <span class="variant-card__tag bg-cyan">B</span>
+          <span class="variant-card__name">Particle Voice Field</span>
+        </div>
+        <div class="variant-card__canvas" style="background:#0A0F1C">
+          <canvas id="particleCanvas" style="width:100%;height:100%"></canvas>
+        </div>
+        <p class="variant-card__desc">Voice Wave + Floating Particles<br>CAT4 파티클 + CAT6 경로 궤적 결합</p>
+        <span class="variant-card__tech">CAT4 + CAT6 · Canvas particles + SVG wave</span>
+      </div>
+
+      <!-- Variant C -->
+      <div class="variant-card">
+        <div class="variant-card__badge">
+          <span class="variant-card__tag bg-pink">C</span>
+          <span class="variant-card__name">Morphing Spectrum Wave</span>
+        </div>
+        <div class="variant-card__canvas" style="background:#0A0F1C">
+          <svg id="morphWaveSvg" viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg"></svg>
+        </div>
+        <p class="variant-card__desc">Voice Wave + Shape Morph + Gradient BG<br>CAT5 모핑 + CAT4 그라데이션 배경 융합</p>
+        <span class="variant-card__tech">CAT4 + CAT5 + CAT7 · WAAPI morph + gradient shift</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SECTION 3: Customer Chatbot ═══ -->
+  <div class="section__divider"></div>
+  <section class="section" id="sec-chatbot">
+    <span class="section__eyebrow text-cyan">+ CUSTOMER CHATBOT</span>
+    <h2 class="section__title">03&emsp;고객 채팅 챗봇 — AI 응답 애니메이션</h2>
+    <p class="section__desc">고객이 AI 챗봇과 대화할 때 응답 대기·처리·완료 상태를 음성파동 기반 애니메이션으로 시각화</p>
+
+    <div class="chatbot-content">
+      <div class="chat-window">
+        <div class="chat-header">
+          <div class="chat-header__icon">
+            <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="white"/></svg>
+          </div>
+          <span class="chat-header__name">AI Assistant</span>
+          <span class="chat-header__status">온라인</span>
+        </div>
+        <div class="chat-body">
+          <div class="chat-msg chat-msg--user">
+            <div class="chat-msg__bubble chat-msg__bubble--user">상품 반품 절차를 알려주세요</div>
+          </div>
+          <div class="chat-msg">
+            <div class="chat-msg__avatar" style="background:radial-gradient(circle,#A855F7,#6D28D9)"></div>
+            <div class="chat-msg__bubble chat-msg__bubble--ai">반품 절차를 안내해 드리겠습니다. 주문 번호를 확인해 주시면 빠르게 처리해 드릴게요.</div>
+          </div>
+          <div class="chat-msg">
+            <div class="chat-msg__avatar" style="background:radial-gradient(circle,#A855F7,#6D28D9)"></div>
+            <div class="chat-msg__wave-indicator">
+              <svg class="mini-wave" id="chatWaveSvg" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg"></svg>
+              <span>AI가 응답을 생성하고 있습니다...</span>
+            </div>
+          </div>
+        </div>
+        <div class="chat-input">
+          <input type="text" class="chat-input__field" placeholder="메시지를 입력하세요...">
+          <button class="chat-input__send">
+            <svg viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="chat-info-panel">
+        <div class="state-card">
+          <div class="state-card__title text-cyan">CHATBOT ANIMATION STATES</div>
+          <div class="state-item" data-state="idle">
+            <span class="state-item__dot" style="background:#4ADE80"></span>
+            Idle — 미니 파동 대기 (느린 호흡)
+          </div>
+          <div class="state-item active" data-state="processing">
+            <span class="state-item__dot" style="background:#A855F7"></span>
+            Processing — 활성 파동 (TrimPath 펄스)
+          </div>
+          <div class="state-item" data-state="speaking">
+            <span class="state-item__dot" style="background:#E4324F"></span>
+            Speaking — 음성 출력 파동 (전체 활성화)
+          </div>
+          <div class="state-item" data-state="complete">
+            <span class="state-item__dot" style="background:#71717A"></span>
+            Complete — 페이드아웃 수렴
+          </div>
+        </div>
+        <div class="tech-note">
+          <div class="tech-note__title">TECHNIQUES USED</div>
+          <div class="tech-note__item">CAT4&emsp;Pulsing Glow — 대기 상태 호흡 효과</div>
+          <div class="tech-note__item">CAT6&emsp;Trim Path Pulse — 응답 생성 진행 표시</div>
+          <div class="tech-note__item">CAT7&emsp;Color Cascade — 음성 출력 색상 파동</div>
+          <div class="tech-note__item">CAT8&emsp;Ripple Effect — 메시지 전송 인터랙션</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SECTION 4: Agent Console ═══ -->
+  <div class="section__divider"></div>
+  <section class="section" id="sec-agent">
+    <span class="section__eyebrow text-amber">+ AI AGENT CONSOLE</span>
+    <h2 class="section__title">04&emsp;상담사 AI상담 채팅창 — 실시간 분석 인터페이스</h2>
+    <p class="section__desc">상담사가 고객과 대화하며 AI가 실시간으로 감정 분석·추천 응답·이전 이력을 표시하는 분할 인터페이스</p>
+
+    <div class="agent-console">
+      <div class="agent-chat">
+        <div class="agent-chat__header">
+          <div class="agent-chat__avatar" style="background:#F59E0B"></div>
+          <span class="agent-chat__name">고객 #2847 — 김민수</span>
+          <span class="agent-chat__sentiment-badge" style="background:rgba(228,50,79,0.13);color:#E4324F">불만</span>
+        </div>
+        <div class="agent-chat__body">
+          <div class="agent-msg">
+            <div class="agent-msg__avatar" style="background:#F59E0B"></div>
+            <div class="agent-msg__bubble agent-msg__bubble--customer">배송이 일주일이나 지났는데 아직 안왔어요. 너무 화나네요.</div>
+          </div>
+          <div class="agent-msg agent-msg--right">
+            <div class="agent-msg__bubble agent-msg__bubble--agent">정말 불편을 드려 죄송합니다. 바로 확인해 드리겠습니다.</div>
+            <div class="agent-msg__avatar" style="background:#A855F7"></div>
+          </div>
+          <div class="ai-suggest">
+            <div class="ai-suggest__icon">AI</div>
+            <div class="ai-suggest__bubble">추천: 배송 추적 조회 → 보상 안내 → 재발송 제안</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ai-analysis-panel">
+        <div class="ai-panel__header">
+          <div class="ai-panel__icon"></div>
+          <span class="ai-panel__title">AI Analysis Engine</span>
+        </div>
+        <div class="ai-panel__body">
+          <div class="emotion-card">
+            <div class="emotion-card__title text-amber">SENTIMENT ANALYSIS</div>
+            <div class="emotion-bar">
+              <div class="emotion-bar__track">
+                <div class="emotion-bar__fill" style="width:78%"></div>
+              </div>
+              <span class="emotion-bar__val text-red">불만 78%</span>
+            </div>
+          </div>
+
+          <div class="realtime-wave-box">
+            <span class="realtime-wave-box__label">VOICE ACTIVITY</span>
+            <svg id="agentWaveSvg" viewBox="0 0 280 100" xmlns="http://www.w3.org/2000/svg"></svg>
+          </div>
+
+          <div class="history-card">
+            <div class="history-card__title text-purple">PREVIOUS INTERACTIONS</div>
+            <div class="history-card__item text-muted">2026-03-15&emsp;배송 문의 (해결)</div>
+            <div class="history-card__item text-amber">2026-03-22&emsp;교환 요청 (진행중)</div>
+            <div class="history-card__item text-red">2026-03-29&emsp;배송 지연 불만 (현재)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SECTION 5: Data Center Diagram ═══ -->
+  <div class="section__divider"></div>
+  <section class="section" id="sec-datacenter">
+    <span class="section__eyebrow text-teal">+ AI DATA CENTER DIAGRAM</span>
+    <h2 class="section__title">05&emsp;AI 데이터센터 — 이벤트 흐름 다이어그램</h2>
+    <p class="section__desc">AI센터 서버 클러스터의 이벤트 전파 과정을 경로 애니메이션 + 파티클 + 음성파동으로 시각화한 종합 다이어그램</p>
+
+    <div class="datacenter-diagram" id="datacenterDiagram">
+      <!-- Particle overlay -->
+      <canvas id="dcParticleCanvas" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:5"></canvas>
+
+      <!-- Grid lines -->
+      <div class="dc-grid-line" style="top:100px"></div>
+      <div class="dc-grid-line" style="top:250px"></div>
+      <div class="dc-grid-line" style="top:400px"></div>
+
+      <!-- Layer labels -->
+      <span class="dc-layer-label" style="top:30px">CLIENT LAYER</span>
+      <span class="dc-layer-label" style="top:140px">API GATEWAY</span>
+      <span class="dc-layer-label" style="top:280px">AI PROCESSING CLUSTER</span>
+      <span class="dc-layer-label" style="top:430px">EVENT BUS / RESPONSE</span>
+
+      <!-- Client nodes -->
+      <div class="dc-node" style="left:200px;top:50px;width:120px;height:60px;background:var(--surface-tertiary);border:1px solid rgba(168,85,247,0.2)" data-glow="rgba(168,85,247,0.3)">
+        <span class="dc-node__icon">📱</span>
+        <span class="dc-node__label text-fg">Mobile App</span>
+      </div>
+      <div class="dc-node" style="left:540px;top:50px;width:120px;height:60px;background:var(--surface-tertiary);border:1px solid rgba(168,85,247,0.2)" data-glow="rgba(168,85,247,0.3)">
+        <span class="dc-node__icon">🖥️</span>
+        <span class="dc-node__label text-fg">Web Console</span>
+      </div>
+      <div class="dc-node" style="left:880px;top:50px;width:120px;height:60px;background:var(--surface-tertiary);border:1px solid rgba(245,158,11,0.2)" data-glow="rgba(245,158,11,0.3)">
+        <span class="dc-node__icon">🎧</span>
+        <span class="dc-node__label text-fg">Agent Desk</span>
+      </div>
+
+      <!-- Gateway -->
+      <div class="dc-node" style="left:500px;top:160px;width:200px;height:60px;background:rgba(34,211,238,0.07);border:1px solid rgba(34,211,238,0.27)" data-glow="rgba(34,211,238,0.3)">
+        <span class="dc-node__icon">🛡️</span>
+        <span class="dc-node__label text-cyan">API Gateway / LB</span>
+      </div>
+
+      <!-- AI Cluster -->
+      <div class="dc-node" style="left:160px;top:300px;width:140px;height:70px;background:rgba(228,50,79,0.07);border:1px solid rgba(228,50,79,0.27)" data-glow="rgba(228,50,79,0.3)">
+        <span class="dc-node__icon">🧠</span>
+        <span class="dc-node__label text-red">NLU Engine</span>
+      </div>
+      <div class="dc-node" style="left:480px;top:300px;width:140px;height:70px;background:rgba(168,85,247,0.07);border:1px solid rgba(168,85,247,0.27)" data-glow="rgba(168,85,247,0.3)">
+        <span class="dc-node__icon">⚡</span>
+        <span class="dc-node__label text-purple">LLM Inference</span>
+      </div>
+      <div class="dc-node" style="left:800px;top:300px;width:140px;height:70px;background:rgba(78,205,196,0.07);border:1px solid rgba(78,205,196,0.27)" data-glow="rgba(78,205,196,0.3)">
+        <span class="dc-node__icon">💾</span>
+        <span class="dc-node__label text-teal">Vector DB</span>
+      </div>
+
+      <!-- Event Bus -->
+      <div class="dc-event-bus" style="left:200px;top:430px;width:800px;height:50px;background:rgba(245,158,11,0.07);border:1px solid rgba(245,158,11,0.2)">
+        <span class="dc-event-bus__icon">📡</span>
+        <span class="dc-event-bus__text text-amber">EVENT BUS — Kafka / Redis Streams</span>
+        <span class="dc-event-bus__status text-green">STREAMING</span>
+      </div>
+
+      <!-- Voice Wave Status indicator -->
+      <div class="dc-wave-status" style="right:60px;top:300px">
+        <svg class="dc-wave-svg" viewBox="0 0 40 40" width="40" height="40" xmlns="http://www.w3.org/2000/svg"></svg>
+        <span class="dc-wave-status__label text-red" style="opacity:0.5">Voice Wave<br>Status</span>
+      </div>
+
+      <!-- SVG Connections -->
+      <svg style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:2" xmlns="http://www.w3.org/2000/svg">
+        <g class="dc-connection">
+          <!-- Client → Gateway -->
+          <line x1="260" y1="110" x2="600" y2="160" stroke="rgba(168,85,247,0.25)" stroke-width="1" stroke-dasharray="4 4"/>
+          <line x1="600" y1="110" x2="600" y2="160" stroke="rgba(168,85,247,0.25)" stroke-width="1" stroke-dasharray="4 4"/>
+          <line x1="940" y1="110" x2="600" y2="160" stroke="rgba(245,158,11,0.25)" stroke-width="1" stroke-dasharray="4 4"/>
+          <!-- Gateway → AI Cluster -->
+          <line x1="500" y1="220" x2="230" y2="300" stroke="rgba(34,211,238,0.2)" stroke-width="1" stroke-dasharray="4 4"/>
+          <line x1="600" y1="220" x2="550" y2="300" stroke="rgba(34,211,238,0.2)" stroke-width="1" stroke-dasharray="4 4"/>
+          <line x1="700" y1="220" x2="870" y2="300" stroke="rgba(34,211,238,0.2)" stroke-width="1" stroke-dasharray="4 4"/>
+          <!-- AI Cluster → Event Bus -->
+          <line x1="230" y1="370" x2="400" y2="430" stroke="rgba(228,50,79,0.2)" stroke-width="1" stroke-dasharray="4 4"/>
+          <line x1="550" y1="370" x2="600" y2="430" stroke="rgba(168,85,247,0.2)" stroke-width="1" stroke-dasharray="4 4"/>
+          <line x1="870" y1="370" x2="800" y2="430" stroke="rgba(78,205,196,0.2)" stroke-width="1" stroke-dasharray="4 4"/>
+        </g>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ═══ Footer ═══ -->
+  <footer style="padding:40px 60px;text-align:center;border-top:1px solid var(--border-subtle)">
+    <p style="font-family:var(--font-mono);font-size:11px;color:var(--fg-muted);letter-spacing:2px">
+      AI VOICE COMPONENTS v1.0 — Radial Voice Wave + 8 CAT Techniques — Pencil Design System
+    </p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

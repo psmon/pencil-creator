@@ -51,12 +51,25 @@ Phase 1 — Gather (researching):
   → 핵심 기술 수집: EventTrigger, DoubleAnimation, Transform, Easing
   → design/xaml/sample/*.xaml 기존 파일 확인
 
-Phase 2 — Action (designing):
+Phase 2a — Action: 개별 카드 (designing):
   → wpf-animation.pen에 신규 카드 생성
   → 각 카드 구조: 번호+제목 + WPF 속성 설명 + Before→After 시각 미리보기 + XAML 코드 스니펫
   → 다크 테마 (#0A0F1C 배경, #22D3EE cyan 악센트, JetBrains Mono)
   → design/xaml/sample/ 에 .xaml 샘플 파일 저장
   → design/xaml/research-history.md 갱신
+
+Phase 2b — Action: COMBINED SAMPLE (designing):
+  ⚠️ 조사 출처에서 2개+ 기법이 조합된 실제 사용 사례가 파악된 경우 반드시 생성
+  → wpf-animation.pen 하단에 "SAMPLE — {이름} (통합 컴포넌트)" 프레임 생성
+  → 구성 요소:
+    - COMBINED SAMPLE 배지 + Source URL
+    - 타이틀 + 기법 조합 요약 설명
+    - 좌측: 시각 프리뷰 (실제 동작 모습의 정적 표현 + 범례)
+    - 우측: 스펙 그리드 (Canvas/Lines/Trim/Color/Stagger/Easing 등 핵심 수치)
+    - 우측 하단: JSON/XAML REFERENCES (관련 파일 경로 매핑)
+    - 하단: WPF IMPLEMENTATION + CSS/SVG IMPLEMENTATION 코드 블록 나란히
+  → 가치: 이 프레임 하나만 참조하면 개별 카드를 조합할 필요 없이 즉시 구현 가능
+  → Case W에서 이 SAMPLE 프레임을 직접 참조하여 HTML 생성 가능
 
 Phase 3 — Verify (design-evaluating):
   → design-craft.md Case A 3축 평가
@@ -172,6 +185,21 @@ Phase 2b — Action: 펜슬 컴포넌트 업데이트 (designing):
   → JSON과 펜슬 카드 간 1:N 또는 N:1 매핑 가능
   → 향후 Case W에서 HTML 구현 시 재활용 목적
 
+Phase 2c — Action: COMBINED SAMPLE (designing):
+  ⚠️ 분석 대상 웹사이트에서 2개+ 기법이 조합된 실제 사용 사례가 파악된 경우 반드시 생성
+  → wpf-animation.pen 하단에 "SAMPLE — {이름} (통합 컴포넌트)" 프레임 생성
+  → 프레임 구성:
+    - COMBINED SAMPLE 배지 (빨강 #E4324F) + Source URL
+    - 타이틀 (한영 병기) + 기법 파이프라인 요약 (분석→분리→매핑)
+    - 좌측 VISUAL STRUCTURE: 실제 동작의 정적 표현 + 범례 (Active/Inactive/Transition)
+    - 우측 ANIMATION SPEC: 핵심 수치 그리드 (Canvas, Lines, Trim, Color, Stagger, Easing)
+    - 우측 JSON REFERENCES: 관련 JSON 파일 경로 ← 기법명 매핑
+    - 하단 코드 블록: WPF IMPLEMENTATION + CSS/SVG IMPLEMENTATION 나란히
+  → 가치:
+    - 개별 카드 = 기법별 학습/재조합용 (사용자가 원하는 조합 가능)
+    - COMBINED SAMPLE = 실제 사례 그대로 즉시 구현용 (조합 고민 불필요)
+    - Case W에서 이 SAMPLE 프레임 하나만 참조하면 전체 애니메이션 구현 가능
+
 Phase 3 — Verify (design-evaluating):
   → design-craft.md Case C 3축 평가
     C1: 조사 깊이 & 정확성 (35점)
@@ -190,6 +218,8 @@ Phase 3 — Verify (design-evaluating):
 □ 펜슬 컴포넌트 카드가 JSON과 매핑되어 생성되었는가?
 □ Before→After 시각 미리보기가 포함되었는가?
 □ 재활용 가능한 형태로 구조화되었는가? (다음 세션에서 참조 가능)
+□ 2개+ 기법이 조합된 경우, COMBINED SAMPLE 프레임이 생성되었는가?
+□ COMBINED SAMPLE에 시각 프리뷰 + 스펙 + JSON 참조 + WPF/CSS 코드가 통합되었는가?
 ```
 
 ---

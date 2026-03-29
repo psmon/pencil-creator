@@ -1,0 +1,2179 @@
+{
+  "version": "2.9",
+  "children": [
+    {
+      "type": "frame",
+      "id": "rheof",
+      "x": 0,
+      "y": 0,
+      "name": "AI Components Sample Page",
+      "width": 1400,
+      "fill": "#0A0A0A",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "7pUIX",
+          "name": "Hero Section",
+          "width": "fill_container",
+          "height": 480,
+          "fill": {
+            "type": "gradient",
+            "gradientType": "linear",
+            "enabled": true,
+            "rotation": 180,
+            "size": {
+              "height": 1
+            },
+            "colors": [
+              {
+                "color": "#1A0A2E",
+                "position": 0
+              },
+              {
+                "color": "#0A0A0A",
+                "position": 1
+              }
+            ]
+          },
+          "layout": "vertical",
+          "gap": 24,
+          "padding": [
+            80,
+            60,
+            60,
+            60
+          ],
+          "justifyContent": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "zltSg",
+              "name": "hEye",
+              "fill": "#A855F7",
+              "content": "+ AI VOICE COMPONENTS",
+              "fontFamily": "Geist Mono",
+              "fontSize": 13,
+              "fontWeight": "500",
+              "letterSpacing": 4
+            },
+            {
+              "type": "text",
+              "id": "j6SdW",
+              "name": "hTitle",
+              "fill": "#FFFFFF",
+              "content": "음성파동 통합 컴포넌트 쇼케이스",
+              "fontFamily": "Inter",
+              "fontSize": 48,
+              "fontWeight": "800",
+              "letterSpacing": -1
+            },
+            {
+              "type": "text",
+              "id": "xKbn6",
+              "name": "hSub",
+              "fill": "#71717A",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Radial Voice Wave 기반 — AI Agent 인터페이스를 위한 고품질 애니메이션 컴포넌트 라이브러리",
+              "fontFamily": "Inter",
+              "fontSize": 18,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "rectangle",
+              "cornerRadius": 2,
+              "id": "818dx",
+              "name": "hLine",
+              "fill": "#A855F7",
+              "width": 80,
+              "height": 3
+            },
+            {
+              "type": "frame",
+              "id": "bYAzm",
+              "name": "hMeta",
+              "width": "fill_container",
+              "gap": 24,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "Y3NCB",
+                  "fill": "#A855F7",
+                  "content": "CAT4 Decorative",
+                  "fontFamily": "Geist Mono",
+                  "fontSize": 11,
+                  "fontWeight": "normal",
+                  "letterSpacing": 2
+                },
+                {
+                  "type": "text",
+                  "id": "mWdsm",
+                  "fill": "#71717A",
+                  "content": "CAT6 Path & Trajectory",
+                  "fontFamily": "Geist Mono",
+                  "fontSize": 11,
+                  "fontWeight": "normal",
+                  "letterSpacing": 2
+                },
+                {
+                  "type": "text",
+                  "id": "mq71G",
+                  "fill": "#71717A",
+                  "content": "CAT7 Sequential",
+                  "fontFamily": "Geist Mono",
+                  "fontSize": 11,
+                  "fontWeight": "normal",
+                  "letterSpacing": 2
+                },
+                {
+                  "type": "text",
+                  "id": "qZIgG",
+                  "fill": "#71717A",
+                  "content": "CAT8 Interactive",
+                  "fontFamily": "Geist Mono",
+                  "fontSize": 11,
+                  "fontWeight": "normal",
+                  "letterSpacing": 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "rectangle",
+          "id": "yqyF2",
+          "fill": "#1A1A1A",
+          "width": "fill_container",
+          "height": 1
+        },
+        {
+          "type": "frame",
+          "id": "s2kY8",
+          "name": "Section 1 — Core Voice Wave",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 40,
+          "padding": 60,
+          "children": [
+            {
+              "type": "text",
+              "id": "wBQPg",
+              "fill": "#A855F7",
+              "content": "+ CORE COMPONENT",
+              "fontFamily": "Geist Mono",
+              "fontSize": 11,
+              "fontWeight": "normal",
+              "letterSpacing": 3
+            },
+            {
+              "type": "text",
+              "id": "eypMl",
+              "fill": "#FFFFFF",
+              "content": "01  Radial Voice Wave — 기본형",
+              "fontFamily": "Inter",
+              "fontSize": 32,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "lHrb7",
+              "fill": "#71717A",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "60개 방사형 라인의 TrimPath 펄스 + 색상 캐스케이드 순차 파동",
+              "fontFamily": "Inter",
+              "fontSize": 15,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "frame",
+              "id": "kP6Ud",
+              "name": "row1",
+              "width": "fill_container",
+              "gap": 32,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "qXhIN",
+                  "name": "voice-wave-canvas",
+                  "width": 400,
+                  "height": 400,
+                  "fill": "#111827",
+                  "cornerRadius": 16,
+                  "layout": "none",
+                  "children": [
+                    {
+                      "type": "ellipse",
+                      "id": "0lnvp",
+                      "x": 40,
+                      "y": 40,
+                      "fill": "#00000000",
+                      "width": 320,
+                      "height": 320,
+                      "stroke": {
+                        "align": "center",
+                        "thickness": 1,
+                        "fill": "#1E293B"
+                      }
+                    },
+                    {
+                      "type": "ellipse",
+                      "id": "boZ9T",
+                      "x": 80,
+                      "y": 80,
+                      "fill": "#00000000",
+                      "width": 240,
+                      "height": 240,
+                      "stroke": {
+                        "align": "center",
+                        "thickness": 1,
+                        "fill": "#1E293B44"
+                      }
+                    },
+                    {
+                      "type": "ellipse",
+                      "id": "xlLP2",
+                      "x": 188,
+                      "y": 188,
+                      "fill": {
+                        "type": "gradient",
+                        "gradientType": "radial",
+                        "enabled": true,
+                        "rotation": 0,
+                        "size": {
+                          "width": 1,
+                          "height": 1
+                        },
+                        "colors": [
+                          {
+                            "color": "#E4324F",
+                            "position": 0
+                          },
+                          {
+                            "color": "#E4324F00",
+                            "position": 1
+                          }
+                        ]
+                      },
+                      "width": 24,
+                      "height": 24
+                    },
+                    {
+                      "type": "line",
+                      "id": "TW9hf",
+                      "x": 200,
+                      "y": 74,
+                      "name": "l1",
+                      "width": 0,
+                      "height": 21,
+                      "stroke": {
+                        "align": "center",
+                        "thickness": 4,
+                        "cap": "round",
+                        "fill": "#E4324F"
+                      }
+                    },
+                    {
+                      "type": "line",
+                      "id": "N3ABI",
+                      "x": 263,
+                      "y": 82,
+                      "name": "l2",
+                      "rotation": 29.999999999999996,
+                      "width": 0,
+                      "height": 21,
+                      "stroke": {
+                        "align": "center",
+                        "thickness": 4,
+                        "cap": "round",
+                        "fill": "#E55A71"
+                      }
+                    },
+                    {
+                      "type": "line",
+                      "id": "Egh5H",
+                      "x": 305,
+                      "y": 118,
+                      "name": "l3",
+                      "rotation": 59.99999999999999,
+                      "width": 0,
+                      "height": 21,
+                      "stroke": {
+                        "align": "center",
+                        "thickness": 4,
+                        "cap": "round",
+                        "fill": "#DB1E3E"
+                      }
+                    },
+                    {
+                      "type": "line",
+                      "id": "HCVRi",
+                      "x": 318,
+                      "y": 190,
+                      "name": "l4",
+                      "rotation": 90,
+                      "width": 0,
+                      "height": 21,
+                      "stroke": {
+                        "align": "center",
+                        "thickness": 4,
+                        "cap": "round",
+                        "fill": "#D8D8D8"
+                      }
+                    },
+                    {
+                      "type": "line",
+                      "id": "AGVWI",
+                      "x": 305,
+                      "y": 261,
+                      "name": "l5",
+                      "rotation": 119.99999999999999,
+                      "width": 0,
+                      "height": 21,
+                      "stroke": {
+                        "align": "center",
+                        "thickness": 4,
+                        "cap": "round",
+                        "fill": "#D8D8D8"
+                      }
+                    },
+                    {
+                      "type": "line",
+                      "id": "tNRnB",
+                      "x": 263,
+                      "y": 297,
+                      "name": "l6",
+                      "rotation": 150,
+                      "width": 0,
+                      "height": 21,
+                      "stroke": {
+                        "align": "center",
+                        "thickness": 4,
+                        "cap": "round",
+                        "fill": "#E55A71"
+                      }
+                    },
+                    {
+                      "type": "line",
+                      "id": "rH9O6",
+                      "x": 200,
+                      "y": 305,
+                      "name": "l7",
+                      "rotation": 180,
+                      "width": 0,
+                      "height": 21,
+                      "stroke": {
+                        "align": "center",
+                        "thickness": 4,
+                        "cap": "round",
+                        "fill": "#E4324F"
+                      }
+                    },
+                    {
+                      "type": "line",
+                      "id": "dleVb",
+                      "x": 137,
+                      "y": 297,
+                      "name": "l8",
+                      "rotation": 210.00000000000003,
+                      "width": 0,
+                      "height": 21,
+                      "stroke": {
+                        "align": "center",
+                        "thickness": 4,
+                        "cap": "round",
+                        "fill": "#DB1E3E"
+                      }
+                    },
+                    {
+                      "type": "line",
+                      "id": "kuZbQ",
+                      "x": 95,
+                      "y": 261,
+                      "name": "l9",
+                      "rotation": 239.99999999999997,
+                      "width": 0,
+                      "height": 21,
+                      "stroke": {
+                        "align": "center",
+                        "thickness": 4,
+                        "cap": "round",
+                        "fill": "#D8D8D8"
+                      }
+                    },
+                    {
+                      "type": "line",
+                      "id": "ILSwh",
+                      "x": 82,
+                      "y": 190,
+                      "name": "l10",
+                      "rotation": 270,
+                      "width": 0,
+                      "height": 21,
+                      "stroke": {
+                        "align": "center",
+                        "thickness": 4,
+                        "cap": "round",
+                        "fill": "#D8D8D8"
+                      }
+                    },
+                    {
+                      "type": "line",
+                      "id": "PFIze",
+                      "x": 95,
+                      "y": 118,
+                      "name": "l11",
+                      "rotation": 300,
+                      "width": 0,
+                      "height": 21,
+                      "stroke": {
+                        "align": "center",
+                        "thickness": 4,
+                        "cap": "round",
+                        "fill": "#E55A71"
+                      }
+                    },
+                    {
+                      "type": "line",
+                      "id": "YGt6Q",
+                      "x": 137,
+                      "y": 82,
+                      "name": "l12",
+                      "rotation": 330,
+                      "width": 0,
+                      "height": 21,
+                      "stroke": {
+                        "align": "center",
+                        "thickness": 4,
+                        "cap": "round",
+                        "fill": "#E4324F"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "85BNK",
+                  "name": "spec-panel",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 24,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "Vopga",
+                      "name": "specCard",
+                      "width": "fill_container",
+                      "fill": "#111827",
+                      "cornerRadius": 12,
+                      "layout": "vertical",
+                      "gap": 16,
+                      "padding": 24,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "QBW4L",
+                          "fill": "#A855F7",
+                          "content": "ANIMATION SPEC",
+                          "fontFamily": "Geist Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal",
+                          "letterSpacing": 3
+                        },
+                        {
+                          "type": "frame",
+                          "id": "Phpbz",
+                          "name": "sg",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 10,
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "IFVxX",
+                              "name": "r1",
+                              "width": "fill_container",
+                              "gap": 8,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "4fo7R",
+                                  "fill": "#71717A",
+                                  "textGrowth": "fixed-width",
+                                  "width": 120,
+                                  "content": "Lines",
+                                  "fontFamily": "Geist Mono",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "JVqk9",
+                                  "fill": "#FFFFFF",
+                                  "content": "60 (6° increment)",
+                                  "fontFamily": "Geist Mono",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "3LRrw",
+                              "name": "r2",
+                              "width": "fill_container",
+                              "gap": 8,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "AGzuh",
+                                  "fill": "#71717A",
+                                  "textGrowth": "fixed-width",
+                                  "width": 120,
+                                  "content": "Duration",
+                                  "fontFamily": "Geist Mono",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "IpEtq",
+                                  "fill": "#FFFFFF",
+                                  "content": "3.5s loop",
+                                  "fontFamily": "Geist Mono",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "3JOv6",
+                              "name": "r3",
+                              "width": "fill_container",
+                              "gap": 8,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "dGVPQ",
+                                  "fill": "#71717A",
+                                  "textGrowth": "fixed-width",
+                                  "width": 120,
+                                  "content": "Trim Path",
+                                  "fontFamily": "Geist Mono",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "yV1Vd",
+                                  "fill": "#22D3EE",
+                                  "content": "90% → 1% → 90%",
+                                  "fontFamily": "Geist Mono",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "x1F5h",
+                              "name": "r4",
+                              "width": "fill_container",
+                              "gap": 8,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "ZNTR2",
+                                  "fill": "#71717A",
+                                  "textGrowth": "fixed-width",
+                                  "width": 120,
+                                  "content": "Color",
+                                  "fontFamily": "Geist Mono",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "8VVJM",
+                                  "fill": "#E4324F",
+                                  "content": "#D8D8D8 → #E4324F",
+                                  "fontFamily": "Geist Mono",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "8MoUp",
+                              "name": "r5",
+                              "width": "fill_container",
+                              "gap": 8,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "yiSRP",
+                                  "fill": "#71717A",
+                                  "textGrowth": "fixed-width",
+                                  "width": 120,
+                                  "content": "Stagger",
+                                  "fontFamily": "Geist Mono",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "Ll4x2",
+                                  "fill": "#FFFFFF",
+                                  "content": "40ms / line",
+                                  "fontFamily": "Geist Mono",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "fzBVc",
+                      "name": "controls-card",
+                      "width": "fill_container",
+                      "fill": "#111827",
+                      "cornerRadius": 12,
+                      "layout": "vertical",
+                      "gap": 14,
+                      "padding": 24,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Yqs4H",
+                          "fill": "#22D3EE",
+                          "content": "PARAMETER CONTROLS",
+                          "fontFamily": "Geist Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal",
+                          "letterSpacing": 3
+                        },
+                        {
+                          "type": "frame",
+                          "id": "lgAtJ",
+                          "name": "s1",
+                          "width": "fill_container",
+                          "gap": 12,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "nUW24",
+                              "fill": "#A1A1AA",
+                              "textGrowth": "fixed-width",
+                              "width": 100,
+                              "content": "Line Count",
+                              "fontFamily": "Geist Mono",
+                              "fontSize": 11,
+                              "fontWeight": "normal"
+                            },
+                            {
+                              "type": "frame",
+                              "id": "AxNzz",
+                              "width": "fill_container",
+                              "height": 4,
+                              "fill": "#1E293B",
+                              "cornerRadius": 2
+                            },
+                            {
+                              "type": "text",
+                              "id": "BRWJq",
+                              "fill": "#FFFFFF",
+                              "content": "60",
+                              "fontFamily": "Geist Mono",
+                              "fontSize": 11,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "CKW19",
+                          "name": "s2",
+                          "width": "fill_container",
+                          "gap": 12,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "bwyhX",
+                              "fill": "#A1A1AA",
+                              "textGrowth": "fixed-width",
+                              "width": 100,
+                              "content": "Speed",
+                              "fontFamily": "Geist Mono",
+                              "fontSize": 11,
+                              "fontWeight": "normal"
+                            },
+                            {
+                              "type": "frame",
+                              "id": "3MwWQ",
+                              "width": "fill_container",
+                              "height": 4,
+                              "fill": "#1E293B",
+                              "cornerRadius": 2
+                            },
+                            {
+                              "type": "text",
+                              "id": "4qbcP",
+                              "fill": "#FFFFFF",
+                              "content": "1.0x",
+                              "fontFamily": "Geist Mono",
+                              "fontSize": 11,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "hYmG0",
+                          "name": "s3",
+                          "width": "fill_container",
+                          "gap": 12,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "XYMVF",
+                              "fill": "#A1A1AA",
+                              "textGrowth": "fixed-width",
+                              "width": 100,
+                              "content": "Stagger",
+                              "fontFamily": "Geist Mono",
+                              "fontSize": 11,
+                              "fontWeight": "normal"
+                            },
+                            {
+                              "type": "frame",
+                              "id": "x0uh4",
+                              "width": "fill_container",
+                              "height": 4,
+                              "fill": "#1E293B",
+                              "cornerRadius": 2
+                            },
+                            {
+                              "type": "text",
+                              "id": "kGrrN",
+                              "fill": "#FFFFFF",
+                              "content": "40ms",
+                              "fontFamily": "Geist Mono",
+                              "fontSize": 11,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "rectangle",
+          "id": "v5lr6",
+          "fill": "#1A1A1A",
+          "width": "fill_container",
+          "height": 1
+        },
+        {
+          "type": "frame",
+          "id": "Fh7IF",
+          "name": "Section 2 — Extended Variants",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 40,
+          "padding": 60,
+          "children": [
+            {
+              "type": "text",
+              "id": "UMqMO",
+              "fill": "#A855F7",
+              "content": "+ EXTENDED VARIANTS",
+              "fontFamily": "Geist Mono",
+              "fontSize": 11,
+              "fontWeight": "normal",
+              "letterSpacing": 3
+            },
+            {
+              "type": "text",
+              "id": "3Ap3q",
+              "fill": "#FFFFFF",
+              "content": "02  확장 변형 컴포넌트",
+              "fontFamily": "Inter",
+              "fontSize": 32,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "D7azV",
+              "fill": "#71717A",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "기본 Voice Wave에 CAT4(Glow) · CAT6(Path/Particle) · CAT5(Morph) 기법을 조합한 3가지 변형",
+              "fontFamily": "Inter",
+              "fontSize": 15,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "frame",
+              "id": "vHZ1Q",
+              "name": "cards",
+              "width": "fill_container",
+              "gap": 24,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "lcorZ",
+                  "name": "Variant A",
+                  "width": "fill_container",
+                  "fill": "#111827",
+                  "cornerRadius": 16,
+                  "layout": "vertical",
+                  "gap": 16,
+                  "padding": 24,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "Hev35",
+                      "name": "vaB",
+                      "gap": 8,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "vs36P",
+                          "fill": "#8B5CF6",
+                          "cornerRadius": 4,
+                          "padding": [
+                            3,
+                            8
+                          ],
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "bVjTF",
+                              "fill": "#FFFFFF",
+                              "content": "A",
+                              "fontFamily": "Geist Mono",
+                              "fontSize": 10,
+                              "fontWeight": "bold"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "UlgM4",
+                      "fill": "#FFFFFF",
+                      "content": "Glow Pulse Wave",
+                      "fontFamily": "Inter",
+                      "fontSize": 16,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "vlpdG",
+                      "width": "fill_container",
+                      "height": 200,
+                      "fill": "#0A0F1C",
+                      "cornerRadius": 12,
+                      "layout": "none"
+                    },
+                    {
+                      "type": "text",
+                      "id": "MMdnd",
+                      "fill": "#A1A1AA",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Voice Wave + Pulsing Glow\nCAT4 글로우 효과로 외곽 발광 표현",
+                      "lineHeight": 1.5,
+                      "fontFamily": "Inter",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "89CNH",
+                      "fill": "#71717A",
+                      "content": "CAT4 + CAT6 · filter: drop-shadow() + WAAPI",
+                      "fontFamily": "Geist Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "1Oa9e",
+                  "name": "Variant B",
+                  "width": "fill_container",
+                  "fill": "#111827",
+                  "cornerRadius": 16,
+                  "layout": "vertical",
+                  "gap": 16,
+                  "padding": 24,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "lMSId",
+                      "name": "vbB",
+                      "gap": 8,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "zZkBl",
+                          "fill": "#22D3EE",
+                          "cornerRadius": 4,
+                          "padding": [
+                            3,
+                            8
+                          ],
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "HgX7m",
+                              "fill": "#0A0A0A",
+                              "content": "B",
+                              "fontFamily": "Geist Mono",
+                              "fontSize": 10,
+                              "fontWeight": "bold"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "MC29n",
+                      "fill": "#FFFFFF",
+                      "content": "Particle Voice Field",
+                      "fontFamily": "Inter",
+                      "fontSize": 16,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "uHlar",
+                      "width": "fill_container",
+                      "height": 200,
+                      "fill": "#0A0F1C",
+                      "cornerRadius": 12,
+                      "layout": "none"
+                    },
+                    {
+                      "type": "text",
+                      "id": "LSHNn",
+                      "fill": "#A1A1AA",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Voice Wave + Floating Particles\nCAT4 파티클 + CAT6 경로 궤적 결합",
+                      "lineHeight": 1.5,
+                      "fontFamily": "Inter",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "jagJt",
+                      "fill": "#71717A",
+                      "content": "CAT4 + CAT6 · Canvas particles + SVG wave",
+                      "fontFamily": "Geist Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "F0WPK",
+                  "name": "Variant C",
+                  "width": "fill_container",
+                  "fill": "#111827",
+                  "cornerRadius": 16,
+                  "layout": "vertical",
+                  "gap": 16,
+                  "padding": 24,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "F3mPy",
+                      "name": "vcB",
+                      "gap": 8,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "10Sq1",
+                          "fill": "#F43F5E",
+                          "cornerRadius": 4,
+                          "padding": [
+                            3,
+                            8
+                          ],
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "4zR2U",
+                              "fill": "#FFFFFF",
+                              "content": "C",
+                              "fontFamily": "Geist Mono",
+                              "fontSize": 10,
+                              "fontWeight": "bold"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "6qBuI",
+                      "fill": "#FFFFFF",
+                      "content": "Morphing Spectrum Wave",
+                      "fontFamily": "Inter",
+                      "fontSize": 16,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "oukMG",
+                      "width": "fill_container",
+                      "height": 200,
+                      "fill": {
+                        "type": "gradient",
+                        "gradientType": "linear",
+                        "enabled": true,
+                        "rotation": 135,
+                        "size": {
+                          "height": 1
+                        },
+                        "colors": [
+                          {
+                            "color": "#0A0F1C",
+                            "position": 0
+                          },
+                          {
+                            "color": "#1A0A2E",
+                            "position": 1
+                          }
+                        ]
+                      },
+                      "cornerRadius": 12,
+                      "layout": "none"
+                    },
+                    {
+                      "type": "text",
+                      "id": "JEBQc",
+                      "fill": "#A1A1AA",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Voice Wave + Shape Morph + Gradient BG\nCAT5 모핑 + CAT4 그라데이션 배경 융합",
+                      "lineHeight": 1.5,
+                      "fontFamily": "Inter",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "PTaFQ",
+                      "fill": "#71717A",
+                      "content": "CAT4 + CAT5 + CAT7 · WAAPI morph + gradient shift",
+                      "fontFamily": "Geist Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "rectangle",
+          "id": "4UxNJ",
+          "fill": "#1A1A1A",
+          "width": "fill_container",
+          "height": 1
+        },
+        {
+          "type": "frame",
+          "id": "KR7rE",
+          "name": "Section 3 — Customer Chatbot",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 40,
+          "padding": 60,
+          "children": [
+            {
+              "type": "text",
+              "id": "sRBiw",
+              "fill": "#22D3EE",
+              "content": "+ CUSTOMER CHATBOT",
+              "fontFamily": "Geist Mono",
+              "fontSize": 11,
+              "fontWeight": "normal",
+              "letterSpacing": 3
+            },
+            {
+              "type": "text",
+              "id": "sEySN",
+              "fill": "#FFFFFF",
+              "content": "03  고객 채팅 챗봇 — AI 응답 애니메이션",
+              "fontFamily": "Inter",
+              "fontSize": 32,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "pfzNh",
+              "fill": "#71717A",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "고객이 AI 챗봇과 대화할 때 응답 대기·처리·완료 상태를 음성파동 기반 애니메이션으로 시각화",
+              "fontFamily": "Inter",
+              "fontSize": 15,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "frame",
+              "id": "mEyVS",
+              "name": "s3row",
+              "width": "fill_container",
+              "gap": 32,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "gEbJD",
+                  "name": "chat-window",
+                  "clip": true,
+                  "width": 480,
+                  "height": 500,
+                  "fill": "#111827",
+                  "cornerRadius": 16,
+                  "layout": "vertical",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "euhAF",
+                      "name": "chatH",
+                      "width": "fill_container",
+                      "height": 56,
+                      "fill": "#1E293B",
+                      "gap": 12,
+                      "padding": [
+                        0,
+                        20
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "ellipse",
+                          "id": "qYS9p",
+                          "fill": {
+                            "type": "gradient",
+                            "gradientType": "radial",
+                            "enabled": true,
+                            "rotation": 0,
+                            "size": {
+                              "width": 1,
+                              "height": 1
+                            },
+                            "colors": [
+                              {
+                                "color": "#A855F7",
+                                "position": 0
+                              },
+                              {
+                                "color": "#6D28D9",
+                                "position": 1
+                              }
+                            ]
+                          },
+                          "width": 32,
+                          "height": 32
+                        },
+                        {
+                          "type": "text",
+                          "id": "wRxeq",
+                          "fill": "#FFFFFF",
+                          "content": "AI Assistant",
+                          "fontFamily": "Inter",
+                          "fontSize": 14,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "J3O1P",
+                      "name": "chatBody",
+                      "width": "fill_container",
+                      "height": "fill_container",
+                      "layout": "vertical",
+                      "gap": 16,
+                      "padding": 20,
+                      "justifyContent": "end",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "xDdZK",
+                          "name": "userRow",
+                          "width": "fill_container",
+                          "justifyContent": "end",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "buTBu",
+                              "name": "userBbl",
+                              "fill": "#A855F7",
+                              "cornerRadius": [
+                                12,
+                                12,
+                                4,
+                                12
+                              ],
+                              "padding": [
+                                10,
+                                16
+                              ],
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "ns0rl",
+                                  "fill": "#FFFFFF",
+                                  "content": "상품 반품 절차를 알려주세요",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 13,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "yyenA",
+                          "name": "aiRow",
+                          "width": "fill_container",
+                          "gap": 12,
+                          "alignItems": "end",
+                          "children": [
+                            {
+                              "type": "ellipse",
+                              "id": "knalo",
+                              "fill": {
+                                "type": "gradient",
+                                "gradientType": "radial",
+                                "enabled": true,
+                                "rotation": 0,
+                                "size": {
+                                  "width": 1,
+                                  "height": 1
+                                },
+                                "colors": [
+                                  {
+                                    "color": "#A855F7",
+                                    "position": 0
+                                  },
+                                  {
+                                    "color": "#6D28D9",
+                                    "position": 1
+                                  }
+                                ]
+                              },
+                              "width": 28,
+                              "height": 28
+                            },
+                            {
+                              "type": "frame",
+                              "id": "M2Kt7",
+                              "name": "aiBbl",
+                              "width": 300,
+                              "fill": "#1E293B",
+                              "cornerRadius": [
+                                12,
+                                12,
+                                12,
+                                4
+                              ],
+                              "padding": [
+                                10,
+                                16
+                              ],
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "kWYTL",
+                                  "fill": "#E2E8F0",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "반품 절차를 안내해 드리겠습니다. 주문 번호를 확인해 주시면 빠르게 처리해 드릴게요.",
+                                  "lineHeight": 1.5,
+                                  "fontFamily": "Inter",
+                                  "fontSize": 13,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "8kgYh",
+                          "name": "waveRow",
+                          "width": "fill_container",
+                          "gap": 12,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "ellipse",
+                              "id": "Pk4C8",
+                              "fill": {
+                                "type": "gradient",
+                                "gradientType": "radial",
+                                "enabled": true,
+                                "rotation": 0,
+                                "size": {
+                                  "width": 1,
+                                  "height": 1
+                                },
+                                "colors": [
+                                  {
+                                    "color": "#A855F7",
+                                    "position": 0
+                                  },
+                                  {
+                                    "color": "#6D28D9",
+                                    "position": 1
+                                  }
+                                ]
+                              },
+                              "width": 28,
+                              "height": 28
+                            },
+                            {
+                              "type": "frame",
+                              "id": "ocznr",
+                              "name": "wInd",
+                              "fill": "#1E293B",
+                              "cornerRadius": [
+                                12,
+                                12,
+                                12,
+                                4
+                              ],
+                              "gap": 8,
+                              "padding": [
+                                12,
+                                16
+                              ],
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "ellipse",
+                                  "id": "GYQO6",
+                                  "fill": {
+                                    "type": "gradient",
+                                    "gradientType": "radial",
+                                    "enabled": true,
+                                    "rotation": 0,
+                                    "size": {
+                                      "width": 1,
+                                      "height": 1
+                                    },
+                                    "colors": [
+                                      {
+                                        "color": "#E4324F44",
+                                        "position": 0
+                                      },
+                                      {
+                                        "color": "#E4324F00",
+                                        "position": 1
+                                      }
+                                    ]
+                                  },
+                                  "width": 32,
+                                  "height": 32
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "26zic",
+                                  "fill": "#A1A1AA",
+                                  "content": "AI가 응답을 생성하고 있습니다...",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "bJakU",
+                      "width": "fill_container",
+                      "height": 52,
+                      "fill": "#1E293B",
+                      "padding": [
+                        0,
+                        16
+                      ],
+                      "alignItems": "center"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "BVCmg",
+                  "name": "info-panel",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 24,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "pJ1P4",
+                      "name": "stCard",
+                      "width": "fill_container",
+                      "fill": "#111827",
+                      "cornerRadius": 12,
+                      "layout": "vertical",
+                      "gap": 16,
+                      "padding": 24,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "fULPP",
+                          "fill": "#22D3EE",
+                          "content": "CHATBOT ANIMATION STATES",
+                          "fontFamily": "Geist Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal",
+                          "letterSpacing": 3
+                        },
+                        {
+                          "type": "frame",
+                          "id": "sQ8Xy",
+                          "name": "st1",
+                          "width": "fill_container",
+                          "gap": 12,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "ellipse",
+                              "id": "a1YHk",
+                              "fill": "#4ADE80",
+                              "width": 8,
+                              "height": 8
+                            },
+                            {
+                              "type": "text",
+                              "id": "SIu4B",
+                              "fill": "#E2E8F0",
+                              "content": "Idle — 미니 파동 대기 (느린 호흡)",
+                              "fontFamily": "Inter",
+                              "fontSize": 13,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "KJ0Zm",
+                          "name": "st2",
+                          "width": "fill_container",
+                          "gap": 12,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "ellipse",
+                              "id": "Uot7p",
+                              "fill": "#A855F7",
+                              "width": 8,
+                              "height": 8
+                            },
+                            {
+                              "type": "text",
+                              "id": "kB3h1",
+                              "fill": "#E2E8F0",
+                              "content": "Processing — 활성 파동 (TrimPath 펄스)",
+                              "fontFamily": "Inter",
+                              "fontSize": 13,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "4WOuX",
+                          "name": "st3",
+                          "width": "fill_container",
+                          "gap": 12,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "ellipse",
+                              "id": "dk8W8",
+                              "fill": "#E4324F",
+                              "width": 8,
+                              "height": 8
+                            },
+                            {
+                              "type": "text",
+                              "id": "3xY0D",
+                              "fill": "#E2E8F0",
+                              "content": "Speaking — 음성 출력 파동 (전체 활성화)",
+                              "fontFamily": "Inter",
+                              "fontSize": 13,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "5IwVI",
+                          "name": "st4",
+                          "width": "fill_container",
+                          "gap": 12,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "ellipse",
+                              "id": "Vv9Kl",
+                              "fill": "#71717A",
+                              "width": 8,
+                              "height": 8
+                            },
+                            {
+                              "type": "text",
+                              "id": "rxH2c",
+                              "fill": "#E2E8F0",
+                              "content": "Complete — 페이드아웃 수렴",
+                              "fontFamily": "Inter",
+                              "fontSize": 13,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "yux5D",
+                      "name": "tnCard",
+                      "width": "fill_container",
+                      "fill": "#111827",
+                      "cornerRadius": 12,
+                      "layout": "vertical",
+                      "gap": 12,
+                      "padding": 24,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "WouWf",
+                          "fill": "#A855F7",
+                          "content": "TECHNIQUES USED",
+                          "fontFamily": "Geist Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal",
+                          "letterSpacing": 3
+                        },
+                        {
+                          "type": "text",
+                          "id": "2809j",
+                          "fill": "#A1A1AA",
+                          "content": "CAT4  Pulsing Glow — 대기 상태 호흡 효과",
+                          "fontFamily": "Geist Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "zegW3",
+                          "fill": "#A1A1AA",
+                          "content": "CAT6  Trim Path Pulse — 응답 생성 진행 표시",
+                          "fontFamily": "Geist Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "8OCws",
+                          "fill": "#A1A1AA",
+                          "content": "CAT7  Color Cascade — 음성 출력 색상 파동",
+                          "fontFamily": "Geist Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "hASdK",
+                          "fill": "#A1A1AA",
+                          "content": "CAT8  Ripple Effect — 메시지 전송 인터랙션",
+                          "fontFamily": "Geist Mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "rectangle",
+          "id": "i7Z4n",
+          "fill": "#1A1A1A",
+          "width": "fill_container",
+          "height": 1
+        },
+        {
+          "type": "frame",
+          "id": "bhNm5",
+          "name": "Section 4 — Agent Console",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 40,
+          "padding": 60,
+          "children": [
+            {
+              "type": "text",
+              "id": "zKMeI",
+              "fill": "#F59E0B",
+              "content": "+ AI AGENT CONSOLE",
+              "fontFamily": "Geist Mono",
+              "fontSize": 11,
+              "fontWeight": "normal",
+              "letterSpacing": 3
+            },
+            {
+              "type": "text",
+              "id": "D29qy",
+              "fill": "#FFFFFF",
+              "content": "04  상담사 AI상담 채팅창 — 실시간 분석 인터페이스",
+              "fontFamily": "Inter",
+              "fontSize": 32,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "s3OIr",
+              "fill": "#71717A",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "상담사가 고객과 대화하며 AI가 실시간으로 감정 분석·추천 응답·이전 이력을 표시하는 분할 인터페이스",
+              "fontFamily": "Inter",
+              "fontSize": 15,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "frame",
+              "id": "5TISd",
+              "name": "console",
+              "clip": true,
+              "width": "fill_container",
+              "height": 480,
+              "fill": "#111827",
+              "cornerRadius": 16,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "ukmDy",
+                  "name": "agChat",
+                  "width": 500,
+                  "height": "fill_container",
+                  "fill": "#111827",
+                  "layout": "vertical",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "7jVO8",
+                      "name": "agH",
+                      "width": "fill_container",
+                      "height": 48,
+                      "fill": "#1E293B",
+                      "gap": 8,
+                      "padding": [
+                        0,
+                        16
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "ellipse",
+                          "id": "SnWPR",
+                          "fill": "#F59E0B",
+                          "width": 24,
+                          "height": 24
+                        },
+                        {
+                          "type": "text",
+                          "id": "NvuR4",
+                          "fill": "#FFFFFF",
+                          "content": "고객 #2847 — 김민수",
+                          "fontFamily": "Inter",
+                          "fontSize": 13,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "khC4W",
+                          "name": "agBdg",
+                          "fill": "#E4324F22",
+                          "cornerRadius": 4,
+                          "padding": [
+                            2,
+                            8
+                          ],
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "wCTCh",
+                              "fill": "#E4324F",
+                              "content": "불만",
+                              "fontFamily": "Geist Mono",
+                              "fontSize": 10,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "zB0BL",
+                      "name": "agBody",
+                      "width": "fill_container",
+                      "height": "fill_container",
+                      "layout": "vertical",
+                      "gap": 12,
+                      "padding": 16,
+                      "justifyContent": "end",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "7aQ8H",
+                          "name": "cm1",
+                          "width": "fill_container",
+                          "gap": 8,
+                          "alignItems": "end",
+                          "children": [
+                            {
+                              "type": "ellipse",
+                              "id": "pm9Ab",
+                              "fill": "#F59E0B",
+                              "width": 24,
+                              "height": 24
+                            },
+                            {
+                              "type": "frame",
+                              "id": "LJNwI",
+                              "name": "cmBbl",
+                              "width": 280,
+                              "fill": "#1E293B",
+                              "cornerRadius": [
+                                12,
+                                12,
+                                12,
+                                4
+                              ],
+                              "padding": [
+                                10,
+                                14
+                              ],
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "Ah7KC",
+                                  "fill": "#E2E8F0",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "배송이 일주일이나 지났는데 아직 안왔어요.",
+                                  "lineHeight": 1.5,
+                                  "fontFamily": "Inter",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "wZHPV",
+                          "name": "agR",
+                          "width": "fill_container",
+                          "gap": 8,
+                          "justifyContent": "end",
+                          "alignItems": "end",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "2DxZg",
+                              "name": "agBbl",
+                              "width": 260,
+                              "fill": "#A855F722",
+                              "cornerRadius": [
+                                12,
+                                12,
+                                4,
+                                12
+                              ],
+                              "padding": [
+                                10,
+                                14
+                              ],
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "SnHkM",
+                                  "fill": "#E2E8F0",
+                                  "textGrowth": "fixed-width",
+                                  "width": "fill_container",
+                                  "content": "정말 불편을 드려 죄송합니다. 바로 확인해 드리겠습니다.",
+                                  "lineHeight": 1.5,
+                                  "fontFamily": "Inter",
+                                  "fontSize": 12,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "ellipse",
+                              "id": "dkMTr",
+                              "fill": "#A855F7",
+                              "width": 24,
+                              "height": 24
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "Zep5h",
+                          "name": "aiSug",
+                          "width": "fill_container",
+                          "gap": 8,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "vgxfV",
+                              "name": "aiIc",
+                              "width": 20,
+                              "height": 20,
+                              "fill": "#22D3EE22",
+                              "cornerRadius": 4,
+                              "layout": "vertical",
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "TE2I6",
+                                  "fill": "#22D3EE",
+                                  "content": "AI",
+                                  "fontFamily": "Geist Mono",
+                                  "fontSize": 7,
+                                  "fontWeight": "bold"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "1hLkm",
+                              "name": "aiBbl",
+                              "fill": "#22D3EE11",
+                              "cornerRadius": 8,
+                              "stroke": {
+                                "align": "inside",
+                                "thickness": 1,
+                                "fill": "#22D3EE33"
+                              },
+                              "padding": [
+                                8,
+                                12
+                              ],
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "vupsd",
+                                  "fill": "#22D3EE",
+                                  "content": "추천: 배송 추적 조회 → 보상 안내 → 재발송 제안",
+                                  "fontFamily": "Geist Mono",
+                                  "fontSize": 11,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "WqPTD",
+                  "name": "ai-analysis-panel",
+                  "width": "fill_container",
+                  "height": "fill_container",
+                  "fill": "#0F172A",
+                  "layout": "vertical",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "91OuU",
+                      "name": "aiPH",
+                      "width": "fill_container",
+                      "height": 48,
+                      "fill": "#1A1A2E",
+                      "gap": 8,
+                      "padding": [
+                        0,
+                        16
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "ellipse",
+                          "id": "raWQg",
+                          "fill": {
+                            "type": "gradient",
+                            "gradientType": "radial",
+                            "enabled": true,
+                            "rotation": 0,
+                            "size": {
+                              "width": 1,
+                              "height": 1
+                            },
+                            "colors": [
+                              {
+                                "color": "#22D3EE",
+                                "position": 0
+                              },
+                              {
+                                "color": "#0891B2",
+                                "position": 1
+                              }
+                            ]
+                          },
+                          "width": 20,
+                          "height": 20
+                        },
+                        {
+                          "type": "text",
+                          "id": "ZB8MR",
+                          "fill": "#22D3EE",
+                          "content": "AI Analysis Engine",
+                          "fontFamily": "Geist Mono",
+                          "fontSize": 12,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "ivPnI",
+                      "name": "aiPB",
+                      "width": "fill_container",
+                      "height": "fill_container",
+                      "layout": "vertical",
+                      "gap": 16,
+                      "padding": 16,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "4PKg5",
+                          "name": "emCard",
+                          "width": "fill_container",
+                          "fill": "#111827",
+                          "cornerRadius": 8,
+                          "layout": "vertical",
+                          "gap": 10,
+                          "padding": 16,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "iFELZ",
+                              "fill": "#F59E0B",
+                              "content": "SENTIMENT ANALYSIS",
+                              "fontFamily": "Geist Mono",
+                              "fontSize": 10,
+                              "fontWeight": "normal",
+                              "letterSpacing": 2
+                            },
+                            {
+                              "type": "frame",
+                              "id": "wO9ik",
+                              "name": "emRow",
+                              "width": "fill_container",
+                              "gap": 12,
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "rmu0E",
+                                  "width": "fill_container",
+                                  "height": 6,
+                                  "fill": "#1E293B",
+                                  "cornerRadius": 3
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "iX9l9",
+                                  "fill": "#E4324F",
+                                  "content": "불만 78%",
+                                  "fontFamily": "Geist Mono",
+                                  "fontSize": 11,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "eo9m5",
+                          "name": "wvBox",
+                          "width": "fill_container",
+                          "height": 100,
+                          "fill": "#111827",
+                          "cornerRadius": 8,
+                          "layout": "none",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "KxmyD",
+                              "x": 12,
+                              "y": 8,
+                              "fill": "#22D3EE44",
+                              "content": "VOICE ACTIVITY",
+                              "fontFamily": "Geist Mono",
+                              "fontSize": 9,
+                              "fontWeight": "normal",
+                              "letterSpacing": 2
+                            },
+                            {
+                              "type": "ellipse",
+                              "id": "3c8B2",
+                              "x": 110,
+                              "y": 20,
+                              "fill": "#00000000",
+                              "width": 60,
+                              "height": 60,
+                              "stroke": {
+                                "align": "center",
+                                "thickness": 1,
+                                "fill": "#22D3EE33"
+                              }
+                            },
+                            {
+                              "type": "ellipse",
+                              "id": "xcaTd",
+                              "x": 134,
+                              "y": 44,
+                              "fill": {
+                                "type": "gradient",
+                                "gradientType": "radial",
+                                "enabled": true,
+                                "rotation": 0,
+                                "size": {
+                                  "width": 1,
+                                  "height": 1
+                                },
+                                "colors": [
+                                  {
+                                    "color": "#E4324F",
+                                    "position": 0
+                                  },
+                                  {
+                                    "color": "#E4324F00",
+                                    "position": 1
+                                  }
+                                ]
+                              },
+                              "width": 12,
+                              "height": 12
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "4ITiX",
+                          "name": "hCard",
+                          "width": "fill_container",
+                          "fill": "#111827",
+                          "cornerRadius": 8,
+                          "layout": "vertical",
+                          "gap": 8,
+                          "padding": 16,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "jOvm9",
+                              "fill": "#A855F7",
+                              "content": "PREVIOUS INTERACTIONS",
+                              "fontFamily": "Geist Mono",
+                              "fontSize": 10,
+                              "fontWeight": "normal",
+                              "letterSpacing": 2
+                            },
+                            {
+                              "type": "text",
+                              "id": "0Wh2J",
+                              "fill": "#71717A",
+                              "content": "2026-03-15  배송 문의 (해결)",
+                              "fontFamily": "Geist Mono",
+                              "fontSize": 11,
+                              "fontWeight": "normal"
+                            },
+                            {
+                              "type": "text",
+                              "id": "9GlED",
+                              "fill": "#F59E0B",
+                              "content": "2026-03-22  교환 요청 (진행중)",
+                              "fontFamily": "Geist Mono",
+                              "fontSize": 11,
+                              "fontWeight": "normal"
+                            },
+                            {
+                              "type": "text",
+                              "id": "f98HD",
+                              "fill": "#E4324F",
+                              "content": "2026-03-29  배송 지연 불만 (현재)",
+                              "fontFamily": "Geist Mono",
+                              "fontSize": 11,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
