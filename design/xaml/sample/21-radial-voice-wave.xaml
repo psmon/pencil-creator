@@ -1,0 +1,92 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       21 — Radial Voice Wave (방사형 음성파동)
+       Source: blumn.ai AIVY AI Agent section
+
+       60 radial lines with TrimPath pulse + color cascade
+       Each line: StrokeDashOffset animation + ColorAnimation
+       Stagger: BeginTime = index × 40ms
+       ═══════════════════════════════════════════════════════════════ -->
+
+  <Style x:Key="RadialVoiceWaveStyle" TargetType="Canvas">
+    <Setter Property="Width" Value="400"/>
+    <Setter Property="Height" Value="400"/>
+    <Setter Property="Background" Value="Transparent"/>
+  </Style>
+
+  <!-- Single Voice Line Template -->
+  <Style x:Key="VoiceLineStyle" TargetType="Line">
+    <Setter Property="X1" Value="0"/>
+    <Setter Property="Y1" Value="-126"/>
+    <Setter Property="X2" Value="0"/>
+    <Setter Property="Y2" Value="-105.75"/>
+    <Setter Property="StrokeThickness" Value="4"/>
+    <Setter Property="StrokeDashArray" Value="20.25"/>
+    <Setter Property="StrokeDashCap" Value="Round"/>
+    <Setter Property="Stroke" Value="#D8D8D8"/>
+    <Setter Property="RenderTransformOrigin" Value="0,0"/>
+  </Style>
+
+  <!-- ═══ Storyboard: Trim Path Pulse (per line) ═══ -->
+  <Storyboard x:Key="TrimPathPulse">
+    <!-- StrokeDashOffset: 18.225 → 0.2025 → 18.225 -->
+    <DoubleAnimation
+      Storyboard.TargetProperty="StrokeDashOffset"
+      From="18.225" To="0.2025"
+      Duration="0:0:0.25"
+      AutoReverse="True"
+      RepeatBehavior="Forever">
+      <DoubleAnimation.EasingFunction>
+        <CubicEase EasingMode="EaseInOut"/>
+      </DoubleAnimation.EasingFunction>
+    </DoubleAnimation>
+  </Storyboard>
+
+  <!-- ═══ Storyboard: Color Cascade (per line) ═══ -->
+  <Storyboard x:Key="ColorCascade">
+    <ColorAnimationUsingKeyFrames
+      Storyboard.TargetProperty="(Shape.Stroke).(SolidColorBrush.Color)"
+      Duration="0:0:0.5"
+      AutoReverse="True"
+      RepeatBehavior="Forever">
+      <SplineColorKeyFrame KeyTime="0:0:0" Value="#D8D8D8"/>
+      <SplineColorKeyFrame KeyTime="0:0:0.14" Value="#E55A71"
+        KeySpline="0.333,0,0.667,1"/>
+      <SplineColorKeyFrame KeyTime="0:0:0.2" Value="#DB1E3E"
+        KeySpline="0.333,0,0.667,1"/>
+      <SplineColorKeyFrame KeyTime="0:0:0.25" Value="#E4324F"
+        KeySpline="0.333,0,0.667,1"/>
+    </ColorAnimationUsingKeyFrames>
+  </Storyboard>
+
+  <!-- ═══ Usage Pattern ═══
+
+  In code-behind, generate 60 lines programmatically:
+
+  for (int i = 0; i < 60; i++)
+  {
+      var line = new Line { Style = (Style)FindResource("VoiceLineStyle") };
+      line.RenderTransform = new RotateTransform(i * 6);
+      Canvas.SetLeft(line, 200);
+      Canvas.SetTop(line, 200);
+
+      // Clone storyboards with staggered BeginTime
+      var trimSb = ((Storyboard)FindResource("TrimPathPulse")).Clone();
+      trimSb.BeginTime = TimeSpan.FromMilliseconds(i * 40);
+
+      var colorSb = ((Storyboard)FindResource("ColorCascade")).Clone();
+      colorSb.BeginTime = TimeSpan.FromMilliseconds(i * 40);
+
+      Storyboard.SetTarget(trimSb, line);
+      Storyboard.SetTarget(colorSb, line);
+
+      canvas.Children.Add(line);
+      trimSb.Begin();
+      colorSb.Begin();
+  }
+
+  ═══════════════════════════════════════════════════════════════ -->
+
+</ResourceDictionary>

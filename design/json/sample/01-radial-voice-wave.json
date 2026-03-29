@@ -1,0 +1,72 @@
+{
+  "technique": "Radial Voice Wave",
+  "name_ko": "방사형 음성파동",
+  "source": "https://blumn.ai/ — AIVY AI Agent 섹션 통화 애니메이션",
+  "description": "60개의 방사형 라인이 원형으로 배치되어, Trim Path와 색상 전환이 순차 지연(stagger)으로 파동처럼 회전하는 음성 시각화 애니메이션",
+  "rendering": "Lottie (dotlottie-player, canvas renderer)",
+  "structure": {
+    "canvas": { "width": 400, "height": 400 },
+    "layers": [
+      { "name": "adjustment", "type": "null", "purpose": "레이어 조정용 빈 레이어" },
+      {
+        "name": "lines",
+        "type": "shape",
+        "position": [200, 200],
+        "childCount": 60,
+        "childPattern": {
+          "type": "group",
+          "elements": ["path", "trimPath", "stroke", "transform"],
+          "rotationRule": "index * 6° (0° ~ 354°)"
+        }
+      }
+    ]
+  },
+  "animationDetails": {
+    "frameRate": 50,
+    "totalFrames": 175,
+    "duration": "3.5s",
+    "loop": true,
+    "lineSpec": {
+      "count": 60,
+      "pathVertices": [[0, -126], [0, -105.75]],
+      "pathLength": 20.25,
+      "strokeWidth": 4,
+      "rotationIncrement": 6
+    },
+    "trimPath": {
+      "trimEnd": "100% (fixed)",
+      "trimStart": {
+        "keyframes": [
+          { "frame": "N*2", "value": "90%", "state": "collapsed (short dash)" },
+          { "frame": "N*2+12", "value": "1%", "state": "expanded (full stroke)" },
+          { "frame": "N*2+25", "value": "90%", "state": "collapsed again" }
+        ],
+        "easing": "cubic-bezier(0.333, 0, 0.667, 1)",
+        "staggerDelay": "2 frames per line (~40ms at 50fps)"
+      }
+    },
+    "colorAnimation": {
+      "keyframes": [
+        { "frame": "N*2", "color": "#D8D8D8", "label": "inactive gray" },
+        { "frame": "N*2+7", "color": "#E55A71", "label": "mid pink transition" },
+        { "frame": "N*2+10", "color": "#DB1E3E", "label": "deep red peak" },
+        { "frame": "N*2+12", "color": "#E4324F", "label": "active red" }
+      ],
+      "easing": "cubic-bezier(0.333, 0, 0.667, 1)"
+    }
+  },
+  "wpfMapping": {
+    "technique": "RotateTransform + StrokeDashOffset Animation",
+    "storyboard": "60 DoubleAnimation with staggered BeginTime",
+    "properties": ["StrokeDashOffset", "Stroke (ColorAnimation)", "Opacity"],
+    "easing": "CubicEase EaseInOut",
+    "repeatBehavior": "Forever"
+  },
+  "cssImplementation": {
+    "approach": "SVG lines + CSS @keyframes with animation-delay stagger",
+    "structure": "60 <line> elements inside <g> with transform rotate",
+    "animation": "@keyframes voicePulse { 0%,100% { stroke-dashoffset: 18px; stroke: #D8D8D8; } 50% { stroke-dashoffset: 0; stroke: #E4324F; } }",
+    "stagger": "animation-delay: calc(var(--i) * 58ms)",
+    "totalDuration": "3.5s"
+  }
+}

@@ -2,13 +2,16 @@
 name: harness-usage
 description: |
   Pencil Design Harness를 이용한 디자인 작업을 실행하는 스킬.
-  Case A(WPF 조사→템플릿 보강), Case B(템플릿 참고→프로젝트 디자인), Case W(Pencil→HTML) 워크플로우를 실행하고 평가한다.
+  Case A(WPF 조사→템플릿 보강), Case B(템플릿 참고→프로젝트 디자인), Case C(웹 애니메이션→JSON→펜슬 컴포넌트), Case W(Pencil→HTML) 워크플로우를 실행하고 평가한다.
   다음 상황에서 반드시 이 스킬을 사용할 것:
   - "WPF 애니메이션 조사해서 펜슬에 그려줘" → Case A
   - "wpf-템플릿조사 후 템플릿보강해" → Case A
   - "애니메이션 컴포넌트 추가해줘" → Case A
   - "wpf-animation 이펙트를 참고해 OO 디자인해줘" → Case B
   - "펜슬을 이용해 OO 디자인" + wpf-animation 참고 언급 → Case B
+  - "OO사이트 애니메이션 조사해서 템플릿 강화" → Case C
+  - "URL 분석해서 애니메이션 JSON 정리해줘" → Case C
+  - "웹 애니메이션 카피캣" → Case C
   - "펜슬 참고해서 HTML 페이지 만들어줘" → Case W
   - "디자인을 웹으로 구현해줘" → Case W
   - "디자인 평가해줘", "점수 매겨줘" → 평가 실행
@@ -17,7 +20,7 @@ allowed-tools: Read, Write, Edit, Glob, Grep, Agent, WebSearch, WebFetch, mcp__p
 
 # Harness Usage — Pencil Design 작업 실행
 
-`harness/` 3계층 구조를 기반으로 **Case A(WPF→템플릿), Case B(템플릿참고→프로젝트 디자인), Case W(Pencil→HTML) 워크플로우**를 실행한다.
+`harness/` 3계층 구조를 기반으로 **Case A(WPF→템플릿), Case B(템플릿참고→프로젝트 디자인), Case C(웹 애니메이션→JSON→펜슬 컴포넌트), Case W(Pencil→HTML) 워크플로우**를 실행한다.
 
 ---
 
@@ -29,9 +32,9 @@ idle → prompted → researching → designing → design-evaluating → record
 
 | 상태 | 핵심 행동 |
 |------|----------|
-| prompted | Case A/B/W 판별, 기존 .pen 파일 상태 확인 |
-| researching | WPF 애니메이션 조사 (Case A) 또는 wpf-animation.pen 기법 파악 (Case B) |
-| designing | 템플릿 카드 추가 (A) / 정적 디자인+애니메이션 가이드 생성 (B) / HTML 구현 (W) |
+| prompted | Case A/B/C/W 판별, 기존 파일 상태 확인 |
+| researching | WPF 조사 (A) / wpf-animation.pen 파악 (B) / 웹 애니메이션 분석 (C) |
+| designing | 카드 추가 (A) / 프로젝트 디자인 (B) / JSON→펜슬 컴포넌트 (C) / HTML 구현 (W) |
 | design-evaluating | 3축 채점 (harness/knowledge/design-craft.md 참조) |
 | recording | 로그 작성 + RPG(XP/레벨/업적) 처리 |
 
@@ -123,7 +126,77 @@ Phase 3 — Verify (design-evaluating):
 
 ---
 
-## 4. Case W: Pencil → HTML 구현
+## 4. Case C: 웹 애니메이션 조사 → JSON → 펜슬 컴포넌트 (Copycat)
+
+특정 웹사이트의 실제 애니메이션을 분석하여 **JSON 기법 정의서**를 생성하고, 이를 기반으로 **재사용 가능한 펜슬 컴포넌트**를 구축하는 워크플로우.
+**핵심 원칙: 실제 웹 애니메이션을 분석 → JSON 구조로 정의 → 펜슬 컴포넌트 라이브러리로 축적하여 재활용.**
+
+```
+Phase 1 — Gather (researching):
+  → 대상 URL 접속 및 특정 요소/섹션 식별
+  → WebFetch로 HTML/CSS/JS 구조 분석 (라이브러리, @keyframes, transition 등)
+  → Playwright로 해당 섹션 스크린샷 캡처 (시각 증거 확보)
+  → browser_evaluate / browser_run_code로 computed animation 추출:
+    - CSS keyframes, animation properties
+    - Lottie/dotlottie-player 소스 URL 및 구조
+    - GSAP, Framer Motion 등 라이브러리 사용 여부
+    - SVG 애니메이션, Canvas 기반 효과
+  → Lottie 파일 발견 시: 다운로드 → ZIP 해제 → JSON 레이어/키프레임 분석
+  → 애니메이션 기법 분류 (기법별 독립 분석)
+
+Phase 2a — Action: JSON 기법 정의서 생성 (designing):
+  → design/json/sample/ 하위에 넘버링 파일 생성
+  → 파일명: {NN}-{기법이름}.json (예: 01-방사형-음성파동.json)
+  → 각 JSON 필수 구조:
+    {
+      "technique": "영문 기법명",
+      "name_ko": "한글 기법명",
+      "source": "출처 URL + 섹션 설명",
+      "description": "기법 요약 설명",
+      "rendering": "구현 방식 (Lottie/CSS/JS/SVG/Canvas)",
+      "structure": { 레이어/요소 구조 },
+      "animationDetails": { 키프레임/타이밍/이징/색상 상세 },
+      "cssImplementation": { CSS/JS 재현 참고 코드 }
+    }
+  → 기법별 독립 JSON: 하나의 애니메이션이라도 구성 요소별로 분리
+    (예: 음성파동 → 01-방사형배치, 02-트림패스, 03-색상전환 각각 분리)
+
+Phase 2b — Action: 펜슬 컴포넌트 업데이트 (designing):
+  → JSON 기법 정의서를 기반으로 wpf-animation.pen 또는 전용 .pen 파일에 컴포넌트 카드 추가
+  → 각 카드 구조:
+    - 번호 + 기법명 (JSON의 technique/name_ko 매핑)
+    - Source: 원본 웹사이트 URL
+    - 렌더링 방식 표시 (Lottie/CSS/SVG 등)
+    - Before → After 시각 미리보기
+    - 핵심 파라미터 요약 (JSON에서 추출)
+  → JSON과 펜슬 카드 간 1:N 또는 N:1 매핑 가능
+  → 향후 Case W에서 HTML 구현 시 재활용 목적
+
+Phase 3 — Verify (design-evaluating):
+  → design-craft.md Case C 3축 평가
+    C1: 조사 깊이 & 정확성 (35점)
+    C2: JSON 구조 완결성 (35점)
+    C3: 펜슬 컴포넌트 품질 (30점)
+  → recording: 로그 + RPG
+```
+
+### Case C 체크리스트
+
+```
+□ WebFetch + Playwright 양쪽 도구를 모두 활용했는가?
+□ Lottie/JS/CSS 등 실제 구현 기술을 정확히 식별했는가?
+□ 각 기법별 독립 JSON 파일이 design/json/sample/에 넘버링 생성되었는가?
+□ JSON에 technique, source, structure, animationDetails, cssImplementation이 포함되었는가?
+□ 펜슬 컴포넌트 카드가 JSON과 매핑되어 생성되었는가?
+□ Before→After 시각 미리보기가 포함되었는가?
+□ 재활용 가능한 형태로 구조화되었는가? (다음 세션에서 참조 가능)
+```
+
+---
+
+## 5. Case W: Pencil → HTML 구현
+
+⚠️ Case C의 JSON 기법 정의서가 존재하면 `.pen` + `.json` 이중 참조로 더 정밀한 구현 가능.
 
 ```
 Phase 1 — Gather:
@@ -178,7 +251,7 @@ Phase 3 — Verify (design-evaluating):
 
 ---
 
-## 5. Playwright 섹션별 캡처
+## 6. Playwright 섹션별 캡처
 
 HTML 데모의 각 섹션을 스크린샷으로 캡처하는 워크플로우.
 
@@ -195,24 +268,27 @@ HTML 데모의 각 섹션을 스크린샷으로 캡처하는 워크플로우.
 
 ---
 
-## 6. 로그 & RPG
+## 7. 로그 & RPG
 
 모든 작업 완료 후 recording 단계에서 실행한다.
 
 ```
-1. 로그: harness/logs/yyyy-mm-dd-{키워드}-case{A|B|W}.md
+1. 로그: harness/logs/yyyy-mm-dd-{키워드}-case{A|B|C|W}.md
 2. 인덱스: harness/logs/harness-usage.md에 1줄 추가
-3. XP 계산: 기본XP(점수×10) × 등급배율(A:5/B:3/C:1/D:0.5) × 유형배율(A:1.2/B:1.2/W:1.2)
+3. XP 계산: 기본XP(점수×10) × 등급배율(A:5/B:3/C:1/D:0.5) × 유형배율(A:1.2/B:1.2/C:1.2/W:1.2)
 4. 레벨업 판정 + 업적 갱신 (harness/engine/level-achievement-system.md 참조)
 ```
 
 ---
 
-## 7. Pipeline 보너스
+## 8. Pipeline 보너스
 
 | 파이프라인 | 조건 | 보너스 |
 |-----------|------|--------|
 | A → B | 양쪽 60점+ | 각 XP × 1.2 |
 | A → W | 양쪽 60점+ | 각 XP × 1.2 |
 | B → W | 양쪽 60점+ | 각 XP × 1.3 |
+| C → W | 양쪽 60점+ | 각 XP × 1.3 |
+| C → B | 양쪽 60점+ | 각 XP × 1.2 |
 | A → B → W | 전체 60점+ | 각 XP × 1.5 |
+| C → B → W | 전체 60점+ | 각 XP × 1.5 |

@@ -1,0 +1,33 @@
+{
+  "technique": "Sequential Color Cascade",
+  "name_ko": "순차 색상 캐스케이드",
+  "source": "https://blumn.ai/ — AIVY AI Agent 섹션 (Lottie 내부 기법 분리)",
+  "description": "방사형으로 배치된 60개 요소의 stroke 색상이 gray→pink→red로 순차적으로 전환되며 회전 파동 효과를 생성. 각 요소마다 2프레임(40ms) 지연",
+  "rendering": "Lottie color keyframes → WPF ColorAnimation → CSS animation-delay",
+  "structure": {
+    "elementCount": 60,
+    "arrangement": "radial (6° increment)",
+    "staggerPattern": "linear sequential (index * delay)"
+  },
+  "animationDetails": {
+    "colorStops": [
+      { "offset": "0%", "color": "#D8D8D8", "rgb": [0.847, 0.847, 0.847], "label": "비활성 회색" },
+      { "offset": "58%", "color": "#E55A71", "rgb": [0.898, 0.353, 0.443], "label": "중간 핑크" },
+      { "offset": "83%", "color": "#DB1E3E", "rgb": [0.859, 0.118, 0.243], "label": "딥 레드" },
+      { "offset": "100%", "color": "#E4324F", "rgb": [0.894, 0.196, 0.310], "label": "활성 레드" }
+    ],
+    "perElementDuration": "240ms (12 frames at 50fps)",
+    "staggerDelay": "40ms (2 frames at 50fps)",
+    "totalWaveDuration": "2400ms (60 elements × 40ms)",
+    "easing": "cubic-bezier(0.333, 0, 0.667, 1)"
+  },
+  "wpfMapping": {
+    "xaml": "<ColorAnimation Storyboard.TargetProperty=\"(Shape.Stroke).(SolidColorBrush.Color)\" From=\"#D8D8D8\" To=\"#E4324F\" Duration=\"0:0:0.24\" BeginTime=\"0:0:{index*0.04}\" AutoReverse=\"True\" />",
+    "stagger": "BeginTime incremented by 40ms per element"
+  },
+  "cssImplementation": {
+    "keyframes": "@keyframes colorCascade { 0%,100% { stroke: #D8D8D8; } 58% { stroke: #E55A71; } 83% { stroke: #DB1E3E; } 100% { stroke: #E4324F; } }",
+    "stagger": "animation-delay: calc(var(--i) * 40ms)",
+    "cssVariable": "--i: element index (0-59)"
+  }
+}

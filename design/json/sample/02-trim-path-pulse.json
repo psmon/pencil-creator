@@ -1,0 +1,35 @@
+{
+  "technique": "Trim Path Pulse",
+  "name_ko": "트림패스 펄스",
+  "source": "https://blumn.ai/ — AIVY AI Agent 섹션 (Lottie 내부 기법 분리)",
+  "description": "Path의 trimStart를 90%→1%→90%로 키프레임 애니메이션하여, 선분이 짧은 점에서 전체 길이로 확장했다가 다시 수축하는 펄스 효과",
+  "rendering": "Lottie trim path → WPF StrokeDashOffset → CSS stroke-dashoffset",
+  "structure": {
+    "element": "line or path",
+    "requiredProperties": ["stroke-dasharray", "stroke-dashoffset"],
+    "mechanism": "trimStart 값 변경으로 path의 보이는 영역 제어"
+  },
+  "animationDetails": {
+    "keyframes": [
+      { "time": "0%", "trimStart": 90, "visiblePortion": "10%", "description": "짧은 점 상태" },
+      { "time": "48%", "trimStart": 1, "visiblePortion": "99%", "description": "전체 확장" },
+      { "time": "100%", "trimStart": 90, "visiblePortion": "10%", "description": "다시 수축" }
+    ],
+    "trimEnd": 100,
+    "duration": "500ms per line",
+    "easing": "cubic-bezier(0.333, 0, 0.667, 1)"
+  },
+  "wpfMapping": {
+    "xaml": "<DoubleAnimation Storyboard.TargetProperty=\"StrokeDashOffset\" From=\"18\" To=\"0\" Duration=\"0:0:0.25\" AutoReverse=\"True\" EasingFunction=\"{CubicEase EaseInOut}\" />",
+    "properties": {
+      "StrokeDashArray": "20.25",
+      "StrokeDashOffset": "animated 18→0→18"
+    }
+  },
+  "cssImplementation": {
+    "property": "stroke-dashoffset",
+    "dasharray": "20.25",
+    "keyframes": "@keyframes trimPulse { 0%,100% { stroke-dashoffset: 18.225px; } 48% { stroke-dashoffset: 0.2025px; } }",
+    "easing": "cubic-bezier(0.333, 0, 0.667, 1)"
+  }
+}
