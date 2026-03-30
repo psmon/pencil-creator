@@ -24,7 +24,17 @@
       "WebFetch(domain:blumn.ai)",
       "WebFetch(domain:framerusercontent.com)",
       "Bash(dotnet build:*)",
-      "Bash(find D:/pencil-creator/.claude/skills -type f -name *.md)"
+      "Bash(find D:/pencil-creator/.claude/skills -type f -name *.md)",
+      "Bash(wc:*)",
+      "Bash(du -sh /d/pencil-creator/*)",
+      "Bash(git:*)",
+      "mcp__pencil__get_editor_state",
+      "mcp__pencil__snapshot_layout",
+      "mcp__pencil__get_screenshot"
     ]
-  }
+  },
+  "enabledMcpjsonServers": [
+    "playwright",
+    "pencil"
+  ]
 }

@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "playwright": {
+      "type": "stdio",
+      "command": "cmd",
+      "args": ["/c", "npx", "@playwright/mcp@latest"],
+      "env": {}
+    },
+    "pencil": {
+      "type": "stdio",
+      "command": "cmd",
+      "args": ["/c", "%LOCALAPPDATA%\\Programs\\Pencil\\resources\\app.asar.unpacked\\out\\mcp-server-windows-x64.exe", "--app", "desktop"],
+      "env": {}
+    }
+  }
+}

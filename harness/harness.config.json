@@ -1,6 +1,6 @@
 {
   "name": "pencil-design-harness",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "description": "Pencil Design 품질 하네스 — Case A(WPF→템플릿), Case B(템플릿참고→프로젝트 디자인), Case C(웹→JSON→펜슬 컴포넌트), Case W(Pencil→HTML) 평가",
   "scope": "pencil-design",
   "layers": {
