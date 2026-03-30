@@ -1,0 +1,122 @@
+<Window x:Class="SpaceAstral.ParallaxCameraShift"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Parallax Camera Shift" Height="600" Width="800"
+        Background="#030712" WindowStartupLocation="CenterScreen">
+    <!--
+    Parallax depth: each layer moves at different speed
+    Background: 0.3x speed, Midground: 0.6x, Foreground: 1.0x
+    Camera orbit: slow SineEase drift on all layers
+    Camera zoom: ScaleTransform on container
+    -->
+    <Grid x:Name="rootContainer" RenderTransformOrigin="0.5,0.5">
+        <Grid.RenderTransform>
+            <TransformGroup>
+                <ScaleTransform x:Name="cameraZoom" ScaleX="1" ScaleY="1"/>
+            </TransformGroup>
+        </Grid.RenderTransform>
+
+        <!-- Background layer (0.3x parallax speed) -->
+        <Canvas x:Name="bgLayer" Opacity="0.4" RenderTransformOrigin="0.5,0.5">
+            <Canvas.RenderTransform>
+                <TranslateTransform x:Name="bgShift"/>
+            </Canvas.RenderTransform>
+            <Canvas.Triggers>
+                <EventTrigger RoutedEvent="Loaded">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="bgShift"
+                                Storyboard.TargetProperty="X"
+                                From="-15" To="15" Duration="0:0:8"
+                                AutoReverse="True" RepeatBehavior="Forever">
+                                <DoubleAnimation.EasingFunction>
+                                    <SineEase EasingMode="EaseInOut"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Canvas.Triggers>
+            <Ellipse Width="2" Height="2" Fill="#FFFFFF20" Canvas.Left="100" Canvas.Top="80"/>
+            <Ellipse Width="1" Height="1" Fill="#FFFFFF15" Canvas.Left="400" Canvas.Top="200"/>
+        </Canvas>
+
+        <!-- Midground layer (0.6x parallax speed) -->
+        <Canvas x:Name="midLayer" Opacity="0.6" RenderTransformOrigin="0.5,0.5">
+            <Canvas.RenderTransform>
+                <TranslateTransform x:Name="midShift"/>
+            </Canvas.RenderTransform>
+            <Canvas.Triggers>
+                <EventTrigger RoutedEvent="Loaded">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="midShift"
+                                Storyboard.TargetProperty="X"
+                                From="-30" To="30" Duration="0:0:8"
+                                AutoReverse="True" RepeatBehavior="Forever">
+                                <DoubleAnimation.EasingFunction>
+                                    <SineEase EasingMode="EaseInOut"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Canvas.Triggers>
+            <Ellipse Width="3" Height="3" Fill="#FFFFFF40" Canvas.Left="250" Canvas.Top="150"/>
+        </Canvas>
+
+        <!-- Foreground layer (1.0x parallax speed) -->
+        <Canvas x:Name="fgLayer" Opacity="0.9" RenderTransformOrigin="0.5,0.5">
+            <Canvas.RenderTransform>
+                <TranslateTransform x:Name="fgShift"/>
+            </Canvas.RenderTransform>
+            <Canvas.Triggers>
+                <EventTrigger RoutedEvent="Loaded">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="fgShift"
+                                Storyboard.TargetProperty="X"
+                                From="-50" To="50" Duration="0:0:8"
+                                AutoReverse="True" RepeatBehavior="Forever">
+                                <DoubleAnimation.EasingFunction>
+                                    <SineEase EasingMode="EaseInOut"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Canvas.Triggers>
+            <Ellipse Width="5" Height="5" Fill="#FFFFFF80" Canvas.Left="500" Canvas.Top="250">
+                <Ellipse.Effect>
+                    <DropShadowEffect ShadowDepth="0" BlurRadius="10" Color="White" Opacity="0.5"/>
+                </Ellipse.Effect>
+            </Ellipse>
+        </Canvas>
+
+        <!-- Camera zoom breathing -->
+        <Grid.Triggers>
+            <EventTrigger RoutedEvent="Loaded">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation Storyboard.TargetName="cameraZoom"
+                            Storyboard.TargetProperty="ScaleX"
+                            From="1.0" To="1.05" Duration="0:0:10"
+                            AutoReverse="True" RepeatBehavior="Forever">
+                            <DoubleAnimation.EasingFunction>
+                                <SineEase EasingMode="EaseInOut"/>
+                            </DoubleAnimation.EasingFunction>
+                        </DoubleAnimation>
+                        <DoubleAnimation Storyboard.TargetName="cameraZoom"
+                            Storyboard.TargetProperty="ScaleY"
+                            From="1.0" To="1.05" Duration="0:0:10"
+                            AutoReverse="True" RepeatBehavior="Forever">
+                            <DoubleAnimation.EasingFunction>
+                                <SineEase EasingMode="EaseInOut"/>
+                            </DoubleAnimation.EasingFunction>
+                        </DoubleAnimation>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Grid.Triggers>
+    </Grid>
+</Window>

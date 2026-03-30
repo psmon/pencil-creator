@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Astral Voyager — Space Universe Showcase</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Loading -->
+  <div class="loading" id="loading">
+    <div class="spinner"></div>
+    <p>Initializing universes...</p>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <span class="nav-title">ASTRAL VOYAGER</span>
+    <button class="nav-btn active" data-universe="starfield">Starfield</button>
+    <button class="nav-btn" data-universe="nebula">Nebula</button>
+    <button class="nav-btn" data-universe="galaxy">Galaxy</button>
+    <button class="nav-btn" data-universe="astral">Solar</button>
+  </nav>
+
+  <!-- Camera HUD -->
+  <div class="camera-hud" id="camera-hud">
+    <div>CAM X: <span class="val" id="hud-x">0</span></div>
+    <div>CAM Y: <span class="val" id="hud-y">0</span></div>
+    <div>CAM Z: <span class="val" id="hud-z">400</span></div>
+    <div>FOV: <span class="val" id="hud-fov">60</span></div>
+  </div>
+
+  <!-- ===== UNIVERSE 1: DEEP STARFIELD ===== -->
+  <div class="universe active" id="uni-starfield">
+    <canvas id="cv-starfield"></canvas>
+  </div>
+  <div class="ctrl-panel" id="ctrl-starfield">
+    <h4><span class="dot"></span>Starfield Controls</h4>
+    <div class="ctrl-group">
+      <label>Warp Speed <span id="v-warp">1.0</span></label>
+      <input type="range" id="sl-warp" min="0.1" max="5" step="0.1" value="1">
+    </div>
+    <div class="ctrl-group">
+      <label>Star Density <span id="v-density">3000</span></label>
+      <input type="range" id="sl-density" min="500" max="8000" step="500" value="3000">
+    </div>
+    <div class="ctrl-group">
+      <label>Depth Range <span id="v-depth">1000</span></label>
+      <input type="range" id="sl-depth" min="200" max="3000" step="100" value="1000">
+    </div>
+  </div>
+
+  <!-- ===== UNIVERSE 2: NEBULA SANCTUM ===== -->
+  <div class="universe" id="uni-nebula"></div>
+  <div class="ctrl-panel hidden" id="ctrl-nebula">
+    <h4><span class="dot"></span>Nebula Controls</h4>
+    <div class="ctrl-group">
+      <label>Cloud Density <span id="v-clouds">12</span></label>
+      <input type="range" id="sl-clouds" min="4" max="30" step="1" value="12">
+    </div>
+    <div class="ctrl-group">
+      <label>Color Cycle Speed <span id="v-color">1.0</span></label>
+      <input type="range" id="sl-color" min="0.2" max="3" step="0.1" value="1">
+    </div>
+    <div class="ctrl-group">
+      <label>Light Intensity <span id="v-light">1.0</span></label>
+      <input type="range" id="sl-light" min="0.1" max="3" step="0.1" value="1">
+    </div>
+  </div>
+
+  <!-- ===== UNIVERSE 3: GALAXY ABYSS ===== -->
+  <div class="universe" id="uni-galaxy"></div>
+  <div class="ctrl-panel hidden" id="ctrl-galaxy">
+    <h4><span class="dot"></span>Galaxy Controls</h4>
+    <div class="ctrl-group">
+      <label>Rotation Speed <span id="v-rot">1.0</span></label>
+      <input type="range" id="sl-rot" min="0.1" max="4" step="0.1" value="1">
+    </div>
+    <div class="ctrl-group">
+      <label>Arm Count <span id="v-arms">4</span></label>
+      <input type="range" id="sl-arms" min="2" max="8" step="1" value="4">
+    </div>
+    <div class="ctrl-group">
+      <label>Star Count <span id="v-gstars">5000</span></label>
+      <input type="range" id="sl-gstars" min="1000" max="15000" step="500" value="5000">
+    </div>
+  </div>
+
+  <!-- ===== UNIVERSE 4: DUAL SOLAR SYSTEMS ===== -->
+  <div class="universe" id="uni-astral"></div>
+  <div class="ctrl-panel hidden" id="ctrl-astral">
+    <h4><span class="dot"></span>Solar System Controls</h4>
+    <div class="ctrl-group">
+      <label>Time Scale <span id="v-timescale">1.0</span>x</label>
+      <input type="range" id="sl-timescale" min="0.1" max="20" step="0.1" value="1">
+    </div>
+    <div class="ctrl-group">
+      <label>Orbit Trails <span id="v-trails">On</span></label>
+      <input type="range" id="sl-trails" min="0" max="1" step="1" value="1">
+    </div>
+    <div class="ctrl-group">
+      <label>View <span id="v-view">Both</span></label>
+      <input type="range" id="sl-view" min="0" max="2" step="1" value="0">
+    </div>
+  </div>
+
+  <!-- Universe Info -->
+  <div class="universe-info" id="universe-info">
+    <h2 id="info-title">DEEP STARFIELD</h2>
+    <p id="info-desc">Infinite parallax star warp — fly through the cosmos</p>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

@@ -400,3 +400,91 @@
 | Pulse Button WPF | https://www.codeproject.com/Articles/996417/Pulse-Button-WPF |
 | Adonis UI Ripple Guide | https://benruehl.github.io/adonis-ui/docs/guides/ripple/ |
 | WPF Storyboard Fade In/Out | https://medium.com/@artillustration391/wpf-storyboards-your-first-animation-fade-in-out-5499dd38433f |
+
+---
+
+# 6차 조사 — Space & Astral 3D Interface (2026-03-31)
+
+> 목적: 우주/은하/성운 기반 3D UI 애니메이션 6종 조사 및 CAT15 추가
+> 핵심 방향: 깊이감(Z축) + 공간감 + 카메라 이동 + WPF Viewport3D/2.5D 혼합
+
+---
+
+## CAT15: 우주 & 아스트랄 3D 인터페이스 (Space & Astral 3D Interface)
+
+### 33. Starfield Depth System (별필드 깊이 시스템)
+
+| 항목 | 내용 |
+|------|------|
+| 출처 | [Microsoft Learn - 3D Graphics Overview](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/graphics-multimedia/3-d-graphics-overview), [CodeProject - Particle Effects in WPF](https://www.codeproject.com/articles/Particle-Effects-in-WPF) |
+| 핵심 기술 | Canvas multi-layer, CompositionTarget.Rendering, Z-depth → size/speed/opacity mapping |
+| 애니메이션 | 3-layer: bg(slow/dim/1~2px) + mid(medium/3px) + fg(fast/bright/4~5px+glow), 좌→우 이동 |
+| 샘플 파일 | [`sample/33-starfield-depth-system.xaml`](sample/33-starfield-depth-system.xaml) |
+
+### 34. Parallax Camera Shift (패럴랙스 카메라 시프트)
+
+| 항목 | 내용 |
+|------|------|
+| 출처 | [Microsoft Learn - Animate Camera Position](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/graphics-multimedia/how-to-animate-camera-position-and-direction-in-a-3d-scene), [Eric Sink - WPF 3D Rotate & Zoom](https://ericsink.com/wpf3d/9_Rotate_Zoom.html) |
+| 핵심 기술 | TranslateTransform per-layer speed factor, ScaleTransform zoom, SineEase orbit drift |
+| 애니메이션 | bg ±15px(0.3x), mid ±30px(0.6x), fg ±50px(1.0x) + ScaleTransform 1.0→1.05 zoom 10s |
+| 샘플 파일 | [`sample/34-parallax-camera-shift.xaml`](sample/34-parallax-camera-shift.xaml) |
+
+### 35. Nebula Cosmic Fog (성운 코스믹 포그)
+
+| 항목 | 내용 |
+|------|------|
+| 출처 | [CodeProject - Shader Effects in WPF](https://www.codeproject.com/Articles/994276/Shader-Effects-in-WPF-The-basics), [Microsoft Learn - BlurEffect Animation](https://learn.microsoft.com/en-us/archive/msdn-technet-forums/72976004-495e-46f9-aaa7-ba66d5fdae66) |
+| 핵심 기술 | RadialGradientBrush overlapping ellipses, BlurEffect Radius 15~25, ColorAnimation, ScaleTransform |
+| 애니메이션 | Purple↔Blue↔Pink 색상 순환 6~7s + Scale 0.9→1.15 + Opacity breathing |
+| 샘플 파일 | [`sample/35-nebula-cosmic-fog.xaml`](sample/35-nebula-cosmic-fog.xaml) |
+
+### 36. Galaxy Swirl Motion (은하 소용돌이)
+
+| 항목 | 내용 |
+|------|------|
+| 출처 | [Microsoft Learn - 3D Transformations Overview](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/graphics-multimedia/3-d-transformations-overview), [Barth Dev - Getting Started 3D WPF](https://barth-dev.de/getting-started-3d-wpf/) |
+| 핵심 기술 | RotateTransform on Canvas orbit rings, DropShadowEffect center glow, spiral particle placement |
+| 애니메이션 | Inner orbit 6s, Mid 12s, Outer 20s 회전 + center glow BlurRadius 30→60 pulse 4s |
+| 샘플 파일 | [`sample/36-galaxy-swirl-motion.xaml`](sample/36-galaxy-swirl-motion.xaml) |
+
+### 37. Volumetric Light Beams (볼류메트릭 라이트 빔)
+
+| 항목 | 내용 |
+|------|------|
+| 출처 | [CodeProject - Getting Started with Shader Effects](https://www.codeproject.com/articles/Getting-Started-with-Shader-Effects-in-WPF), [GitHub - WpfShaders](https://github.com/mdschweda/WpfShaders) |
+| 핵심 기술 | Path cone + LinearGradientBrush, BlurEffect 6~10, DropShadowEffect light source, OpacityAnimation |
+| 애니메이션 | Opacity 0.3→0.8 SineEase 3s + secondary beam 4s BeginTime 1s stagger |
+| 샘플 파일 | [`sample/37-volumetric-light-beams.xaml`](sample/37-volumetric-light-beams.xaml) |
+
+### 38. Hologram Floating Panel (홀로그램 부유 패널)
+
+| 항목 | 내용 |
+|------|------|
+| 출처 | [Microsoft Learn - Opacity Animation](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/graphics-multimedia/how-to-animate-the-opacity-of-an-element-or-brush), [GitHub - FluentWpfChromes (Blur/Acrylic)](https://github.com/vbobroff-app/FluentWpfChromes) |
+| 핵심 기술 | Border semi-transparent + DropShadowEffect neon, TranslateTransform.Y oscillation, scanline sweep |
+| 애니메이션 | TranslateY ±8px SineEase 3s + scanline sweep Y -55→120 2.5s + cascade fade PowerEase 0.8s |
+| 샘플 파일 | [`sample/38-hologram-floating-panel.xaml`](sample/38-hologram-floating-panel.xaml) |
+
+---
+
+## COMBINED SAMPLE: Astral Command Center
+
+| 항목 | 내용 |
+|------|------|
+| 조합 기법 | Starfield + Parallax + Nebula + Galaxy + Volumetric Light + Hologram Panel |
+| 파이프라인 | Starfield(Z-depth bg) → Nebula(fog overlay) → Galaxy(center swirl) → Light(beams) → Hologram(floating UI) → Parallax(camera) |
+| 가치 | 6개 기법의 통합 우주 UI, Case W에서 WebGL/Canvas 기반 즉시 HTML 변환 가능 |
+
+---
+
+## 추가 참고 자료
+
+| 리소스 | URL |
+|--------|-----|
+| WPF 3D Graphics Overview | https://learn.microsoft.com/en-us/dotnet/desktop/wpf/graphics-multimedia/3-d-graphics-overview |
+| WPF 3D Camera Animation | https://learn.microsoft.com/en-us/dotnet/desktop/wpf/graphics-multimedia/how-to-animate-camera-position-and-direction-in-a-3d-scene |
+| WPF ShaderEffects Library | https://github.com/mrange/WPFShaderEffects |
+| Web Starfield (Canvas) | https://github.com/anthony-hopkins/web_starfield |
+| WebGL Parallax Starfield | https://github.com/rocket-boots/webgl-starfield |
+| Interactive 3D Galaxy | https://codetap.org/project/interactive-3d-galaxy-animation |

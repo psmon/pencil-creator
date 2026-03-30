@@ -325,6 +325,138 @@
       "coreAnimations": ["ColorAnimation 색상 순환", "DoubleAnimation GradientStop.Offset 스윕"],
       "triggerType": "자동반복형 (Loaded+Forever)",
       "notes": ""
+    },
+    {
+      "id": 28,
+      "sourceFile": "28-zen-breathing-circle.xaml",
+      "migratedFile": "migrated/Sample28_ZenBreathingCircle.xaml",
+      "displayName": "28. Zen Breathing Circle",
+      "category": "Peace",
+      "status": "빌드성공",
+      "animationSummary": "3개 동심원이 SineEase로 확대/축소하며 호흡하는 명상 효과",
+      "coreAnimations": ["ScaleTransform 확대축소", "SineEase 이징", "Opacity 브리딩"],
+      "triggerType": "자동반복형 (Loaded+Forever)",
+      "notes": ""
+    },
+    {
+      "id": 29,
+      "sourceFile": "29-water-ripple-emanation.xaml",
+      "migratedFile": "migrated/Sample29_WaterRippleEmanation.xaml",
+      "displayName": "29. Water Ripple Emanation",
+      "category": "Peace",
+      "status": "빌드성공",
+      "animationSummary": "3개 원형이 시차를 두고 Scale 0→8로 확장+페이드아웃하는 파문 효과",
+      "coreAnimations": ["ScaleTransform 0→8 확장", "Opacity 페이드아웃", "시차(Stagger) BeginTime"],
+      "triggerType": "자동반복형 (Loaded+Forever)",
+      "notes": ""
+    },
+    {
+      "id": 30,
+      "sourceFile": "30-floating-feather-drift.xaml",
+      "migratedFile": "migrated/Sample30_FloatingFeatherDrift.xaml",
+      "displayName": "30. Floating Feather Drift",
+      "category": "Peace",
+      "status": "빌드성공",
+      "animationSummary": "깃털 Path가 좌우 사인파 진동하며 아래로 천천히 낙하+회전+페이드 효과",
+      "coreAnimations": ["TranslateTransform X/Y 드리프트", "RotateTransform 기울임", "Opacity 페이드", "SineEase 이징"],
+      "triggerType": "자동반복형 (Loaded+Forever)",
+      "notes": ""
+    },
+    {
+      "id": 31,
+      "sourceFile": "31-soft-aurora-gradient.xaml",
+      "migratedFile": "migrated/Sample31_SoftAuroraGradient.xaml",
+      "displayName": "31. Soft Aurora Gradient",
+      "category": "Peace",
+      "status": "빌드성공",
+      "animationSummary": "4개 그라데이션 스톱의 ColorAnimation 순환+Offset 진동으로 오로라 배경 효과",
+      "coreAnimations": ["ColorAnimation 색상 순환", "DoubleAnimation GradientStop.Offset", "SineEase 이징"],
+      "triggerType": "자동반복형 (Loaded+Forever)",
+      "notes": ""
+    },
+    {
+      "id": 32,
+      "sourceFile": "32-zen-fade-cascade.xaml",
+      "migratedFile": "migrated/Sample32_ZenFadeCascade.xaml",
+      "displayName": "32. Zen Fade Cascade",
+      "category": "Peace",
+      "status": "빌드성공",
+      "animationSummary": "4개 텍스트+구분선이 500ms 시차로 순차 페이드인하는 캐스케이드 효과",
+      "coreAnimations": ["Opacity 페이드인", "PowerEase Power=3", "시차(Stagger) BeginTime 500ms"],
+      "triggerType": "시퀀스형 (Loaded+시차)",
+      "notes": ""
+    },
+    {
+      "id": 33,
+      "sourceFile": "33-starfield-depth-system.xaml",
+      "migratedFile": "migrated/Sample33_StarfieldDepthSystem.xaml",
+      "displayName": "33. Starfield Depth System",
+      "category": "Space",
+      "status": "빌드성공",
+      "animationSummary": "3계층(배경/중간/전경) 별들이 서로 다른 속도로 이동하는 Z-depth 별밭 효과",
+      "coreAnimations": ["Canvas.Left DoubleAnimation", "Opacity 페이드", "DropShadowEffect 글로우"],
+      "triggerType": "자동반복형 (Loaded+Forever)",
+      "notes": ""
+    },
+    {
+      "id": 34,
+      "sourceFile": "34-parallax-camera-shift.xaml",
+      "migratedFile": "migrated/Sample34_ParallaxCameraShift.xaml",
+      "displayName": "34. Parallax Camera Shift",
+      "category": "Space",
+      "status": "빌드성공",
+      "animationSummary": "3개 레이어가 0.3x/0.6x/1.0x 속도로 횡이동+카메라 줌 브리딩 패럴랙스 효과",
+      "coreAnimations": ["TranslateTransform.X 패럴랙스", "ScaleTransform 줌 브리딩", "SineEase 이징"],
+      "triggerType": "자동반복형 (Loaded+Forever)",
+      "notes": ""
+    },
+    {
+      "id": 35,
+      "sourceFile": "35-nebula-cosmic-fog.xaml",
+      "migratedFile": "migrated/Sample35_NebulaCosmicFog.xaml",
+      "displayName": "35. Nebula Cosmic Fog",
+      "category": "Space",
+      "status": "빌드성공",
+      "animationSummary": "3개 타원형 RadialGradient 구름이 색상 순환+Scale 확장으로 성운 안개 효과",
+      "coreAnimations": ["ColorAnimation 색상 순환", "ScaleTransform 확장", "BlurEffect", "Opacity 브리딩"],
+      "triggerType": "자동반복형 (Loaded+Forever)",
+      "notes": ""
+    },
+    {
+      "id": 36,
+      "sourceFile": "36-galaxy-swirl-motion.xaml",
+      "migratedFile": "migrated/Sample36_GalaxySwirlMotion.xaml",
+      "displayName": "36. Galaxy Swirl Motion",
+      "category": "Space",
+      "status": "빌드성공",
+      "animationSummary": "3개 궤도 링이 6s/12s/20s로 회전+코어 글로우 펄스 은하 소용돌이 효과",
+      "coreAnimations": ["RotateTransform 360도 회전", "DropShadowEffect.BlurRadius 펄스", "시차 속도 차이"],
+      "triggerType": "자동반복형 (Loaded+Forever)",
+      "notes": ""
+    },
+    {
+      "id": 37,
+      "sourceFile": "37-volumetric-light-beams.xaml",
+      "migratedFile": "migrated/Sample37_VolumetricLightBeams.xaml",
+      "displayName": "37. Volumetric Light Beams",
+      "category": "Space",
+      "status": "빌드성공",
+      "animationSummary": "삼각형 Path+LinearGradient+BlurEffect로 볼류메트릭 광선 브리딩 효과",
+      "coreAnimations": ["Opacity 브리딩", "BlurEffect", "DropShadowEffect 광원 글로우", "SineEase 이징"],
+      "triggerType": "자동반복형 (Loaded+Forever)",
+      "notes": ""
+    },
+    {
+      "id": 38,
+      "sourceFile": "38-hologram-floating-panel.xaml",
+      "migratedFile": "migrated/Sample38_HologramFloatingPanel.xaml",
+      "displayName": "38. Hologram Floating Panel",
+      "category": "Space",
+      "status": "빌드성공",
+      "animationSummary": "반투명 패널이 Y축 부유+스캔라인 스윕+콘텐츠 시차 페이드인 홀로그램 UI 효과",
+      "coreAnimations": ["TranslateTransform.Y 부유", "Opacity 캐스케이드 페이드인", "QuadraticEase 스캔라인"],
+      "triggerType": "자동반복형 (Loaded+Forever)",
+      "notes": ""
     }
   ],
   "migrationLog": [
@@ -531,6 +663,83 @@
       "itemId": 27,
       "action": "변환완료",
       "summary": "Holographic Shimmer — 그라데이션 스톱 색상 순환+오프셋 스윕 홀로그래픽 무지개빛 효과"
+    },
+    {
+      "version": 2,
+      "date": "2026-03-31",
+      "itemId": 28,
+      "action": "변환완료",
+      "summary": "Zen Breathing Circle — 3개 동심원 SineEase 확대축소+Opacity 브리딩 명상 효과"
+    },
+    {
+      "version": 2,
+      "date": "2026-03-31",
+      "itemId": 29,
+      "action": "변환완료",
+      "summary": "Water Ripple Emanation — 3개 원형 Scale 0→8 확장+시차 페이드아웃 파문 효과"
+    },
+    {
+      "version": 2,
+      "date": "2026-03-31",
+      "itemId": 30,
+      "action": "변환완료",
+      "summary": "Floating Feather Drift — Path 깃털 사인파 진동+낙하+회전+페이드 자연 효과"
+    },
+    {
+      "version": 2,
+      "date": "2026-03-31",
+      "itemId": 31,
+      "action": "변환완료",
+      "summary": "Soft Aurora Gradient — 4개 그라데이션 스톱 색상순환+Offset 진동 오로라 배경 효과"
+    },
+    {
+      "version": 2,
+      "date": "2026-03-31",
+      "itemId": 32,
+      "action": "변환완료",
+      "summary": "Zen Fade Cascade — 4개 텍스트+구분선 500ms 시차 순차 페이드인 캐스케이드 효과"
+    },
+    {
+      "version": 2,
+      "date": "2026-03-31",
+      "itemId": 33,
+      "action": "변환완료",
+      "summary": "Starfield Depth System — 3계층 Z-depth 별밭 서로 다른 속도 이동+글로우 효과"
+    },
+    {
+      "version": 2,
+      "date": "2026-03-31",
+      "itemId": 34,
+      "action": "변환완료",
+      "summary": "Parallax Camera Shift — 3레이어 0.3x/0.6x/1.0x 패럴랙스+카메라 줌 브리딩 효과"
+    },
+    {
+      "version": 2,
+      "date": "2026-03-31",
+      "itemId": 35,
+      "action": "변환완료",
+      "summary": "Nebula Cosmic Fog — 3개 RadialGradient 타원 색상순환+Scale 확장 성운 안개 효과"
+    },
+    {
+      "version": 2,
+      "date": "2026-03-31",
+      "itemId": 36,
+      "action": "변환완료",
+      "summary": "Galaxy Swirl Motion — 3개 궤도 6s/12s/20s 회전+코어 글로우 펄스 은하 소용돌이 효과"
+    },
+    {
+      "version": 2,
+      "date": "2026-03-31",
+      "itemId": 37,
+      "action": "변환완료",
+      "summary": "Volumetric Light Beams — 삼각형 Path+BlurEffect+Opacity 브리딩 볼류메트릭 광선 효과"
+    },
+    {
+      "version": 2,
+      "date": "2026-03-31",
+      "itemId": 38,
+      "action": "변환완료",
+      "summary": "Hologram Floating Panel — 반투명 패널 Y축 부유+스캔라인+캐스케이드 페이드인 홀로그램 UI"
     }
   ]
 }

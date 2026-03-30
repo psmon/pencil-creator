@@ -1,0 +1,76 @@
+<UserControl x:Class="design_wpf_app.Migrated.Sample32_ZenFadeCascade"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="400" d:DesignWidth="600"
+             Background="#0A0F1C">
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical">
+        <TextBlock Text="Breathe" FontSize="32" Foreground="#22D3EE" FontFamily="Segoe UI Light" HorizontalAlignment="Center" Opacity="0" Margin="0,10">
+            <TextBlock.Triggers>
+                <EventTrigger RoutedEvent="Loaded">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:1.2">
+                                <DoubleAnimation.EasingFunction><PowerEase Power="3" EasingMode="EaseOut"/></DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </TextBlock.Triggers>
+        </TextBlock>
+        <TextBlock Text="Release" FontSize="28" Foreground="#4ECDC4" FontFamily="Segoe UI Light" HorizontalAlignment="Center" Opacity="0" Margin="0,10">
+            <TextBlock.Triggers>
+                <EventTrigger RoutedEvent="Loaded">
+                    <BeginStoryboard>
+                        <Storyboard BeginTime="0:0:0.5">
+                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:1.2">
+                                <DoubleAnimation.EasingFunction><PowerEase Power="3" EasingMode="EaseOut"/></DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </TextBlock.Triggers>
+        </TextBlock>
+        <TextBlock Text="Peace" FontSize="24" Foreground="#7DD3A0" FontFamily="Segoe UI Light" HorizontalAlignment="Center" Opacity="0" Margin="0,10">
+            <TextBlock.Triggers>
+                <EventTrigger RoutedEvent="Loaded">
+                    <BeginStoryboard>
+                        <Storyboard BeginTime="0:0:1">
+                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:1.2">
+                                <DoubleAnimation.EasingFunction><PowerEase Power="3" EasingMode="EaseOut"/></DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </TextBlock.Triggers>
+        </TextBlock>
+        <TextBlock Text="Stillness" FontSize="20" Foreground="#A78BFA" FontFamily="Segoe UI Light" HorizontalAlignment="Center" Opacity="0" Margin="0,10">
+            <TextBlock.Triggers>
+                <EventTrigger RoutedEvent="Loaded">
+                    <BeginStoryboard>
+                        <Storyboard BeginTime="0:0:1.5">
+                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:1.2">
+                                <DoubleAnimation.EasingFunction><PowerEase Power="3" EasingMode="EaseOut"/></DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </TextBlock.Triggers>
+        </TextBlock>
+        <Rectangle Width="200" Height="1" Fill="#22D3EE" Opacity="0" HorizontalAlignment="Center" Margin="0,20">
+            <Rectangle.Triggers>
+                <EventTrigger RoutedEvent="Loaded">
+                    <BeginStoryboard>
+                        <Storyboard BeginTime="0:0:2">
+                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="0.5" Duration="0:0:1.2">
+                                <DoubleAnimation.EasingFunction><PowerEase Power="3" EasingMode="EaseOut"/></DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Rectangle.Triggers>
+        </Rectangle>
+    </StackPanel>
+</UserControl>

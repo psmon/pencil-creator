@@ -1,0 +1,139 @@
+/* ============================================
+   Space Showcase — style.css
+   4 Universes: Starfield, Nebula, Galaxy, Astral
+   ============================================ */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  background:#030712;
+  color:#E2E8F0;
+  overflow-x:hidden;
+}
+
+/* --- Navigation --- */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:16px 20px;
+  background:rgba(3,7,18,0.8);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(139,92,246,0.15);
+}
+.nav-btn{
+  font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;
+  letter-spacing:1px;text-transform:uppercase;
+  padding:8px 20px;border-radius:20px;border:1px solid rgba(139,92,246,0.3);
+  background:transparent;color:#94A3B8;cursor:pointer;
+  transition:all 0.3s;
+}
+.nav-btn:hover{color:#A78BFA;border-color:#A78BFA}
+.nav-btn.active{
+  background:rgba(139,92,246,0.15);color:#A78BFA;
+  border-color:#8B5CF6;
+  box-shadow:0 0 20px rgba(139,92,246,0.2);
+}
+.nav-title{
+  font-family:'JetBrains Mono',monospace;font-size:11px;
+  color:#64748B;letter-spacing:2px;margin-right:16px;
+}
+
+/* --- Universe Container --- */
+.universe{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  opacity:0;pointer-events:none;
+  transition:opacity 0.8s ease;
+}
+.universe.active{opacity:1;pointer-events:auto}
+.universe canvas{display:block;width:100%!important;height:100%!important}
+
+/* --- Control Panel (per universe) --- */
+.ctrl-panel{
+  position:fixed;bottom:24px;left:24px;z-index:200;
+  background:rgba(3,7,18,0.85);
+  backdrop-filter:blur(16px);
+  border:1px solid rgba(139,92,246,0.2);
+  border-radius:14px;padding:20px;width:260px;
+  box-shadow:0 8px 32px rgba(0,0,0,0.4);
+  transition:transform 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+.ctrl-panel.hidden{transform:translateY(calc(100% + 30px))}
+.ctrl-panel h4{
+  font-family:'JetBrains Mono',monospace;font-size:11px;
+  color:#8B5CF6;letter-spacing:1.5px;text-transform:uppercase;
+  margin-bottom:14px;display:flex;align-items:center;gap:8px;
+}
+.ctrl-panel h4 .dot{width:6px;height:6px;border-radius:50%;background:#8B5CF6;
+  box-shadow:0 0 8px #8B5CF6}
+.ctrl-group{margin-bottom:10px}
+.ctrl-group label{
+  display:flex;justify-content:space-between;
+  font-size:11px;color:#64748B;margin-bottom:3px;
+}
+.ctrl-group label span{color:#CBD5E1;font-weight:500}
+.ctrl-group input[type="range"]{
+  width:100%;height:3px;-webkit-appearance:none;
+  background:linear-gradient(90deg,#8B5CF6,#EC4899);
+  border-radius:3px;outline:none;
+}
+.ctrl-group input[type="range"]::-webkit-slider-thumb{
+  -webkit-appearance:none;width:14px;height:14px;border-radius:50%;
+  background:#fff;border:2px solid #8B5CF6;cursor:pointer;
+  box-shadow:0 0 8px rgba(139,92,246,0.4);
+}
+.ctrl-toggle{
+  display:flex;align-items:center;gap:6px;
+  font-size:11px;color:#64748B;margin-bottom:4px;
+}
+.ctrl-toggle input{accent-color:#8B5CF6;width:14px;height:14px}
+
+/* --- Camera HUD overlay --- */
+.camera-hud{
+  position:fixed;top:72px;right:24px;z-index:150;
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  color:#64748B;text-align:right;pointer-events:none;
+  line-height:1.6;
+}
+.camera-hud .val{color:#A78BFA}
+
+/* --- Info overlay --- */
+.universe-info{
+  position:fixed;bottom:24px;right:24px;z-index:150;
+  text-align:right;pointer-events:none;
+}
+.universe-info h2{
+  font-family:'JetBrains Mono',monospace;font-size:20px;
+  font-weight:700;color:#E2E8F0;letter-spacing:2px;
+  text-shadow:0 0 30px rgba(139,92,246,0.3);
+}
+.universe-info p{
+  font-size:12px;color:#64748B;margin-top:4px;
+}
+
+/* --- Loading --- */
+.loading{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:#030712;z-index:9999;
+  transition:opacity 0.6s ease;
+}
+.loading.done{opacity:0;pointer-events:none}
+.loading .spinner{
+  width:40px;height:40px;border:3px solid rgba(139,92,246,0.2);
+  border-top-color:#8B5CF6;border-radius:50%;
+  animation:spin 1s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading p{font-size:12px;color:#64748B;margin-top:16px;
+  font-family:'JetBrains Mono',monospace;letter-spacing:1px}
+
+/* --- Responsive --- */
+@media(max-width:768px){
+  .nav{gap:4px;padding:12px 8px}
+  .nav-btn{padding:6px 12px;font-size:10px}
+  .nav-title{display:none}
+  .ctrl-panel{width:220px;left:12px;bottom:12px;padding:16px}
+  .universe-info h2{font-size:14px}
+}

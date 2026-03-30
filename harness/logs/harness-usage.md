@@ -12,3 +12,5 @@
 | 2026-03-29 | W | Cyberpunk HUD 5-Theme 페이지 (6FX+테마5종+제어패널) | 92/100 A | [로그](2026-03-29-cyberpunk-hud-caseW.md) |
 | 2026-03-31 | A | Peace & Meditation 애니메이션 (CAT14 신규, 5카드+5XAML+COMBINED) | 88/100 A | [로그](2026-03-31-peace-meditation-caseA.md) |
 | 2026-03-31 | W | 평화기원 홈페이지 (A→W 파이프라인, 5FX+옵션패널+세계지도) | 92/100 A | [로그](2026-03-31-peace-homepage-caseW.md) |
+| 2026-03-31 | A | Space & Astral 3D Interface (CAT15 신규, 6카드+6XAML+COMBINED) | 94/100 A | [로그](2026-03-31-space-astral-caseA.md) |
+| 2026-03-31 | W | Astral Voyager 4-Universe 쇼케이스 (A→W, Canvas+Three.js, 4장면+카메라) | 93/100 A | [로그](2026-03-31-space-showcase-caseW.md) |

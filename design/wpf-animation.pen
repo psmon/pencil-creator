@@ -13106,6 +13106,2081 @@
           ]
         }
       ]
+    },
+    {
+      "type": "frame",
+      "id": "JWGkr",
+      "x": 0,
+      "y": 13408,
+      "name": "CAT15 — Space & Astral 3D Interface",
+      "width": 1400,
+      "fill": "#0A0F1C",
+      "layout": "vertical",
+      "gap": 28,
+      "padding": [
+        40,
+        48,
+        48,
+        48
+      ],
+      "children": [
+        {
+          "type": "frame",
+          "id": "3rM5f",
+          "name": "cat15lbl",
+          "width": "fill_container",
+          "gap": 12,
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "rectangle",
+              "cornerRadius": 6,
+              "id": "ZwpHR",
+              "name": "cat15badge",
+              "fill": "#8B5CF6",
+              "width": 32,
+              "height": 24
+            },
+            {
+              "type": "text",
+              "id": "h973d",
+              "name": "cat15num",
+              "fill": "#0A0F1C",
+              "content": "15",
+              "fontFamily": "JetBrains Mono",
+              "fontSize": 14,
+              "fontWeight": "bold"
+            },
+            {
+              "type": "text",
+              "id": "Xtv5t",
+              "name": "cat15title",
+              "fill": "#F1F5F9",
+              "content": "CAT15 — SPACE & ASTRAL 3D INTERFACE",
+              "fontFamily": "JetBrains Mono",
+              "fontSize": 20,
+              "fontWeight": "bold",
+              "letterSpacing": 3
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "0yP0a",
+          "name": "cat15desc",
+          "fill": "#64748B",
+          "content": "Starfield Depth System · Parallax Camera Shift · Nebula Cosmic Fog · Galaxy Swirl Motion · Volumetric Light Beams · Hologram Floating Panel",
+          "fontFamily": "Inter",
+          "fontSize": 14,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "frame",
+          "id": "lmoYt",
+          "name": "cat15-cards-row1",
+          "width": "fill_container",
+          "gap": 24,
+          "children": [
+            {
+              "type": "frame",
+              "id": "pa6Mf",
+              "name": "card151",
+              "width": "fill_container",
+              "fill": "#1E293B",
+              "cornerRadius": 12,
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "QhP0M",
+                  "name": "t151",
+                  "fill": "#8B5CF6",
+                  "content": "15-1  STARFIELD DEPTH SYSTEM",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 14,
+                  "fontWeight": "bold",
+                  "letterSpacing": 2
+                },
+                {
+                  "type": "text",
+                  "id": "OoDom",
+                  "name": "d151",
+                  "fill": "#94A3B8",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Multi-layer Canvas Z-depth particles\nBackground(slow/dim) Mid(medium) Fore(fast/bright)\nCompositionTarget.Rendering per-frame",
+                  "lineHeight": 1.5,
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "yvagW",
+                  "name": "pv151",
+                  "width": "fill_container",
+                  "height": 120,
+                  "fill": "#030712",
+                  "cornerRadius": 8,
+                  "layout": "none",
+                  "children": [
+                    {
+                      "type": "ellipse",
+                      "id": "G3wwz",
+                      "x": 30,
+                      "y": 80,
+                      "name": "s1",
+                      "fill": "#FFFFFF15",
+                      "width": 2,
+                      "height": 2
+                    },
+                    {
+                      "type": "ellipse",
+                      "id": "zJaCy",
+                      "x": 90,
+                      "y": 40,
+                      "name": "s2",
+                      "fill": "#FFFFFF20",
+                      "width": 2,
+                      "height": 2
+                    },
+                    {
+                      "type": "ellipse",
+                      "id": "cJAZD",
+                      "x": 150,
+                      "y": 95,
+                      "name": "s3",
+                      "fill": "#FFFFFF15",
+                      "width": 1,
+                      "height": 1
+                    },
+                    {
+                      "type": "ellipse",
+                      "id": "sJq45",
+                      "x": 200,
+                      "y": 25,
+                      "name": "s4",
+                      "fill": "#FFFFFF30",
+                      "width": 3,
+                      "height": 3
+                    },
+                    {
+                      "type": "ellipse",
+                      "id": "g3f1p",
+                      "x": 260,
+                      "y": 55,
+                      "name": "s5",
+                      "fill": "#FFFFFF60",
+                      "width": 4,
+                      "height": 4,
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#FFFFFF40",
+                        "blur": 8
+                      }
+                    },
+                    {
+                      "type": "ellipse",
+                      "id": "kBQDY",
+                      "x": 310,
+                      "y": 30,
+                      "name": "s6",
+                      "fill": "#FFFFFF90",
+                      "width": 5,
+                      "height": 5,
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#FFFFFF60",
+                        "blur": 12
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "id": "D7lFS",
+                      "x": 20,
+                      "y": 105,
+                      "name": "zlbl",
+                      "fill": "#FFFFFF20",
+                      "content": "Z:far",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 8,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "HkTsK",
+                      "x": 190,
+                      "y": 105,
+                      "name": "zmid",
+                      "fill": "#FFFFFF40",
+                      "content": "Z:mid",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 8,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "Q0QPv",
+                      "x": 300,
+                      "y": 105,
+                      "name": "znear",
+                      "fill": "#FFFFFF70",
+                      "content": "Z:near",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 8,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "K3x0j",
+                  "name": "cb151",
+                  "width": "fill_container",
+                  "fill": "#0A0F1C",
+                  "cornerRadius": 6,
+                  "layout": "vertical",
+                  "gap": 4,
+                  "padding": [
+                    10,
+                    14
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "Jybjs",
+                      "name": "cb151a",
+                      "fill": "#8B5CF6",
+                      "content": "Canvas + CompositionTarget.Rendering",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "UwJDW",
+                      "name": "cb151b",
+                      "fill": "#A78BFA",
+                      "content": "Z-depth → size/speed/opacity mapping",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "5jhD7",
+              "name": "card152",
+              "width": "fill_container",
+              "fill": "#1E293B",
+              "cornerRadius": 12,
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "Te5CD",
+                  "name": "t152",
+                  "fill": "#8B5CF6",
+                  "content": "15-2  PARALLAX CAMERA SHIFT",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 14,
+                  "fontWeight": "bold",
+                  "letterSpacing": 2
+                },
+                {
+                  "type": "text",
+                  "id": "pJXkg",
+                  "name": "d152",
+                  "fill": "#94A3B8",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Mouse-responsive layer parallax\nTranslateTransform per layer speed diff\nCamera zoom ScaleTransform + orbit drift",
+                  "lineHeight": 1.5,
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "tp5Ep",
+                  "name": "pv152",
+                  "width": "fill_container",
+                  "height": 120,
+                  "fill": "#030712",
+                  "cornerRadius": 8,
+                  "layout": "none",
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 4,
+                      "id": "QiCXJ",
+                      "x": 30,
+                      "y": 15,
+                      "name": "lyrBg",
+                      "opacity": 0.4,
+                      "fill": "#0F172A",
+                      "width": 280,
+                      "height": 80
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 4,
+                      "id": "Q06In",
+                      "x": 55,
+                      "y": 22,
+                      "name": "lyrMd",
+                      "opacity": 0.6,
+                      "fill": "#1E293B",
+                      "width": 240,
+                      "height": 70
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 4,
+                      "id": "EV3go",
+                      "x": 80,
+                      "y": 30,
+                      "name": "lyrFg",
+                      "opacity": 0.8,
+                      "fill": "#334155",
+                      "width": 200,
+                      "height": 60
+                    },
+                    {
+                      "type": "text",
+                      "id": "nBwuu",
+                      "x": 35,
+                      "y": 100,
+                      "name": "arrL",
+                      "fill": "#FFFFFF20",
+                      "content": "← 0.3x",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 8,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "LlsBw",
+                      "x": 105,
+                      "y": 100,
+                      "name": "arrM",
+                      "fill": "#FFFFFF40",
+                      "content": "← 0.6x",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 8,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "p68qY",
+                      "x": 195,
+                      "y": 100,
+                      "name": "arrF",
+                      "fill": "#FFFFFF70",
+                      "content": "← 1.0x",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 8,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "gtKho",
+                  "name": "cb152",
+                  "width": "fill_container",
+                  "fill": "#0A0F1C",
+                  "cornerRadius": 6,
+                  "layout": "vertical",
+                  "gap": 4,
+                  "padding": [
+                    10,
+                    14
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "RxP2r",
+                      "name": "cb152a",
+                      "fill": "#8B5CF6",
+                      "content": "TranslateTransform X×speedFactor",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "PGnqu",
+                      "name": "cb152b",
+                      "fill": "#A78BFA",
+                      "content": "ScaleTransform zoom + SineEase orbit",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "GWabN",
+              "name": "card153",
+              "width": "fill_container",
+              "fill": "#1E293B",
+              "cornerRadius": 12,
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "zdCTN",
+                  "name": "t153",
+                  "fill": "#8B5CF6",
+                  "content": "15-3  NEBULA COSMIC FOG",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 14,
+                  "fontWeight": "bold",
+                  "letterSpacing": 2
+                },
+                {
+                  "type": "text",
+                  "id": "3ZO2r",
+                  "name": "d153",
+                  "fill": "#94A3B8",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Radial gradient clouds + BlurEffect\nColorAnimation purple→blue→pink cycle\nOverlapping ellipses = volumetric illusion",
+                  "lineHeight": 1.5,
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "d5szE",
+                  "name": "pv153",
+                  "width": "fill_container",
+                  "height": 120,
+                  "fill": "#030712",
+                  "cornerRadius": 8,
+                  "layout": "none",
+                  "children": [
+                    {
+                      "type": "ellipse",
+                      "id": "HPLlA",
+                      "x": 20,
+                      "y": 10,
+                      "name": "neb1",
+                      "fill": {
+                        "type": "gradient",
+                        "gradientType": "radial",
+                        "enabled": true,
+                        "rotation": 0,
+                        "size": {
+                          "width": 1,
+                          "height": 1
+                        },
+                        "colors": [
+                          {
+                            "color": "#8B5CF640",
+                            "position": 0
+                          },
+                          {
+                            "color": "#8B5CF600",
+                            "position": 1
+                          }
+                        ]
+                      },
+                      "width": 160,
+                      "height": 100,
+                      "effect": {
+                        "type": "blur",
+                        "radius": 15
+                      }
+                    },
+                    {
+                      "type": "ellipse",
+                      "id": "BFugC",
+                      "x": 120,
+                      "y": 20,
+                      "name": "neb2",
+                      "fill": {
+                        "type": "gradient",
+                        "gradientType": "radial",
+                        "enabled": true,
+                        "rotation": 0,
+                        "size": {
+                          "width": 1,
+                          "height": 1
+                        },
+                        "colors": [
+                          {
+                            "color": "#EC489940",
+                            "position": 0
+                          },
+                          {
+                            "color": "#EC489900",
+                            "position": 1
+                          }
+                        ]
+                      },
+                      "width": 130,
+                      "height": 90,
+                      "effect": {
+                        "type": "blur",
+                        "radius": 20
+                      }
+                    },
+                    {
+                      "type": "ellipse",
+                      "id": "xlz1w",
+                      "x": 200,
+                      "y": 5,
+                      "name": "neb3",
+                      "fill": {
+                        "type": "gradient",
+                        "gradientType": "radial",
+                        "enabled": true,
+                        "rotation": 0,
+                        "size": {
+                          "width": 1,
+                          "height": 1
+                        },
+                        "colors": [
+                          {
+                            "color": "#3B82F630",
+                            "position": 0
+                          },
+                          {
+                            "color": "#3B82F600",
+                            "position": 1
+                          }
+                        ]
+                      },
+                      "width": 140,
+                      "height": 80,
+                      "effect": {
+                        "type": "blur",
+                        "radius": 18
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "FuHs3",
+                  "name": "cb153",
+                  "width": "fill_container",
+                  "fill": "#0A0F1C",
+                  "cornerRadius": 6,
+                  "layout": "vertical",
+                  "gap": 4,
+                  "padding": [
+                    10,
+                    14
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "NKCjq",
+                      "name": "cb153a",
+                      "fill": "#8B5CF6",
+                      "content": "BlurEffect Radius 15~25 + Opacity anim",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "1eaCL",
+                      "name": "cb153b",
+                      "fill": "#A78BFA",
+                      "content": "ColorAnimation 6s SineEase AutoReverse",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "lLuqM",
+          "name": "cat15-cards-row2",
+          "width": "fill_container",
+          "gap": 24,
+          "children": [
+            {
+              "type": "frame",
+              "id": "JzTvj",
+              "name": "card154",
+              "width": "fill_container",
+              "fill": "#1E293B",
+              "cornerRadius": 12,
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "5iMZo",
+                  "name": "t154",
+                  "fill": "#8B5CF6",
+                  "content": "15-4  GALAXY SWIRL MOTION",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 14,
+                  "fontWeight": "bold",
+                  "letterSpacing": 2
+                },
+                {
+                  "type": "text",
+                  "id": "1bx3y",
+                  "name": "d154",
+                  "fill": "#94A3B8",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Spiral path RotateTransform per orbit\nVarying speeds inner→outer rings\nCenter glow DropShadowEffect breathing",
+                  "lineHeight": 1.5,
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "tiXnL",
+                  "name": "pv154",
+                  "width": "fill_container",
+                  "height": 120,
+                  "fill": "#030712",
+                  "cornerRadius": 8,
+                  "layout": "none",
+                  "children": [
+                    {
+                      "type": "ellipse",
+                      "id": "wSPjK",
+                      "x": 165,
+                      "y": 54,
+                      "name": "gc",
+                      "fill": "#8B5CF6",
+                      "width": 12,
+                      "height": 12,
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#8B5CF680",
+                        "blur": 25
+                      }
+                    },
+                    {
+                      "type": "ellipse",
+                      "id": "Pv3bQ",
+                      "x": 141,
+                      "y": 30,
+                      "name": "orb1",
+                      "fill": "#00000000",
+                      "width": 60,
+                      "height": 60,
+                      "stroke": {
+                        "thickness": 0.8,
+                        "fill": "#8B5CF620"
+                      }
+                    },
+                    {
+                      "type": "ellipse",
+                      "id": "owf7S",
+                      "x": 121,
+                      "y": 10,
+                      "name": "orb2",
+                      "fill": "#00000000",
+                      "width": 100,
+                      "height": 100,
+                      "stroke": {
+                        "thickness": 0.6,
+                        "fill": "#A78BFA15"
+                      }
+                    },
+                    {
+                      "type": "ellipse",
+                      "id": "td4BJ",
+                      "x": 170,
+                      "y": 30,
+                      "name": "sp1",
+                      "fill": "#8B5CF680",
+                      "width": 3,
+                      "height": 3
+                    },
+                    {
+                      "type": "ellipse",
+                      "id": "sT5Wb",
+                      "x": 141,
+                      "y": 55,
+                      "name": "sp2",
+                      "fill": "#A78BFA60",
+                      "width": 2,
+                      "height": 2
+                    },
+                    {
+                      "type": "ellipse",
+                      "id": "WkCc5",
+                      "x": 195,
+                      "y": 70,
+                      "name": "sp3",
+                      "fill": "#EC489960",
+                      "width": 3,
+                      "height": 3
+                    },
+                    {
+                      "type": "ellipse",
+                      "id": "abNFg",
+                      "x": 125,
+                      "y": 35,
+                      "name": "sp4",
+                      "fill": "#8B5CF640",
+                      "width": 2,
+                      "height": 2
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "FtJc2",
+                  "name": "cb154",
+                  "width": "fill_container",
+                  "fill": "#0A0F1C",
+                  "cornerRadius": 6,
+                  "layout": "vertical",
+                  "gap": 4,
+                  "padding": [
+                    10,
+                    14
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "GpUPj",
+                      "name": "cb154a",
+                      "fill": "#8B5CF6",
+                      "content": "RotateTransform spiral r=i×10 + angle",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "kxns2",
+                      "name": "cb154b",
+                      "fill": "#A78BFA",
+                      "content": "DropShadowEffect center glow 4s pulse",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "DTZMS",
+              "name": "card155",
+              "width": "fill_container",
+              "fill": "#1E293B",
+              "cornerRadius": 12,
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "LZDdc",
+                  "name": "t155",
+                  "fill": "#8B5CF6",
+                  "content": "15-5  VOLUMETRIC LIGHT BEAMS",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 14,
+                  "fontWeight": "bold",
+                  "letterSpacing": 2
+                },
+                {
+                  "type": "text",
+                  "id": "xqtPf",
+                  "name": "d155",
+                  "fill": "#94A3B8",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Path-based light cones + gradient fill\nOpacityAnimation breathing on segments\nBlurEffect soft edges + scatter layers",
+                  "lineHeight": 1.5,
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "mD0L0",
+                  "name": "pv155",
+                  "width": "fill_container",
+                  "height": 120,
+                  "fill": "#030712",
+                  "cornerRadius": 8,
+                  "layout": "none",
+                  "children": [
+                    {
+                      "type": "path",
+                      "id": "SpAUh",
+                      "x": 120,
+                      "y": 0,
+                      "name": "beam1",
+                      "opacity": 0.7,
+                      "geometry": "M170 0l-50 120 20 0 30-105 30 105 20 0z",
+                      "fill": {
+                        "type": "gradient",
+                        "gradientType": "linear",
+                        "enabled": true,
+                        "rotation": 0,
+                        "size": {
+                          "height": 1
+                        },
+                        "colors": [
+                          {
+                            "color": "#8B5CF650",
+                            "position": 0
+                          },
+                          {
+                            "color": "#8B5CF600",
+                            "position": 1
+                          }
+                        ]
+                      },
+                      "width": 100,
+                      "height": 120,
+                      "effect": {
+                        "type": "blur",
+                        "radius": 6
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "id": "FfZkV",
+                      "x": 30,
+                      "y": 0,
+                      "name": "beam2",
+                      "opacity": 0.5,
+                      "geometry": "M60 0l-30 120 15 0 15-100 15 100 15 0z",
+                      "fill": {
+                        "type": "gradient",
+                        "gradientType": "linear",
+                        "enabled": true,
+                        "rotation": 0,
+                        "size": {
+                          "height": 1
+                        },
+                        "colors": [
+                          {
+                            "color": "#3B82F640",
+                            "position": 0
+                          },
+                          {
+                            "color": "#3B82F600",
+                            "position": 1
+                          }
+                        ]
+                      },
+                      "width": 60,
+                      "height": 120,
+                      "effect": {
+                        "type": "blur",
+                        "radius": 8
+                      }
+                    },
+                    {
+                      "type": "ellipse",
+                      "id": "3Sgo8",
+                      "x": 166,
+                      "y": 0,
+                      "name": "src1",
+                      "fill": "#8B5CF6",
+                      "width": 8,
+                      "height": 8,
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#8B5CF6",
+                        "blur": 15
+                      }
+                    },
+                    {
+                      "type": "ellipse",
+                      "id": "dHgIG",
+                      "x": 57,
+                      "y": 0,
+                      "name": "src2",
+                      "fill": "#3B82F6",
+                      "width": 6,
+                      "height": 6,
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#3B82F6",
+                        "blur": 12
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "pe8fC",
+                  "name": "cb155",
+                  "width": "fill_container",
+                  "fill": "#0A0F1C",
+                  "cornerRadius": 6,
+                  "layout": "vertical",
+                  "gap": 4,
+                  "padding": [
+                    10,
+                    14
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "vQpTq",
+                      "name": "cb155a",
+                      "fill": "#8B5CF6",
+                      "content": "Path gradient fill + BlurEffect 6~10",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "T6T35",
+                      "name": "cb155b",
+                      "fill": "#A78BFA",
+                      "content": "Opacity 0.3→0.8 SineEase 3s Forever",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "PHCzj",
+              "name": "card156",
+              "width": "fill_container",
+              "fill": "#1E293B",
+              "cornerRadius": 12,
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "h422h",
+                  "name": "t156",
+                  "fill": "#8B5CF6",
+                  "content": "15-6  HOLOGRAM FLOATING PANEL",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 14,
+                  "fontWeight": "bold",
+                  "letterSpacing": 2
+                },
+                {
+                  "type": "text",
+                  "id": "1AjJ4",
+                  "name": "d156",
+                  "fill": "#94A3B8",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Semi-transparent panel + backdrop blur\nTranslateY float oscillation SineEase 3s\nNeon border glow + scanline overlay",
+                  "lineHeight": 1.5,
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "X6OUm",
+                  "name": "pv156",
+                  "width": "fill_container",
+                  "height": 120,
+                  "fill": "#030712",
+                  "cornerRadius": 8,
+                  "layout": "none",
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 8,
+                      "id": "dvWWI",
+                      "x": 80,
+                      "y": 25,
+                      "name": "hpanel",
+                      "fill": "#1E293B60",
+                      "width": 180,
+                      "height": 70,
+                      "stroke": {
+                        "thickness": 1,
+                        "fill": "#8B5CF650"
+                      },
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#8B5CF630",
+                        "blur": 12
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "id": "Vhbj3",
+                      "x": 100,
+                      "y": 35,
+                      "name": "hlbl1",
+                      "fill": "#8B5CF6",
+                      "content": "ASTRAL SYSTEMS",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 9,
+                      "fontWeight": "bold",
+                      "letterSpacing": 1
+                    },
+                    {
+                      "type": "text",
+                      "id": "Kfsux",
+                      "x": 100,
+                      "y": 50,
+                      "name": "hlbl2",
+                      "fill": "#4ADE80",
+                      "content": "Status: Active",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 8,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "tU4bv",
+                      "x": 100,
+                      "y": 65,
+                      "name": "hlbl3",
+                      "fill": "#8B5CF640",
+                      "content": "■ ■ ■ ■ ■ □ □",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 8,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "RkWIz",
+                      "x": 80,
+                      "y": 50,
+                      "name": "scanl",
+                      "fill": {
+                        "type": "gradient",
+                        "gradientType": "linear",
+                        "enabled": true,
+                        "rotation": 0,
+                        "size": {
+                          "height": 1
+                        },
+                        "colors": [
+                          {
+                            "color": "#8B5CF600",
+                            "position": 0
+                          },
+                          {
+                            "color": "#8B5CF620",
+                            "position": 0.5
+                          },
+                          {
+                            "color": "#8B5CF600",
+                            "position": 1
+                          }
+                        ]
+                      },
+                      "width": 180,
+                      "height": 2
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "saBqR",
+                  "name": "cb156",
+                  "width": "fill_container",
+                  "fill": "#0A0F1C",
+                  "cornerRadius": 6,
+                  "layout": "vertical",
+                  "gap": 4,
+                  "padding": [
+                    10,
+                    14
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "q8K5y",
+                      "name": "cb156a",
+                      "fill": "#8B5CF6",
+                      "content": "TranslateY ±8px SineEase 3s Forever",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "Jad1K",
+                      "name": "cb156b",
+                      "fill": "#A78BFA",
+                      "content": "DropShadow glow + scanline Y sweep",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "79ELt",
+      "x": 0,
+      "y": 14371,
+      "name": "SAMPLE — Astral Command Center (통합 컴포넌트)",
+      "width": 1400,
+      "fill": "#0A0F1C",
+      "layout": "vertical",
+      "gap": 32,
+      "padding": 48,
+      "children": [
+        {
+          "type": "frame",
+          "id": "2pbnF",
+          "name": "header",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 8,
+          "children": [
+            {
+              "type": "frame",
+              "id": "BSYJv",
+              "name": "badgeRow",
+              "gap": 12,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "JY6o5",
+                  "name": "badge",
+                  "fill": "#E4324F",
+                  "cornerRadius": 4,
+                  "padding": [
+                    4,
+                    10
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "b8pcb",
+                      "name": "badgeTxt",
+                      "fill": "#FFFFFF",
+                      "content": "COMBINED SAMPLE",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "bold",
+                      "letterSpacing": 1
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "RAGme",
+                  "name": "srcTxt",
+                  "fill": "#64748B",
+                  "content": "6 Space Techniques Combined · Starfield + Parallax + Nebula + Galaxy + Light + Hologram",
+                  "fontFamily": "Inter",
+                  "fontSize": 12,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "VuMZz",
+              "name": "titleTxt",
+              "fill": "#F1F5F9",
+              "content": "Astral Command Center",
+              "fontFamily": "JetBrains Mono",
+              "fontSize": 28,
+              "fontWeight": "bold",
+              "letterSpacing": 2
+            },
+            {
+              "type": "text",
+              "id": "oCPU7",
+              "name": "titleKo",
+              "fill": "#94A3B8",
+              "content": "우주 사령 센터 — 깊이감과 공간감을 강조한 3D 인터페이스 통합 컴포넌트",
+              "fontFamily": "Inter",
+              "fontSize": 14,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "text",
+              "id": "DXSy6",
+              "name": "pipeTxt",
+              "fill": "#A78BFA",
+              "content": "Pipeline: Starfield (Z-depth) → Parallax (Camera) → Nebula (Fog) → Galaxy (Swirl) → Light (Beams) → Hologram (Panel)",
+              "fontFamily": "JetBrains Mono",
+              "fontSize": 11,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "e0Dxa",
+          "name": "content-row",
+          "width": "fill_container",
+          "gap": 32,
+          "children": [
+            {
+              "type": "frame",
+              "id": "XTWSJ",
+              "name": "visual-structure",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "CoMeI",
+                  "name": "leftTitle",
+                  "fill": "#8B5CF6",
+                  "content": "VISUAL STRUCTURE",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 12,
+                  "fontWeight": "bold",
+                  "letterSpacing": 2
+                },
+                {
+                  "type": "frame",
+                  "id": "UbUGp",
+                  "name": "astral-preview",
+                  "width": "fill_container",
+                  "height": 280,
+                  "fill": "#030712",
+                  "cornerRadius": 12,
+                  "layout": "none",
+                  "children": [
+                    {
+                      "type": "ellipse",
+                      "id": "00ohw",
+                      "x": 50,
+                      "y": 30,
+                      "name": "nebBg",
+                      "fill": {
+                        "type": "gradient",
+                        "gradientType": "radial",
+                        "enabled": true,
+                        "rotation": 0,
+                        "size": {
+                          "width": 1,
+                          "height": 1
+                        },
+                        "colors": [
+                          {
+                            "color": "#8B5CF620",
+                            "position": 0
+                          },
+                          {
+                            "color": "#8B5CF600",
+                            "position": 1
+                          }
+                        ]
+                      },
+                      "width": 300,
+                      "height": 200,
+                      "effect": {
+                        "type": "blur",
+                        "radius": 20
+                      }
+                    },
+                    {
+                      "type": "ellipse",
+                      "id": "cItBy",
+                      "x": 250,
+                      "y": 60,
+                      "name": "nebPink",
+                      "fill": {
+                        "type": "gradient",
+                        "gradientType": "radial",
+                        "enabled": true,
+                        "rotation": 0,
+                        "size": {
+                          "width": 1,
+                          "height": 1
+                        },
+                        "colors": [
+                          {
+                            "color": "#EC489918",
+                            "position": 0
+                          },
+                          {
+                            "color": "#EC489900",
+                            "position": 1
+                          }
+                        ]
+                      },
+                      "width": 200,
+                      "height": 150,
+                      "effect": {
+                        "type": "blur",
+                        "radius": 18
+                      }
+                    },
+                    {
+                      "type": "ellipse",
+                      "id": "td8wx",
+                      "x": 40,
+                      "y": 50,
+                      "name": "starFar1",
+                      "fill": "#FFFFFF15",
+                      "width": 2,
+                      "height": 2
+                    },
+                    {
+                      "type": "ellipse",
+                      "id": "0eHOC",
+                      "x": 180,
+                      "y": 30,
+                      "name": "starFar2",
+                      "fill": "#FFFFFF12",
+                      "width": 1,
+                      "height": 1
+                    },
+                    {
+                      "type": "ellipse",
+                      "id": "4UFcQ",
+                      "x": 350,
+                      "y": 80,
+                      "name": "starFar3",
+                      "fill": "#FFFFFF18",
+                      "width": 2,
+                      "height": 2
+                    },
+                    {
+                      "type": "ellipse",
+                      "id": "YjgCn",
+                      "x": 120,
+                      "y": 110,
+                      "name": "starMid1",
+                      "fill": "#FFFFFF35",
+                      "width": 3,
+                      "height": 3
+                    },
+                    {
+                      "type": "ellipse",
+                      "id": "w3hgG",
+                      "x": 400,
+                      "y": 45,
+                      "name": "starNear1",
+                      "fill": "#FFFFFF70",
+                      "width": 4,
+                      "height": 4,
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#FFFFFF50",
+                        "blur": 8
+                      }
+                    },
+                    {
+                      "type": "ellipse",
+                      "id": "VTEhk",
+                      "x": 245,
+                      "y": 135,
+                      "name": "galCore",
+                      "fill": "#8B5CF6",
+                      "width": 10,
+                      "height": 10,
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#8B5CF680",
+                        "blur": 20
+                      }
+                    },
+                    {
+                      "type": "ellipse",
+                      "id": "eMIEx",
+                      "x": 225,
+                      "y": 115,
+                      "name": "galOrb1",
+                      "fill": "#00000000",
+                      "width": 50,
+                      "height": 50,
+                      "stroke": {
+                        "thickness": 0.5,
+                        "fill": "#8B5CF615"
+                      }
+                    },
+                    {
+                      "type": "ellipse",
+                      "id": "pEAat",
+                      "x": 205,
+                      "y": 95,
+                      "name": "galOrb2",
+                      "fill": "#00000000",
+                      "width": 90,
+                      "height": 90,
+                      "stroke": {
+                        "thickness": 0.5,
+                        "fill": "#A78BFA10"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "id": "pSIc6",
+                      "x": 60,
+                      "y": 0,
+                      "name": "beam1",
+                      "opacity": 0.5,
+                      "geometry": "M80 0l-30 280 20 0 10-270 10 270 20 0z",
+                      "fill": {
+                        "type": "gradient",
+                        "gradientType": "linear",
+                        "enabled": true,
+                        "rotation": 0,
+                        "size": {
+                          "height": 1
+                        },
+                        "colors": [
+                          {
+                            "color": "#8B5CF630",
+                            "position": 0
+                          },
+                          {
+                            "color": "#8B5CF600",
+                            "position": 1
+                          }
+                        ]
+                      },
+                      "width": 60,
+                      "height": 280,
+                      "effect": {
+                        "type": "blur",
+                        "radius": 5
+                      }
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 6,
+                      "id": "YzYXS",
+                      "x": 360,
+                      "y": 190,
+                      "name": "holoPanel",
+                      "fill": "#1E293B50",
+                      "width": 130,
+                      "height": 55,
+                      "stroke": {
+                        "thickness": 0.8,
+                        "fill": "#8B5CF640"
+                      },
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#8B5CF625",
+                        "blur": 8
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "id": "TK2zc",
+                      "x": 375,
+                      "y": 200,
+                      "name": "holoTxt",
+                      "fill": "#8B5CF6",
+                      "content": "ASTRAL CMD",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 8,
+                      "fontWeight": "bold"
+                    },
+                    {
+                      "type": "text",
+                      "id": "MXJcT",
+                      "x": 375,
+                      "y": 215,
+                      "name": "holoStat",
+                      "fill": "#4ADE80",
+                      "content": "● Online",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 7,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "UorrL",
+                      "x": 15,
+                      "y": 230,
+                      "name": "legendFrame",
+                      "layout": "vertical",
+                      "gap": 4,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "yJPn6",
+                          "name": "leg1",
+                          "fill": "#FFFFFF50",
+                          "content": "● Starfield (Z-depth)",
+                          "fontFamily": "Inter",
+                          "fontSize": 8,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "kmz8Y",
+                          "name": "leg2",
+                          "fill": "#8B5CF6",
+                          "content": "● Nebula (Fog)",
+                          "fontFamily": "Inter",
+                          "fontSize": 8,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "1hiKS",
+                          "name": "leg3",
+                          "fill": "#A78BFA",
+                          "content": "● Galaxy (Swirl)",
+                          "fontFamily": "Inter",
+                          "fontSize": 8,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "VqeaP",
+                          "name": "leg4",
+                          "fill": "#EC4899",
+                          "content": "● Hologram (Panel)",
+                          "fontFamily": "Inter",
+                          "fontSize": 8,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "nk7VR",
+              "name": "spec-panel",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 16,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "PAuVc",
+                  "name": "specTitle",
+                  "fill": "#8B5CF6",
+                  "content": "ANIMATION SPEC",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 12,
+                  "fontWeight": "bold",
+                  "letterSpacing": 2
+                },
+                {
+                  "type": "frame",
+                  "id": "ubmmc",
+                  "name": "specGrid",
+                  "width": "fill_container",
+                  "fill": "#0F172A",
+                  "cornerRadius": 8,
+                  "layout": "vertical",
+                  "gap": 10,
+                  "padding": 16,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "wgJOh",
+                      "name": "r1",
+                      "width": "fill_container",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "QswwU",
+                          "name": "r1k",
+                          "fill": "#64748B",
+                          "content": "Starfield",
+                          "fontFamily": "Inter",
+                          "fontSize": 11,
+                          "fontWeight": "bold"
+                        },
+                        {
+                          "type": "text",
+                          "id": "axzL8",
+                          "name": "r1v",
+                          "fill": "#CBD5E1",
+                          "content": "3-layer Z-depth · size/speed/opacity mapping",
+                          "fontFamily": "Inter",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "RXtfb",
+                      "name": "r2",
+                      "width": "fill_container",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "C4q1N",
+                          "name": "r2k",
+                          "fill": "#64748B",
+                          "content": "Parallax",
+                          "fontFamily": "Inter",
+                          "fontSize": 11,
+                          "fontWeight": "bold"
+                        },
+                        {
+                          "type": "text",
+                          "id": "KaEVJ",
+                          "name": "r2v",
+                          "fill": "#CBD5E1",
+                          "content": "0.3x/0.6x/1.0x speed · ScaleTransform zoom",
+                          "fontFamily": "Inter",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "jBgSY",
+                      "name": "r3",
+                      "width": "fill_container",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "kNYE7",
+                          "name": "r3k",
+                          "fill": "#64748B",
+                          "content": "Nebula",
+                          "fontFamily": "Inter",
+                          "fontSize": 11,
+                          "fontWeight": "bold"
+                        },
+                        {
+                          "type": "text",
+                          "id": "h8Pgn",
+                          "name": "r3v",
+                          "fill": "#CBD5E1",
+                          "content": "BlurEffect 15~25 · ColorAnim 6s · Scale 0.9→1.15",
+                          "fontFamily": "Inter",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "zAB9l",
+                      "name": "r4",
+                      "width": "fill_container",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "u5pMR",
+                          "name": "r4k",
+                          "fill": "#64748B",
+                          "content": "Galaxy",
+                          "fontFamily": "Inter",
+                          "fontSize": 11,
+                          "fontWeight": "bold"
+                        },
+                        {
+                          "type": "text",
+                          "id": "iY3I5",
+                          "name": "r4v",
+                          "fill": "#CBD5E1",
+                          "content": "Rotate 6s/12s/20s per orbit · center glow pulse",
+                          "fontFamily": "Inter",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "P8ldL",
+                      "name": "r5",
+                      "width": "fill_container",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "6nsef",
+                          "name": "r5k",
+                          "fill": "#64748B",
+                          "content": "Light",
+                          "fontFamily": "Inter",
+                          "fontSize": 11,
+                          "fontWeight": "bold"
+                        },
+                        {
+                          "type": "text",
+                          "id": "mYogE",
+                          "name": "r5v",
+                          "fill": "#CBD5E1",
+                          "content": "Path cone gradient · Opacity 0.3→0.8 · BlurEffect",
+                          "fontFamily": "Inter",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "ym0fu",
+                      "name": "r6",
+                      "width": "fill_container",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "HLQd6",
+                          "name": "r6k",
+                          "fill": "#64748B",
+                          "content": "Hologram",
+                          "fontFamily": "Inter",
+                          "fontSize": 11,
+                          "fontWeight": "bold"
+                        },
+                        {
+                          "type": "text",
+                          "id": "ej00W",
+                          "name": "r6v",
+                          "fill": "#CBD5E1",
+                          "content": "TranslateY ±8px · scanline sweep · cascade fade",
+                          "fontFamily": "Inter",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "2KKQ3",
+                  "name": "refFrame",
+                  "width": "fill_container",
+                  "fill": "#0F172A",
+                  "cornerRadius": 8,
+                  "layout": "vertical",
+                  "gap": 6,
+                  "padding": 16,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "T5Dh1",
+                      "name": "refTitle",
+                      "fill": "#8B5CF6",
+                      "content": "XAML REFERENCES",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "bold",
+                      "letterSpacing": 1
+                    },
+                    {
+                      "type": "text",
+                      "id": "Xeh4S",
+                      "name": "ref1",
+                      "fill": "#94A3B8",
+                      "content": "33-starfield-depth-system.xaml",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "p7eom",
+                      "name": "ref2",
+                      "fill": "#94A3B8",
+                      "content": "34-parallax-camera-shift.xaml",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "HOMIb",
+                      "name": "ref3",
+                      "fill": "#94A3B8",
+                      "content": "35-nebula-cosmic-fog.xaml",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "UXahi",
+                      "name": "ref4",
+                      "fill": "#94A3B8",
+                      "content": "36-galaxy-swirl-motion.xaml",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "7SXmW",
+                      "name": "ref5",
+                      "fill": "#94A3B8",
+                      "content": "37-volumetric-light-beams.xaml",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "4ldhY",
+                      "name": "ref6",
+                      "fill": "#94A3B8",
+                      "content": "38-hologram-floating-panel.xaml",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "45dtN",
+          "name": "unified-code",
+          "width": "fill_container",
+          "gap": 24,
+          "children": [
+            {
+              "type": "frame",
+              "id": "tA5rr",
+              "name": "wpf-impl",
+              "width": "fill_container",
+              "fill": "#0F172A",
+              "cornerRadius": 8,
+              "layout": "vertical",
+              "gap": 6,
+              "padding": 16,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "467xp",
+                  "name": "wpfTitle",
+                  "fill": "#8B5CF6",
+                  "content": "WPF IMPLEMENTATION",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 10,
+                  "fontWeight": "bold",
+                  "letterSpacing": 1
+                },
+                {
+                  "type": "text",
+                  "id": "hSCm8",
+                  "name": "wpf1",
+                  "fill": "#64748B",
+                  "content": "<!-- Z-Depth Starfield Layer -->",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 10,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "zxJTz",
+                  "name": "wpf2",
+                  "fill": "#CBD5E1",
+                  "content": "<Canvas x:Name=\"bgStars\"> <!-- speed: 0.3x -->",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 10,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "1bmME",
+                  "name": "wpf3",
+                  "fill": "#94A3B8",
+                  "content": "  <Ellipse Fill=\"#FFF15\" Width=\"2\" Height=\"2\"/>",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 10,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "hViFr",
+                  "name": "wpf4",
+                  "fill": "#64748B",
+                  "content": "<!-- Nebula: BlurEffect + ColorAnimation -->",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 10,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "s6sbr",
+                  "name": "wpf5",
+                  "fill": "#94A3B8",
+                  "content": "<Ellipse> <BlurEffect Radius=\"20\"/>",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 10,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "JBMTE",
+                  "name": "wpf6",
+                  "fill": "#A78BFA",
+                  "content": "  <ColorAnimation From=\"#8B5CF640\" To=\"#3B82F640\"",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 10,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "0v6mE",
+                  "name": "wpf7",
+                  "fill": "#A78BFA",
+                  "content": "    Duration=\"0:0:6\" SineEase AutoReverse/>",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 10,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "SDOuo",
+              "name": "css-impl",
+              "width": "fill_container",
+              "fill": "#0F172A",
+              "cornerRadius": 8,
+              "layout": "vertical",
+              "gap": 6,
+              "padding": 16,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "IBUMh",
+                  "name": "cssTitle",
+                  "fill": "#8B5CF6",
+                  "content": "CSS/JS IMPLEMENTATION",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 10,
+                  "fontWeight": "bold",
+                  "letterSpacing": 1
+                },
+                {
+                  "type": "text",
+                  "id": "mv5U8",
+                  "name": "css1",
+                  "fill": "#64748B",
+                  "content": "/* Starfield: Canvas rAF per-frame */",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 10,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "ZjKtC",
+                  "name": "css2",
+                  "fill": "#CBD5E1",
+                  "content": "stars.forEach(s => { s.x -= s.speed;",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 10,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "OO2lI",
+                  "name": "css3",
+                  "fill": "#94A3B8",
+                  "content": "  ctx.globalAlpha = s.z * 0.01; });",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 10,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "sL3DW",
+                  "name": "css4",
+                  "fill": "#64748B",
+                  "content": "/* Nebula: CSS filter + animation */",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 10,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "Ksta8",
+                  "name": "css5",
+                  "fill": "#94A3B8",
+                  "content": ".nebula { filter: blur(20px);",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 10,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "8l40m",
+                  "name": "css6",
+                  "fill": "#A78BFA",
+                  "content": "  animation: nebPulse 6s ease-in-out",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 10,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "nUp09",
+                  "name": "css7",
+                  "fill": "#A78BFA",
+                  "content": "    infinite alternate; }",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 10,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ]
 }

@@ -6,91 +6,14 @@
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600"
              Background="#0A0F1C">
-
-    <UserControl.Resources>
-        <!-- Scanline Y sweep -->
-        <Storyboard x:Key="ScanlineSweepY">
-            <DoubleAnimation
-                Storyboard.TargetName="ScanTranslate"
-                Storyboard.TargetProperty="Y"
-                From="-20" To="400"
-                Duration="0:0:2.5">
-                <DoubleAnimation.EasingFunction>
-                    <QuadraticEase EasingMode="EaseInOut"/>
-                </DoubleAnimation.EasingFunction>
-            </DoubleAnimation>
-        </Storyboard>
-
-        <!-- Scanline opacity pulse -->
-        <Storyboard x:Key="ScanlineOpacityPulse">
-            <DoubleAnimationUsingKeyFrames
-                Storyboard.TargetName="ScanLine"
-                Storyboard.TargetProperty="Opacity">
-                <LinearDoubleKeyFrame KeyTime="0:0:0.0" Value="0.3"/>
-                <LinearDoubleKeyFrame KeyTime="0:0:1.0" Value="0.9"/>
-                <LinearDoubleKeyFrame KeyTime="0:0:2.0" Value="0.5"/>
-                <LinearDoubleKeyFrame KeyTime="0:0:2.5" Value="0.2"/>
-            </DoubleAnimationUsingKeyFrames>
-        </Storyboard>
-
-        <!-- ★ DemoSequence
-             원본 의도: 스캔라인 스윕 효과 — CRT 모니터의 수평 주사선이 위에서 아래로 이동
-             시나리오: 밝은 스캔라인이 Y=-20에서 Y=400까지 2.5초간 이동,
-                       동시에 불투명도가 0.3→0.9→0.5→0.2로 펄스, 1사이클 후 정지
-             핵심 기법: TranslateTransform Y + QuadraticEase(EaseInOut)로 부드러운 가감속,
-                        DrawingBrush TileMode로 정적 CRT 오버레이
-             다른 플랫폼:
-               - 웹: CSS transform: translateY() + @keyframes + linear-gradient repeating
-               - 모바일: CABasicAnimation position.y + CAMediaTimingFunction
-        -->
-        <Storyboard x:Key="DemoSequence" FillBehavior="HoldEnd">
-            <!-- Sweep Y from top to bottom -->
-            <DoubleAnimation
-                Storyboard.TargetName="ScanTranslate"
-                Storyboard.TargetProperty="Y"
-                From="-20" To="400"
-                Duration="0:0:2.5"
-                BeginTime="0:0:0">
-                <DoubleAnimation.EasingFunction>
-                    <QuadraticEase EasingMode="EaseInOut"/>
-                </DoubleAnimation.EasingFunction>
-            </DoubleAnimation>
-
-            <!-- Opacity pulse during sweep -->
-            <DoubleAnimationUsingKeyFrames
-                Storyboard.TargetName="ScanLine"
-                Storyboard.TargetProperty="Opacity"
-                BeginTime="0:0:0">
-                <LinearDoubleKeyFrame KeyTime="0:0:0.0" Value="0.3"/>
-                <LinearDoubleKeyFrame KeyTime="0:0:1.0" Value="0.9"/>
-                <LinearDoubleKeyFrame KeyTime="0:0:2.0" Value="0.5"/>
-                <LinearDoubleKeyFrame KeyTime="0:0:2.5" Value="0.2"/>
-            </DoubleAnimationUsingKeyFrames>
-        </Storyboard>
-    </UserControl.Resources>
-
-    <!-- Scanline Sweep: horizontal line translating vertically + repeating scanline pattern -->
     <Grid ClipToBounds="True">
-        <!-- Content behind scanlines -->
-        <Border Width="400" Height="250"
-                Background="#1E293B" CornerRadius="12">
+        <Border Width="400" Height="250" Background="#1E293B" CornerRadius="12">
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                <TextBlock Text="INTERFACE ACTIVE"
-                           FontFamily="JetBrains Mono" FontSize="24" FontWeight="Bold"
-                           Foreground="#22D3EE" HorizontalAlignment="Center"/>
-                <TextBlock Text="Scanning system modules..."
-                           FontFamily="Inter" FontSize="14"
-                           Foreground="#64748B" HorizontalAlignment="Center" Margin="0,8,0,0"/>
+                <TextBlock Text="INTERFACE ACTIVE" FontFamily="JetBrains Mono" FontSize="24" FontWeight="Bold" Foreground="#22D3EE" HorizontalAlignment="Center"/>
+                <TextBlock Text="Scanning system modules..." FontFamily="Inter" FontSize="14" Foreground="#64748B" HorizontalAlignment="Center" Margin="0,8,0,0"/>
             </StackPanel>
         </Border>
-
-        <!-- Single bright scanline sweeping top to bottom -->
-        <Rectangle x:Name="ScanLine"
-                   Width="400" Height="3"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Top"
-                   Opacity="0.7"
-                   RenderTransformOrigin="0.5,0.5">
+        <Rectangle x:Name="ScanLine" Width="400" Height="3" HorizontalAlignment="Center" VerticalAlignment="Top" Opacity="0.7" RenderTransformOrigin="0.5,0.5">
             <Rectangle.Fill>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                     <GradientStop Color="#0022D3EE" Offset="0"/>
@@ -107,21 +30,10 @@
                 <EventTrigger RoutedEvent="Rectangle.Loaded">
                     <BeginStoryboard>
                         <Storyboard RepeatBehavior="Forever">
-                            <!-- Sweep Y from top to bottom -->
-                            <DoubleAnimation
-                                Storyboard.TargetName="ScanTranslate"
-                                Storyboard.TargetProperty="Y"
-                                From="-20" To="400"
-                                Duration="0:0:2.5">
-                                <DoubleAnimation.EasingFunction>
-                                    <QuadraticEase EasingMode="EaseInOut"/>
-                                </DoubleAnimation.EasingFunction>
+                            <DoubleAnimation Storyboard.TargetName="ScanTranslate" Storyboard.TargetProperty="Y" From="-20" To="400" Duration="0:0:2.5">
+                                <DoubleAnimation.EasingFunction><QuadraticEase EasingMode="EaseInOut"/></DoubleAnimation.EasingFunction>
                             </DoubleAnimation>
-
-                            <!-- Opacity pulse during sweep -->
-                            <DoubleAnimationUsingKeyFrames
-                                Storyboard.TargetName="ScanLine"
-                                Storyboard.TargetProperty="Opacity">
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ScanLine" Storyboard.TargetProperty="Opacity">
                                 <LinearDoubleKeyFrame KeyTime="0:0:0.0" Value="0.3"/>
                                 <LinearDoubleKeyFrame KeyTime="0:0:1.0" Value="0.9"/>
                                 <LinearDoubleKeyFrame KeyTime="0:0:2.0" Value="0.5"/>
@@ -132,24 +44,13 @@
                 </EventTrigger>
             </Rectangle.Triggers>
         </Rectangle>
-
-        <!-- Static scanline overlay (CRT effect) -->
-        <Rectangle Width="400" Height="250"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   Opacity="0.08"
-                   IsHitTestVisible="False">
+        <Rectangle Width="400" Height="250" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.08" IsHitTestVisible="False">
             <Rectangle.Fill>
-                <DrawingBrush TileMode="Tile"
-                              Viewport="0,0,1,4" ViewportUnits="Absolute">
+                <DrawingBrush TileMode="Tile" Viewport="0,0,1,4" ViewportUnits="Absolute">
                     <DrawingBrush.Drawing>
                         <GeometryDrawing>
-                            <GeometryDrawing.Geometry>
-                                <RectangleGeometry Rect="0,0,1,2"/>
-                            </GeometryDrawing.Geometry>
-                            <GeometryDrawing.Brush>
-                                <SolidColorBrush Color="#000000"/>
-                            </GeometryDrawing.Brush>
+                            <GeometryDrawing.Geometry><RectangleGeometry Rect="0,0,1,2"/></GeometryDrawing.Geometry>
+                            <GeometryDrawing.Brush><SolidColorBrush Color="#000000"/></GeometryDrawing.Brush>
                         </GeometryDrawing>
                     </DrawingBrush.Drawing>
                 </DrawingBrush>

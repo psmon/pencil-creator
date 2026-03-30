@@ -6,91 +6,6 @@
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600"
              Background="#0A0F1C">
-
-    <UserControl.Resources>
-        <!-- ═══ NeonBlurBreathing: BlurRadius 15→40 ═══ -->
-        <Storyboard x:Key="NeonBlurBreathing" AutoReverse="True" RepeatBehavior="Forever">
-            <DoubleAnimation
-                Storyboard.TargetName="NeonShadow"
-                Storyboard.TargetProperty="BlurRadius"
-                From="15" To="40"
-                Duration="0:0:1.5">
-                <DoubleAnimation.EasingFunction>
-                    <SineEase EasingMode="EaseInOut"/>
-                </DoubleAnimation.EasingFunction>
-            </DoubleAnimation>
-        </Storyboard>
-
-        <!-- ═══ NeonOpacityPulse: Opacity 0.5→1.0 ═══ -->
-        <Storyboard x:Key="NeonOpacityPulse" AutoReverse="True" RepeatBehavior="Forever">
-            <DoubleAnimation
-                Storyboard.TargetName="NeonShadow"
-                Storyboard.TargetProperty="Opacity"
-                From="0.5" To="1.0"
-                Duration="0:0:1.5">
-                <DoubleAnimation.EasingFunction>
-                    <SineEase EasingMode="EaseInOut"/>
-                </DoubleAnimation.EasingFunction>
-            </DoubleAnimation>
-        </Storyboard>
-
-        <!-- ═══ NeonColorCycle: Cyan→Magenta→Cyan ═══ -->
-        <Storyboard x:Key="NeonColorCycle" AutoReverse="True" RepeatBehavior="Forever">
-            <ColorAnimation
-                Storyboard.TargetName="NeonShadow"
-                Storyboard.TargetProperty="Color"
-                From="#22D3EE" To="#E040FB"
-                Duration="0:0:3.0">
-                <ColorAnimation.EasingFunction>
-                    <SineEase EasingMode="EaseInOut"/>
-                </ColorAnimation.EasingFunction>
-            </ColorAnimation>
-        </Storyboard>
-
-        <!-- ═══ TextGlowSync: text blur 10→30 ═══ -->
-        <Storyboard x:Key="TextGlowSync" AutoReverse="True" RepeatBehavior="Forever">
-            <DoubleAnimation
-                Storyboard.TargetName="TextGlow"
-                Storyboard.TargetProperty="BlurRadius"
-                From="10" To="30"
-                Duration="0:0:1.5">
-                <DoubleAnimation.EasingFunction>
-                    <SineEase EasingMode="EaseInOut"/>
-                </DoubleAnimation.EasingFunction>
-            </DoubleAnimation>
-        </Storyboard>
-
-        <!--
-        ═══ DemoSequence ═══
-        원본 의도: 네온 사인 글로우 펄스 — DropShadowEffect의 BlurRadius/Opacity/Color를 동시 애니메이션
-        시나리오: Border와 TextBlock에 네온 그림자를 적용, 1.5초 주기로 블러 확대/축소 + 3초 주기로 시안↔마젠타 색상 순환
-        핵심 기법: DropShadowEffect 속성 애니메이션 (BlurRadius, Opacity, Color), SineEase breathing
-        다른 플랫폼: CSS — box-shadow + text-shadow animation, filter: drop-shadow() with @keyframes
-        -->
-        <Storyboard x:Key="DemoSequence" AutoReverse="True" RepeatBehavior="Forever">
-            <!-- BlurRadius breathing -->
-            <DoubleAnimation Storyboard.TargetName="NeonShadow" Storyboard.TargetProperty="BlurRadius"
-                From="15" To="40" Duration="0:0:1.5">
-                <DoubleAnimation.EasingFunction><SineEase EasingMode="EaseInOut"/></DoubleAnimation.EasingFunction>
-            </DoubleAnimation>
-            <!-- Opacity pulse -->
-            <DoubleAnimation Storyboard.TargetName="NeonShadow" Storyboard.TargetProperty="Opacity"
-                From="0.5" To="1.0" Duration="0:0:1.5">
-                <DoubleAnimation.EasingFunction><SineEase EasingMode="EaseInOut"/></DoubleAnimation.EasingFunction>
-            </DoubleAnimation>
-            <!-- Color cycle -->
-            <ColorAnimation Storyboard.TargetName="NeonShadow" Storyboard.TargetProperty="Color"
-                From="#22D3EE" To="#E040FB" Duration="0:0:3.0">
-                <ColorAnimation.EasingFunction><SineEase EasingMode="EaseInOut"/></ColorAnimation.EasingFunction>
-            </ColorAnimation>
-            <!-- Text glow sync -->
-            <DoubleAnimation Storyboard.TargetName="TextGlow" Storyboard.TargetProperty="BlurRadius"
-                From="10" To="30" Duration="0:0:1.5">
-                <DoubleAnimation.EasingFunction><SineEase EasingMode="EaseInOut"/></DoubleAnimation.EasingFunction>
-            </DoubleAnimation>
-        </Storyboard>
-    </UserControl.Resources>
-
     <Grid>
         <Border x:Name="NeonBorder"
                 Width="320" Height="90"
@@ -120,7 +35,6 @@
                 <EventTrigger RoutedEvent="Border.Loaded">
                     <BeginStoryboard>
                         <Storyboard RepeatBehavior="Forever" AutoReverse="True">
-                            <!-- BlurRadius breathing 15→40 -->
                             <DoubleAnimation
                                 Storyboard.TargetName="NeonShadow"
                                 Storyboard.TargetProperty="BlurRadius"
@@ -130,8 +44,6 @@
                                     <SineEase EasingMode="EaseInOut"/>
                                 </DoubleAnimation.EasingFunction>
                             </DoubleAnimation>
-
-                            <!-- Opacity pulse 0.5→1.0 -->
                             <DoubleAnimation
                                 Storyboard.TargetName="NeonShadow"
                                 Storyboard.TargetProperty="Opacity"
@@ -141,8 +53,6 @@
                                     <SineEase EasingMode="EaseInOut"/>
                                 </DoubleAnimation.EasingFunction>
                             </DoubleAnimation>
-
-                            <!-- Color cycle: Cyan → Magenta → Cyan -->
                             <ColorAnimation
                                 Storyboard.TargetName="NeonShadow"
                                 Storyboard.TargetProperty="Color"
@@ -152,8 +62,6 @@
                                     <SineEase EasingMode="EaseInOut"/>
                                 </ColorAnimation.EasingFunction>
                             </ColorAnimation>
-
-                            <!-- Text glow sync -->
                             <DoubleAnimation
                                 Storyboard.TargetName="TextGlow"
                                 Storyboard.TargetProperty="BlurRadius"

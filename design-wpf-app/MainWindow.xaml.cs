@@ -106,6 +106,17 @@ namespace design_wpf_app
                 25 => new Migrated.Sample25_ScanlineSweep(),
                 26 => new Migrated.Sample26_DigitalMatrixRain(),
                 27 => new Migrated.Sample27_HolographicShimmer(),
+                28 => new Migrated.Sample28_ZenBreathingCircle(),
+                29 => new Migrated.Sample29_WaterRippleEmanation(),
+                30 => new Migrated.Sample30_FloatingFeatherDrift(),
+                31 => new Migrated.Sample31_SoftAuroraGradient(),
+                32 => new Migrated.Sample32_ZenFadeCascade(),
+                33 => new Migrated.Sample33_StarfieldDepthSystem(),
+                34 => new Migrated.Sample34_ParallaxCameraShift(),
+                35 => new Migrated.Sample35_NebulaCosmicFog(),
+                36 => new Migrated.Sample36_GalaxySwirlMotion(),
+                37 => new Migrated.Sample37_VolumetricLightBeams(),
+                38 => new Migrated.Sample38_HologramFloatingPanel(),
                 _ => null
             };
         }
@@ -140,7 +151,18 @@ namespace design_wpf_app
                 new() { id = 24, displayName = "24. RGB Split Chromatic", status = "미완성" },
                 new() { id = 25, displayName = "25. Scanline Sweep", status = "미완성" },
                 new() { id = 26, displayName = "26. Digital Matrix Rain", status = "미완성" },
-                new() { id = 27, displayName = "27. Holographic Shimmer", status = "미완성" }
+                new() { id = 27, displayName = "27. Holographic Shimmer", status = "미완성" },
+                new() { id = 28, displayName = "28. Zen Breathing Circle", status = "미완성" },
+                new() { id = 29, displayName = "29. Water Ripple Emanation", status = "미완성" },
+                new() { id = 30, displayName = "30. Floating Feather Drift", status = "미완성" },
+                new() { id = 31, displayName = "31. Soft Aurora Gradient", status = "미완성" },
+                new() { id = 32, displayName = "32. Zen Fade Cascade", status = "미완성" },
+                new() { id = 33, displayName = "33. Starfield Depth System", status = "미완성" },
+                new() { id = 34, displayName = "34. Parallax Camera Shift", status = "미완성" },
+                new() { id = 35, displayName = "35. Nebula Cosmic Fog", status = "미완성" },
+                new() { id = 36, displayName = "36. Galaxy Swirl Motion", status = "미완성" },
+                new() { id = 37, displayName = "37. Volumetric Light Beams", status = "미완성" },
+                new() { id = 38, displayName = "38. Hologram Floating Panel", status = "미완성" }
             };
         }
     }

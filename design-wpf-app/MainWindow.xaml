@@ -19,7 +19,7 @@
                 <TextBlock DockPanel.Dock="Top" Text="XAML Gallery"
                            Foreground="#E94560" FontSize="20" FontWeight="Bold"
                            Margin="16,16,16,8" FontFamily="Segoe UI" />
-                <TextBlock DockPanel.Dock="Top" Text="27 Animation Samples"
+                <TextBlock DockPanel.Dock="Top" Text="38 Animation Samples"
                            Foreground="#666" FontSize="12" Margin="16,0,16,12" />
 
                 <ListBox x:Name="NavList" Background="Transparent" BorderThickness="0"
