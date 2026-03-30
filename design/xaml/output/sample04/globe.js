@@ -148,36 +148,87 @@
   }
 
   /* ===========================
-     CITY DOTS — Soft glow only
-     No ripples, no explosions
+     HEART SHAPE GEOMETRY
+     Volumetric 3D heart via ExtrudeGeometry
      =========================== */
+  let heartGeoCache = null;
+
+  function getHeartGeometry() {
+    if (heartGeoCache) return heartGeoCache;
+
+    const shape = new THREE.Shape();
+    const s = 1; // unit scale, will be scaled per instance
+    shape.moveTo(0, s * 0.6);
+    shape.bezierCurveTo(0, s * 0.9, -s * 0.5, s * 1.1, -s * 0.5, s * 0.7);
+    shape.bezierCurveTo(-s * 0.5, s * 0.3, 0, s * 0.1, 0, -s * 0.3);
+    shape.bezierCurveTo(0, s * 0.1, s * 0.5, s * 0.3, s * 0.5, s * 0.7);
+    shape.bezierCurveTo(s * 0.5, s * 1.1, 0, s * 0.9, 0, s * 0.6);
+
+    heartGeoCache = new THREE.ExtrudeGeometry(shape, {
+      depth: 1.2,
+      bevelEnabled: true,
+      bevelThickness: 0.4,
+      bevelSize: 0.3,
+      bevelSegments: 4,
+      curveSegments: 12,
+    });
+    // Center the geometry
+    heartGeoCache.computeBoundingBox();
+    heartGeoCache.center();
+
+    return heartGeoCache;
+  }
+
+  /* ===========================
+     CITY HEARTS — 3D volumetric
+     hearts that gently grow/pulse
+     =========================== */
+  let heartsData = [];  // { mesh, glow, phase, basePos, normal }
+
   function buildCityDots() {
     dotsGroup = new THREE.Group();
+    heartsData = [];
+
+    const heartGeo = getHeartGeometry();
 
     CITIES.forEach((city, i) => {
-      const pos = latLonToVec3(city.lat, city.lon, R + 1.5);
+      const pos = latLonToVec3(city.lat, city.lon, R + 3);
+      const normal = pos.clone().normalize();
       const color = DOT_COLORS[i % 3];
 
-      // Small solid dot
-      const dotGeo = new THREE.SphereGeometry(DOT_R, 10, 10);
-      const dotMat = new THREE.MeshBasicMaterial({ color });
-      const dot = new THREE.Mesh(dotGeo, dotMat);
-      dot.position.copy(pos);
-      dot.userData = { phase: Math.random() * Math.PI * 2 };
-      dotsGroup.add(dot);
-
-      // Gentle glow sprite (small, soft)
-      const spMat = new THREE.SpriteMaterial({
+      // 3D Heart mesh
+      const mat = new THREE.MeshPhongMaterial({
         color,
+        emissive: new THREE.Color(color).multiplyScalar(0.3),
         transparent: true,
-        opacity: 0.35,
-        blending: THREE.AdditiveBlending,
+        opacity: 0.9,
+        shininess: 30,
       });
-      const sp = new THREE.Sprite(spMat);
-      sp.position.copy(pos);
-      sp.scale.set(12, 12, 1);
-      sp.userData = { isGlow: true, phase: dot.userData.phase };
-      dotsGroup.add(sp);
+      const heart = new THREE.Mesh(heartGeo, mat);
+      heart.position.copy(pos);
+
+      // Orient heart outward from globe surface
+      heart.lookAt(pos.clone().multiplyScalar(2));
+      // Rotate so heart points "up" relative to surface
+      heart.rotateX(Math.PI);
+
+      const baseScale = 2.8;
+      heart.scale.set(baseScale, baseScale, baseScale);
+
+      dotsGroup.add(heart);
+
+      // Point light for soft glow (no square artifact)
+      const light = new THREE.PointLight(color, 0.4, 30);
+      light.position.copy(pos);
+      dotsGroup.add(light);
+
+      heartsData.push({
+        mesh: heart,
+        light,
+        phase: i * 0.55 + Math.random() * 0.5,
+        baseScale,
+        color,
+      });
     });
 
     globe.add(dotsGroup);
@@ -293,22 +344,38 @@
   }
 
   /* ===========================
-     UPDATE: DOT BREATHING
-     Gentle, slow pulse — like a heartbeat
+     UPDATE: HEART PULSE
+     Each heart gently grows then
+     softens back — like a heartbeat
+     sending love outward
      =========================== */
   function updateDots(time) {
     const t = time * 0.001;
-    dotsGroup.children.forEach(child => {
-      if (!child.userData) return;
-      const phase = child.userData.phase || 0;
-      if (child.userData.isGlow) {
-        const s = 10 + 3 * Math.sin(t * 0.8 + phase);
-        child.scale.set(s, s, 1);
-        child.material.opacity = 0.2 + 0.15 * Math.sin(t * 0.8 + phase);
+
+    heartsData.forEach(hd => {
+      // Two-phase heartbeat: quick swell, gentle release
+      const beat = t * 0.7 + hd.phase;
+      const cycle = beat % 2;
+      let pulse;
+      if (cycle < 0.15) {
+        // Quick swell (systole)
+        pulse = 1 + 0.35 * Math.sin(cycle / 0.15 * Math.PI);
+      } else if (cycle < 0.35) {
+        // Small second bump (diastole)
+        pulse = 1 + 0.12 * Math.sin((cycle - 0.15) / 0.2 * Math.PI);
       } else {
-        const s = 1 + 0.15 * Math.sin(t * 0.8 + phase);
-        child.scale.set(s, s, s);
+        // Resting
+        pulse = 1;
       }
+
+      const s = hd.baseScale * pulse;
+      hd.mesh.scale.set(s, s, s);
+      hd.mesh.material.opacity = 0.7 + 0.25 * (pulse - 1) / 0.35;
+      hd.mesh.material.emissiveIntensity = 0.3 + 0.5 * (pulse - 1) / 0.35;
+
+      // Light intensity follows pulse
+      hd.light.intensity = 0.3 + 1.2 * Math.max(0, (pulse - 1) / 0.35);
+      hd.light.distance = 25 + 20 * Math.max(0, (pulse - 1) / 0.35);
     });
   }
 
