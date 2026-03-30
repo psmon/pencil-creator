@@ -33,7 +33,8 @@
       "mcp__pencil__get_screenshot",
       "mcp__pencil__batch_get",
       "mcp__pencil__find_empty_space_on_canvas",
-      "mcp__pencil__batch_design"
+      "mcp__pencil__batch_design",
+      "Skill(harness-usage)"
     ]
   },
   "enabledMcpjsonServers": [

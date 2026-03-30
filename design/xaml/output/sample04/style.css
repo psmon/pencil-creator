@@ -1,0 +1,460 @@
+/* ============================================
+   Peace Homepage — style.css
+   Theme: Zen Garden (White, Soft Blue, Green)
+   Fonts: Rounded, comfortable reading
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* --- Reset & Base --- */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: 'Noto Sans KR', 'Inter', sans-serif;
+  color: #2D3748;
+  background: #F7FAFC;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* --- Utility --- */
+.section { position: relative; overflow: hidden; }
+
+/* --- Language Toggle --- */
+.lang-toggle {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 1001;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,0.4);
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(12px);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s, transform 0.3s, border-color 0.3s;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+}
+.lang-toggle:hover {
+  background: rgba(255,255,255,0.3);
+  transform: scale(1.08);
+}
+.lang-toggle .lang-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.5px;
+}
+/* Adjust for non-hero sections (dark text) */
+.peace-message ~ .lang-toggle,
+.peace-map ~ .lang-toggle {
+  border-color: rgba(45,212,191,0.4);
+}
+/* Override: since toggle is fixed, use scroll-aware coloring via JS class */
+.lang-toggle.on-light {
+  border-color: rgba(30,58,95,0.3);
+  background: rgba(30,58,95,0.08);
+}
+.lang-toggle.on-light .lang-label {
+  color: #1E3A5F;
+}
+
+/* --- Options Panel --- */
+.options-panel {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1000;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  width: 280px;
+  transition: transform 0.4s cubic-bezier(0.4,0,0.2,1), opacity 0.4s;
+  border: 1px solid rgba(45,212,191,0.2);
+}
+.options-panel.collapsed {
+  transform: translateY(calc(100% - 48px));
+}
+.options-panel h3 {
+  font-size: 13px;
+  font-weight: 600;
+  color: #2DD4BF;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.options-panel h3::before { content: ''; }
+.options-panel h3 .toggle-icon { margin-left: auto; font-size: 16px; transition: transform 0.3s; }
+.options-panel.collapsed h3 .toggle-icon { transform: rotate(180deg); }
+.opt-group { margin-bottom: 12px; }
+.opt-group label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #64748B;
+  margin-bottom: 4px;
+}
+.opt-group label span { font-weight: 500; color: #2D3748; }
+.opt-group input[type="range"] {
+  width: 100%;
+  height: 4px;
+  -webkit-appearance: none;
+  background: linear-gradient(90deg, #2DD4BF, #A78BFA);
+  border-radius: 4px;
+  outline: none;
+}
+.opt-group input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #2DD4BF;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+.opt-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #64748B;
+  margin-bottom: 6px;
+}
+.opt-toggle input[type="checkbox"] {
+  accent-color: #2DD4BF;
+  width: 16px; height: 16px;
+}
+
+/* ===========================
+   SECTION 1: HERO
+   =========================== */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: linear-gradient(135deg, #1E3A5F 0%, #2DD4BF 33%, #7DD3A0 66%, #A78BFA 100%);
+  background-size: 300% 300%;
+  overflow: hidden;
+}
+
+/* Breathing Circle Container */
+.breathing-circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+.breathing-circle .ring {
+  position: absolute;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.ring.outer {
+  width: 320px; height: 320px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.15);
+}
+.ring.mid {
+  width: 200px; height: 200px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.25);
+}
+.ring.inner {
+  width: 80px; height: 80px;
+  background: rgba(255,255,255,0.85);
+  box-shadow: 0 0 60px rgba(255,255,255,0.5), 0 0 120px rgba(45,212,191,0.3);
+}
+
+/* Hero Text */
+.hero-content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  color: #fff;
+  padding: 0 20px;
+}
+.hero-content h1 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  margin-bottom: 16px;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.15);
+  opacity: 0;
+}
+.hero-content .sub-message {
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  font-weight: 300;
+  line-height: 1.8;
+  opacity: 0;
+  max-width: 500px;
+  margin: 0 auto 40px;
+  text-shadow: 0 1px 10px rgba(0,0,0,0.1);
+}
+.hero-content .btn-group {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  opacity: 0;
+}
+.hero-content .btn {
+  padding: 14px 32px;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.3s, box-shadow 0.3s;
+  font-family: inherit;
+}
+.hero-content .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+}
+.btn-primary {
+  background: rgba(255,255,255,0.95);
+  color: #1E3A5F;
+}
+.btn-secondary {
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  border: 1.5px solid rgba(255,255,255,0.4) !important;
+  backdrop-filter: blur(8px);
+}
+
+/* Feather Canvas */
+.feather-canvas {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Ripple decoration */
+.ripple-container {
+  position: absolute;
+  pointer-events: none;
+}
+.ripple-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,0.3);
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* ===========================
+   SECTION 2: PEACE MESSAGE
+   =========================== */
+.peace-message {
+  padding: 120px 20px;
+  background: #F7FAFC;
+  text-align: center;
+  position: relative;
+}
+.peace-message .section-title {
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-weight: 700;
+  color: #1E3A5F;
+  margin-bottom: 40px;
+  opacity: 0;
+}
+.peace-cards {
+  display: flex;
+  gap: 32px;
+  max-width: 960px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.peace-card {
+  flex: 1;
+  min-width: 260px;
+  max-width: 320px;
+  background: #fff;
+  border-radius: 20px;
+  padding: 40px 28px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+  opacity: 0;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.peace-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(45,212,191,0.15);
+}
+.peace-card .card-icon {
+  width: 56px; height: 56px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  margin: 0 auto 20px;
+}
+.peace-card h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #1E3A5F;
+  margin-bottom: 12px;
+}
+.peace-card p {
+  font-size: 0.95rem;
+  color: #64748B;
+  line-height: 1.7;
+}
+/* Card ripple bg */
+.card-ripple {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+.card-ripple .rp {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(45,212,191,0.15);
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+}
+
+/* ===========================
+   SECTION 3: PEACE MAP (3D Globe)
+   =========================== */
+.peace-map {
+  padding: 100px 20px 60px;
+  background: linear-gradient(180deg, #0B1120 0%, #101B30 50%, #0B1120 100%);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.peace-map .section-title {
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+  font-weight: 700;
+  color: #E2E8F0;
+  margin-bottom: 12px;
+  opacity: 0;
+}
+.peace-map .section-sub {
+  font-size: 1.05rem;
+  color: #94A3B8;
+  margin-bottom: 32px;
+  opacity: 0;
+}
+.globe-container {
+  position: relative;
+  max-width: 700px;
+  margin: 0 auto;
+  height: 520px;
+  cursor: grab;
+}
+.globe-container:active { cursor: grabbing; }
+.globe-container canvas {
+  display: block;
+  margin: 0 auto;
+}
+/* City label tooltips */
+.globe-label {
+  position: absolute;
+  background: rgba(11,17,32,0.85);
+  backdrop-filter: blur(8px);
+  color: #E2E8F0;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(45,212,191,0.3);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+  white-space: nowrap;
+  z-index: 20;
+}
+.globe-label.visible { opacity: 1; }
+/* Ambient glow behind globe */
+.globe-glow {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px; height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(45,212,191,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ===========================
+   SECTION 4: FOOTER
+   =========================== */
+.footer {
+  padding: 80px 20px 60px;
+  background: linear-gradient(135deg, #1E3A5F, #2DD4BF);
+  text-align: center;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.footer h2 {
+  font-size: clamp(1.3rem, 3vw, 2rem);
+  font-weight: 600;
+  margin-bottom: 12px;
+  opacity: 0;
+}
+.footer p {
+  font-size: 1.1rem;
+  font-weight: 300;
+  opacity: 0;
+  margin-bottom: 8px;
+}
+.footer .peace-symbol {
+  font-size: 48px;
+  opacity: 0;
+  margin-top: 24px;
+  display: inline-block;
+}
+.footer .copyright {
+  margin-top: 40px;
+  font-size: 0.8rem;
+  opacity: 0.5;
+}
+
+/* --- Scroll-triggered fade base --- */
+.fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .peace-cards { flex-direction: column; align-items: center; }
+  .options-panel { width: 240px; right: 12px; bottom: 12px; padding: 16px; }
+  .globe-container { height: 380px; }
+  .globe-glow { width: 320px; height: 320px; }
+  .lang-toggle { top: 16px; right: 16px; width: 40px; height: 40px; }
+  .lang-toggle .lang-label { font-size: 11px; }
+}

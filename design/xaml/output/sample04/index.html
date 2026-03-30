@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>We Choose Peace — 평화를 기원합니다</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Language Toggle -->
+  <button class="lang-toggle" id="lang-toggle" title="Switch Language">
+    <span class="lang-label">EN</span>
+  </button>
+
+  <!-- ===========================
+       SECTION 1: HERO
+       =========================== -->
+  <section class="hero section" id="hero">
+    <div class="breathing-circle">
+      <div class="ring outer"></div>
+      <div class="ring mid"></div>
+      <div class="ring inner"></div>
+    </div>
+    <div class="feather-canvas"></div>
+
+    <div class="hero-content">
+      <h1 data-cascade data-cascade-delay="0" data-i18n="hero.title">We Choose Peace</h1>
+      <div class="sub-message" data-cascade data-cascade-delay="500" data-i18n="hero.sub" data-i18n-html="true">
+        Small winds gather to change the world<br>
+        Your heart is where peace begins
+      </div>
+      <div class="btn-group" data-cascade data-cascade-delay="1000">
+        <button class="btn btn-primary" data-i18n="hero.btnPray">Pray Together</button>
+        <button class="btn btn-secondary" data-i18n="hero.btnMessage">Leave a Message</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===========================
+       SECTION 2: PEACE MESSAGE
+       =========================== -->
+  <section class="peace-message section" id="peace-message">
+    <h2 class="section-title" data-cascade data-cascade-delay="0" data-i18n="msg.title">
+      Peace Is Not Far Away
+    </h2>
+
+    <div class="peace-cards">
+      <div class="peace-card" data-cascade data-cascade-delay="200">
+        <div class="card-ripple"></div>
+        <div class="card-icon" style="background:linear-gradient(135deg,#E0F2FE,#BAE6FD);">
+          <span>&#x1F91D;</span>
+        </div>
+        <h3 data-i18n="msg.card1Title">Effort to Understand Each Other</h3>
+        <p data-i18n="msg.card1Desc" data-i18n-html="true">Listening to another's story.<br>That is the first step toward peace.</p>
+      </div>
+
+      <div class="peace-card" data-cascade data-cascade-delay="400">
+        <div class="card-ripple"></div>
+        <div class="card-icon" style="background:linear-gradient(135deg,#D1FAE5,#A7F3D0);">
+          <span>&#x1F331;</span>
+        </div>
+        <h3 data-i18n="msg.card2Title">A Warm Gaze That Accepts Differences</h3>
+        <p data-i18n="msg.card2Desc" data-i18n-html="true">We are all different,<br>but that difference makes the world beautiful.</p>
+      </div>
+
+      <div class="peace-card" data-cascade data-cascade-delay="600">
+        <div class="card-ripple"></div>
+        <div class="card-icon" style="background:linear-gradient(135deg,#EDE9FE,#C4B5FD);">
+          <span>&#x1F54A;</span>
+        </div>
+        <h3 data-i18n="msg.card3Title">That Is What Peace Is</h3>
+        <p data-i18n="msg.card3Desc" data-i18n-html="true">Not a grand declaration,<br>but warmth in everyday life — that is peace.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===========================
+       SECTION 3: PEACE MAP (3D Globe — Three.js)
+       =========================== -->
+  <section class="peace-map section" id="peace-map">
+    <h2 class="section-title" data-cascade data-cascade-delay="0" data-i18n="map.title">
+      Messages of Peace from Around the World
+    </h2>
+    <p class="section-sub" data-cascade data-cascade-delay="300" data-i18n="map.sub">
+      We are all connected as one
+    </p>
+
+    <div class="globe-container" data-cascade data-cascade-delay="500" id="globe-container">
+      <div class="globe-glow"></div>
+      <!-- Three.js canvas injected here -->
+    </div>
+  </section>
+
+  <!-- ===========================
+       SECTION 4: FOOTER
+       =========================== -->
+  <footer class="footer section" id="footer">
+    <h2 data-cascade data-cascade-delay="0" data-i18n="footer.title">
+      Peace is not something grand
+    </h2>
+    <p data-cascade data-cascade-delay="400" data-i18n="footer.sub">
+      It begins in your heart, today
+    </p>
+    <div class="peace-symbol" data-cascade data-cascade-delay="800">
+      &#x262E;
+    </div>
+    <p class="copyright" data-i18n="footer.copy" data-i18n-html="true">
+      &copy; 2026 Peace Project &mdash; "Peace is what we choose"
+    </p>
+  </footer>
+
+  <!-- ===========================
+       ANIMATION OPTIONS PANEL
+       =========================== -->
+  <div class="options-panel">
+    <h3>
+      <span data-i18n="opt.title">Animation Options</span>
+      <span class="toggle-icon">&#x25BC;</span>
+    </h3>
+
+    <div class="opt-group">
+      <label><span data-i18n="opt.speed">Speed</span> <span id="opt-speed-val">1.0x</span></label>
+      <input type="range" id="opt-speed" min="0.3" max="3" step="0.1" value="1">
+    </div>
+
+    <div class="opt-group">
+      <label><span data-i18n="opt.feather">Feather Count</span> <span id="opt-feather-val">8</span></label>
+      <input type="range" id="opt-feather" min="0" max="25" step="1" value="8">
+    </div>
+
+    <div class="opt-group">
+      <label><span data-i18n="opt.ripple">Ripple Intensity</span> <span id="opt-ripple-val">1.0</span></label>
+      <input type="range" id="opt-ripple" min="0" max="2" step="0.1" value="1">
+    </div>
+
+    <div style="margin-top:12px; border-top:1px solid #E2E8F0; padding-top:12px;">
+      <div class="opt-toggle">
+        <input type="checkbox" id="tog-breathing" checked>
+        <label for="tog-breathing" data-i18n="opt.togBreathing">Zen Breathing</label>
+      </div>
+      <div class="opt-toggle">
+        <input type="checkbox" id="tog-ripple" checked>
+        <label for="tog-ripple" data-i18n="opt.togRipple">Water Ripple</label>
+      </div>
+      <div class="opt-toggle">
+        <input type="checkbox" id="tog-feather" checked>
+        <label for="tog-feather" data-i18n="opt.togFeather">Floating Feather</label>
+      </div>
+      <div class="opt-toggle">
+        <input type="checkbox" id="tog-aurora" checked>
+        <label for="tog-aurora" data-i18n="opt.togAurora">Aurora Gradient</label>
+      </div>
+      <div class="opt-toggle">
+        <input type="checkbox" id="tog-cascade" checked>
+        <label for="tog-cascade" data-i18n="opt.togCascade">Zen Fade Cascade</label>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="main.js"></script>
+  <script src="globe.js"></script>
+  <script src="i18n.js"></script>
+</body>
+</html>
