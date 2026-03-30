@@ -325,3 +325,78 @@
 | XamlFlair Animation Library | https://github.com/XamlFlair/XamlFlair |
 | WPF Advanced Animation Effects | http://shashtricodewiki.blogspot.com/2015/08/wpf-advanced-xaml-animation-effects.html |
 | WPF Fluid Segmented Control | https://medium.com/@artillustration391/mastering-modern-ui-creating-a-fluid-animated-segmented-control-in-wpf-4db952ddeac3 |
+
+---
+
+# 5차 조사 — Peace & Meditation 애니메이션 (2026-03-31)
+
+> 목적: 평화/명상 테마 WPF 애니메이션 5종 조사 및 CAT14 추가
+
+---
+
+## CAT14: 평화 & 명상 (Peace & Meditation)
+
+### 28. Zen Breathing Circle (젠 호흡 원)
+
+| 항목 | 내용 |
+|------|------|
+| 출처 | [CodeProject - Pulse Button WPF](https://www.codeproject.com/Articles/996417/Pulse-Button-WPF), [GitHub Gist - Pulse Animation](https://gist.github.com/mohamedmansour/9fa64785496ceeabd991) |
+| 핵심 기술 | ScaleTransform (multi-ring), OpacityAnimation, SineEase EaseInOut, DropShadowEffect |
+| 애니메이션 | 3층 동심원 Scale 0.6→1.4 (4s) + Opacity 0.3→1.0, 각 링 BeginTime stagger 0.3s |
+| 샘플 파일 | [`sample/28-zen-breathing-circle.xaml`](sample/28-zen-breathing-circle.xaml) |
+
+### 29. Water Ripple Emanation (수면 파문)
+
+| 항목 | 내용 |
+|------|------|
+| 출처 | [Adonis UI - Ripple Effect](https://benruehl.github.io/adonis-ui/docs/guides/ripple/), [Microsoft Learn - Animation Overview](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/graphics-multimedia/animation-overview) |
+| 핵심 기술 | ScaleTransform 0→8 확장, OpacityAnimation 1→0 페이드, Staggered BeginTime |
+| 애니메이션 | 3개 동심 링 중앙에서 확산 + 투명도 감소, BeginTime 0s/0.8s/1.6s stagger, 3s 주기 |
+| 샘플 파일 | [`sample/29-water-ripple-emanation.xaml`](sample/29-water-ripple-emanation.xaml) |
+
+### 30. Floating Feather Drift (깃털 부유)
+
+| 항목 | 내용 |
+|------|------|
+| 출처 | [Medium - TranslateTransform Animation](https://medium.com/@artillustration391/moving-elements-with-storyboards-translatetransform-animation-in-wpf-0ac391441b37), [Medium - Scale & Rotate](https://medium.com/@artillustration391/scale-rotate-your-ui-dynamic-transforms-with-wpf-storyboards-602bcbc061f3) |
+| 핵심 기술 | TranslateTransform X(sin파) + Y(하강), RotateTransform ±15°, OpacityAnimation |
+| 애니메이션 | 깃털 Path 수평 진동(±30px, 3s) + 수직 하강(0→500, 8s) + 회전(±15°, 2.5s) + 페이드 |
+| 샘플 파일 | [`sample/30-floating-feather-drift.xaml`](sample/30-floating-feather-drift.xaml) |
+
+### 31. Soft Aurora Gradient (오로라 그라디언트)
+
+| 항목 | 내용 |
+|------|------|
+| 출처 | [Microsoft Learn - Animate GradientStop](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/graphics-multimedia/how-to-animate-the-position-or-color-of-a-gradient-stop), [C# Corner - Color Animation](https://www.c-sharpcorner.com/Resources/893/) |
+| 핵심 기술 | LinearGradientBrush 4-stop, ColorAnimation 순환, DoubleAnimation Offset 진동 |
+| 애니메이션 | DeepBlue↔Teal↔Mint↔Lavender 8s 순환 + Offset 0.2↔0.8 SineEase AutoReverse ∞ |
+| 샘플 파일 | [`sample/31-soft-aurora-gradient.xaml`](sample/31-soft-aurora-gradient.xaml) |
+
+### 32. Zen Fade Cascade (젠 페이드 캐스케이드)
+
+| 항목 | 내용 |
+|------|------|
+| 출처 | [Microsoft Learn - Storyboards Overview](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/graphics-multimedia/storyboards-overview), [CodeProject - Animation using Storyboards](https://www.codeproject.com/Articles/364529/Animation-using-Storyboards-in-WPF) |
+| 핵심 기술 | OpacityAnimation 0→1, PowerEase EaseOut (Power=3), BeginTime +500ms stagger |
+| 애니메이션 | 4개 텍스트 요소 순차 등장 (Breathe→Release→Peace→Stillness), 1.2s 각, +500ms stagger |
+| 샘플 파일 | [`sample/32-zen-fade-cascade.xaml`](sample/32-zen-fade-cascade.xaml) |
+
+---
+
+## COMBINED SAMPLE: Peaceful Zen Garden
+
+| 항목 | 내용 |
+|------|------|
+| 조합 기법 | Zen Breathing Circle + Water Ripple + Floating Feather + Soft Aurora + Zen Fade Cascade |
+| 파이프라인 | Breathing (Scale 4s) → Ripple (Expand 3s stagger) → Feather (Drift 8s) → Aurora (Color 8s) → Cascade (Fade +500ms) |
+| 가치 | 5개 평화 기법의 통합 구현, Case W에서 명상 UI 즉시 HTML 변환 가능 |
+
+---
+
+## 추가 참고 자료
+
+| 리소스 | URL |
+|--------|-----|
+| Pulse Button WPF | https://www.codeproject.com/Articles/996417/Pulse-Button-WPF |
+| Adonis UI Ripple Guide | https://benruehl.github.io/adonis-ui/docs/guides/ripple/ |
+| WPF Storyboard Fade In/Out | https://medium.com/@artillustration391/wpf-storyboards-your-first-animation-fade-in-out-5499dd38433f |

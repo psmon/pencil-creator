@@ -1,0 +1,94 @@
+<Window x:Class="PeaceMeditation.WaterRippleEmanation"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Water Ripple Emanation" Height="400" Width="400"
+        Background="#0A0F1C" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <!-- Ripple 1: outermost, starts first -->
+        <Ellipse Width="40" Height="40" HorizontalAlignment="Center" VerticalAlignment="Center"
+                 Fill="Transparent" Stroke="#22D3EE" StrokeThickness="2"
+                 RenderTransformOrigin="0.5,0.5">
+            <Ellipse.RenderTransform>
+                <ScaleTransform x:Name="ripple1Scale"/>
+            </Ellipse.RenderTransform>
+            <Ellipse.Triggers>
+                <EventTrigger RoutedEvent="Loaded">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="ripple1Scale"
+                                             Storyboard.TargetProperty="ScaleX"
+                                             From="0" To="8" Duration="0:0:3"
+                                             RepeatBehavior="Forever"/>
+                            <DoubleAnimation Storyboard.TargetName="ripple1Scale"
+                                             Storyboard.TargetProperty="ScaleY"
+                                             From="0" To="8" Duration="0:0:3"
+                                             RepeatBehavior="Forever"/>
+                            <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                             From="1" To="0" Duration="0:0:3"
+                                             RepeatBehavior="Forever"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Ellipse.Triggers>
+        </Ellipse>
+
+        <!-- Ripple 2: staggered 0.8s -->
+        <Ellipse Width="40" Height="40" HorizontalAlignment="Center" VerticalAlignment="Center"
+                 Fill="Transparent" Stroke="#22D3EE" StrokeThickness="1.5"
+                 RenderTransformOrigin="0.5,0.5">
+            <Ellipse.RenderTransform>
+                <ScaleTransform x:Name="ripple2Scale"/>
+            </Ellipse.RenderTransform>
+            <Ellipse.Triggers>
+                <EventTrigger RoutedEvent="Loaded">
+                    <BeginStoryboard>
+                        <Storyboard BeginTime="0:0:0.8">
+                            <DoubleAnimation Storyboard.TargetName="ripple2Scale"
+                                             Storyboard.TargetProperty="ScaleX"
+                                             From="0" To="8" Duration="0:0:3"
+                                             RepeatBehavior="Forever"/>
+                            <DoubleAnimation Storyboard.TargetName="ripple2Scale"
+                                             Storyboard.TargetProperty="ScaleY"
+                                             From="0" To="8" Duration="0:0:3"
+                                             RepeatBehavior="Forever"/>
+                            <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                             From="1" To="0" Duration="0:0:3"
+                                             RepeatBehavior="Forever"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Ellipse.Triggers>
+        </Ellipse>
+
+        <!-- Ripple 3: staggered 1.6s -->
+        <Ellipse Width="40" Height="40" HorizontalAlignment="Center" VerticalAlignment="Center"
+                 Fill="Transparent" Stroke="#22D3EE" StrokeThickness="1"
+                 RenderTransformOrigin="0.5,0.5">
+            <Ellipse.RenderTransform>
+                <ScaleTransform x:Name="ripple3Scale"/>
+            </Ellipse.RenderTransform>
+            <Ellipse.Triggers>
+                <EventTrigger RoutedEvent="Loaded">
+                    <BeginStoryboard>
+                        <Storyboard BeginTime="0:0:1.6">
+                            <DoubleAnimation Storyboard.TargetName="ripple3Scale"
+                                             Storyboard.TargetProperty="ScaleX"
+                                             From="0" To="8" Duration="0:0:3"
+                                             RepeatBehavior="Forever"/>
+                            <DoubleAnimation Storyboard.TargetName="ripple3Scale"
+                                             Storyboard.TargetProperty="ScaleY"
+                                             From="0" To="8" Duration="0:0:3"
+                                             RepeatBehavior="Forever"/>
+                            <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                             From="1" To="0" Duration="0:0:3"
+                                             RepeatBehavior="Forever"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Ellipse.Triggers>
+        </Ellipse>
+
+        <!-- Center dot -->
+        <Ellipse Width="8" Height="8" Fill="#22D3EE" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    </Grid>
+</Window>

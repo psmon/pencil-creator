@@ -11560,6 +11560,1552 @@
           ]
         }
       ]
+    },
+    {
+      "type": "frame",
+      "id": "WwOXe",
+      "x": 0,
+      "y": 11582,
+      "name": "CAT14 — Peace & Meditation",
+      "width": 1400,
+      "fill": "#0A0F1C",
+      "layout": "vertical",
+      "gap": 28,
+      "padding": [
+        40,
+        48,
+        48,
+        48
+      ],
+      "children": [
+        {
+          "type": "frame",
+          "id": "lN1l2",
+          "name": "cat14lbl",
+          "width": "fill_container",
+          "gap": 12,
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "OyWlu",
+              "name": "cat14num",
+              "fill": "#0A0F1C",
+              "content": "14",
+              "fontFamily": "JetBrains Mono",
+              "fontSize": 14,
+              "fontWeight": "bold"
+            },
+            {
+              "type": "rectangle",
+              "cornerRadius": 6,
+              "id": "2Y7fI",
+              "name": "cat14badge",
+              "fill": "#22D3EE",
+              "width": 32,
+              "height": 24
+            },
+            {
+              "type": "text",
+              "id": "ujR3B",
+              "name": "cat14title",
+              "fill": "#F1F5F9",
+              "content": "CAT14 — PEACE & MEDITATION",
+              "fontFamily": "JetBrains Mono",
+              "fontSize": 20,
+              "fontWeight": "bold",
+              "letterSpacing": 3
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "wgacd",
+          "name": "cat14desc",
+          "fill": "#64748B",
+          "content": "Zen Breathing Circle · Water Ripple Emanation · Floating Feather Drift · Soft Aurora Gradient · Zen Fade Cascade",
+          "fontFamily": "Inter",
+          "fontSize": 14,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "frame",
+          "id": "skXQ5",
+          "name": "cat14-cards",
+          "width": "fill_container",
+          "gap": 24,
+          "children": [
+            {
+              "type": "frame",
+              "id": "0Stqc",
+              "name": "card141",
+              "width": "fill_container",
+              "fill": "#1E293B",
+              "cornerRadius": 12,
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "tyV9C",
+                  "name": "t141",
+                  "fill": "#22D3EE",
+                  "content": "14-1  ZEN BREATHING CIRCLE",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 14,
+                  "fontWeight": "bold",
+                  "letterSpacing": 2
+                },
+                {
+                  "type": "text",
+                  "id": "ZXWCO",
+                  "name": "d141",
+                  "fill": "#94A3B8",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Multi-ring ScaleTransform inhale/exhale\nSineEase 4s AutoReverse Forever\nGuided meditation breathing pattern",
+                  "lineHeight": 1.5,
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "fMrSh",
+                  "name": "pv141",
+                  "width": "fill_container",
+                  "height": 120,
+                  "fill": "#0F172A",
+                  "cornerRadius": 8,
+                  "layout": "none",
+                  "children": [
+                    {
+                      "type": "ellipse",
+                      "id": "EZ57s",
+                      "x": 127,
+                      "y": 15,
+                      "name": "zen-outer",
+                      "fill": "#22D3EE15",
+                      "width": 90,
+                      "height": 90,
+                      "stroke": {
+                        "thickness": 1,
+                        "fill": "#22D3EE40"
+                      }
+                    },
+                    {
+                      "type": "ellipse",
+                      "id": "U6Bsl",
+                      "x": 142,
+                      "y": 30,
+                      "name": "zen-mid",
+                      "fill": "#22D3EE25",
+                      "width": 60,
+                      "height": 60,
+                      "stroke": {
+                        "thickness": 1,
+                        "fill": "#22D3EE60"
+                      }
+                    },
+                    {
+                      "type": "ellipse",
+                      "id": "Yn7O5",
+                      "x": 157,
+                      "y": 45,
+                      "name": "zen-inner",
+                      "opacity": 0.8,
+                      "fill": "#22D3EE",
+                      "width": 30,
+                      "height": 30,
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#22D3EE60",
+                        "blur": 20
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "aQtOV",
+                  "name": "cb141",
+                  "width": "fill_container",
+                  "fill": "#0A0F1C",
+                  "cornerRadius": 6,
+                  "layout": "vertical",
+                  "gap": 4,
+                  "padding": [
+                    10,
+                    14
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "uATQw",
+                      "name": "cb141a",
+                      "fill": "#22D3EE",
+                      "content": "ScaleTransform 0.6→1.4 SineEase 4s",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "HvUvV",
+                      "name": "cb141b",
+                      "fill": "#4ECDC4",
+                      "content": "Opacity 0.3→1.0 AutoReverse Forever",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "8PtSy",
+              "name": "card142",
+              "width": "fill_container",
+              "fill": "#1E293B",
+              "cornerRadius": 12,
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "7eSba",
+                  "name": "t142",
+                  "fill": "#22D3EE",
+                  "content": "14-2  WATER RIPPLE EMANATION",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 14,
+                  "fontWeight": "bold",
+                  "letterSpacing": 2
+                },
+                {
+                  "type": "text",
+                  "id": "Fyu2G",
+                  "name": "d142",
+                  "fill": "#94A3B8",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Concentric rings expand from center\nScale 0→3 + Opacity 1→0 fade\nStaggered BeginTime ambient ripple",
+                  "lineHeight": 1.5,
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "jopx2",
+                  "name": "pv142",
+                  "width": "fill_container",
+                  "height": 120,
+                  "fill": "#0F172A",
+                  "cornerRadius": 8,
+                  "layout": "none",
+                  "children": [
+                    {
+                      "type": "ellipse",
+                      "id": "OZiBe",
+                      "x": 127,
+                      "y": 15,
+                      "name": "ripple1",
+                      "opacity": 0.3,
+                      "fill": "#00000000",
+                      "width": 90,
+                      "height": 90,
+                      "stroke": {
+                        "thickness": 2,
+                        "fill": "#22D3EE"
+                      }
+                    },
+                    {
+                      "type": "ellipse",
+                      "id": "TD30Y",
+                      "x": 142,
+                      "y": 30,
+                      "name": "ripple2",
+                      "opacity": 0.6,
+                      "fill": "#00000000",
+                      "width": 60,
+                      "height": 60,
+                      "stroke": {
+                        "thickness": 1.5,
+                        "fill": "#22D3EE"
+                      }
+                    },
+                    {
+                      "type": "ellipse",
+                      "id": "B00PZ",
+                      "x": 157,
+                      "y": 45,
+                      "name": "ripple3",
+                      "opacity": 0.9,
+                      "fill": "#00000000",
+                      "width": 30,
+                      "height": 30,
+                      "stroke": {
+                        "thickness": 1,
+                        "fill": "#22D3EE"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "tu1A3",
+                  "name": "cb142",
+                  "width": "fill_container",
+                  "fill": "#0A0F1C",
+                  "cornerRadius": 6,
+                  "layout": "vertical",
+                  "gap": 4,
+                  "padding": [
+                    10,
+                    14
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "tLUnz",
+                      "name": "cb142a",
+                      "fill": "#22D3EE",
+                      "content": "ScaleX/Y 0→3 Opacity 1→0 (2s)",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "Kmu8w",
+                      "name": "cb142b",
+                      "fill": "#4ECDC4",
+                      "content": "BeginTime 0s / 0.8s / 1.6s Forever",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "tTYQA",
+              "name": "card143",
+              "width": "fill_container",
+              "fill": "#1E293B",
+              "cornerRadius": 12,
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "lckuJ",
+                  "name": "t143",
+                  "fill": "#22D3EE",
+                  "content": "14-3  FLOATING FEATHER DRIFT",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 14,
+                  "fontWeight": "bold",
+                  "letterSpacing": 2
+                },
+                {
+                  "type": "text",
+                  "id": "dPJmb",
+                  "name": "d143",
+                  "fill": "#94A3B8",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Sine-wave X oscillation + slow Y drift\nRotateTransform ±15° gentle tilt\nSingle feather meditative descent",
+                  "lineHeight": 1.5,
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "av6Ui",
+                  "name": "pv143",
+                  "width": "fill_container",
+                  "height": 120,
+                  "fill": "#0F172A",
+                  "cornerRadius": 8,
+                  "layout": "none",
+                  "children": [
+                    {
+                      "type": "path",
+                      "id": "tzS9w",
+                      "x": 140,
+                      "y": 20,
+                      "name": "feather",
+                      "opacity": 0.8,
+                      "rotation": 14.999999999999998,
+                      "geometry": "M160 20c-5 15-20 30-15 50 3 10 10 15 15 20 5-5 12-10 15-20 5-20-10-35-15-50z",
+                      "fill": {
+                        "type": "gradient",
+                        "gradientType": "linear",
+                        "enabled": true,
+                        "rotation": 0,
+                        "size": {
+                          "height": 1
+                        },
+                        "colors": [
+                          {
+                            "color": "#22D3EE",
+                            "position": 0
+                          },
+                          {
+                            "color": "#4ECDC440",
+                            "position": 1
+                          }
+                        ]
+                      },
+                      "width": 40,
+                      "height": 80
+                    },
+                    {
+                      "type": "path",
+                      "id": "vj7P7",
+                      "x": 80,
+                      "y": 15,
+                      "name": "drift-path",
+                      "geometry": "M80 15c40 25 20 55 80 80",
+                      "fill": "#00000000",
+                      "width": 120,
+                      "height": 90,
+                      "stroke": {
+                        "thickness": 1,
+                        "fill": "#22D3EE20"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "BucTX",
+                  "name": "cb143",
+                  "width": "fill_container",
+                  "fill": "#0A0F1C",
+                  "cornerRadius": 6,
+                  "layout": "vertical",
+                  "gap": 4,
+                  "padding": [
+                    10,
+                    14
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "4cRm5",
+                      "name": "cb143a",
+                      "fill": "#22D3EE",
+                      "content": "TranslateX sin(t)*30 + Y 0→400 (6s)",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "eVRMS",
+                      "name": "cb143b",
+                      "fill": "#4ECDC4",
+                      "content": "RotateTransform ±15° SineEase Forever",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "d6NaR",
+          "name": "cat14-cards-row2",
+          "width": "fill_container",
+          "gap": 24,
+          "children": [
+            {
+              "type": "frame",
+              "id": "vgptd",
+              "name": "card144",
+              "width": "fill_container",
+              "fill": "#1E293B",
+              "cornerRadius": 12,
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "wFtEA",
+                  "name": "t144",
+                  "fill": "#22D3EE",
+                  "content": "14-4  SOFT AURORA GRADIENT",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 14,
+                  "fontWeight": "bold",
+                  "letterSpacing": 2
+                },
+                {
+                  "type": "text",
+                  "id": "rYvHW",
+                  "name": "d144",
+                  "fill": "#94A3B8",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "4-stop LinearGradientBrush cycling\nDeep Blue→Teal→Mint→Lavender\nSlow 8s ColorAnimation peaceful sky",
+                  "lineHeight": 1.5,
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "LkfNh",
+                  "name": "pv144",
+                  "width": "fill_container",
+                  "height": 120,
+                  "fill": {
+                    "type": "gradient",
+                    "gradientType": "linear",
+                    "enabled": true,
+                    "rotation": 90,
+                    "size": {
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "#1E3A5F",
+                        "position": 0
+                      },
+                      {
+                        "color": "#2DD4BF",
+                        "position": 0.33
+                      },
+                      {
+                        "color": "#7DD3A0",
+                        "position": 0.66
+                      },
+                      {
+                        "color": "#A78BFA",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "cornerRadius": 8,
+                  "layout": "none",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "WQuWf",
+                      "x": 12,
+                      "y": 96,
+                      "name": "aurora-lbl",
+                      "fill": "#FFFFFF80",
+                      "content": "Aurora Borealis",
+                      "fontFamily": "Inter",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "jLGQX",
+                  "name": "cb144",
+                  "width": "fill_container",
+                  "fill": "#0A0F1C",
+                  "cornerRadius": 6,
+                  "layout": "vertical",
+                  "gap": 4,
+                  "padding": [
+                    10,
+                    14
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "asMsl",
+                      "name": "cb144a",
+                      "fill": "#22D3EE",
+                      "content": "ColorAnimation 4-Stop cycle 8s",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "C5SHG",
+                      "name": "cb144b",
+                      "fill": "#4ECDC4",
+                      "content": "Offset 0.2↔0.8 SineEase AutoReverse",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "IhN5u",
+              "name": "card145",
+              "width": "fill_container",
+              "fill": "#1E293B",
+              "cornerRadius": 12,
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "QpPp6",
+                  "name": "t145",
+                  "fill": "#22D3EE",
+                  "content": "14-5  ZEN FADE CASCADE",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 14,
+                  "fontWeight": "bold",
+                  "letterSpacing": 2
+                },
+                {
+                  "type": "text",
+                  "id": "VqYND",
+                  "name": "d145",
+                  "fill": "#94A3B8",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Sequential Opacity 0→1 entrance\nPowerEase with 500ms+ stagger delay\nMeditative slow element revelation",
+                  "lineHeight": 1.5,
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "s4M1z",
+                  "name": "pv145",
+                  "width": "fill_container",
+                  "height": 120,
+                  "fill": "#0F172A",
+                  "cornerRadius": 8,
+                  "gap": 16,
+                  "padding": [
+                    0,
+                    24
+                  ],
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 4,
+                      "id": "pclK7",
+                      "name": "bar1",
+                      "fill": "#22D3EE",
+                      "width": 40,
+                      "height": 60
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 4,
+                      "id": "SxUBi",
+                      "name": "bar2",
+                      "opacity": 0.7,
+                      "fill": "#22D3EE",
+                      "width": 40,
+                      "height": 60
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 4,
+                      "id": "FmfIn",
+                      "name": "bar3",
+                      "opacity": 0.4,
+                      "fill": "#22D3EE",
+                      "width": 40,
+                      "height": 60
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 4,
+                      "id": "H4eNE",
+                      "name": "bar4",
+                      "opacity": 0.15,
+                      "fill": "#22D3EE",
+                      "width": 40,
+                      "height": 60
+                    },
+                    {
+                      "type": "text",
+                      "id": "17OPM",
+                      "name": "arrow-label",
+                      "fill": "#94A3B8",
+                      "content": "→",
+                      "fontFamily": "Inter",
+                      "fontSize": 16,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "6cJOG",
+                  "name": "cb145",
+                  "width": "fill_container",
+                  "fill": "#0A0F1C",
+                  "cornerRadius": 6,
+                  "layout": "vertical",
+                  "gap": 4,
+                  "padding": [
+                    10,
+                    14
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "ctSQX",
+                      "name": "cb145a",
+                      "fill": "#22D3EE",
+                      "content": "Opacity 0→1 PowerEase EaseOut 1.2s",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "hYFYQ",
+                      "name": "cb145b",
+                      "fill": "#4ECDC4",
+                      "content": "BeginTime stagger +500ms per element",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "gIxyJ",
+      "x": 0,
+      "y": 12545,
+      "name": "SAMPLE — Peaceful Zen Garden (통합 컴포넌트)",
+      "width": 1400,
+      "fill": "#0A0F1C",
+      "layout": "vertical",
+      "gap": 32,
+      "padding": 48,
+      "children": [
+        {
+          "type": "frame",
+          "id": "E4WvC",
+          "name": "header",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 8,
+          "children": [
+            {
+              "type": "frame",
+              "id": "JQDz4",
+              "name": "badge-row",
+              "gap": 12,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "1GQU3",
+                  "name": "badge",
+                  "fill": "#E4324F",
+                  "cornerRadius": 4,
+                  "padding": [
+                    4,
+                    10
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "bwSxP",
+                      "name": "badgeTxt",
+                      "fill": "#FFFFFF",
+                      "content": "COMBINED SAMPLE",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "bold",
+                      "letterSpacing": 1
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "c30fm",
+                  "name": "srcTxt",
+                  "fill": "#64748B",
+                  "content": "5 Peace Techniques Combined · Breathing + Ripple + Drift + Aurora + Cascade",
+                  "fontFamily": "Inter",
+                  "fontSize": 12,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "m8LHd",
+              "name": "titleTxt",
+              "fill": "#F1F5F9",
+              "content": "Peaceful Zen Garden",
+              "fontFamily": "JetBrains Mono",
+              "fontSize": 28,
+              "fontWeight": "bold",
+              "letterSpacing": 2
+            },
+            {
+              "type": "text",
+              "id": "J9M1i",
+              "name": "titleKo",
+              "fill": "#94A3B8",
+              "content": "평화로운 젠 가든 — 명상 UI를 위한 5가지 기법 통합 컴포넌트",
+              "fontFamily": "Inter",
+              "fontSize": 14,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "text",
+              "id": "NRGu5",
+              "name": "pipelineTxt",
+              "fill": "#4ECDC4",
+              "content": "Pipeline: Breathing (Scale+Opacity) → Ripple (Expand+Fade) → Feather (Translate+Rotate) → Aurora (ColorAnimation) → Cascade (Stagger Opacity)",
+              "fontFamily": "JetBrains Mono",
+              "fontSize": 11,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "mNBcc",
+          "name": "content-row",
+          "width": "fill_container",
+          "gap": 32,
+          "children": [
+            {
+              "type": "frame",
+              "id": "iM1YB",
+              "name": "visual-structure",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "cODT2",
+                  "name": "leftTitle",
+                  "fill": "#22D3EE",
+                  "content": "VISUAL STRUCTURE",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 12,
+                  "fontWeight": "bold",
+                  "letterSpacing": 2
+                },
+                {
+                  "type": "frame",
+                  "id": "cldhe",
+                  "name": "zen-preview",
+                  "width": "fill_container",
+                  "height": 280,
+                  "fill": {
+                    "type": "gradient",
+                    "gradientType": "radial",
+                    "enabled": true,
+                    "rotation": 0,
+                    "size": {
+                      "width": 1,
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "#1E3A5F",
+                        "position": 0
+                      },
+                      {
+                        "color": "#0A0F1C",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "cornerRadius": 12,
+                  "layout": "none",
+                  "children": [
+                    {
+                      "type": "ellipse",
+                      "id": "a1gr3",
+                      "x": 210,
+                      "y": 50,
+                      "name": "breathe-outer",
+                      "fill": "#22D3EE10",
+                      "width": 180,
+                      "height": 180,
+                      "stroke": {
+                        "thickness": 1,
+                        "fill": "#22D3EE30"
+                      }
+                    },
+                    {
+                      "type": "ellipse",
+                      "id": "cOvsk",
+                      "x": 240,
+                      "y": 80,
+                      "name": "breathe-mid",
+                      "fill": "#22D3EE20",
+                      "width": 120,
+                      "height": 120,
+                      "stroke": {
+                        "thickness": 1,
+                        "fill": "#22D3EE50"
+                      }
+                    },
+                    {
+                      "type": "ellipse",
+                      "id": "oCd9w",
+                      "x": 275,
+                      "y": 115,
+                      "name": "breathe-core",
+                      "opacity": 0.7,
+                      "fill": "#22D3EE",
+                      "width": 50,
+                      "height": 50,
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#22D3EE80",
+                        "blur": 30
+                      }
+                    },
+                    {
+                      "type": "ellipse",
+                      "id": "zTEel",
+                      "x": 30,
+                      "y": 100,
+                      "name": "ripple-r1",
+                      "opacity": 0.2,
+                      "fill": "#00000000",
+                      "width": 140,
+                      "height": 140,
+                      "stroke": {
+                        "thickness": 1,
+                        "fill": "#4ECDC4"
+                      }
+                    },
+                    {
+                      "type": "ellipse",
+                      "id": "dUPVq",
+                      "x": 55,
+                      "y": 125,
+                      "name": "ripple-r2",
+                      "opacity": 0.5,
+                      "fill": "#00000000",
+                      "width": 90,
+                      "height": 90,
+                      "stroke": {
+                        "thickness": 1,
+                        "fill": "#4ECDC4"
+                      }
+                    },
+                    {
+                      "type": "ellipse",
+                      "id": "4aASi",
+                      "x": 80,
+                      "y": 150,
+                      "name": "ripple-r3",
+                      "opacity": 0.8,
+                      "fill": "#00000000",
+                      "width": 40,
+                      "height": 40,
+                      "stroke": {
+                        "thickness": 1.5,
+                        "fill": "#4ECDC4"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "id": "Kf3GK",
+                      "x": 450,
+                      "y": 40,
+                      "name": "feather-drift",
+                      "opacity": 0.7,
+                      "rotation": 20,
+                      "geometry": "M20 0c-5 15-15 30-10 50 3 8 8 12 10 15 2-3 7-7 10-15 5-20-5-35-10-50z",
+                      "fill": {
+                        "type": "gradient",
+                        "gradientType": "linear",
+                        "enabled": true,
+                        "rotation": 0,
+                        "size": {
+                          "height": 1
+                        },
+                        "colors": [
+                          {
+                            "color": "#7DD3A0",
+                            "position": 0
+                          },
+                          {
+                            "color": "#7DD3A040",
+                            "position": 1
+                          }
+                        ]
+                      },
+                      "width": 35,
+                      "height": 65
+                    },
+                    {
+                      "type": "path",
+                      "id": "iJrxP",
+                      "x": 440,
+                      "y": 30,
+                      "name": "drift-line",
+                      "geometry": "M440 30c20 30 5 60 30 90",
+                      "fill": "#00000000",
+                      "width": 50,
+                      "height": 100,
+                      "stroke": {
+                        "thickness": 1,
+                        "fill": "#7DD3A030"
+                      }
+                    },
+                    {
+                      "type": "frame",
+                      "id": "idmju",
+                      "x": 420,
+                      "y": 200,
+                      "name": "legend",
+                      "layout": "vertical",
+                      "gap": 6,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Pb73T",
+                          "name": "leg1",
+                          "fill": "#22D3EE",
+                          "content": "● Breathing (Scale)",
+                          "fontFamily": "Inter",
+                          "fontSize": 9,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "8RHxM",
+                          "name": "leg2",
+                          "fill": "#4ECDC4",
+                          "content": "● Ripple (Expand)",
+                          "fontFamily": "Inter",
+                          "fontSize": 9,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "text",
+                          "id": "qfZbx",
+                          "name": "leg3",
+                          "fill": "#7DD3A0",
+                          "content": "● Drift (Translate)",
+                          "fontFamily": "Inter",
+                          "fontSize": 9,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "Vwh6R",
+              "name": "spec-panel",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 16,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "20L2C",
+                  "name": "specTitle",
+                  "fill": "#22D3EE",
+                  "content": "ANIMATION SPEC",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 12,
+                  "fontWeight": "bold",
+                  "letterSpacing": 2
+                },
+                {
+                  "type": "frame",
+                  "id": "k0w5E",
+                  "name": "spec-grid",
+                  "width": "fill_container",
+                  "fill": "#0F172A",
+                  "cornerRadius": 8,
+                  "layout": "vertical",
+                  "gap": 10,
+                  "padding": 16,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "Obhev",
+                      "name": "row1",
+                      "width": "fill_container",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "l3qid",
+                          "name": "r1k",
+                          "fill": "#64748B",
+                          "content": "Breathing",
+                          "fontFamily": "Inter",
+                          "fontSize": 11,
+                          "fontWeight": "bold"
+                        },
+                        {
+                          "type": "text",
+                          "id": "hpzhP",
+                          "name": "r1v",
+                          "fill": "#CBD5E1",
+                          "content": "Scale 0.6→1.4 · SineEase · 4s cycle",
+                          "fontFamily": "Inter",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "tFSit",
+                      "name": "row2",
+                      "width": "fill_container",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "HtcA9",
+                          "name": "r2k",
+                          "fill": "#64748B",
+                          "content": "Ripple",
+                          "fontFamily": "Inter",
+                          "fontSize": 11,
+                          "fontWeight": "bold"
+                        },
+                        {
+                          "type": "text",
+                          "id": "1E7NE",
+                          "name": "r2v",
+                          "fill": "#CBD5E1",
+                          "content": "Scale 0→8 · Opacity 1→0 · 3s stagger",
+                          "fontFamily": "Inter",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "Tavvc",
+                      "name": "row3",
+                      "width": "fill_container",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "pnqxY",
+                          "name": "r3k",
+                          "fill": "#64748B",
+                          "content": "Feather",
+                          "fontFamily": "Inter",
+                          "fontSize": 11,
+                          "fontWeight": "bold"
+                        },
+                        {
+                          "type": "text",
+                          "id": "9cPf0",
+                          "name": "r3v",
+                          "fill": "#CBD5E1",
+                          "content": "TranslateX sin(t)·30 · Y 0→500 · Rotate ±15°",
+                          "fontFamily": "Inter",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "8JtMF",
+                      "name": "row4",
+                      "width": "fill_container",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "rx6br",
+                          "name": "r4k",
+                          "fill": "#64748B",
+                          "content": "Aurora",
+                          "fontFamily": "Inter",
+                          "fontSize": 11,
+                          "fontWeight": "bold"
+                        },
+                        {
+                          "type": "text",
+                          "id": "d1hp3",
+                          "name": "r4v",
+                          "fill": "#CBD5E1",
+                          "content": "4-stop ColorAnimation · 8s · Offset 0.2↔0.8",
+                          "fontFamily": "Inter",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "t0eoM",
+                      "name": "row5",
+                      "width": "fill_container",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "kNJWq",
+                          "name": "r5k",
+                          "fill": "#64748B",
+                          "content": "Cascade",
+                          "fontFamily": "Inter",
+                          "fontSize": 11,
+                          "fontWeight": "bold"
+                        },
+                        {
+                          "type": "text",
+                          "id": "ICPxE",
+                          "name": "r5v",
+                          "fill": "#CBD5E1",
+                          "content": "Opacity 0→1 · PowerEase · +500ms stagger",
+                          "fontFamily": "Inter",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "4GAcE",
+                      "name": "row6",
+                      "width": "fill_container",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "QWLTU",
+                          "name": "r6k",
+                          "fill": "#64748B",
+                          "content": "Easing",
+                          "fontFamily": "Inter",
+                          "fontSize": 11,
+                          "fontWeight": "bold"
+                        },
+                        {
+                          "type": "text",
+                          "id": "H1Rz5",
+                          "name": "r6v",
+                          "fill": "#CBD5E1",
+                          "content": "SineEase EaseInOut + PowerEase EaseOut",
+                          "fontFamily": "Inter",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "fF4sW",
+                  "name": "xaml-refs",
+                  "width": "fill_container",
+                  "fill": "#0F172A",
+                  "cornerRadius": 8,
+                  "layout": "vertical",
+                  "gap": 6,
+                  "padding": 16,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "8UJpv",
+                      "name": "refTitle",
+                      "fill": "#22D3EE",
+                      "content": "XAML REFERENCES",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "bold",
+                      "letterSpacing": 1
+                    },
+                    {
+                      "type": "text",
+                      "id": "ZOJo5",
+                      "name": "ref1",
+                      "fill": "#94A3B8",
+                      "content": "28-zen-breathing-circle.xaml → Breathing",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "9Nclm",
+                      "name": "ref2",
+                      "fill": "#94A3B8",
+                      "content": "29-water-ripple-emanation.xaml → Ripple",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "FX7Ip",
+                      "name": "ref3",
+                      "fill": "#94A3B8",
+                      "content": "30-floating-feather-drift.xaml → Feather",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "dTHdL",
+                      "name": "ref4",
+                      "fill": "#94A3B8",
+                      "content": "31-soft-aurora-gradient.xaml → Aurora",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "0M3cN",
+                      "name": "ref5",
+                      "fill": "#94A3B8",
+                      "content": "32-zen-fade-cascade.xaml → Cascade",
+                      "fontFamily": "JetBrains Mono",
+                      "fontSize": 10,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "KPfNo",
+          "name": "unified-code",
+          "width": "fill_container",
+          "gap": 24,
+          "children": [
+            {
+              "type": "frame",
+              "id": "n1bBB",
+              "name": "wpf-impl",
+              "width": "fill_container",
+              "fill": "#0F172A",
+              "cornerRadius": 8,
+              "layout": "vertical",
+              "gap": 6,
+              "padding": 16,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "HShxp",
+                  "name": "wpfTitle",
+                  "fill": "#22D3EE",
+                  "content": "WPF IMPLEMENTATION",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 10,
+                  "fontWeight": "bold",
+                  "letterSpacing": 1
+                },
+                {
+                  "type": "text",
+                  "id": "RqE7h",
+                  "name": "wpf1",
+                  "fill": "#CBD5E1",
+                  "content": "<Storyboard x:Key=\"ZenBreathing\">",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 10,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "feT4Q",
+                  "name": "wpf2",
+                  "fill": "#94A3B8",
+                  "content": "  <DoubleAnimation Storyboard.TargetProperty=\"ScaleX\"",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 10,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "B4cOL",
+                  "name": "wpf3",
+                  "fill": "#94A3B8",
+                  "content": "    From=\"0.6\" To=\"1.4\" Duration=\"0:0:4\"",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 10,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "Ip7OH",
+                  "name": "wpf4",
+                  "fill": "#94A3B8",
+                  "content": "    AutoReverse=\"True\" RepeatBehavior=\"Forever\">",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 10,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "zRsQN",
+                  "name": "wpf5",
+                  "fill": "#4ECDC4",
+                  "content": "    <SineEase EasingMode=\"EaseInOut\"/>",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 10,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "xKG15",
+                  "name": "wpf6",
+                  "fill": "#94A3B8",
+                  "content": "  </DoubleAnimation>",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 10,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "IjvhW",
+                  "name": "wpf7",
+                  "fill": "#CBD5E1",
+                  "content": "</Storyboard>",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 10,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "F17fM",
+              "name": "css-impl",
+              "width": "fill_container",
+              "fill": "#0F172A",
+              "cornerRadius": 8,
+              "layout": "vertical",
+              "gap": 6,
+              "padding": 16,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "ZHrKv",
+                  "name": "cssTitle",
+                  "fill": "#22D3EE",
+                  "content": "CSS/SVG IMPLEMENTATION",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 10,
+                  "fontWeight": "bold",
+                  "letterSpacing": 1
+                },
+                {
+                  "type": "text",
+                  "id": "UlX7e",
+                  "name": "css1",
+                  "fill": "#CBD5E1",
+                  "content": "@keyframes zenBreathe {",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 10,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "HA5Jy",
+                  "name": "css2",
+                  "fill": "#94A3B8",
+                  "content": "  0%, 100% { transform: scale(0.6); opacity: 0.3; }",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 10,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "9wrR5",
+                  "name": "css3",
+                  "fill": "#94A3B8",
+                  "content": "  50% { transform: scale(1.4); opacity: 1.0; }",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 10,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "fNoUZ",
+                  "name": "css4",
+                  "fill": "#CBD5E1",
+                  "content": "}",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 10,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "E9TQS",
+                  "name": "css5",
+                  "fill": "#4ECDC4",
+                  "content": ".zen-circle { animation: zenBreathe 4s",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 10,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "0PIlV",
+                  "name": "css6",
+                  "fill": "#4ECDC4",
+                  "content": "  ease-in-out infinite alternate; }",
+                  "fontFamily": "JetBrains Mono",
+                  "fontSize": 10,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ]
 }
