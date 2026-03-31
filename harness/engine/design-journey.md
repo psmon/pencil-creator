@@ -38,7 +38,7 @@ idle → prompted → researching(wpf-animation.pen) → designing(정적+애니
 
 ### Case C: 웹 애니메이션 → JSON → 펜슬 컴포넌트 (Copycat)
 ```
-idle → prompted → researching(WebFetch+Playwright 분석) → designing(JSON 정의서+펜슬 컴포넌트) → design-evaluating(Case C) → recording → idle
+idle → prompted → researching(WebFetch 분석) → designing(JSON 정의서+펜슬 컴포넌트) → design-evaluating(Case C) → recording → idle
 ```
 
 ### Case W: Pencil → HTML/웹 구현

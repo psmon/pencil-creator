@@ -40,7 +40,8 @@
       "Bash(\"D:/pencil-creator/design-wpf-app/migrated/Sample29_WaterRippleEmanation.xaml\")",
       "Bash(\"D:/pencil-creator/design-wpf-app/migrated/Sample30_FloatingFeatherDrift.xaml\")",
       "Bash(\"D:/pencil-creator/design-wpf-app/migrated/Sample31_SoftAuroraGradient.xaml\")",
-      "Bash(\"D:/pencil-creator/design-wpf-app/migrated/Sample32_ZenFadeCascade.xaml\")"
+      "Bash(\"D:/pencil-creator/design-wpf-app/migrated/Sample32_ZenFadeCascade.xaml\")",
+      "Bash(find /d/pencil-creator -type f \\\\\\(-name settings*.json -o -name *hook* -o -name *.config \\\\\\))"
     ]
   },
   "enabledMcpjsonServers": [

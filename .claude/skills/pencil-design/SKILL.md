@@ -470,7 +470,8 @@ Step 3. HTML 생성
   → 다크 테마 권장 (var(--bg), var(--cyan) 등 CSS 변수)
   → 반응형 + 인터랙티브 + 스크롤 트리거 애니메이션 포함
 
-Step 4. Playwright 캡처 (위키 게시용)
+Step 4. Playwright 캡처 (선택 — 사용자 요청 시에만)
+  ⚠️ 자동 실행하지 않음. "스크린샷 캡처해줘" 등 명시적 요청 시에만 수행.
   → python -m http.server로 로컬 서버 시작
   → browser_navigate → 섹션별 scrollIntoView → waitForTimeout → take_screenshot
   → tmp/playwright/sample{N}/에 섹션별 PNG 저장
@@ -491,7 +492,7 @@ design/xaml/output/
 └── sample{N}/            ← 추가 테스트 샘플 페이지
 ```
 
-### 10.3 Playwright 섹션별 캡처 패턴
+### 10.3 Playwright 섹션별 캡처 패턴 (사용자 요청 시에만)
 
 ```javascript
 // 1. 로컬 서버 시작
@@ -508,9 +509,9 @@ for each section_id in [hero, about, travels, gallery, stats, journey, contact]:
   browser_take_screenshot(filename: "tmp/playwright/sample{N}/{순번}-{section}.png")
 ```
 
-### 10.4 Playwright 동영상 녹화 (WebM)
+### 10.4 Playwright 동영상 녹화 (WebM) (사용자 요청 시에만)
 
-애니메이션 시연을 동영상으로 녹화하고 싶은 경우, `browser_run_code`를 통해 WebM 비디오 녹화가 가능하다.
+애니메이션 시연을 동영상으로 녹화하고 싶은 경우, 사용자가 명시적으로 요청하면 `browser_run_code`를 통해 WebM 비디오 녹화가 가능하다.
 설치 절차 및 GIF/MOV 변환 방법은 `tools/tools-window.md`를 참조한다.
 
 ⚠️ **주의**: 이 프로젝트는 Windows 환경 기준이다. ffmpeg 설치 시 OS를 판별하여 호환성을 고려할 것 (npm `ffmpeg-static` 패키지는 OS별 바이너리를 자동 선택하므로 권장).

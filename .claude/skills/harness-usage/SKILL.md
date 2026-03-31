@@ -15,7 +15,7 @@ description: |
   - "펜슬 참고해서 HTML 페이지 만들어줘" → Case W
   - "디자인을 웹으로 구현해줘" → Case W
   - "디자인 평가해줘", "점수 매겨줘" → 평가 실행
-allowed-tools: Read, Write, Edit, Glob, Grep, Agent, WebSearch, WebFetch, mcp__pencil__get_guidelines, mcp__pencil__open_document, mcp__pencil__get_editor_state, mcp__pencil__batch_design, mcp__pencil__get_screenshot, mcp__pencil__find_empty_space_on_canvas, mcp__pencil__snapshot_layout, mcp__pencil__batch_get, mcp__pencil__get_style_guide_tags, mcp__pencil__get_style_guide, mcp__pencil__get_variables, mcp__playwright__browser_navigate, mcp__playwright__browser_take_screenshot, mcp__playwright__browser_evaluate, mcp__playwright__browser_run_code, mcp__playwright__browser_resize
+allowed-tools: Read, Write, Edit, Glob, Grep, Agent, WebSearch, WebFetch, mcp__pencil__get_guidelines, mcp__pencil__open_document, mcp__pencil__get_editor_state, mcp__pencil__batch_design, mcp__pencil__get_screenshot, mcp__pencil__find_empty_space_on_canvas, mcp__pencil__snapshot_layout, mcp__pencil__batch_get, mcp__pencil__get_style_guide_tags, mcp__pencil__get_style_guide, mcp__pencil__get_variables
 ---
 
 # Harness Usage — Pencil Design 작업 실행
@@ -148,12 +148,7 @@ Phase 3 — Verify (design-evaluating):
 Phase 1 — Gather (researching):
   → 대상 URL 접속 및 특정 요소/섹션 식별
   → WebFetch로 HTML/CSS/JS 구조 분석 (라이브러리, @keyframes, transition 등)
-  → Playwright로 해당 섹션 스크린샷 캡처 (시각 증거 확보)
-  → browser_evaluate / browser_run_code로 computed animation 추출:
-    - CSS keyframes, animation properties
-    - Lottie/dotlottie-player 소스 URL 및 구조
-    - GSAP, Framer Motion 등 라이브러리 사용 여부
-    - SVG 애니메이션, Canvas 기반 효과
+  → (선택 — 사용자 요청 시) Playwright로 해당 섹션 스크린샷 캡처 / browser_evaluate로 computed animation 추출
   → Lottie 파일 발견 시: 다운로드 → ZIP 해제 → JSON 레이어/키프레임 분석
   → 애니메이션 기법 분류 (기법별 독립 분석)
 
@@ -211,7 +206,7 @@ Phase 3 — Verify (design-evaluating):
 ### Case C 체크리스트
 
 ```
-□ WebFetch + Playwright 양쪽 도구를 모두 활용했는가?
+□ WebFetch로 HTML/CSS/JS 구조를 분석했는가? (Playwright는 사용자 요청 시에만)
 □ Lottie/JS/CSS 등 실제 구현 기술을 정확히 식별했는가?
 □ 각 기법별 독립 JSON 파일이 design/json/sample/에 넘버링 생성되었는가?
 □ JSON에 technique, source, structure, animationDetails, cssImplementation이 포함되었는가?
@@ -281,7 +276,9 @@ Phase 3 — Verify (design-evaluating):
 
 ---
 
-## 6. Playwright 섹션별 캡처
+## 6. Playwright 섹션별 캡처 (선택 — 사용자 요청 시에만)
+
+⚠️ **이 단계는 자동 실행하지 않는다.** 사용자가 "스크린샷 캡처해줘", "Playwright로 검수해줘" 등 명시적으로 요청한 경우에만 수행한다.
 
 HTML 데모의 각 섹션을 스크린샷으로 캡처하는 워크플로우.
 
