@@ -41,7 +41,9 @@
       "Bash(\"D:/pencil-creator/design-wpf-app/migrated/Sample30_FloatingFeatherDrift.xaml\")",
       "Bash(\"D:/pencil-creator/design-wpf-app/migrated/Sample31_SoftAuroraGradient.xaml\")",
       "Bash(\"D:/pencil-creator/design-wpf-app/migrated/Sample32_ZenFadeCascade.xaml\")",
-      "Bash(find /d/pencil-creator -type f \\\\\\(-name settings*.json -o -name *hook* -o -name *.config \\\\\\))"
+      "Bash(find /d/pencil-creator -type f \\\\\\(-name settings*.json -o -name *hook* -o -name *.config \\\\\\))",
+      "mcp__pencil__get_guidelines",
+      "mcp__playwright__browser_resize"
     ]
   },
   "enabledMcpjsonServers": [

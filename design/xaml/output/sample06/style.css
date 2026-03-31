@@ -1,0 +1,899 @@
+/* ============================================================
+   요르단의 반지 (Ring of Jordan) — Fantasy Puzzle Game Landing
+   WPF Animation Mapping: CAT16/17/23/27/33/36/38 + Particles
+   ============================================================ */
+
+/* --- Reset & Base --- */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  /* Arcane Gateway palette (CAT16) */
+  --bg-deep: #0a0510;
+  --bg-mid: #1a0a2e;
+  --bg-surface: #2a1040;
+  --gold: #efbf04;
+  --gold-dim: rgba(239, 191, 4, 0.4);
+  --gold-glow: rgba(239, 191, 4, 0.6);
+  --cyan: #22d3ee;
+  --magenta: #e040fb;
+  --purple: #a78bfa;
+  --text-primary: #f1f5f9;
+  --text-secondary: #c4b5d4;
+  --text-muted: #94a3b8;
+  --danger: #e4324f;
+  --success: #34d399;
+  --font-display: 'Playfair Display', serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Geist Mono', monospace;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+a { color: var(--gold); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* --- Starfield Canvas Background (CAT33) --- */
+#starfield-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* --- Navigation --- */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 48px;
+  background: rgba(10, 5, 16, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(239, 191, 4, 0.15);
+}
+
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 22px; font-weight: 700;
+  color: var(--gold);
+  text-shadow: 0 0 20px var(--gold-dim);
+  letter-spacing: 2px;
+}
+
+.nav-links { display: flex; gap: 32px; list-style: none; }
+.nav-links a {
+  font-family: var(--font-mono);
+  font-size: 13px; letter-spacing: 2px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  transition: color 0.3s, text-shadow 0.3s;
+}
+.nav-links a:hover {
+  color: var(--gold);
+  text-shadow: 0 0 12px var(--gold-dim);
+  text-decoration: none;
+}
+
+/* --- Section Base --- */
+.section {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120px 48px 80px;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: 48px; font-weight: 700;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.section-subtitle {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--text-muted);
+  text-align: center;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 48px;
+}
+
+/* --- Hero Section --- */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+  padding-top: 80px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 20px;
+  border: 1px solid var(--gold-dim);
+  border-radius: 24px;
+  font-family: var(--font-mono);
+  font-size: 12px; letter-spacing: 3px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 32px;
+  background: rgba(239, 191, 4, 0.05);
+}
+
+/* Neon Glow Title (CAT23: 1.5s SineEase) */
+.hero-title {
+  font-family: var(--font-display);
+  font-size: 80px; font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+  animation: neonGlowTitle 3s ease-in-out infinite alternate;
+}
+
+@keyframes neonGlowTitle {
+  0% { text-shadow: 0 0 20px rgba(239,191,4,0.3), 0 0 40px rgba(239,191,4,0.15); }
+  100% { text-shadow: 0 0 40px rgba(239,191,4,0.6), 0 0 80px rgba(239,191,4,0.3), 0 0 120px rgba(239,191,4,0.15); }
+}
+
+.hero-tagline {
+  font-size: 18px;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin-bottom: 48px;
+}
+
+/* 3D Ring Container (CAT36: Galaxy Swirl 360°) */
+.ring-container {
+  position: relative;
+  width: 360px; height: 360px;
+  margin: 0 auto 48px;
+  perspective: 800px;
+}
+
+.ring-3d {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform-style: preserve-3d;
+  animation: ringRotate 8s linear infinite;
+}
+
+.ring-band {
+  position: absolute;
+  border-radius: 50%;
+  border-style: solid;
+  border-color: var(--gold);
+  transform-origin: center center;
+}
+
+.ring-band-1 {
+  width: 280px; height: 280px;
+  margin-left: -140px; margin-top: -140px;
+  border-width: 4px;
+  opacity: 0.9;
+  animation: ringPulse1 1.2s ease-in-out infinite alternate;
+  box-shadow: 0 0 30px var(--gold-dim), inset 0 0 30px var(--gold-dim);
+}
+
+.ring-band-2 {
+  width: 240px; height: 240px;
+  margin-left: -120px; margin-top: -120px;
+  border-width: 2px;
+  opacity: 0.6;
+  transform: rotateX(70deg);
+  animation: ringPulse2 1.5s ease-in-out infinite alternate;
+  box-shadow: 0 0 20px var(--gold-dim), inset 0 0 15px rgba(239,191,4,0.2);
+}
+
+.ring-band-3 {
+  width: 200px; height: 200px;
+  margin-left: -100px; margin-top: -100px;
+  border-width: 1.5px;
+  opacity: 0.4;
+  transform: rotateY(70deg);
+  animation: ringPulse3 2s ease-in-out infinite alternate;
+  box-shadow: 0 0 15px rgba(167,139,250,0.3), inset 0 0 10px rgba(167,139,250,0.15);
+  border-color: var(--purple);
+}
+
+/* Pulsing Glow (CAT17: 1.2s SineEase BlurRadius 10→30, Opacity 0.4→0.9) */
+@keyframes ringPulse1 {
+  0% { box-shadow: 0 0 10px var(--gold-dim), inset 0 0 10px var(--gold-dim); opacity: 0.6; }
+  100% { box-shadow: 0 0 30px var(--gold-glow), inset 0 0 30px var(--gold-glow); opacity: 0.9; }
+}
+
+@keyframes ringPulse2 {
+  0% { box-shadow: 0 0 8px var(--gold-dim), inset 0 0 8px rgba(239,191,4,0.15); opacity: 0.4; }
+  100% { box-shadow: 0 0 25px var(--gold-glow), inset 0 0 20px rgba(239,191,4,0.4); opacity: 0.7; }
+}
+
+@keyframes ringPulse3 {
+  0% { box-shadow: 0 0 6px rgba(167,139,250,0.2); opacity: 0.3; }
+  100% { box-shadow: 0 0 20px rgba(167,139,250,0.5); opacity: 0.6; }
+}
+
+/* Galaxy Swirl Rotation (CAT36: continuous 360°) */
+@keyframes ringRotate {
+  0% { transform: rotateX(25deg) rotateY(0deg) rotateZ(0deg); }
+  100% { transform: rotateX(25deg) rotateY(360deg) rotateZ(15deg); }
+}
+
+.ring-core-glow {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 100px; height: 100px;
+  margin: -50px 0 0 -50px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(239,191,4,0.4) 0%, rgba(239,191,4,0) 70%);
+  animation: coreGlow 4s ease-in-out infinite alternate;
+}
+
+@keyframes coreGlow {
+  0% { transform: scale(0.8); opacity: 0.5; }
+  100% { transform: scale(1.4); opacity: 1; }
+}
+
+.ring-rune {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 48px;
+  z-index: 2;
+  animation: runeFloat 3s ease-in-out infinite alternate;
+}
+
+@keyframes runeFloat {
+  0% { transform: translate(-50%, -50%) translateY(5px); filter: drop-shadow(0 0 10px var(--gold-dim)); }
+  100% { transform: translate(-50%, -50%) translateY(-5px); filter: drop-shadow(0 0 25px var(--gold-glow)); }
+}
+
+/* CTA Button */
+.cta-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 16px 40px;
+  border: 1.5px solid var(--gold);
+  border-radius: 8px;
+  background: rgba(239, 191, 4, 0.08);
+  color: var(--gold);
+  font-family: var(--font-mono);
+  font-size: 14px; font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-btn::before {
+  content: '';
+  position: absolute; top: 0; left: -100%; right: 0; bottom: 0;
+  width: 300%;
+  background: linear-gradient(90deg, transparent, rgba(239,191,4,0.15), transparent);
+  animation: ctaSweep 3s ease-in-out infinite;
+}
+
+@keyframes ctaSweep {
+  0% { transform: translateX(-33%); }
+  100% { transform: translateX(33%); }
+}
+
+.cta-btn:hover {
+  background: rgba(239, 191, 4, 0.2);
+  box-shadow: 0 0 30px var(--gold-dim), 0 0 60px rgba(239,191,4,0.15);
+  transform: translateY(-2px);
+  text-decoration: none;
+}
+
+/* Scroll Indicator */
+.scroll-indicator {
+  position: absolute; bottom: 40px;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  animation: scrollBounce 2s ease-in-out infinite;
+}
+
+.scroll-indicator span {
+  font-family: var(--font-mono);
+  font-size: 11px; letter-spacing: 2px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.scroll-arrow {
+  width: 20px; height: 20px;
+  border-right: 2px solid var(--gold-dim);
+  border-bottom: 2px solid var(--gold-dim);
+  transform: rotate(45deg);
+}
+
+@keyframes scrollBounce {
+  0%, 100% { transform: translateY(0); opacity: 0.5; }
+  50% { transform: translateY(10px); opacity: 1; }
+}
+
+/* --- Hero Cards Section --- */
+.hero-cards {
+  padding: 100px 48px;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Holographic Shimmer Card (CAT27: gradient sweep 3s SineEase) */
+.hero-card {
+  position: relative;
+  border-radius: 16px;
+  padding: 32px 28px;
+  background: linear-gradient(145deg, rgba(42,16,64,0.8), rgba(26,10,46,0.9));
+  border: 1px solid rgba(239,191,4,0.2);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s;
+}
+
+.hero-card::before {
+  content: '';
+  position: absolute; top: 0; left: -150%; right: 0; bottom: 0;
+  width: 400%;
+  background: linear-gradient(90deg, transparent, rgba(239,191,4,0.08), rgba(167,139,250,0.06), transparent);
+  animation: shimmerSweep 3s ease-in-out infinite;
+}
+
+@keyframes shimmerSweep {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(50%); }
+}
+
+.hero-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 60px rgba(239,191,4,0.15), 0 0 40px rgba(239,191,4,0.08);
+  border-color: rgba(239,191,4,0.5);
+}
+
+.card-icon {
+  font-size: 56px;
+  margin-bottom: 20px;
+  display: block;
+  filter: drop-shadow(0 0 12px var(--gold-dim));
+}
+
+.card-class {
+  font-family: var(--font-mono);
+  font-size: 11px; letter-spacing: 3px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.card-name {
+  font-family: var(--font-display);
+  font-size: 26px; font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+.card-desc {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+.card-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.stat {
+  text-align: center;
+  padding: 8px 4px;
+  border-radius: 6px;
+  background: rgba(239,191,4,0.06);
+  border: 1px solid rgba(239,191,4,0.1);
+}
+
+.stat-value {
+  font-family: var(--font-mono);
+  font-size: 18px; font-weight: 700;
+  color: var(--gold);
+  display: block;
+}
+
+.stat-label {
+  font-size: 10px; letter-spacing: 1px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.card-rarity {
+  position: absolute; top: 16px; right: 16px;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-family: var(--font-mono);
+  font-size: 10px; letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.rarity-legendary {
+  background: rgba(239,191,4,0.2);
+  color: var(--gold);
+  border: 1px solid rgba(239,191,4,0.4);
+}
+
+.rarity-epic {
+  background: rgba(167,139,250,0.2);
+  color: var(--purple);
+  border: 1px solid rgba(167,139,250,0.4);
+}
+
+.rarity-rare {
+  background: rgba(34,211,238,0.2);
+  color: var(--cyan);
+  border: 1px solid rgba(34,211,238,0.4);
+}
+
+/* --- Puzzle Game Section --- */
+.puzzle-section {
+  padding: 100px 48px;
+  position: relative;
+  z-index: 1;
+}
+
+.puzzle-showcase {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.puzzle-visual {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.puzzle-board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  padding: 16px;
+  background: rgba(42,16,64,0.5);
+  border-radius: 16px;
+  border: 1px solid rgba(239,191,4,0.15);
+}
+
+.puzzle-tile {
+  aspect-ratio: 1;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+}
+
+.puzzle-tile.rune {
+  background: linear-gradient(135deg, rgba(239,191,4,0.15), rgba(239,191,4,0.05));
+  border: 1px solid rgba(239,191,4,0.3);
+}
+
+.puzzle-tile.crystal {
+  background: linear-gradient(135deg, rgba(34,211,238,0.15), rgba(34,211,238,0.05));
+  border: 1px solid rgba(34,211,238,0.3);
+}
+
+.puzzle-tile.magic {
+  background: linear-gradient(135deg, rgba(167,139,250,0.15), rgba(167,139,250,0.05));
+  border: 1px solid rgba(167,139,250,0.3);
+}
+
+.puzzle-tile.fire {
+  background: linear-gradient(135deg, rgba(228,50,79,0.15), rgba(228,50,79,0.05));
+  border: 1px solid rgba(228,50,79,0.3);
+}
+
+.puzzle-tile.empty {
+  background: rgba(10,5,16,0.6);
+  border: 1px dashed rgba(239,191,4,0.1);
+}
+
+.puzzle-tile:hover:not(.empty) {
+  transform: scale(1.08);
+  box-shadow: 0 0 20px rgba(239,191,4,0.2);
+}
+
+.puzzle-tile.matched {
+  animation: tileMatch 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes tileMatch {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); box-shadow: 0 0 30px var(--gold-glow); }
+  100% { transform: scale(1); }
+}
+
+.puzzle-info {
+  display: flex; flex-direction: column; gap: 24px;
+}
+
+.puzzle-info h3 {
+  font-family: var(--font-display);
+  font-size: 36px; font-weight: 700;
+}
+
+.puzzle-info p {
+  color: var(--text-secondary);
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.feature-list {
+  list-style: none;
+  display: flex; flex-direction: column; gap: 16px;
+}
+
+.feature-list li {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 15px;
+  color: var(--text-secondary);
+}
+
+.feature-icon {
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  background: rgba(239,191,4,0.1);
+  border: 1px solid rgba(239,191,4,0.2);
+  flex-shrink: 0;
+}
+
+/* --- 3D Ring Showcase (독창적 3D 요소) --- */
+.ring-showcase {
+  padding: 100px 48px;
+  position: relative; z-index: 1;
+}
+
+.ring-display {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 40px;
+}
+
+#ring-3d-canvas {
+  width: 500px; height: 500px;
+  border-radius: 16px;
+  background: radial-gradient(circle at 50% 50%, rgba(42,16,64,0.6), rgba(10,5,16,0.9));
+  border: 1px solid rgba(239,191,4,0.15);
+}
+
+.ring-controls {
+  display: flex; gap: 24px; align-items: center;
+  flex-wrap: wrap; justify-content: center;
+}
+
+.ring-control {
+  display: flex; flex-direction: column; gap: 6px; align-items: center;
+}
+
+.ring-control label {
+  font-family: var(--font-mono);
+  font-size: 11px; letter-spacing: 2px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.ring-control input[type="range"] {
+  width: 120px;
+  accent-color: var(--gold);
+}
+
+/* --- Crowdfunding Section --- */
+.crowdfund-section {
+  padding: 100px 48px;
+  position: relative; z-index: 1;
+}
+
+.crowdfund-container {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex; flex-direction: column; gap: 48px;
+}
+
+.fund-hero {
+  text-align: center;
+  padding: 48px;
+  border-radius: 20px;
+  background: linear-gradient(145deg, rgba(42,16,64,0.6), rgba(26,10,46,0.8));
+  border: 1px solid rgba(239,191,4,0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.fund-hero::after {
+  content: '';
+  position: absolute; top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: conic-gradient(from 0deg, transparent, rgba(239,191,4,0.05), transparent, rgba(167,139,250,0.03), transparent);
+  animation: fundSweep 12s linear infinite;
+}
+
+@keyframes fundSweep {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.fund-amount {
+  font-family: var(--font-display);
+  font-size: 64px; font-weight: 700;
+  color: var(--gold);
+  position: relative; z-index: 1;
+  animation: neonGlowTitle 3s ease-in-out infinite alternate;
+}
+
+.fund-goal {
+  font-size: 18px;
+  color: var(--text-secondary);
+  margin-top: 8px;
+  position: relative; z-index: 1;
+}
+
+/* Animated progress bar */
+.progress-container {
+  position: relative; z-index: 1;
+  margin-top: 32px;
+}
+
+.progress-bar {
+  height: 12px;
+  background: rgba(10,5,16,0.6);
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid rgba(239,191,4,0.2);
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 6px;
+  background: linear-gradient(90deg, var(--gold), var(--purple), var(--gold));
+  background-size: 200% 100%;
+  animation: progressShimmer 2s ease-in-out infinite;
+  width: 0%;
+  transition: width 2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes progressShimmer {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+.progress-label {
+  display: flex; justify-content: space-between;
+  margin-top: 8px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* Funding tiers */
+.fund-tiers {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.tier-card {
+  padding: 28px 24px;
+  border-radius: 16px;
+  background: rgba(42,16,64,0.4);
+  border: 1px solid rgba(239,191,4,0.15);
+  text-align: center;
+  transition: all 0.4s;
+  position: relative;
+  overflow: hidden;
+}
+
+.tier-card:hover {
+  border-color: rgba(239,191,4,0.5);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(239,191,4,0.1);
+}
+
+.tier-icon { font-size: 40px; margin-bottom: 16px; display: block; }
+
+.tier-name {
+  font-family: var(--font-display);
+  font-size: 20px; font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.tier-price {
+  font-family: var(--font-mono);
+  font-size: 24px; font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+
+.tier-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+
+.tier-backers {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+}
+
+.tier-btn {
+  display: block;
+  margin-top: 16px;
+  padding: 10px 20px;
+  border: 1px solid var(--gold-dim);
+  border-radius: 6px;
+  background: rgba(239,191,4,0.08);
+  color: var(--gold);
+  font-family: var(--font-mono);
+  font-size: 12px; letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.tier-btn:hover {
+  background: rgba(239,191,4,0.2);
+  box-shadow: 0 0 20px var(--gold-dim);
+}
+
+/* Fund stats row */
+.fund-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.fund-stat {
+  text-align: center;
+  padding: 24px 16px;
+  border-radius: 12px;
+  background: rgba(42,16,64,0.3);
+  border: 1px solid rgba(239,191,4,0.1);
+}
+
+.fund-stat-value {
+  font-family: var(--font-mono);
+  font-size: 28px; font-weight: 700;
+  color: var(--gold);
+  display: block;
+}
+
+.fund-stat-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 6px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* --- Hologram Float (CAT38: translateY 3s SineEase) --- */
+.float-anim {
+  animation: hologramFloat 3s ease-in-out infinite alternate;
+}
+
+@keyframes hologramFloat {
+  0% { transform: translateY(8px); }
+  100% { transform: translateY(-8px); }
+}
+
+/* --- Fade-in on scroll (WAAPI fallback) --- */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+              transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- Footer --- */
+.footer {
+  position: relative; z-index: 1;
+  padding: 48px;
+  text-align: center;
+  border-top: 1px solid rgba(239,191,4,0.1);
+  background: rgba(10,5,16,0.9);
+}
+
+.footer-brand {
+  font-family: var(--font-display);
+  font-size: 20px; font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+
+.footer-links {
+  display: flex; justify-content: center; gap: 32px;
+  list-style: none;
+  margin-bottom: 24px;
+}
+
+.footer-links a {
+  font-size: 13px;
+  color: var(--text-muted);
+  transition: color 0.3s;
+}
+
+.footer-links a:hover { color: var(--gold); }
+
+.footer-harness {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  padding: 12px 24px;
+  border: 1px solid rgba(239,191,4,0.1);
+  border-radius: 8px;
+  display: inline-block;
+  background: rgba(239,191,4,0.03);
+}
+
+/* --- Particle Canvas (Magic Particles overlay) --- */
+#particle-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* --- Responsive --- */
+@media (max-width: 900px) {
+  .hero-title { font-size: 48px; }
+  .cards-grid { grid-template-columns: 1fr; max-width: 400px; }
+  .puzzle-showcase { grid-template-columns: 1fr; }
+  .fund-tiers { grid-template-columns: 1fr; }
+  .fund-stats { grid-template-columns: repeat(2, 1fr); }
+  .nav { padding: 12px 24px; }
+  .section { padding: 80px 24px; }
+  .ring-container { width: 260px; height: 260px; }
+}
+
+@media (max-width: 600px) {
+  .hero-title { font-size: 36px; }
+  .nav-links { display: none; }
+  #ring-3d-canvas { width: 320px; height: 320px; }
+}

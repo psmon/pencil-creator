@@ -15181,6 +15181,1949 @@
           ]
         }
       ]
+    },
+    {
+      "type": "frame",
+      "id": "lOHfQ",
+      "x": 0,
+      "y": 15393,
+      "name": "CAT16 — RPG Fantasy Hero Effects",
+      "width": 4200,
+      "fill": "#08080CFF",
+      "layout": "vertical",
+      "gap": 80,
+      "padding": 60,
+      "children": [
+        {
+          "type": "text",
+          "id": "Tjsmf",
+          "name": "catTitle",
+          "fill": "#EFBF04FF",
+          "content": "CAT16 — RPG Fantasy Hero Effects",
+          "fontFamily": "Playfair Display",
+          "fontSize": 48,
+          "fontWeight": "700"
+        },
+        {
+          "type": "text",
+          "id": "7JsWY",
+          "name": "catDesc",
+          "fill": "#A1A1AAFF",
+          "textGrowth": "fixed-width",
+          "width": 1200,
+          "content": "WPF 기반 RPG 판타지풍 히어로 섹션 이펙트 — 3가지 컨셉 (Arcane Gateway · Crystal Sanctum · Blood Moon Throne)",
+          "fontFamily": "Inter",
+          "fontSize": 18,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "frame",
+          "id": "MWTP7",
+          "name": "Hero Sections Row",
+          "width": "fill_container",
+          "gap": 60,
+          "children": [
+            {
+              "type": "frame",
+              "id": "JFt74",
+              "name": "Hero 1 — Arcane Gateway",
+              "clip": true,
+              "width": 1280,
+              "height": 720,
+              "fill": {
+                "type": "gradient",
+                "gradientType": "radial",
+                "enabled": true,
+                "rotation": 0,
+                "size": {
+                  "width": 1,
+                  "height": 1
+                },
+                "colors": [
+                  {
+                    "color": "#2a1040FF",
+                    "position": 0
+                  },
+                  {
+                    "color": "#1a0a2eFF",
+                    "position": 0.5
+                  },
+                  {
+                    "color": "#0d0515FF",
+                    "position": 1
+                  }
+                ]
+              },
+              "cornerRadius": 12,
+              "layout": "none",
+              "children": [
+                {
+                  "type": "ellipse",
+                  "id": "jI0nf",
+                  "x": 490,
+                  "y": 160,
+                  "name": "Rune Circle Outer",
+                  "innerRadius": 0.88,
+                  "fill": "#EFBF0440",
+                  "width": 300,
+                  "height": 300,
+                  "stroke": {
+                    "align": "center",
+                    "thickness": 2,
+                    "fill": "#EFBF0480"
+                  },
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#EFBF0450",
+                    "blur": 30,
+                    "spread": 8
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "GBQuY",
+                  "x": 530,
+                  "y": 200,
+                  "name": "Rune Circle Inner",
+                  "innerRadius": 0.85,
+                  "fill": "#EFBF0430",
+                  "width": 220,
+                  "height": 220,
+                  "stroke": {
+                    "align": "center",
+                    "thickness": 1.5,
+                    "fill": "#EFBF0460"
+                  },
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#EFBF0440",
+                    "blur": 20,
+                    "spread": 4
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "E02no",
+                  "x": 580,
+                  "y": 250,
+                  "name": "Rune Core Glow",
+                  "fill": {
+                    "type": "gradient",
+                    "gradientType": "radial",
+                    "enabled": true,
+                    "rotation": 0,
+                    "size": {
+                      "width": 1,
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "#EFBF0425",
+                        "position": 0
+                      },
+                      {
+                        "color": "#EFBF0400",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "width": 120,
+                  "height": 120
+                },
+                {
+                  "type": "text",
+                  "id": "Mh56z",
+                  "x": 600,
+                  "y": 270,
+                  "name": "Rune Symbol",
+                  "fill": "#EFBF04CC",
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#EFBF0480",
+                    "blur": 15,
+                    "spread": 2
+                  },
+                  "content": "⚔",
+                  "fontFamily": "Inter",
+                  "fontSize": 72,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "ellipse",
+                  "id": "0rsNN",
+                  "x": 200,
+                  "y": 520,
+                  "name": "Particle 1",
+                  "fill": "#EFBF0480",
+                  "width": 6,
+                  "height": 6,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#EFBF0460",
+                    "blur": 8,
+                    "spread": 2
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "Ma4XA",
+                  "x": 350,
+                  "y": 450,
+                  "name": "Particle 2",
+                  "fill": "#EFBF04A0",
+                  "width": 4,
+                  "height": 4
+                },
+                {
+                  "type": "ellipse",
+                  "id": "pFELq",
+                  "x": 520,
+                  "y": 580,
+                  "name": "Particle 3",
+                  "fill": "#C9A84C90",
+                  "width": 5,
+                  "height": 5,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#C9A84C50",
+                    "blur": 6,
+                    "spread": 1
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "Sgtz4",
+                  "x": 780,
+                  "y": 490,
+                  "name": "Particle 4",
+                  "fill": "#EFBF0470",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "JjzNi",
+                  "x": 900,
+                  "y": 550,
+                  "name": "Particle 5",
+                  "fill": "#EFBF0460",
+                  "width": 7,
+                  "height": 7,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#EFBF0440",
+                    "blur": 10,
+                    "spread": 3
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "OF8th",
+                  "x": 1050,
+                  "y": 480,
+                  "name": "Particle 6",
+                  "fill": "#C9A84C80",
+                  "width": 4,
+                  "height": 4
+                },
+                {
+                  "type": "ellipse",
+                  "id": "GZwKN",
+                  "x": 150,
+                  "y": 380,
+                  "name": "Particle 7",
+                  "fill": "#EFBF0450",
+                  "width": 5,
+                  "height": 5
+                },
+                {
+                  "type": "ellipse",
+                  "id": "E2L7Z",
+                  "x": 680,
+                  "y": 620,
+                  "name": "Particle 8",
+                  "fill": "#EFBF0490",
+                  "width": 4,
+                  "height": 4
+                },
+                {
+                  "type": "ellipse",
+                  "id": "wgWWE",
+                  "x": 1100,
+                  "y": 350,
+                  "name": "Particle 9",
+                  "fill": "#C9A84C70",
+                  "width": 6,
+                  "height": 6,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#C9A84C40",
+                    "blur": 8,
+                    "spread": 2
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "dZAHY",
+                  "x": 420,
+                  "y": 300,
+                  "name": "Particle 10",
+                  "fill": "#EFBF0460",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "rectangle",
+                  "cornerRadius": 8,
+                  "id": "TcHYC",
+                  "x": 40,
+                  "y": 80,
+                  "name": "Left Pillar",
+                  "fill": {
+                    "type": "gradient",
+                    "gradientType": "linear",
+                    "enabled": true,
+                    "rotation": 180,
+                    "size": {
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "#EFBF0400",
+                        "position": 0
+                      },
+                      {
+                        "color": "#EFBF0440",
+                        "position": 0.3
+                      },
+                      {
+                        "color": "#EFBF0460",
+                        "position": 0.5
+                      },
+                      {
+                        "color": "#EFBF0440",
+                        "position": 0.7
+                      },
+                      {
+                        "color": "#EFBF0400",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "width": 16,
+                  "height": 560
+                },
+                {
+                  "type": "rectangle",
+                  "cornerRadius": 8,
+                  "id": "1hwow",
+                  "x": 1224,
+                  "y": 80,
+                  "name": "Right Pillar",
+                  "fill": {
+                    "type": "gradient",
+                    "gradientType": "linear",
+                    "enabled": true,
+                    "rotation": 180,
+                    "size": {
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "#EFBF0400",
+                        "position": 0
+                      },
+                      {
+                        "color": "#EFBF0440",
+                        "position": 0.3
+                      },
+                      {
+                        "color": "#EFBF0460",
+                        "position": 0.5
+                      },
+                      {
+                        "color": "#EFBF0440",
+                        "position": 0.7
+                      },
+                      {
+                        "color": "#EFBF0400",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "width": 16,
+                  "height": 560
+                },
+                {
+                  "type": "ellipse",
+                  "id": "Vntv8",
+                  "x": 36,
+                  "y": 70,
+                  "name": "Left Pillar Gem",
+                  "fill": {
+                    "type": "gradient",
+                    "gradientType": "radial",
+                    "enabled": true,
+                    "rotation": 0,
+                    "size": {
+                      "width": 1,
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "#EFBF04FF",
+                        "position": 0
+                      },
+                      {
+                        "color": "#EFBF0460",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "width": 24,
+                  "height": 24,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#EFBF0480",
+                    "blur": 12,
+                    "spread": 4
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "BWCwj",
+                  "x": 1220,
+                  "y": 70,
+                  "name": "Right Pillar Gem",
+                  "fill": {
+                    "type": "gradient",
+                    "gradientType": "radial",
+                    "enabled": true,
+                    "rotation": 0,
+                    "size": {
+                      "width": 1,
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "#EFBF04FF",
+                        "position": 0
+                      },
+                      {
+                        "color": "#EFBF0460",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "width": 24,
+                  "height": 24,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#EFBF0480",
+                    "blur": 12,
+                    "spread": 4
+                  }
+                },
+                {
+                  "type": "text",
+                  "id": "v36Ft",
+                  "x": 440,
+                  "y": 120,
+                  "name": "Hero1 Subtitle",
+                  "fill": "#EFBF0490",
+                  "content": "⟡ ENTER THE ANCIENT PORTAL ⟡",
+                  "fontFamily": "Geist Mono",
+                  "fontSize": 13,
+                  "letterSpacing": 4
+                },
+                {
+                  "type": "text",
+                  "id": "3ZB77",
+                  "x": 340,
+                  "y": 490,
+                  "name": "Hero1 Title",
+                  "fill": "#FFFFFFEE",
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#EFBF0440",
+                    "blur": 20
+                  },
+                  "content": "REALM OF ARCANA",
+                  "fontFamily": "Playfair Display",
+                  "fontSize": 64,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "UUjbo",
+                  "x": 380,
+                  "y": 570,
+                  "name": "Hero1 Tagline",
+                  "fill": "#C4B5D4CC",
+                  "content": "고대의 룬이 깨어나고, 마법의 파티클이 상승하는 신비로운 관문",
+                  "fontFamily": "Inter",
+                  "fontSize": 15,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "rectangle",
+                  "cornerRadius": 8,
+                  "id": "RSPpb",
+                  "x": 520,
+                  "y": 630,
+                  "name": "CTA Button",
+                  "fill": "#EFBF0418",
+                  "width": 240,
+                  "height": 52,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1.5,
+                    "fill": {
+                      "type": "gradient",
+                      "gradientType": "linear",
+                      "enabled": true,
+                      "rotation": 90,
+                      "size": {
+                        "height": 1
+                      },
+                      "colors": [
+                        {
+                          "color": "#EFBF04CC",
+                          "position": 0
+                        },
+                        {
+                          "color": "#C9A84C60",
+                          "position": 0.5
+                        },
+                        {
+                          "color": "#EFBF04CC",
+                          "position": 1
+                        }
+                      ]
+                    }
+                  },
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#EFBF0430",
+                    "blur": 16,
+                    "spread": 2
+                  }
+                },
+                {
+                  "type": "text",
+                  "id": "T5Wij",
+                  "x": 570,
+                  "y": 645,
+                  "name": "CTA Text",
+                  "fill": "#EFBF04FF",
+                  "content": "BEGIN QUEST",
+                  "fontFamily": "Geist Mono",
+                  "fontSize": 14,
+                  "fontWeight": "600",
+                  "letterSpacing": 3
+                },
+                {
+                  "type": "frame",
+                  "id": "tn5pH",
+                  "x": 40,
+                  "y": 690,
+                  "name": "Annotation 1",
+                  "width": 1200,
+                  "height": 100,
+                  "fill": "#0d051580",
+                  "cornerRadius": [
+                    0,
+                    0,
+                    12,
+                    12
+                  ],
+                  "layout": "vertical",
+                  "gap": 6,
+                  "padding": [
+                    12,
+                    16
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "xnujY",
+                      "name": "a1t",
+                      "fill": "#EFBF0490",
+                      "textGrowth": "fixed-width",
+                      "width": 1160,
+                      "content": "WPF: DoubleAnimation(Opacity) + DropShadowEffect(ColorAnimation) + CompositionTarget.Rendering(Particles)",
+                      "fontFamily": "Geist Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "LtTEx",
+                      "name": "a1d",
+                      "fill": "#A1A1AA80",
+                      "textGrowth": "fixed-width",
+                      "width": 1160,
+                      "content": "CSS: @keyframes glow-pulse + stacked box-shadow + SCSS particle field + SineEase(EaseInOut)",
+                      "fontFamily": "Geist Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "iTXuV",
+              "name": "Hero 2 — Crystal Sanctum",
+              "clip": true,
+              "width": 1280,
+              "height": 720,
+              "fill": {
+                "type": "gradient",
+                "gradientType": "radial",
+                "enabled": true,
+                "rotation": 0,
+                "size": {
+                  "width": 1,
+                  "height": 1
+                },
+                "colors": [
+                  {
+                    "color": "#1e3050FF",
+                    "position": 0
+                  },
+                  {
+                    "color": "#1c2541FF",
+                    "position": 0.4
+                  },
+                  {
+                    "color": "#0f1729FF",
+                    "position": 1
+                  }
+                ],
+                "center": {
+                  "x": 0.3,
+                  "y": 0.4
+                }
+              },
+              "cornerRadius": 12,
+              "layout": "none",
+              "children": [
+                {
+                  "type": "ellipse",
+                  "id": "3YIMS",
+                  "x": 80,
+                  "y": 60,
+                  "name": "Star 1",
+                  "fill": "#FFFFFF60",
+                  "width": 2,
+                  "height": 2
+                },
+                {
+                  "type": "ellipse",
+                  "id": "lqW3L",
+                  "x": 200,
+                  "y": 130,
+                  "name": "Star 2",
+                  "fill": "#FFFFFF40",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "oheMW",
+                  "x": 340,
+                  "y": 45,
+                  "name": "Star 3",
+                  "fill": "#FFFFFF50",
+                  "width": 2,
+                  "height": 2
+                },
+                {
+                  "type": "ellipse",
+                  "id": "CFaP2",
+                  "x": 500,
+                  "y": 90,
+                  "name": "Star 4",
+                  "fill": "#5bc0be60",
+                  "width": 3,
+                  "height": 3,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#5bc0be40",
+                    "blur": 4,
+                    "spread": 1
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "5EnhY",
+                  "x": 650,
+                  "y": 30,
+                  "name": "Star 5",
+                  "fill": "#FFFFFF70",
+                  "width": 2,
+                  "height": 2
+                },
+                {
+                  "type": "ellipse",
+                  "id": "aDI1T",
+                  "x": 800,
+                  "y": 110,
+                  "name": "Star 6",
+                  "fill": "#FFFFFF30",
+                  "width": 2,
+                  "height": 2
+                },
+                {
+                  "type": "ellipse",
+                  "id": "DEC4b",
+                  "x": 950,
+                  "y": 55,
+                  "name": "Star 7",
+                  "fill": "#5bc0be50",
+                  "width": 3,
+                  "height": 3
+                },
+                {
+                  "type": "ellipse",
+                  "id": "QEmjL",
+                  "x": 1100,
+                  "y": 80,
+                  "name": "Star 8",
+                  "fill": "#FFFFFF50",
+                  "width": 2,
+                  "height": 2
+                },
+                {
+                  "type": "ellipse",
+                  "id": "nHEeH",
+                  "x": 1200,
+                  "y": 40,
+                  "name": "Star 9",
+                  "fill": "#FFFFFF40",
+                  "width": 2,
+                  "height": 2
+                },
+                {
+                  "type": "ellipse",
+                  "id": "puA4G",
+                  "x": 420,
+                  "y": 170,
+                  "name": "Star 10",
+                  "fill": "#FFFFFF30",
+                  "width": 2,
+                  "height": 2
+                },
+                {
+                  "type": "ellipse",
+                  "id": "wJKq8",
+                  "x": 730,
+                  "y": 180,
+                  "name": "Star 11",
+                  "fill": "#5bc0be40",
+                  "width": 3,
+                  "height": 3,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#5bc0be30",
+                    "blur": 6,
+                    "spread": 1
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "gscOr",
+                  "x": 1050,
+                  "y": 160,
+                  "name": "Star 12",
+                  "fill": "#FFFFFF50",
+                  "width": 2,
+                  "height": 2
+                },
+                {
+                  "type": "frame",
+                  "id": "JxQFE",
+                  "x": 80,
+                  "y": 180,
+                  "name": "Crystal Panel Main",
+                  "rotation": 3.0000000000000004,
+                  "width": 460,
+                  "height": 360,
+                  "fill": "#5bc0be10",
+                  "cornerRadius": 4,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "#5bc0be30"
+                  },
+                  "effect": [
+                    {
+                      "type": "background_blur",
+                      "radius": 12
+                    },
+                    {
+                      "type": "shadow",
+                      "shadowType": "outer",
+                      "color": "#5bc0be18",
+                      "offset": {
+                        "x": 0,
+                        "y": 4
+                      },
+                      "blur": 30
+                    }
+                  ],
+                  "layout": "none",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "DH98w",
+                      "x": 0,
+                      "y": 0,
+                      "name": "Crystal Icon",
+                      "fill": "#5bc0beCC",
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#5bc0be50",
+                        "blur": 20,
+                        "spread": 4
+                      },
+                      "content": "◇",
+                      "fontFamily": "Inter",
+                      "fontSize": 80,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "20C4G",
+                      "x": 85,
+                      "y": 0,
+                      "name": "Crystal Label",
+                      "fill": "#5bc0be80",
+                      "content": "MANA CRYSTAL",
+                      "fontFamily": "Geist Mono",
+                      "fontSize": 12,
+                      "fontWeight": "normal",
+                      "letterSpacing": 4
+                    },
+                    {
+                      "type": "text",
+                      "id": "EDMMH",
+                      "x": 220,
+                      "y": 0,
+                      "name": "Crystal Value",
+                      "fill": "#E0FBFCDD",
+                      "content": "∞ POWER",
+                      "fontFamily": "Playfair Display",
+                      "fontSize": 28,
+                      "fontWeight": "700"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "pFPvR",
+                  "x": 120,
+                  "y": 480,
+                  "name": "Crystal Panel Sub 1",
+                  "rotation": -2,
+                  "width": 200,
+                  "height": 160,
+                  "fill": "#5bc0be08",
+                  "cornerRadius": 4,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "#5bc0be25"
+                  },
+                  "effect": {
+                    "type": "background_blur",
+                    "radius": 8
+                  },
+                  "layout": "none",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "fqgyL",
+                      "x": 0,
+                      "y": 0,
+                      "name": "Sub1 Label",
+                      "fill": "#5bc0be60",
+                      "content": "STR",
+                      "fontFamily": "Geist Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal",
+                      "letterSpacing": 3
+                    },
+                    {
+                      "type": "text",
+                      "id": "wBSfY",
+                      "x": 29,
+                      "y": 0,
+                      "name": "Sub1 Value",
+                      "fill": "#E0FBFCCC",
+                      "content": "99",
+                      "fontFamily": "Playfair Display",
+                      "fontSize": 40,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 2,
+                      "id": "AzLaJ",
+                      "x": 74,
+                      "y": 0,
+                      "name": "Sub1 Bar",
+                      "fill": {
+                        "type": "gradient",
+                        "gradientType": "linear",
+                        "enabled": true,
+                        "rotation": 90,
+                        "size": {
+                          "height": 1
+                        },
+                        "colors": [
+                          {
+                            "color": "#5bc0beCC",
+                            "position": 0
+                          },
+                          {
+                            "color": "#5bc0be30",
+                            "position": 1
+                          }
+                        ]
+                      },
+                      "width": 160,
+                      "height": 4
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "YzV2C",
+                  "x": 360,
+                  "y": 500,
+                  "name": "Crystal Panel Sub 2",
+                  "rotation": 5,
+                  "width": 180,
+                  "height": 140,
+                  "fill": "#5bc0be0C",
+                  "cornerRadius": 4,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "#5bc0be20"
+                  },
+                  "effect": {
+                    "type": "background_blur",
+                    "radius": 8
+                  },
+                  "layout": "none",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "LnmMM",
+                      "x": 0,
+                      "y": 0,
+                      "name": "Sub2 Label",
+                      "fill": "#5bc0be60",
+                      "content": "DEX",
+                      "fontFamily": "Geist Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal",
+                      "letterSpacing": 3
+                    },
+                    {
+                      "type": "text",
+                      "id": "8cniv",
+                      "x": 29,
+                      "y": 0,
+                      "name": "Sub2 Value",
+                      "fill": "#E0FBFCCC",
+                      "content": "87",
+                      "fontFamily": "Playfair Display",
+                      "fontSize": 40,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 2,
+                      "id": "Dh0Ej",
+                      "x": 70,
+                      "y": 0,
+                      "name": "Sub2 Bar",
+                      "fill": {
+                        "type": "gradient",
+                        "gradientType": "linear",
+                        "enabled": true,
+                        "rotation": 90,
+                        "size": {
+                          "height": 1
+                        },
+                        "colors": [
+                          {
+                            "color": "#5bc0beCC",
+                            "position": 0
+                          },
+                          {
+                            "color": "#5bc0be40",
+                            "position": 1
+                          }
+                        ]
+                      },
+                      "width": 140,
+                      "height": 4
+                    }
+                  ]
+                },
+                {
+                  "type": "ellipse",
+                  "id": "mBDFm",
+                  "x": 200,
+                  "y": 300,
+                  "name": "Iridescent Glow",
+                  "fill": {
+                    "type": "gradient",
+                    "gradientType": "radial",
+                    "enabled": true,
+                    "rotation": 0,
+                    "size": {
+                      "width": 1,
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "#5bc0be15",
+                        "position": 0
+                      },
+                      {
+                        "color": "#5bc0be00",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "width": 300,
+                  "height": 300,
+                  "effect": {
+                    "type": "blur",
+                    "radius": 40
+                  }
+                },
+                {
+                  "type": "text",
+                  "id": "INT2k",
+                  "x": 660,
+                  "y": 220,
+                  "name": "Hero2 Title",
+                  "fill": "#E0FBFCEE",
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#5bc0be30",
+                    "blur": 24
+                  },
+                  "textGrowth": "fixed-width",
+                  "width": 560,
+                  "content": "CRYSTAL\nSANCTUM",
+                  "fontFamily": "Playfair Display",
+                  "fontSize": 72,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "rectangle",
+                  "id": "bvOpu",
+                  "x": 660,
+                  "y": 410,
+                  "name": "Gold Divider",
+                  "fill": {
+                    "type": "gradient",
+                    "gradientType": "linear",
+                    "enabled": true,
+                    "rotation": 90,
+                    "size": {
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "#5bc0beCC",
+                        "position": 0
+                      },
+                      {
+                        "color": "#5bc0be00",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "width": 200,
+                  "height": 2
+                },
+                {
+                  "type": "text",
+                  "id": "A52MD",
+                  "x": 660,
+                  "y": 435,
+                  "name": "Hero2 Tagline",
+                  "fill": "#A1A1AACC",
+                  "textGrowth": "fixed-width",
+                  "width": 500,
+                  "content": "얼어붙은 신비의 동굴에서\n크리스탈 글라스모피즘 패널이 빛나고\n별빛 패럴랙스가 깊이를 만든다",
+                  "lineHeight": 1.8,
+                  "fontFamily": "Inter",
+                  "fontSize": 15,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "rectangle",
+                  "cornerRadius": 6,
+                  "id": "kGg0F",
+                  "x": 660,
+                  "y": 550,
+                  "name": "CTA Button 2",
+                  "fill": "#5bc0be12",
+                  "width": 220,
+                  "height": 50,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": {
+                      "type": "gradient",
+                      "gradientType": "linear",
+                      "enabled": true,
+                      "rotation": 90,
+                      "size": {
+                        "height": 1
+                      },
+                      "colors": [
+                        {
+                          "color": "#5bc0beCC",
+                          "position": 0
+                        },
+                        {
+                          "color": "#5bc0be30",
+                          "position": 0.5
+                        },
+                        {
+                          "color": "#5bc0beCC",
+                          "position": 1
+                        }
+                      ]
+                    }
+                  },
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#5bc0be20",
+                    "blur": 14,
+                    "spread": 2
+                  }
+                },
+                {
+                  "type": "text",
+                  "id": "JEswf",
+                  "x": 712,
+                  "y": 565,
+                  "name": "CTA Text 2",
+                  "fill": "#5bc0beFF",
+                  "content": "ENTER SANCTUM",
+                  "fontFamily": "Geist Mono",
+                  "fontSize": 13,
+                  "fontWeight": "600",
+                  "letterSpacing": 3
+                },
+                {
+                  "type": "frame",
+                  "id": "rRcvu",
+                  "x": 40,
+                  "y": 690,
+                  "name": "Annotation 2",
+                  "width": 1200,
+                  "height": 100,
+                  "fill": "#0f172980",
+                  "cornerRadius": [
+                    0,
+                    0,
+                    12,
+                    12
+                  ],
+                  "layout": "vertical",
+                  "gap": 6,
+                  "padding": [
+                    12,
+                    16
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "WX9JD",
+                      "name": "a2t",
+                      "fill": "#5bc0be90",
+                      "textGrowth": "fixed-width",
+                      "width": 1160,
+                      "content": "WPF: BlurEffect + GradientStop(ColorAnimation) + TranslateTransform(Parallax Layers) + backdrop_blur",
+                      "fontFamily": "Geist Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "0PPXC",
+                      "name": "a2d",
+                      "fill": "#A1A1AA80",
+                      "textGrowth": "fixed-width",
+                      "width": 1160,
+                      "content": "CSS: backdrop-filter:blur() + glassmorphism rgba bg + perspective+translateZ parallax + iridescent border-image",
+                      "fontFamily": "Geist Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "O3qQd",
+              "name": "Hero 3 — Blood Moon Throne",
+              "clip": true,
+              "width": 1280,
+              "height": 720,
+              "fill": {
+                "type": "gradient",
+                "gradientType": "radial",
+                "enabled": true,
+                "rotation": 0,
+                "size": {
+                  "width": 1,
+                  "height": 1
+                },
+                "colors": [
+                  {
+                    "color": "#4a2020FF",
+                    "position": 0
+                  },
+                  {
+                    "color": "#3c2a2aFF",
+                    "position": 0.3
+                  },
+                  {
+                    "color": "#1a1010FF",
+                    "position": 1
+                  }
+                ],
+                "center": {
+                  "y": 0.3
+                }
+              },
+              "cornerRadius": 12,
+              "layout": "none",
+              "children": [
+                {
+                  "type": "rectangle",
+                  "id": "Ic5cm",
+                  "x": 0,
+                  "y": 0,
+                  "name": "Fog Layer Top",
+                  "fill": {
+                    "type": "gradient",
+                    "gradientType": "linear",
+                    "enabled": true,
+                    "rotation": 180,
+                    "size": {
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "#1a101080",
+                        "position": 0
+                      },
+                      {
+                        "color": "#1a101000",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "width": 1280,
+                  "height": 200
+                },
+                {
+                  "type": "rectangle",
+                  "id": "kEiFa",
+                  "x": 0,
+                  "y": 520,
+                  "name": "Fog Layer Bottom",
+                  "fill": {
+                    "type": "gradient",
+                    "gradientType": "linear",
+                    "enabled": true,
+                    "rotation": 0,
+                    "size": {
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "#1a101090",
+                        "position": 0
+                      },
+                      {
+                        "color": "#1a101000",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "width": 1280,
+                  "height": 200
+                },
+                {
+                  "type": "rectangle",
+                  "id": "ZEIXv",
+                  "x": -100,
+                  "y": 280,
+                  "name": "Fog Layer Mid",
+                  "fill": {
+                    "type": "gradient",
+                    "gradientType": "linear",
+                    "enabled": true,
+                    "rotation": 90,
+                    "size": {
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "#3c2a2a00",
+                        "position": 0
+                      },
+                      {
+                        "color": "#3c2a2a30",
+                        "position": 0.3
+                      },
+                      {
+                        "color": "#3c2a2a40",
+                        "position": 0.5
+                      },
+                      {
+                        "color": "#3c2a2a30",
+                        "position": 0.7
+                      },
+                      {
+                        "color": "#3c2a2a00",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "width": 1480,
+                  "height": 160,
+                  "effect": {
+                    "type": "blur",
+                    "radius": 20
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "CpWhH",
+                  "x": 440,
+                  "y": 100,
+                  "name": "Throne Circle Outer",
+                  "innerRadius": 0.92,
+                  "width": 400,
+                  "height": 400,
+                  "stroke": {
+                    "align": "center",
+                    "thickness": 2,
+                    "fill": {
+                      "type": "gradient",
+                      "gradientType": "linear",
+                      "enabled": true,
+                      "rotation": 45,
+                      "size": {
+                        "height": 1
+                      },
+                      "colors": [
+                        {
+                          "color": "#c9a669CC",
+                          "position": 0
+                        },
+                        {
+                          "color": "#6a1d2380",
+                          "position": 0.5
+                        },
+                        {
+                          "color": "#c9a669CC",
+                          "position": 1
+                        }
+                      ]
+                    }
+                  },
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#c9a66930",
+                    "blur": 25,
+                    "spread": 6
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "2Uj5Y",
+                  "x": 480,
+                  "y": 140,
+                  "name": "Throne Circle Inner",
+                  "innerRadius": 0.9,
+                  "width": 320,
+                  "height": 320,
+                  "stroke": {
+                    "align": "center",
+                    "thickness": 1.5,
+                    "fill": "#c9a66960"
+                  },
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#6a1d2340",
+                    "blur": 15,
+                    "spread": 3
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "9DJ8z",
+                  "x": 560,
+                  "y": 180,
+                  "name": "Blood Moon",
+                  "fill": {
+                    "type": "gradient",
+                    "gradientType": "radial",
+                    "enabled": true,
+                    "rotation": 0,
+                    "size": {
+                      "width": 1,
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "#6a1d2360",
+                        "position": 0
+                      },
+                      {
+                        "color": "#6a1d2320",
+                        "position": 0.5
+                      },
+                      {
+                        "color": "#6a1d2300",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "width": 160,
+                  "height": 160,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#6a1d2340",
+                    "blur": 40,
+                    "spread": 10
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "cEL6U",
+                  "x": 600,
+                  "y": 220,
+                  "name": "Moon Core",
+                  "fill": {
+                    "type": "gradient",
+                    "gradientType": "radial",
+                    "enabled": true,
+                    "rotation": 0,
+                    "size": {
+                      "width": 1,
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "#8b3030FF",
+                        "position": 0
+                      },
+                      {
+                        "color": "#6a1d23CC",
+                        "position": 0.6
+                      },
+                      {
+                        "color": "#6a1d2360",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "width": 80,
+                  "height": 80,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#6a1d2380",
+                    "blur": 20,
+                    "spread": 5
+                  }
+                },
+                {
+                  "type": "text",
+                  "id": "Hj79F",
+                  "x": 612,
+                  "y": 235,
+                  "name": "Throne Emblem",
+                  "fill": "#c9a669CC",
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#c9a66960",
+                    "blur": 12,
+                    "spread": 2
+                  },
+                  "content": "♛",
+                  "fontFamily": "Inter",
+                  "fontSize": 48,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "ellipse",
+                  "id": "4cFe5",
+                  "x": 150,
+                  "y": 200,
+                  "name": "Floating Orb 1",
+                  "fill": {
+                    "type": "gradient",
+                    "gradientType": "radial",
+                    "enabled": true,
+                    "rotation": 0,
+                    "size": {
+                      "width": 1,
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "#c9a669A0",
+                        "position": 0
+                      },
+                      {
+                        "color": "#c9a66900",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "width": 20,
+                  "height": 20,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#c9a66950",
+                    "blur": 16,
+                    "spread": 4
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "B8A8M",
+                  "x": 1050,
+                  "y": 250,
+                  "name": "Floating Orb 2",
+                  "fill": {
+                    "type": "gradient",
+                    "gradientType": "radial",
+                    "enabled": true,
+                    "rotation": 0,
+                    "size": {
+                      "width": 1,
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "#c9a66990",
+                        "position": 0
+                      },
+                      {
+                        "color": "#c9a66900",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "width": 16,
+                  "height": 16,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#c9a66940",
+                    "blur": 12,
+                    "spread": 3
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "euNbg",
+                  "x": 250,
+                  "y": 420,
+                  "name": "Floating Orb 3",
+                  "fill": {
+                    "type": "gradient",
+                    "gradientType": "radial",
+                    "enabled": true,
+                    "rotation": 0,
+                    "size": {
+                      "width": 1,
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "#6a1d23A0",
+                        "position": 0
+                      },
+                      {
+                        "color": "#6a1d2300",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "width": 12,
+                  "height": 12,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#6a1d2360",
+                    "blur": 10,
+                    "spread": 3
+                  }
+                },
+                {
+                  "type": "ellipse",
+                  "id": "eg2Fj",
+                  "x": 1100,
+                  "y": 150,
+                  "name": "Floating Orb 4",
+                  "fill": {
+                    "type": "gradient",
+                    "gradientType": "radial",
+                    "enabled": true,
+                    "rotation": 0,
+                    "size": {
+                      "width": 1,
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "#c9a66980",
+                        "position": 0
+                      },
+                      {
+                        "color": "#c9a66900",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "width": 14,
+                  "height": 14,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#c9a66930",
+                    "blur": 10,
+                    "spread": 2
+                  }
+                },
+                {
+                  "type": "text",
+                  "id": "uZEzL",
+                  "x": 380,
+                  "y": 30,
+                  "name": "Hero3 Title",
+                  "fill": "#FFFFFFEE",
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#6a1d2350",
+                    "blur": 16
+                  },
+                  "textGrowth": "fixed-width",
+                  "width": 520,
+                  "content": "BLOOD MOON\nTHRONE",
+                  "textAlign": "center",
+                  "fontFamily": "Playfair Display",
+                  "fontSize": 56,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "23N21",
+                  "x": 480,
+                  "y": 8,
+                  "name": "Hero3 Subtitle",
+                  "fill": "#c9a66980",
+                  "content": "⟡ THE DARK LORD AWAITS ⟡",
+                  "fontFamily": "Geist Mono",
+                  "fontSize": 11,
+                  "fontWeight": "normal",
+                  "letterSpacing": 4
+                },
+                {
+                  "type": "frame",
+                  "id": "tUSHG",
+                  "x": 160,
+                  "y": 540,
+                  "name": "Feature Card 1",
+                  "width": 280,
+                  "height": 140,
+                  "fill": "#1a101080",
+                  "cornerRadius": 8,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "#c9a66930"
+                  },
+                  "effect": {
+                    "type": "background_blur",
+                    "radius": 8
+                  },
+                  "layout": "none",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "lkKrv",
+                      "x": 20,
+                      "y": 16,
+                      "name": "Card1 Icon",
+                      "fill": "#c9a669CC",
+                      "content": "⚔",
+                      "fontFamily": "Inter",
+                      "fontSize": 28,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "CLHlz",
+                      "x": 20,
+                      "y": 60,
+                      "name": "Card1 Title",
+                      "fill": "#c9a669A0",
+                      "content": "COMBAT",
+                      "fontFamily": "Geist Mono",
+                      "fontSize": 12,
+                      "fontWeight": "normal",
+                      "letterSpacing": 3
+                    },
+                    {
+                      "type": "text",
+                      "id": "c1BW9",
+                      "x": 20,
+                      "y": 85,
+                      "name": "Card1 Desc",
+                      "fill": "#FFFFFFA0",
+                      "textGrowth": "fixed-width",
+                      "width": 240,
+                      "content": "안개 속 패럴랙스 레이어와\n떠다니는 마법 오브 이펙트",
+                      "lineHeight": 1.7,
+                      "fontFamily": "Inter",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "PyUpl",
+                  "x": 500,
+                  "y": 540,
+                  "name": "Feature Card 2",
+                  "width": 280,
+                  "height": 140,
+                  "fill": "#1a101080",
+                  "cornerRadius": 8,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "#6a1d2350"
+                  },
+                  "effect": {
+                    "type": "background_blur",
+                    "radius": 8
+                  },
+                  "layout": "none",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "KHIZd",
+                      "x": 20,
+                      "y": 16,
+                      "name": "Card2 Icon",
+                      "fill": "#6a1d23EE",
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#6a1d2360",
+                        "blur": 8,
+                        "spread": 2
+                      },
+                      "content": "♛",
+                      "fontFamily": "Inter",
+                      "fontSize": 28,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "8eJpk",
+                      "x": 20,
+                      "y": 60,
+                      "name": "Card2 Title",
+                      "fill": "#c9a669A0",
+                      "content": "THRONE",
+                      "fontFamily": "Geist Mono",
+                      "fontSize": 12,
+                      "fontWeight": "normal",
+                      "letterSpacing": 3
+                    },
+                    {
+                      "type": "text",
+                      "id": "Mndts",
+                      "x": 20,
+                      "y": 85,
+                      "name": "Card2 Desc",
+                      "fill": "#FFFFFFA0",
+                      "textGrowth": "fixed-width",
+                      "width": 240,
+                      "content": "장식적 원형 프레임과\n크림슨 블러드문 글로우",
+                      "lineHeight": 1.7,
+                      "fontFamily": "Inter",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "XuIgV",
+                  "x": 840,
+                  "y": 540,
+                  "name": "Feature Card 3",
+                  "width": 280,
+                  "height": 140,
+                  "fill": "#1a101080",
+                  "cornerRadius": 8,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "#c9a66930"
+                  },
+                  "effect": {
+                    "type": "background_blur",
+                    "radius": 8
+                  },
+                  "layout": "none",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "AN85E",
+                      "x": 20,
+                      "y": 16,
+                      "name": "Card3 Icon",
+                      "fill": "#c9a669CC",
+                      "content": "◈",
+                      "fontFamily": "Inter",
+                      "fontSize": 28,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "bcRjA",
+                      "x": 20,
+                      "y": 60,
+                      "name": "Card3 Title",
+                      "fill": "#c9a669A0",
+                      "content": "REALM",
+                      "fontFamily": "Geist Mono",
+                      "fontSize": 12,
+                      "fontWeight": "normal",
+                      "letterSpacing": 3
+                    },
+                    {
+                      "type": "text",
+                      "id": "MZaXO",
+                      "x": 20,
+                      "y": 85,
+                      "name": "Card3 Desc",
+                      "fill": "#FFFFFFA0",
+                      "textGrowth": "fixed-width",
+                      "width": 240,
+                      "content": "고딕 풍 다크 판타지\n왕좌의 위엄과 고급스러움",
+                      "lineHeight": 1.7,
+                      "fontFamily": "Inter",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "K1XQ1",
+                  "x": 40,
+                  "y": 690,
+                  "name": "Annotation 3",
+                  "width": 1200,
+                  "height": 100,
+                  "fill": "#1a101080",
+                  "cornerRadius": [
+                    0,
+                    0,
+                    12,
+                    12
+                  ],
+                  "layout": "vertical",
+                  "gap": 6,
+                  "padding": [
+                    12,
+                    16
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "zgeDt",
+                      "name": "a3t",
+                      "fill": "#c9a66990",
+                      "textGrowth": "fixed-width",
+                      "width": 1160,
+                      "content": "WPF: TranslateTransform(Fog Drift) + OpacityMask(Gradient) + DoubleAnimation(Floating Orbs Y) + SineEase",
+                      "fontFamily": "Geist Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "Dy8mx",
+                      "name": "a3d",
+                      "fill": "#A1A1AA80",
+                      "textGrowth": "fixed-width",
+                      "width": 1160,
+                      "content": "CSS: blur() fog overlay + conic-gradient rotation border + sinusoidal translateY keyframes + background_blur cards",
+                      "fontFamily": "Geist Mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ]
 }

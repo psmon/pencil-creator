@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>요르단의 반지 — Ring of Jordan | Fantasy Puzzle RPG</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Starfield Background Canvas (CAT33: Starfield Depth System) -->
+  <canvas id="starfield-canvas"></canvas>
+
+  <!-- Magic Particle Overlay (CAT16: Particle Floating Dots) -->
+  <canvas id="particle-canvas"></canvas>
+
+  <!-- ═══════════ Navigation ═══════════ -->
+  <nav class="nav">
+    <div class="nav-logo">RING OF JORDAN</div>
+    <ul class="nav-links">
+      <li><a href="#hero">Home</a></li>
+      <li><a href="#heroes">Heroes</a></li>
+      <li><a href="#puzzle">Puzzle</a></li>
+      <li><a href="#ring">The Ring</a></li>
+      <li><a href="#crowdfund">Fund</a></li>
+    </ul>
+  </nav>
+
+  <!-- ═══════════ Hero Section ═══════════ -->
+  <section id="hero" class="hero">
+    <div class="hero-badge">Fantasy Puzzle RPG</div>
+
+    <!-- 3D Rotating Ring (CAT36: Galaxy Swirl + CAT17: Pulsing Glow) -->
+    <div class="ring-container">
+      <div class="ring-core-glow"></div>
+      <div class="ring-3d">
+        <div class="ring-band ring-band-1"></div>
+        <div class="ring-band ring-band-2"></div>
+        <div class="ring-band ring-band-3"></div>
+      </div>
+      <div class="ring-rune"></div>
+    </div>
+
+    <!-- Neon Glow Title (CAT23: 1.5s SineEase text-shadow) -->
+    <h1 class="hero-title">요르단의 반지</h1>
+    <p class="hero-tagline">
+      고대 룬의 힘이 깃든 신비로운 반지를 찾아 떠나는 판타지 퍼즐 어드벤처.
+      잊혀진 왕국의 비밀을 풀고, 전설의 히어로들과 함께 운명을 바꾸세요.
+    </p>
+    <a href="#puzzle" class="cta-btn">퀘스트 시작하기</a>
+
+    <div class="scroll-indicator">
+      <span>Scroll</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════ Hero Cards Section (CAT27: Holographic Shimmer) ═══════════ -->
+  <section id="heroes" class="section hero-cards">
+    <h2 class="section-title" style="animation: neonGlowTitle 3s ease-in-out infinite alternate;">전설의 히어로</h2>
+    <p class="section-subtitle">Choose Your Champion</p>
+
+    <div class="cards-grid">
+      <!-- Hero 1: Legendary -->
+      <div class="hero-card float-anim" style="animation-delay: 0s;">
+        <span class="card-rarity rarity-legendary">Legendary</span>
+        <span class="card-icon">🧙‍♂️</span>
+        <span class="card-class">Arcane Mage</span>
+        <h3 class="card-name">아케인 엘드릭</h3>
+        <p class="card-desc">
+          고대 룬 마법의 마지막 계승자. 요르단의 반지에 봉인된
+          시간 마법을 해독할 수 있는 유일한 마법사.
+        </p>
+        <div class="card-stats">
+          <div class="stat">
+            <span class="stat-value">98</span>
+            <span class="stat-label">마력</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">72</span>
+            <span class="stat-label">지혜</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">45</span>
+            <span class="stat-label">체력</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero 2: Epic -->
+      <div class="hero-card float-anim" style="animation-delay: 0.5s;">
+        <span class="card-rarity rarity-epic">Epic</span>
+        <span class="card-icon">⚔️</span>
+        <span class="card-class">Shadow Knight</span>
+        <h3 class="card-name">그림자 기사 카엘</h3>
+        <p class="card-desc">
+          어둠 속에서 태어난 기사. 그림자를 무기로 다루며,
+          퍼즐의 숨겨진 경로를 찾아내는 데 탁월한 직감을 가졌다.
+        </p>
+        <div class="card-stats">
+          <div class="stat">
+            <span class="stat-value">85</span>
+            <span class="stat-label">공격</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">90</span>
+            <span class="stat-label">민첩</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">78</span>
+            <span class="stat-label">체력</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero 3: Rare -->
+      <div class="hero-card float-anim" style="animation-delay: 1s;">
+        <span class="card-rarity rarity-rare">Rare</span>
+        <span class="card-icon">🏹</span>
+        <span class="card-class">Crystal Archer</span>
+        <h3 class="card-name">크리스탈 아처 리아</h3>
+        <p class="card-desc">
+          크리스탈 화살로 먼 거리의 룬을 정확히 맞추는 궁수.
+          퍼즐 보드의 연쇄 콤보를 이끌어내는 전략가.
+        </p>
+        <div class="card-stats">
+          <div class="stat">
+            <span class="stat-value">92</span>
+            <span class="stat-label">정확</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">88</span>
+            <span class="stat-label">연쇄</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value">60</span>
+            <span class="stat-label">체력</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ Puzzle Game Section ═══════════ -->
+  <section id="puzzle" class="section puzzle-section">
+    <h2 class="section-title fade-in">룬 매칭 퍼즐</h2>
+    <p class="section-subtitle fade-in">Rune Matching Puzzle</p>
+
+    <div class="puzzle-showcase">
+      <!-- Interactive Puzzle Demo -->
+      <div class="puzzle-visual fade-in">
+        <div class="puzzle-board">
+          <!-- JS로 동적 생성 -->
+        </div>
+      </div>
+
+      <!-- Puzzle Info -->
+      <div class="puzzle-info fade-in">
+        <h3>고대 룬을 매칭하라</h3>
+        <p>
+          요르단의 반지에 새겨진 신비로운 룬 기호들을 매칭하여
+          봉인된 마법의 힘을 해방하세요. 매칭할수록 히어로의 능력이
+          강화되고, 새로운 스테이지의 문이 열립니다.
+        </p>
+        <ul class="feature-list">
+          <li>
+            <span class="feature-icon">🔮</span>
+            <span><strong>룬 매칭</strong> — 같은 기호의 룬 쌍을 찾아 고대의 마법을 해방</span>
+          </li>
+          <li>
+            <span class="feature-icon">⚡</span>
+            <span><strong>연쇄 콤보</strong> — 연속 매칭으로 강력한 스킬 발동</span>
+          </li>
+          <li>
+            <span class="feature-icon">🌀</span>
+            <span><strong>보스 퍼즐</strong> — 시간 제한 내 복잡한 룬 배열 해독</span>
+          </li>
+          <li>
+            <span class="feature-icon">💎</span>
+            <span><strong>히어로 성장</strong> — 퍼즐 클리어로 히어로 스탯 강화</span>
+          </li>
+          <li>
+            <span class="feature-icon">🗺️</span>
+            <span><strong>스토리 모드</strong> — 100+ 스테이지의 모험이 기다립니다</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ 3D Ring Showcase (독창적 3D Canvas) ═══════════ -->
+  <section id="ring" class="section ring-showcase">
+    <h2 class="section-title fade-in" style="animation: neonGlowTitle 3s ease-in-out infinite alternate;">요르단의 반지</h2>
+    <p class="section-subtitle fade-in">The Ring of Jordan — Interactive 3D</p>
+
+    <div class="ring-display fade-in">
+      <canvas id="ring-3d-canvas" width="500" height="500"></canvas>
+
+      <div class="ring-controls">
+        <div class="ring-control">
+          <label>Rotation Speed</label>
+          <input type="range" id="ring-speed" min="0" max="3" step="0.1" value="1">
+        </div>
+        <div class="ring-control">
+          <label>Glow Intensity</label>
+          <input type="range" id="ring-glow" min="0" max="2" step="0.1" value="1">
+        </div>
+        <div class="ring-control">
+          <label>Rune Count</label>
+          <input type="range" id="ring-runes" min="4" max="24" step="1" value="12">
+        </div>
+      </div>
+
+      <p style="color: var(--text-muted); font-size: 13px; font-family: var(--font-mono); letter-spacing: 1px; text-align: center;">
+        드래그하여 반지를 회전시키세요 · Click &amp; drag to rotate
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════════ Crowdfunding Section ═══════════ -->
+  <section id="crowdfund" class="section crowdfund-section">
+    <h2 class="section-title fade-in">크라우드펀딩</h2>
+    <p class="section-subtitle fade-in">Support the Quest</p>
+
+    <div class="crowdfund-container">
+      <!-- Fund Hero -->
+      <div class="fund-hero fade-in">
+        <div class="fund-amount" data-count="182500000" data-prefix="₩" data-suffix="">₩0</div>
+        <div class="fund-goal">목표 금액 ₩250,000,000 중</div>
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill"></div>
+          </div>
+          <div class="progress-label">
+            <span>73% 달성</span>
+            <span>D-18</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fund Stats -->
+      <div class="fund-stats fade-in">
+        <div class="fund-stat">
+          <span class="fund-stat-value" data-count="2847" data-suffix="명">0</span>
+          <span class="fund-stat-label">후원자</span>
+        </div>
+        <div class="fund-stat">
+          <span class="fund-stat-value" data-count="18">0</span>
+          <span class="fund-stat-label">남은 일수</span>
+        </div>
+        <div class="fund-stat">
+          <span class="fund-stat-value" data-count="73" data-suffix="%">0</span>
+          <span class="fund-stat-label">달성률</span>
+        </div>
+        <div class="fund-stat">
+          <span class="fund-stat-value" data-count="127" data-suffix="개">0</span>
+          <span class="fund-stat-label">얼리버드 남음</span>
+        </div>
+      </div>
+
+      <!-- Funding Tiers -->
+      <div class="fund-tiers fade-in">
+        <!-- Tier 1 -->
+        <div class="tier-card">
+          <span class="tier-icon">🌟</span>
+          <div class="tier-name">모험자</div>
+          <div class="tier-price">₩15,000</div>
+          <p class="tier-desc">
+            디지털 게임 본편 + 한정판 룬 아이콘 세트 + 후원자 크레딧 등재
+          </p>
+          <div class="tier-backers">1,204명 후원</div>
+          <button class="tier-btn">후원하기</button>
+        </div>
+
+        <!-- Tier 2 -->
+        <div class="tier-card">
+          <span class="tier-icon">⚔️</span>
+          <div class="tier-name">기사단</div>
+          <div class="tier-price">₩45,000</div>
+          <p class="tier-desc">
+            게임 본편 + 아트북 PDF + 한정 히어로 스킨 3종 + 비하인드 영상 접근권
+          </p>
+          <div class="tier-backers">892명 후원</div>
+          <button class="tier-btn">후원하기</button>
+        </div>
+
+        <!-- Tier 3 -->
+        <div class="tier-card">
+          <span class="tier-icon">👑</span>
+          <div class="tier-name">대마법사</div>
+          <div class="tier-price">₩120,000</div>
+          <p class="tier-desc">
+            게임 본편 + 피지컬 아트북 + 요르단의 반지 레플리카 + NPC 이름 등재
+          </p>
+          <div class="tier-backers">751명 후원</div>
+          <button class="tier-btn">후원하기</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ Footer ═══════════ -->
+  <footer class="footer">
+    <div class="footer-brand">RING OF JORDAN</div>
+    <ul class="footer-links">
+      <li><a href="#hero">Home</a></li>
+      <li><a href="#heroes">Heroes</a></li>
+      <li><a href="#puzzle">Puzzle</a></li>
+      <li><a href="#ring">The Ring</a></li>
+      <li><a href="#crowdfund">Crowdfunding</a></li>
+    </ul>
+    <div class="footer-harness">
+      펜슬 AI하네스로 제작되었습니다 (실제 출시 제품이 아닙니다)
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
