@@ -1,27 +1,52 @@
-# Pencil Design Harness — English Version
+# Pencil Design — English Language Pack (v2.5.1)
 
-English translation of the Pencil Design Quality Harness (v2.5.1).
-The Korean version in `harness/` is the **original**; this is a translated pack for English-speaking users.
+English translation of the Pencil Design Harness & Skills.
+The Korean version is the **actively developed original**; this pack is a translated snapshot.
+
+> **Warning**: This pack is based on Korean v2.5.1. The Korean version is actively developed
+> and may have been updated beyond this version. Check `harness/harness.config.json` to compare.
 
 ---
 
-## Quick Start
+## Quick Start — Install via Skill Command
 
-To use the English version, copy the `harness/` pack to replace `harness/`:
+The easiest way to install the English pack is using the slash command:
 
-```bash
-# 1. Backup the original Korean harness (optional but recommended)
-cp -r harness harness-ko-backup
-
-# 2. Copy the English pack over
-cp -r harness/* harness/
+```
+/pencil-lang-pack
 ```
 
-> **Note:** The `logs/` directory in `harness/` contains only initialized templates (level 1, empty achievements). Your existing evaluation logs in `harness/logs/` will be overwritten. If you want to preserve your progress, back up `harness/logs/` before copying.
+This will guide you through language selection, backup, and installation.
+
+---
+
+## Skill Commands (English)
+
+After installing the English pack, the following skill commands are available:
+
+| Command | Description |
+|---------|-------------|
+| `/harness-usage` | Execute design workflows (Case A/B/C/W) with 3-axis evaluation |
+| `/harness-creator` | Upgrade the evaluation framework, add axes, bump versions |
+| `/pencil-design` | Create architecture diagrams, flowcharts, ERD in .pen files |
+| `/pencil-deploy` | Deploy demo site to GitHub Pages (prepare + publish) |
+| `/pencil-lang-pack` | Switch harness language / reinstall language pack |
+
+### Example Prompts (English)
+
+```
+Case A: "Research WPF animations and add to Pencil template"
+Case B: "Reference wpf-animation effects to design a dashboard"
+Case C: "Analyze animations on this URL and create JSON definitions"
+Case W: "Convert the Pencil design to HTML"
+Deploy: "Prepare deployment" / "Publish the demo site"
+```
 
 ---
 
 ## What's Included
+
+### Harness (`en/harness/`)
 
 | Path | Description |
 |------|-------------|
@@ -31,10 +56,16 @@ cp -r harness/* harness/
 | `engine/design-journey.md` | State machine for design workflows |
 | `engine/level-achievement-system.md` | RPG level (Lv.1~100), XP formula, achievements |
 | `logs/level-up/status.json` | Level state — **initialized to Lv.1** |
-| `logs/level-up/history.md` | Level-up history log (empty) |
 | `logs/achievements/achievements.json` | Achievement state — **all categories reset to 0** |
-| `logs/achievements/history.md` | Achievement unlock history (empty) |
-| `logs/harness-usage.md` | Evaluation usage log (empty) |
+
+### Skills (`en/skills/`)
+
+| Skill | Description |
+|-------|-------------|
+| `harness-creator/SKILL.md` | Harness upgrade & improvement |
+| `harness-usage/SKILL.md` | Design workflow execution (Case A/B/C/W) |
+| `pencil-deploy/SKILL.md` | GitHub Pages deployment |
+| `pencil-design/SKILL.md` | Technical diagramming & WPF animation design |
 
 ---
 
