@@ -16,3 +16,11 @@
     }                                                                                                                                                                                                                                             
   }      
 ```
+
+### skill-creator
+
+```
+/plugin marketplace add anthropics/skills
+
+/plugin install skill-creator@anthropic-agent-skills 
+```
