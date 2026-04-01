@@ -1,8 +1,9 @@
 ---
 name: pencil-lang-pack
 description: >
-  Language pack installer for Pencil Design Harness.
-  Copies a translated harness pack (evaluation rules, RPG system, achievements) into the project's harness/ directory.
+  Language pack installer for Pencil Design Harness & Skills.
+  Copies a translated harness pack (evaluation rules, RPG system, achievements) and skill files
+  into the project's harness/ and .claude/skills/ directories.
   Use this skill when the user wants to switch the harness language, install an English harness,
   or set up a localized version of the evaluation framework.
   Triggers on: "change harness language", "install English harness", "switch to English pack",
@@ -11,28 +12,57 @@ description: >
 
 # Pencil Language Pack Installer
 
-Copies a localized harness pack from `.claude/skills/pencil-lang-pack/{lang}/` into the project,
-replacing the Korean-original `harness/` directory with a translated version.
+Copies a localized harness pack and skill files from `.claude/skills/pencil-lang-pack/{lang}/`
+into the project, replacing the Korean-original directories with translated versions.
+
+## Version
+
+| Lang Pack | Based On | Harness Version |
+|-----------|----------|-----------------|
+| `en`      | Korean original (v2.5.1) | **v2.5.1** |
+
+> **Warning**: The Korean version (`harness/`) is the **actively developed original**.
+> Language packs are snapshots translated at a specific version and may lag behind
+> the latest Korean version. After installing a language pack, check `harness.config.json`
+> in the Korean original to compare versions. If the Korean version has been bumped
+> beyond the language pack version, some evaluation rules or RPG features may differ.
 
 ## Available Languages
 
-| Code | Language | Pack Path |
-|------|----------|-----------|
-| `en` | English  | `.claude/skills/pencil-lang-pack/en/harness/` |
+| Code | Language | Harness Pack | Skills Pack |
+|------|----------|-------------|-------------|
+| `en` | English  | `.claude/skills/pencil-lang-pack/en/harness/` | `.claude/skills/pencil-lang-pack/en/skills/` |
 
-> To add a new language, create a `{lang-code}/harness/` directory under `.claude/skills/pencil-lang-pack/`
-> following the same structure as `en/harness/`.
+> To add a new language, create a `{lang-code}/` directory under `.claude/skills/pencil-lang-pack/`
+> with `harness/` and `skills/` subdirectories following the same structure as `en/`.
+
+## Pack Contents
+
+### Harness (`en/harness/`)
+- `harness.config.json` — Main config (v2.5.1)
+- `knowledge/design-craft.md` — Evaluation criteria (Case A/B/C/W)
+- `agents/design-evaluator.md` — Evaluation agent
+- `engine/design-journey.md` — State machine
+- `engine/level-achievement-system.md` — RPG level & achievements
+- `logs/` — Initialized templates (Lv.1, empty achievements)
+
+### Skills (`en/skills/`)
+- `harness-creator/SKILL.md` — Harness upgrade skill
+- `harness-usage/SKILL.md` — Design workflow execution skill
+- `pencil-deploy/SKILL.md` — GitHub Pages deployment skill
+- `pencil-design/SKILL.md` — Technical diagramming skill
 
 ## Workflow
 
-### Step 1: Show available languages
-
-List the language directories under `.claude/skills/pencil-lang-pack/` (excluding SKILL.md).
-Present them to the user and ask which language to install.
+### Step 1: Show available languages and version info
 
 ```
 Available language packs:
-  - en (English)
+  - en (English) — based on v2.5.1
+
+⚠️  The Korean version is the actively developed original.
+    This language pack is a translated snapshot and may not
+    reflect the latest changes in the Korean version.
 
 Which language pack would you like to install?
 ```
@@ -44,67 +74,91 @@ If only one language exists, confirm with the user rather than auto-selecting.
 Before copying, warn the user about what will be overwritten:
 
 ```
-This will copy the "{lang}" harness pack into your project:
+This will install the "{lang}" language pack (v2.5.1):
 
-  Source: .claude/skills/pencil-lang-pack/{lang}/harness/
-  Target: harness/
+  Harness:
+    Source: .claude/skills/pencil-lang-pack/{lang}/harness/
+    Target: harness/
 
-  - Knowledge, agents, engine rules will be replaced with {lang} translations
-  - Level will be reset to Lv.1
-  - Achievements will be initialized to empty
-  - Existing evaluation logs (harness/logs/yyyy-mm-dd-*.md) will NOT be touched
-    (the pack does not include log files)
+  Skills:
+    Source: .claude/skills/pencil-lang-pack/{lang}/skills/
+    Target: .claude/skills/ (harness-creator, harness-usage, pencil-deploy, pencil-design)
 
-  Your current harness/ will be backed up to harness-backup-{date}/
+  Changes:
+    - Harness rules, agents, engine will be replaced with {lang} translations
+    - Skills (4 files) will be replaced with {lang} versions
+    - RPG level will be reset to Lv.1
+    - Achievements will be initialized to empty
+    - Existing evaluation logs (harness/logs/yyyy-mm-dd-*.md) will NOT be touched
+
+  ⚠️  The Korean version (harness/) is the actively developed original.
+      This pack is based on v2.5.1 and may not include recent updates.
+
+  Backups will be created:
+    harness → harness-backup-{date}/
+    skills  → .claude/skills/{name}-backup-{date}/
 
 Proceed? (y/n)
 ```
 
 Wait for explicit user confirmation before proceeding.
 
-### Step 3: Backup current harness
+### Step 3: Backup current files
 
 ```bash
 cp -r harness harness-backup-{YYYY-MM-DD}
 ```
 
+For skills, back up only the 4 affected skill directories:
+
+```bash
+for skill in harness-creator harness-usage pencil-deploy pencil-design; do
+  cp -r .claude/skills/$skill .claude/skills/${skill}-backup-{YYYY-MM-DD}
+done
+```
+
 ### Step 4: Copy the language pack
 
-Copy the translated pack files over the existing harness directory.
-Use relative paths from the project root.
+Copy harness files:
 
 ```bash
 cp -r .claude/skills/pencil-lang-pack/{lang}/harness/* harness/
 ```
 
-This overwrites:
-- `harness/harness.config.json`
-- `harness/knowledge/design-craft.md`
-- `harness/agents/design-evaluator.md`
-- `harness/engine/design-journey.md`
-- `harness/engine/level-achievement-system.md`
-- `harness/logs/level-up/status.json` (reset to Lv.1)
-- `harness/logs/achievements/achievements.json` (reset to empty)
-- `harness/logs/level-up/history.md` (empty)
-- `harness/logs/achievements/history.md` (empty)
-- `harness/logs/harness-usage.md` (empty)
+Copy skill files:
 
-Existing date-stamped log files (`harness/logs/yyyy-mm-dd-*.md`) are preserved
-because the language pack does not include them.
+```bash
+for skill in harness-creator harness-usage pencil-deploy pencil-design; do
+  cp .claude/skills/pencil-lang-pack/{lang}/skills/$skill/SKILL.md .claude/skills/$skill/SKILL.md
+done
+```
 
 ### Step 5: Verify and report
 
 After copying, verify the key files exist and report:
 
 ```
-Language pack "{lang}" installed successfully!
+Language pack "{lang}" (v2.5.1) installed successfully!
 
-  - Harness language: {lang}
-  - Level: Lv.1 (reset)
-  - Achievements: 0 (reset)
-  - Backup: harness-backup-{date}/
+  Harness:
+    - Language: {lang}
+    - Version: v2.5.1
+    - Level: Lv.1 (reset)
+    - Achievements: 0 (reset)
 
-  The original Korean harness has been backed up.
+  Skills updated:
+    - harness-creator
+    - harness-usage
+    - pencil-deploy
+    - pencil-design
+
+  Backups:
+    - harness-backup-{date}/
+    - .claude/skills/{name}-backup-{date}/ (×4)
+
+  ⚠️  This pack is based on Korean v2.5.1.
+      To check for newer Korean versions: cat harness-backup-{date}/harness.config.json | grep version
+
   To restore: cp -r harness-backup-{date}/* harness/
 ```
 
@@ -122,3 +176,6 @@ If any paths are incorrect, fix them in place.
 - The `docs/` directory (version history) is not included in language packs;
   those remain Korean-only in the original harness
 - Existing evaluation log files are preserved since the pack doesn't overwrite them
+- **Version drift**: If the Korean harness has been updated beyond v2.5.1,
+  the language pack will be outdated. Users should check the Korean version periodically
+  and request an updated language pack translation when needed

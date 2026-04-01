@@ -43,7 +43,16 @@
       "Bash(\"D:/pencil-creator/design-wpf-app/migrated/Sample32_ZenFadeCascade.xaml\")",
       "Bash(find /d/pencil-creator -type f \\\\\\(-name settings*.json -o -name *hook* -o -name *.config \\\\\\))",
       "mcp__pencil__get_guidelines",
-      "mcp__playwright__browser_resize"
+      "mcp__playwright__browser_resize",
+      "Bash(mkdir:*)",
+      "Bash(cp .claude/skills/harness-creator/SKILL.md .claude/skills/pencil-lang-pack/en/skills/harness-creator/SKILL.md)",
+      "Bash(cp .claude/skills/harness-usage/SKILL.md .claude/skills/pencil-lang-pack/en/skills/harness-usage/SKILL.md)",
+      "Bash(cp .claude/skills/pencil-deploy/SKILL.md .claude/skills/pencil-lang-pack/en/skills/pencil-deploy/SKILL.md)",
+      "Bash(cp .claude/skills/pencil-design/SKILL.md .claude/skills/pencil-lang-pack/en/skills/pencil-design/SKILL.md)",
+      "Bash(cp skills-en/harness-creator/SKILL.md .claude/skills/pencil-lang-pack/en/skills/harness-creator/SKILL.md)",
+      "Bash(cp skills-en/harness-usage/SKILL.md .claude/skills/pencil-lang-pack/en/skills/harness-usage/SKILL.md)",
+      "Bash(cp skills-en/pencil-deploy/SKILL.md .claude/skills/pencil-lang-pack/en/skills/pencil-deploy/SKILL.md)",
+      "Bash(cp skills-en/pencil-design/SKILL.md .claude/skills/pencil-lang-pack/en/skills/pencil-design/SKILL.md)"
     ]
   },
   "enabledMcpjsonServers": [
