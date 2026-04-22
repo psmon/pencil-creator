@@ -15,3 +15,5 @@
 | 2026-03-31 | A | Space & Astral 3D Interface (CAT15 신규, 6카드+6XAML+COMBINED) | 94/100 A | [로그](2026-03-31-space-astral-caseA.md) |
 | 2026-03-31 | W | Astral Voyager 4-Universe 쇼케이스 (A→W, Canvas+Three.js, 4장면+카메라) | 93/100 A | [로그](2026-03-31-space-showcase-caseW.md) |
 | 2026-03-31 | W | 요르단의 반지 RPG 퍼즐 랜딩 (8CAT+3D반지+퍼즐게임+크라우드펀딩) | 94/100 A | [로그](2026-03-31-ring-of-jordan-caseW.md) |
+| 2026-04-16 | W | 블룸 AI 디자인 시스템 소개 랜딩 (Three.js orbit+3축하네스+터미널+커스텀스크롤) | 93/100 A | [로그](2026-04-16-blumnai-intro-caseW.md) |
+| 2026-04-17 | D | Verdana Health 디자인 시스템 영입 (TOKENS 5+COMPONENTS 8+README, 첫 Case D) | 76/100 B | [로그](2026-04-17-verdana-health-caseD.md) |

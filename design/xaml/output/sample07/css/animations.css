@@ -1,0 +1,162 @@
+/* ============================================
+   Blumnai DS Landing · animations.css
+   Keyframes only — WPF DoubleAnimation / Storyboard 매핑
+   ============================================ */
+
+/* ring-pulse — WPF ScaleTransform + Opacity AutoReverse Forever  */
+@keyframes ring-pulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+  50%      { transform: translate(-50%, -50%) scale(1.08); opacity: 0.15; }
+}
+
+/* dot-pulse — SineEase EaseInOut, RepeatBehavior=Forever */
+@keyframes dot-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%      { transform: scale(1.4); opacity: 0.7; }
+}
+
+/* hue-shift — gradient background-position cycle */
+@keyframes hue-shift {
+  0%   { filter: hue-rotate(0deg);   }
+  100% { filter: hue-rotate(360deg); }
+}
+
+/* scroll-line — QuadraticEase EaseIn, 2s AutoReverse */
+@keyframes scroll-line {
+  0%, 100% { transform: scaleY(1); opacity: 1; transform-origin: top; }
+  50%      { transform: scaleY(0.2); opacity: 0.3; }
+}
+
+/* ripple — WAAPI style radial burst */
+@keyframes ripple {
+  0%   { width: 0; height: 0; opacity: 0.6; }
+  100% { width: 500px; height: 500px; opacity: 0; }
+}
+
+/* caret-blink */
+@keyframes caret-blink {
+  0%, 50%    { opacity: 1; }
+  51%, 100%  { opacity: 0; }
+}
+
+/* gpane tab transition */
+@keyframes gpane-in {
+  0%   { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* orb-pulse — WPF ScaleTransform + GlowEffect AutoReverse */
+@keyframes orb-pulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    box-shadow:
+      0 0 80px rgba(139, 92, 246, 0.5),
+      inset 0 0 40px rgba(255, 255, 255, 0.15);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.04);
+    box-shadow:
+      0 0 120px rgba(236, 72, 153, 0.7),
+      inset 0 0 60px rgba(255, 255, 255, 0.25);
+  }
+}
+
+/* orb-rotate — RotateTransform RepeatBehavior=Forever */
+@keyframes orb-rotate {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* chip counter-rotate so text stays upright (0% from is parent's opposite) */
+@keyframes chip-counter-rotate {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(-360deg); }
+}
+
+/* shimmer — WPF LinearGradientBrush offset animation */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0) 40%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0) 60%,
+    rgba(255, 255, 255, 0) 100%
+  ), var(--grad-brand);
+  background-size: 200% 100%, 100% 100%;
+  background-repeat: no-repeat;
+  animation: shimmer 2.4s linear infinite;
+}
+
+/* float — gentle translateY breathing */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+
+/* fade-in-up utility  */
+@keyframes fade-in-up {
+  0%   { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* gauge-seg active pulse */
+@keyframes seg-glow {
+  0%, 100% { box-shadow: 0 4px 16px rgba(236, 72, 153, 0.4); }
+  50%      { box-shadow: 0 6px 28px rgba(236, 72, 153, 0.7); }
+}
+.gauge-seg.active { animation: seg-glow 2s ease-in-out infinite; }
+
+/* axis bar active pulse */
+@keyframes bar-glow {
+  0%, 100% { box-shadow: 0 4px 16px rgba(139, 92, 246, 0.4); }
+  50%      { box-shadow: 0 6px 28px rgba(139, 92, 246, 0.7); }
+}
+.ab.active { animation: bar-glow 2s ease-in-out infinite; }
+
+/* neon title sub-glow */
+@keyframes neon-breathe {
+  0%, 100% { text-shadow: 0 0 20px rgba(236, 72, 153, 0.3); }
+  50%      { text-shadow: 0 0 40px rgba(236, 72, 153, 0.6), 0 0 80px rgba(139, 92, 246, 0.4); }
+}
+.neon-title { animation: neon-breathe 3.6s ease-in-out infinite; }
+
+/* marching ants — SVG stroke-dashoffset */
+@keyframes march {
+  to { stroke-dashoffset: -20; }
+}
+
+/* brand glow breathing — for brand mark */
+@keyframes brand-glow {
+  0%, 100% { filter: drop-shadow(0 0 8px rgba(139, 92, 246, 0.5)); }
+  50%      { filter: drop-shadow(0 0 16px rgba(236, 72, 153, 0.7)); }
+}
+.brand-mark { animation: brand-glow 3s ease-in-out infinite; }
+
+/* stat counter reveal */
+@keyframes num-rise {
+  0%   { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Pillar card border glow on hover — already in styles but shimmer for emphasis */
+@keyframes border-dance {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+/* Terminal caret blink handled by caret-blink reuse */
+
+/* Motion-reduce honor */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

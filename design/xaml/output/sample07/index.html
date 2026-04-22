@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>블룸 AI 디자인 시스템을 소개합니다 · Blumnai Design System</title>
+  <meta name="description" content="블룸 AI 디자인 시스템과 평가 하네스 — AI 시대의 사내 맞춤형 컴포넌트 라이브러리." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+</head>
+<body>
+
+  <!-- Scroll progress indicator -->
+  <div class="scroll-progress" id="scroll-progress"></div>
+
+  <!-- Floating Nav -->
+  <nav class="nav-glass" id="nav">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-brand">
+        <span class="brand-mark">
+          <svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true">
+            <defs>
+              <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#EC4899" />
+                <stop offset="50%" stop-color="#8B5CF6" />
+                <stop offset="100%" stop-color="#22D3EE" />
+              </linearGradient>
+            </defs>
+            <path d="M16 2 L20 10 L28 12 L22 18 L24 28 L16 23 L8 28 L10 18 L4 12 L12 10 Z" fill="url(#brandGrad)" opacity="0.9"/>
+          </svg>
+        </span>
+        <span class="brand-text">Blumnai DS</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#design-system">디자인 시스템</a></li>
+        <li><a href="#harness">평가 하네스</a></li>
+        <li><a href="#closing">블룸 AI</a></li>
+      </ul>
+      <a href="#hero" class="nav-cta">
+        <span>시작하기</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </nav>
+
+  <!-- ============================================
+       HERO — 3D Orbit + Neon Title
+       ============================================ -->
+  <section id="hero" class="hero">
+    <div class="hero-bg">
+      <div class="pulse-ring ring-1"></div>
+      <div class="pulse-ring ring-2"></div>
+      <div class="pulse-ring ring-3"></div>
+      <div class="grid-overlay"></div>
+    </div>
+
+    <div class="hero-content">
+      <div class="hero-text">
+        <span class="eyebrow" data-cascade data-cascade-delay="0">
+          <span class="eyebrow-dot"></span>
+          BLUMNAI · DESIGN SYSTEM + HARNESS
+        </span>
+        <h1 class="hero-title" data-cascade data-cascade-delay="200">
+          <span class="line">블룸 AI 디자인 시스템을</span>
+          <span class="line neon-title">소개합니다</span>
+        </h1>
+        <p class="hero-sub" data-cascade data-cascade-delay="450">
+          40+ 컴포넌트 · 4 테마 · 3,800+ 아이콘 · WCAG 2.1 AA<br/>
+          그리고 AI 에이전트 6인의 <em>자동 품질 평가 하네스</em>까지.
+        </p>
+        <div class="hero-cta" data-cascade data-cascade-delay="700">
+          <button class="btn btn-primary ripple-btn" id="cta-primary">
+            <span>디자인 시스템 살펴보기</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+          <button class="btn btn-ghost ripple-btn" id="cta-secondary">
+            <span>하네스 시스템 보기</span>
+          </button>
+        </div>
+
+        <div class="hero-stats" data-cascade data-cascade-delay="950">
+          <div class="stat">
+            <span class="stat-num" data-count="40">0</span><span class="stat-plus">+</span>
+            <span class="stat-lbl">Components</span>
+          </div>
+          <div class="stat-div"></div>
+          <div class="stat">
+            <span class="stat-num" data-count="4">0</span>
+            <span class="stat-lbl">Themes</span>
+          </div>
+          <div class="stat-div"></div>
+          <div class="stat">
+            <span class="stat-num" data-count="3800">0</span><span class="stat-plus">+</span>
+            <span class="stat-lbl">Icons</span>
+          </div>
+          <div class="stat-div"></div>
+          <div class="stat">
+            <span class="stat-num" data-count="6">0</span>
+            <span class="stat-lbl">AI Agents</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual" data-cascade data-cascade-delay="400">
+        <div class="visual-inner">
+          <div id="orbit-container" class="orbit-canvas"></div>
+          <div class="visual-badge"><span class="dot-live"></span>LIVE · ORBITING COMPONENTS</div>
+          <div class="visual-label">
+            <span class="vl-key">Core:</span>
+            <span class="vl-val">@blumnai-studio/blumnai-design-system</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="scroll-hint">
+      <span>SCROLL</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       SECTION 1 — Design System
+       ============================================ -->
+  <section id="design-system" class="section">
+    <div class="section-header">
+      <span class="section-label">SECTION · 01</span>
+      <h2 class="section-title"><span class="glow-word">디자인 시스템</span>을 소개합니다</h2>
+      <p class="section-sub">
+        React 18+/19 · TypeScript · Tailwind CSS 4 · Radix UI · shadcn/ui 기반.<br/>
+        내부 팀의 일관된 UI 개발을 위한 <strong>사내 맞춤형 컴포넌트 라이브러리</strong>입니다.
+      </p>
+    </div>
+
+    <!-- Concept pillars -->
+    <div class="pillar-grid">
+      <article class="pillar-card reveal">
+        <div class="pillar-num">01</div>
+        <h3>토큰 중심 설계</h3>
+        <p>색상·타이포·간격을 CSS 변수로 정의. 4가지 테마(Light-A, Dark, Theme-B Light/Dark) 간 자동 동기화.</p>
+        <div class="pillar-tokens">
+          <span class="tok tok-1">bg-default</span>
+          <span class="tok tok-2">text-subtle</span>
+          <span class="tok tok-3">border-default</span>
+        </div>
+      </article>
+
+      <article class="pillar-card reveal">
+        <div class="pillar-num">02</div>
+        <h3>Radix UI 기반 접근성</h3>
+        <p>14개 프리미티브, 키보드 네비, ARIA 속성, 포커스 트랩, 스크린리더 호환까지 내장.</p>
+        <div class="a11y-badge">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="2"/><path d="M12 7v12M5 11h14M8 18l4-4 4 4"/></svg>
+          WCAG 2.1 AA
+        </div>
+      </article>
+
+      <article class="pillar-card reveal">
+        <div class="pillar-num">03</div>
+        <h3>설계 소스 단일화</h3>
+        <p>Figma 킷(SortUI)의 시각 정의 + shadcn/ui의 인터랙션 로직을 통합. 디자인 충실도와 생산성을 동시에 확보.</p>
+        <div class="dual-chip">
+          <span class="chip chip-sort">SortUI</span>
+          <span class="chip-plus">+</span>
+          <span class="chip chip-shad">shadcn/ui</span>
+        </div>
+      </article>
+
+      <article class="pillar-card reveal">
+        <div class="pillar-num">04</div>
+        <h3>서브패스 임포트</h3>
+        <p><code>@blumnai-studio/blumnai-design-system/button</code> 형태로 컴포넌트 단위 로드. 번들 크기 최적화.</p>
+        <div class="mini-progress">
+          <span class="mp-label">Bundle Size</span>
+          <div class="mp-bar"><div class="mp-fill shimmer" style="--fill:35%"></div></div>
+          <span class="mp-val">-65%</span>
+        </div>
+      </article>
+
+      <article class="pillar-card reveal">
+        <div class="pillar-num">05</div>
+        <h3>엔터프라이즈 복합 컴포넌트</h3>
+        <p>DataGrid, HtmlEditor(Tiptap), EventCalendar, ResizablePanel, DnD(@dnd-kit) 등 복잡한 인터랙션을 기본 제공.</p>
+        <div class="enterprise-badges">
+          <span class="eb">DataGrid</span>
+          <span class="eb">Editor</span>
+          <span class="eb">Calendar</span>
+          <span class="eb">+12</span>
+        </div>
+      </article>
+
+      <article class="pillar-card reveal">
+        <div class="pillar-num">06</div>
+        <h3>점진적 마이그레이션</h3>
+        <p>기존 프로젝트에서 컴포넌트 단위로 점진 도입 가능. Next.js 13+, Vite, webpack 5+ 지원.</p>
+        <div class="mig-flow">
+          <span class="mf">Legacy</span>
+          <span class="mf-arrow">→</span>
+          <span class="mf mf-dash">Hybrid</span>
+          <span class="mf-arrow">→</span>
+          <span class="mf mf-brand">Blumnai DS</span>
+        </div>
+      </article>
+    </div>
+
+    <!-- Component gallery -->
+    <div class="gallery">
+      <div class="gallery-head">
+        <h3>컴포넌트 갤러리</h3>
+        <div class="gallery-tabs" role="tablist">
+          <button class="gt active" data-cat="form">폼 입력</button>
+          <button class="gt" data-cat="display">데이터 표시</button>
+          <button class="gt" data-cat="nav">네비게이션</button>
+          <button class="gt" data-cat="overlay">피드백</button>
+        </div>
+      </div>
+
+      <div class="gallery-body">
+        <!-- Form -->
+        <div class="gpane active" data-pane="form">
+          <span class="gchip">Input × 12</span>
+          <span class="gchip">Textarea</span>
+          <span class="gchip">Select</span>
+          <span class="gchip">Combobox</span>
+          <span class="gchip">VirtualSelect <em>1000+</em></span>
+          <span class="gchip">Checkbox</span>
+          <span class="gchip">Radio</span>
+          <span class="gchip">Switch</span>
+          <span class="gchip">Slider</span>
+          <span class="gchip">DatePicker</span>
+          <span class="gchip">TimePicker</span>
+          <span class="gchip">FileUpload</span>
+          <span class="gchip">InputOTP</span>
+        </div>
+        <div class="gpane" data-pane="display">
+          <span class="gchip">DataGrid</span>
+          <span class="gchip">Table</span>
+          <span class="gchip">Avatar × 8</span>
+          <span class="gchip">Badge</span>
+          <span class="gchip">Chip</span>
+          <span class="gchip">Card</span>
+          <span class="gchip">Skeleton</span>
+          <span class="gchip">Progress</span>
+          <span class="gchip">Stepper</span>
+          <span class="gchip">Pagination</span>
+          <span class="gchip">Chart <em>5 types</em></span>
+          <span class="gchip">ProportionBar</span>
+        </div>
+        <div class="gpane" data-pane="nav">
+          <span class="gchip">Sidebar</span>
+          <span class="gchip">Tabs × 3</span>
+          <span class="gchip">Breadcrumbs</span>
+          <span class="gchip">NavigationMenu</span>
+          <span class="gchip">Pagination</span>
+          <span class="gchip">Menubar</span>
+          <span class="gchip">DropdownMenu</span>
+          <span class="gchip">ContextMenu</span>
+        </div>
+        <div class="gpane" data-pane="overlay">
+          <span class="gchip">Dialog</span>
+          <span class="gchip">AlertDialog</span>
+          <span class="gchip">ConfirmDialog</span>
+          <span class="gchip">InfoBox</span>
+          <span class="gchip">Toast <em>Sonner</em></span>
+          <span class="gchip">Tooltip</span>
+          <span class="gchip">HoverCard</span>
+          <span class="gchip">Popover</span>
+          <span class="gchip">Sheet / Drawer</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Code usage -->
+    <div class="code-window reveal">
+      <div class="cw-head">
+        <span class="cw-dot r"></span>
+        <span class="cw-dot y"></span>
+        <span class="cw-dot g"></span>
+        <span class="cw-file">app.tsx</span>
+      </div>
+      <pre class="cw-body" id="typed-code"></pre>
+    </div>
+  </section>
+
+  <!-- ============================================
+       SECTION 2 — Harness
+       ============================================ -->
+  <section id="harness" class="section section-harness">
+    <div class="harness-bg">
+      <div class="h-grid-glow"></div>
+    </div>
+
+    <div class="section-header">
+      <span class="section-label">SECTION · 02</span>
+      <h2 class="section-title">AI 에이전트가 평가하는 <span class="glow-word alt">디자인 하네스</span></h2>
+      <p class="section-sub">
+        v1.1.0 · 6명의 평가 에이전트 · 3개 워크플로우 · 3축 품질 평가.<br/>
+        사람의 리뷰 <strong>이전에 기계가 먼저 기준 미달을 걸러내는</strong> 자동화 품질 게이트입니다.
+      </p>
+    </div>
+
+    <!-- 3 Axes Visualization -->
+    <div class="axes-grid">
+      <article class="axis-card axis-1 reveal">
+        <div class="axis-head">
+          <div class="axis-ico">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6v6H9z"/><path d="M3 9h6M15 9h6M3 15h6M15 15h6"/></svg>
+          </div>
+          <span class="axis-scale">A · B · C · D</span>
+        </div>
+        <h3>Design Fidelity</h3>
+        <p class="axis-desc">Figma ↔ 코드 정합성. 픽셀 정확성, 색상/타이포/간격 토큰 준수.</p>
+        <div class="axis-gauge">
+          <div class="gauge-seg active">A</div>
+          <div class="gauge-seg">B</div>
+          <div class="gauge-seg">C</div>
+          <div class="gauge-seg">D</div>
+        </div>
+      </article>
+
+      <article class="axis-card axis-2 reveal">
+        <div class="axis-head">
+          <div class="axis-ico">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 3v18M16 3v18"/><path d="M3 8h18M3 16h18"/></svg>
+          </div>
+          <span class="axis-scale">1 · 2 · 3 · 4 · 5</span>
+        </div>
+        <h3>API Ergonomics</h3>
+        <p class="axis-desc">Props 명명 일관성, 마이그레이션 비용, 개발자 경험의 직관성.</p>
+        <div class="axis-bars">
+          <div class="ab" style="--h:20%"></div>
+          <div class="ab" style="--h:40%"></div>
+          <div class="ab" style="--h:60%"></div>
+          <div class="ab" style="--h:80%"></div>
+          <div class="ab active" style="--h:100%"></div>
+        </div>
+      </article>
+
+      <article class="axis-card axis-3 reveal">
+        <div class="axis-head">
+          <div class="axis-ico">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 2v20M2 12h20"/></svg>
+          </div>
+          <span class="axis-scale">L1 · L2 · L3 · L4 · L5</span>
+        </div>
+        <h3>Accessibility Maturity</h3>
+        <p class="axis-desc">WCAG 2.1 AA 준수율. ARIA, 키보드 네비, 스크린리더, 포커스 관리.</p>
+        <div class="axis-rings">
+          <svg viewBox="0 0 60 60" width="60" height="60">
+            <circle cx="30" cy="30" r="26" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="4"/>
+            <circle cx="30" cy="30" r="26" fill="none" stroke="url(#ringGrad)" stroke-width="4" stroke-linecap="round" stroke-dasharray="163" stroke-dashoffset="33" transform="rotate(-90 30 30)"/>
+            <defs>
+              <linearGradient id="ringGrad" x1="0" y1="0" x2="60" y2="60">
+                <stop offset="0%" stop-color="#EC4899"/>
+                <stop offset="100%" stop-color="#22D3EE"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <span class="ar-label">L5 / 80%</span>
+        </div>
+      </article>
+    </div>
+
+    <!-- Agent Roster -->
+    <div class="agents-wrap reveal">
+      <div class="agents-head">
+        <h3>평가 에이전트 6인</h3>
+        <span class="agents-caption">각 에이전트가 자신의 전문 영역을 자동 감시합니다.</span>
+      </div>
+      <div class="agents-grid">
+        <div class="agent">
+          <div class="ag-avatar ag-a"></div>
+          <div class="ag-body">
+            <h4>조련사 <span class="ag-en">tamer</span></h4>
+            <p>기본 가이드라인 준수 점검</p>
+          </div>
+        </div>
+        <div class="agent">
+          <div class="ag-avatar ag-b"></div>
+          <div class="ag-body">
+            <h4>a11y-auditor</h4>
+            <p>접근성 심화 감사 (WCAG, 키보드, ARIA)</p>
+          </div>
+        </div>
+        <div class="agent">
+          <div class="ag-avatar ag-c"></div>
+          <div class="ag-body">
+            <h4>token-consistency-inspector</h4>
+            <p>디자인 토큰 일관성 검증</p>
+          </div>
+        </div>
+        <div class="agent">
+          <div class="ag-avatar ag-d"></div>
+          <div class="ag-body">
+            <h4>figma-drift-detector</h4>
+            <p>Figma 설계 vs 코드 구현 괴리 감지</p>
+          </div>
+        </div>
+        <div class="agent">
+          <div class="ag-avatar ag-e"></div>
+          <div class="ag-body">
+            <h4>type-api-reviewer</h4>
+            <p>TypeScript Props 인터페이스 품질 검토</p>
+          </div>
+        </div>
+        <div class="agent">
+          <div class="ag-avatar ag-f"></div>
+          <div class="ag-body">
+            <h4>ds-release-curator</h4>
+            <p>릴리스 게이트 · 버전/CHANGELOG/호환성</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Workflows -->
+    <div class="workflows reveal">
+      <h3>워크플로우</h3>
+      <div class="wf-row">
+        <div class="wf">
+          <div class="wf-num">W1</div>
+          <h4>component-full-audit</h4>
+          <p>신규 컴포넌트의 전체 품질 감사 — 3축을 한 번에 평가</p>
+          <span class="wf-when">새 컴포넌트 추가 후</span>
+        </div>
+        <div class="wf">
+          <div class="wf-num">W2</div>
+          <h4>component-targeted-review</h4>
+          <p>특정 항목만 심화 검토 (예: a11y 집중 점검)</p>
+          <span class="wf-when">PR · 버그수정 · a11y 개선</span>
+        </div>
+        <div class="wf">
+          <div class="wf-num">W3</div>
+          <h4>release-gate</h4>
+          <p>버전 릴리스 전 최종 검증 · CHANGELOG · 호환성</p>
+          <span class="wf-when">npm publish 직전</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Harness usage terminal -->
+    <div class="terminal reveal">
+      <div class="term-head">
+        <span class="term-dot r"></span>
+        <span class="term-dot y"></span>
+        <span class="term-dot g"></span>
+        <span class="term-file">harness · cli</span>
+      </div>
+      <div class="term-body" id="term-body"></div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       SECTION 3 — Closing (AI Era)
+       ============================================ -->
+  <section id="closing" class="section section-closing">
+    <div class="closing-inner">
+      <div class="closing-text">
+        <span class="section-label alt">SECTION · 03 · FIN</span>
+        <h2 class="section-title">
+          <span class="line-1">AI 시대의 일은</span>
+          <span class="line-2 gradient-text">사내 맞춤형 시스템</span>
+          <span class="line-3">에서 빠르게 완성됩니다.</span>
+        </h2>
+        <p class="closing-desc">
+          범용 디자인 시스템은 누구에게나 적합하지만, 누구에게도 완벽하지 않습니다.<br/>
+          <strong>블룸 AI</strong>는 조직의 브랜드 · 워크플로 · 접근성 기준을 <em>내장</em>하고,<br/>
+          AI 에이전트가 그 품질을 상시 감시합니다.
+        </p>
+        <div class="closing-points">
+          <div class="cp"><span class="cp-dot"></span>오픈소스의 속도 + 엔터프라이즈의 일관성</div>
+          <div class="cp"><span class="cp-dot"></span>Figma → 코드 → 배포까지 단일 토큰 파이프라인</div>
+          <div class="cp"><span class="cp-dot"></span>사람 리뷰 전에 기계가 먼저 품질을 보장</div>
+        </div>
+        <div class="closing-cta">
+          <a href="https://github.com/BlumnAI-Studio" class="btn btn-primary ripple-btn" target="_blank" rel="noopener">
+            <span>GitHub에서 보기</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <button class="btn btn-ghost ripple-btn" id="cta-scroll-top">
+            <span>처음으로 돌아가기</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="closing-orbit">
+        <div class="orb-center">
+          <span class="oc-label">BLUMNAI</span>
+          <span class="oc-sub">AI · DESIGN SYSTEM</span>
+        </div>
+        <div class="orb-ring r-1"><span class="orb-chip">React 19</span></div>
+        <div class="orb-ring r-2"><span class="orb-chip">Tailwind 4</span></div>
+        <div class="orb-ring r-3"><span class="orb-chip">TypeScript</span></div>
+        <div class="orb-ring r-4"><span class="orb-chip">Radix UI</span></div>
+        <div class="orb-ring r-5"><span class="orb-chip">Storybook</span></div>
+        <div class="orb-ring r-6"><span class="orb-chip">AI Agents</span></div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div class="ft-row">
+        <div class="ft-brand">
+          <svg viewBox="0 0 32 32" width="20" height="20" aria-hidden="true">
+            <path d="M16 2 L20 10 L28 12 L22 18 L24 28 L16 23 L8 28 L10 18 L4 12 L12 10 Z" fill="url(#brandGrad)" opacity="0.9"/>
+          </svg>
+          <span>Blumnai AI · Design System</span>
+        </div>
+        <div class="ft-meta">
+          <span>v1.4.10</span>
+          <span>·</span>
+          <span>Harness v1.1.0</span>
+          <span>·</span>
+          <span>2026</span>
+        </div>
+      </div>
+    </footer>
+  </section>
+
+  <script src="js/hero3d.js" defer></script>
+  <script src="js/effects.js" defer></script>
+  <script src="js/main.js" defer></script>
+</body>
+</html>

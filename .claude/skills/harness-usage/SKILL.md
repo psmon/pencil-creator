@@ -2,7 +2,7 @@
 name: harness-usage
 description: |
   Pencil Design Harness를 이용한 디자인 작업을 실행하는 스킬.
-  Case A(WPF 조사→템플릿 보강), Case B(템플릿 참고→프로젝트 디자인), Case C(웹 애니메이션→JSON→펜슬 컴포넌트), Case W(Pencil→HTML) 워크플로우를 실행하고 평가한다.
+  Case A(WPF 조사→템플릿 보강), Case B(템플릿 참고→프로젝트 디자인), Case C(웹 애니메이션→JSON→펜슬 컴포넌트), Case D(DesignMD 영입→펜슬 복제), Case W(Pencil→HTML) 워크플로우를 실행하고 평가한다.
   다음 상황에서 반드시 이 스킬을 사용할 것:
   - "WPF 애니메이션 조사해서 펜슬에 그려줘" → Case A
   - "wpf-템플릿조사 후 템플릿보강해" → Case A
@@ -12,15 +12,18 @@ description: |
   - "OO사이트 애니메이션 조사해서 템플릿 강화" → Case C
   - "URL 분석해서 애니메이션 JSON 정리해줘" → Case C
   - "웹 애니메이션 카피캣" → Case C
+  - "designmd에서 OO 디자인 영입해줘" → Case D
+  - "디자인엠디 디자인 시스템 복제" → Case D
+  - "DESIGN.md 펜슬에 프레임 단위로 복제" → Case D
   - "펜슬 참고해서 HTML 페이지 만들어줘" → Case W
   - "디자인을 웹으로 구현해줘" → Case W
   - "디자인 평가해줘", "점수 매겨줘" → 평가 실행
-allowed-tools: Read, Write, Edit, Glob, Grep, Agent, WebSearch, WebFetch, mcp__pencil__get_guidelines, mcp__pencil__open_document, mcp__pencil__get_editor_state, mcp__pencil__batch_design, mcp__pencil__get_screenshot, mcp__pencil__find_empty_space_on_canvas, mcp__pencil__snapshot_layout, mcp__pencil__batch_get, mcp__pencil__get_style_guide_tags, mcp__pencil__get_style_guide, mcp__pencil__get_variables
+allowed-tools: Read, Write, Edit, Glob, Grep, Bash, Agent, WebSearch, WebFetch, mcp__pencil__get_guidelines, mcp__pencil__open_document, mcp__pencil__get_editor_state, mcp__pencil__batch_design, mcp__pencil__get_screenshot, mcp__pencil__find_empty_space_on_canvas, mcp__pencil__snapshot_layout, mcp__pencil__batch_get, mcp__pencil__get_style_guide_tags, mcp__pencil__get_style_guide, mcp__pencil__get_variables
 ---
 
 # Harness Usage — Pencil Design 작업 실행
 
-`harness/` 3계층 구조를 기반으로 **Case A(WPF→템플릿), Case B(템플릿참고→프로젝트 디자인), Case C(웹 애니메이션→JSON→펜슬 컴포넌트), Case W(Pencil→HTML) 워크플로우**를 실행한다.
+`harness/` 3계층 구조를 기반으로 **Case A(WPF→템플릿), Case B(템플릿참고→프로젝트 디자인), Case C(웹 애니메이션→JSON→펜슬 컴포넌트), Case D(DesignMD 영입→펜슬 복제), Case W(Pencil→HTML) 워크플로우**를 실행한다.
 
 ---
 
@@ -32,9 +35,9 @@ idle → prompted → researching → designing → design-evaluating → record
 
 | 상태 | 핵심 행동 |
 |------|----------|
-| prompted | Case A/B/C/W 판별, 기존 파일 상태 확인 |
-| researching | WPF 조사 (A) / wpf-animation.pen 파악 (B) / 웹 애니메이션 분석 (C) |
-| designing | 카드 추가 (A) / 프로젝트 디자인 (B) / JSON→펜슬 컴포넌트 (C) / HTML 구현 (W) |
+| prompted | Case A/B/C/D/W 판별, 기존 파일 상태 확인 |
+| researching | WPF 조사 (A) / wpf-animation.pen 파악 (B) / 웹 애니메이션 분석 (C) / designmd CLI 수집 (D) |
+| designing | 카드 추가 (A) / 프로젝트 디자인 (B) / JSON→펜슬 컴포넌트 (C) / design-md.pen 프레임 복제 (D) / HTML 구현 (W) |
 | design-evaluating | 3축 채점 (harness/knowledge/design-craft.md 참조) |
 | recording | 로그 작성 + RPG(XP/레벨/업적) 처리 |
 
@@ -219,6 +222,81 @@ Phase 3 — Verify (design-evaluating):
 
 ---
 
+## 4-2. Case D: DesignMD → 펜슬 디자인 시스템 복제
+
+designmd CLI로 외부 디자인 시스템(`DESIGN.md`)을 영입하여 **`design/design-md.pen` 파일에 프레임 단위로 복제**하는 워크플로우.
+**핵심 원칙: DESIGN.md 스펙을 TOKENS → COMPONENTS → TEMPLATES의 3계층 프레임으로 분해 재구성하여 펜슬 디자인 시스템 라이브러리로 축적한다.**
+
+```
+Phase 1 — Gather (researching):
+  → designmd CLI 활용 (Bash 실행):
+    - `designmd search "<키워드>" --limit 5` 또는 `--tag <tag>` 로 후보 탐색
+    - `designmd get <user/slug>` 로 상세 파악 (사용자 승인 후 선정)
+    - `designmd download <user/slug> -o design/design-md/<slug>/DESIGN.md`
+    - (필요 시) `designmd tags` 로 태그 생태계 확인
+  → 다운로드된 DESIGN.md를 Read 도구로 전체 파싱
+  → 섹션 인덱스 생성: Brand, Tokens(Color/Typography/Spacing/Radius/Shadow), Components, Templates
+  → 메타 기록: name, slug, tags, license, source URL
+  → 유사 레퍼런스 2개+ 비교 조사 (선택 — 최상위 점수 목표 시)
+
+Phase 2a — Action: 디자인 시스템 복제 (designing):
+  ⚠️ 대상 파일: design/design-md.pen (없으면 open_document('new')로 생성)
+  → 파일 루트에 인덱스 프레임: {시스템명}·메타·원본 링크·라이선스
+  → TOKENS 섹션 (별도 프레임 그룹):
+    - Color Tokens 프레임: primary/secondary/neutral/success/warning/danger 팔레트 (hex 값 복제)
+    - Typography 프레임: 폰트 패밀리/사이즈 스케일/웨이트
+    - Spacing 프레임: 4/8/12/16/24/... 스케일
+    - Radius 프레임, Shadow 프레임 (원본에 있는 경우)
+  → COMPONENTS 섹션 (컴포넌트별 독립 프레임):
+    - 각 프레임: 원본 이름 + Variants + 상태별 변형 (default/hover/active/disabled)
+    - reusable 컴포넌트로 정의 (템플릿에서 ref로 참조할 수 있게)
+  → TEMPLATES 섹션 (페이지 템플릿 프레임):
+    - 원본 DESIGN.md에 명시된 페이지/화면을 프레임으로 재구성
+    - 이미 만든 컴포넌트를 ref로 조립 (중복 그리기 금지)
+  → 각 프레임 헤더에 "Source: DESIGN.md § {섹션명}" 참조 표기
+
+Phase 2b — Action: README 프레임 (designing):
+  → design-md.pen 최상단 또는 최하단에 "README" 프레임
+  → 내용:
+    - 시스템 소개 (1-2줄)
+    - 원본 출처 URL + 라이선스 고지
+    - 토큰 → 컴포넌트 → 템플릿 계층 설명
+    - Case B 연결: "이 시스템을 참고하여 프로젝트 .pen 디자인 시 적용 방법"
+    - Case W 연결: "이 .pen을 참고하여 HTML 구현 시 매핑 가이드"
+  → 다크/라이트 변형 지원 여부 명시
+
+Phase 3 — Verify (design-evaluating):
+  → design-craft.md Case D 3축 평가
+    D1: 수집 충실도 (35점)
+    D2: 프레임 단위 복제 정확도 (35점)
+    D3: 토큰 & 템플릿 재사용성 (30점)
+  → recording: 로그 + RPG
+```
+
+### designmd CLI 인증 체크
+
+```
+□ `designmd --version`이 동작하는가? (미설치 시 사용자에게 안내)
+□ DESIGNMD_API_KEY가 환경에 설정되어 있는가? (download/get/upload 시 필요)
+□ 라이선스가 mit/cc0/cc-by/cc-by-sa 중 하나인지 확인 후 출처 고지 규칙 준수
+```
+
+### Case D 체크리스트
+
+```
+□ designmd search/get/download CLI를 실제로 호출했는가?
+□ DESIGN.md 원본이 design/design-md/{slug}/ 에 보존되었는가?
+□ design/design-md.pen 루트에 인덱스 프레임이 있는가?
+□ TOKENS 3계층(Color/Typography/Spacing 최소) 프레임이 분리되었는가?
+□ COMPONENTS 각각이 독립 프레임으로 존재하는가?
+□ TEMPLATES 프레임이 기존 컴포넌트를 ref로 조립하는가?
+□ 각 프레임에 "Source: DESIGN.md § {섹션명}" 참조가 있는가?
+□ README 프레임에 라이선스·원본 URL·Case B/W 연결 가이드가 있는가?
+□ get_screenshot()으로 시각 검증했는가?
+```
+
+---
+
 ## 5. Case W: Pencil → HTML 구현
 
 ⚠️ Case C의 JSON 기법 정의서가 존재하면 `.pen` + `.json` 이중 참조로 더 정밀한 구현 가능.
@@ -300,7 +378,7 @@ HTML 데모의 각 섹션을 스크린샷으로 캡처하는 워크플로우.
 모든 작업 완료 후 recording 단계에서 실행한다.
 
 ```
-1. 로그: harness/logs/yyyy-mm-dd-{키워드}-case{A|B|C|W}.md
+1. 로그: harness/logs/yyyy-mm-dd-{키워드}-case{A|B|C|D|W}.md
 2. 인덱스: harness/logs/harness-usage.md에 1줄 추가
 3. XP 계산: 기본XP(점수×10) × 등급배율(A:5/B:3/C:1/D:0.5) × 유형배율(A:1.2/B:1.2/C:1.2/W:1.2)
 4. 레벨업 판정 + 업적 갱신 (harness/engine/level-achievement-system.md 참조)
@@ -317,5 +395,8 @@ HTML 데모의 각 섹션을 스크린샷으로 캡처하는 워크플로우.
 | B → W | 양쪽 60점+ | 각 XP × 1.3 |
 | C → W | 양쪽 60점+ | 각 XP × 1.3 |
 | C → B | 양쪽 60점+ | 각 XP × 1.2 |
+| D → B | 양쪽 60점+ | 각 XP × 1.3 |
+| D → W | 양쪽 60점+ | 각 XP × 1.3 |
 | A → B → W | 전체 60점+ | 각 XP × 1.5 |
 | C → B → W | 전체 60점+ | 각 XP × 1.5 |
+| D → B → W | 전체 60점+ | 각 XP × 1.5 |

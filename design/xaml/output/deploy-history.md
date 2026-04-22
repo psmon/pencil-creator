@@ -10,3 +10,4 @@
 | 2026-03-31 | v1.0.5 | sample04 추가: We Choose Peace (CAT14 Peace 5종·Three.js 3D Globe·하트 도시·EN/KO i18n·옵션패널) |
 | 2026-03-31 | v1.0.6 | sample05 추가: Astral Voyager (CAT15 Space 6종·4 Universe·Dual Solar Systems·Kepler+Fibonacci·NASA Texture) |
 | 2026-03-31 | v1.0.7 | sample06 추가: 요르단의 반지 (CAT16 RPG Hero·8CAT 통합·3D Canvas Ring·룬 매칭 퍼즐·크라우드펀딩) |
+| 2026-04-16 | v1.0.8 | sample07 추가: 블룸 AI 디자인 시스템 소개 랜딩 (Three.js Orbit·3축 하네스 UI·6 Agents·터미널 시뮬레이션·커스텀 스크롤) |
