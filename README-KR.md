@@ -1,5 +1,9 @@
 # Pencil Creator
 
+[![Pencil Creator 시연 영상](https://img.youtube.com/vi/wx6UsD48zXs/maxresdefault.jpg)](https://www.youtube.com/watch?v=wx6UsD48zXs)
+
+> ▶ 이미지를 클릭하면 **PencilCreator 시연 영상**이 재생됩니다.
+
 ![Pencil Creator](design/img/intro.png)
 
 **Look & Feel + Animation First Design** ― 웹 애플리케이션을 만들기 전에, 룩앤필과 애니메이션을 먼저 디자인하고 검증하는 Claude Code 프로젝트
@@ -346,6 +350,26 @@ claude
 > "XAML을 WPF앱에 마이그레이션 해줘"                           # Blend 편집용 변환
 > "하네스가 뭐야?"                                            # 사용법 안내
 ```
+
+---
+
+## 하네스(Harness)로 직접 만들어보기
+
+이 프로젝트의 결과물은 모두 **Pencil Design Harness (v2.6.0)** 위에서 생산됩니다.
+하네스는 단순한 프롬프트 실행 도구가 아니라 **프롬프트 → 디자인 → 평가 → 레벨업** 루프를 갖춘 품질 프레임워크입니다.
+
+- **5가지 워크플로우 케이스** — A(WPF→템플릿) · B(템플릿→프로젝트) · C(웹→JSON→컴포넌트) · D(DesignMD→펜슬) · W(펜슬→HTML)
+- **3축 × 100점 자동 평가** — 결과물마다 점수/등급(A·B·C·D)이 매겨지고 `harness/logs/`에 기록됩니다
+- **파이프라인 보너스** — A→B→W처럼 케이스를 이어 붙이면 최대 **1.5배 XP** 획득
+- **RPG 레벨 & 업적 시스템** — 작업을 반복할수록 레벨·업적이 쌓여 품질 기준이 가시화됩니다
+
+아래 영상은 위 하네스를 이용해 **프롬프트 한 줄에서 펜슬 디자인, HTML 구현, 자동 평가까지** 이어지는 전체 과정을 담았습니다.
+
+<a href="https://www.youtube.com/watch?v=iFBF_CMX64g">
+  <img src="https://img.youtube.com/vi/iFBF_CMX64g/hqdefault.jpg" alt="하네스 제작 과정" width="420" />
+</a>
+
+> ▶ 이미지를 클릭하면 **하네스 제작 과정 영상**이 YouTube에서 재생됩니다.
 
 ---
 

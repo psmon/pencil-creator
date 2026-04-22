@@ -1,5 +1,9 @@
 # Pencil Creator
 
+[![Pencil Creator Demo](https://img.youtube.com/vi/wx6UsD48zXs/maxresdefault.jpg)](https://www.youtube.com/watch?v=wx6UsD48zXs)
+
+> ▶ Click the image to watch the **PencilCreator demo video**.
+
 ![Pencil Creator](design/img/intro.png)
 
 **Look & Feel + Animation First Design** — A Claude Code project for designing and validating look & feel and animations before building web applications.
@@ -354,6 +358,26 @@ claude
 > "Migrate XAML to WPF app"                                      # Blend editing
 > "What is the harness?"                                         # Usage guide
 ```
+
+---
+
+## Built with the Harness
+
+Everything you see above is produced on top of the **Pencil Design Harness (v2.6.0)** —
+not a plain prompt runner, but a quality framework that closes the loop of **prompt → design → evaluation → level-up**.
+
+- **5 workflow cases** — A (WPF → Template) · B (Template → Project) · C (Web → JSON → Component) · D (DesignMD → Pencil) · W (Pencil → HTML)
+- **3-axis × 100-point auto evaluation** — every artifact gets a score/grade (A/B/C/D) logged under `harness/logs/`
+- **Pipeline bonuses** — chain cases like A → B → W to earn up to **1.5× XP**
+- **RPG level & achievement system** — levels and achievements accumulate with each run, making quality bars visible
+
+The video below walks through the full loop — **from a single prompt to Pencil design, HTML implementation, and automated scoring** — driven entirely by the Harness.
+
+<a href="https://www.youtube.com/watch?v=iFBF_CMX64g">
+  <img src="https://img.youtube.com/vi/iFBF_CMX64g/hqdefault.jpg" alt="Built with the Harness" width="420" />
+</a>
+
+> ▶ Click the image to watch the **Harness making-of video** on YouTube.
 
 ---
 
