@@ -216,6 +216,39 @@ h1 {
   margin-bottom: 18px;
 }
 
+.objective-card {
+  display: grid;
+  gap: 7px;
+  padding: 12px;
+  margin-bottom: 14px;
+  border: 1px solid rgba(245, 191, 79, 0.24);
+  background:
+    linear-gradient(135deg, rgba(245, 191, 79, 0.12), rgba(56, 213, 255, 0.04)),
+    rgba(255, 255, 255, 0.03);
+}
+
+.objective-card span,
+.objective-card em {
+  font-family: var(--mono);
+  font-style: normal;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.objective-card span {
+  color: var(--amber);
+}
+
+.objective-card strong {
+  font-size: 14px;
+  color: var(--text);
+}
+
+.objective-card em {
+  color: var(--muted);
+}
+
 .mini-grid {
   display: grid;
   grid-template-columns: 72px 1fr;
@@ -304,6 +337,47 @@ h1 {
 .reticle span:nth-child(3) { right: -1px; bottom: -1px; border-width: 0 2px 2px 0; }
 .reticle span:nth-child(4) { left: -1px; bottom: -1px; border-width: 0 0 2px 2px; }
 
+.treasure-toast {
+  position: fixed;
+  z-index: 13;
+  left: 50%;
+  top: 118px;
+  min-width: 300px;
+  transform: translate(-50%, -18px) scale(0.96);
+  padding: 14px 18px;
+  border: 1px solid rgba(245, 191, 79, 0.5);
+  background:
+    radial-gradient(circle at 18% 50%, rgba(245, 191, 79, 0.24), transparent 34%),
+    rgba(8, 15, 29, 0.88);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 0 40px rgba(245, 191, 79, 0.2), inset 0 0 28px rgba(245, 191, 79, 0.08);
+  text-align: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.24s ease, transform 0.24s ease;
+}
+
+.treasure-toast.show {
+  opacity: 1;
+  transform: translate(-50%, 0) scale(1);
+}
+
+.treasure-toast span {
+  display: block;
+  color: var(--amber);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+
+.treasure-toast strong {
+  font-size: 18px;
+  letter-spacing: 0;
+  text-shadow: 0 0 22px rgba(245, 191, 79, 0.34);
+}
+
 .bottom-console {
   position: fixed;
   z-index: 12;
@@ -362,6 +436,7 @@ h1 {
   .hud-right { right: 16px; }
   .hud-right p,
   .mini-grid { display: none; }
+  .treasure-toast { top: 96px; }
   .bottom-console { bottom: 12px; }
 }
 
@@ -386,6 +461,12 @@ h1 {
   .hud-right { bottom: 92px; }
   .panel-title { margin-bottom: 10px; }
   .meter { margin-top: 9px; }
+  .objective-card { margin-bottom: 10px; padding: 10px; }
+  .treasure-toast {
+    min-width: 0;
+    width: calc(100vw - 40px);
+    top: 104px;
+  }
   .reticle {
     width: 70px;
     height: 70px;

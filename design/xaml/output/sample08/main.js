@@ -12,16 +12,53 @@ const hud = {
   console: document.getElementById('consoleText'),
   progress: document.getElementById('missionProgress'),
   sector: document.getElementById('sectorName'),
+  stageTitle: document.getElementById('stageTitle'),
+  goalText: document.getElementById('goalText'),
+  goalValue: document.getElementById('goalValue'),
+  treasureToast: document.getElementById('treasureToast'),
+  treasureName: document.getElementById('treasureName'),
   boostBtn: document.getElementById('boostBtn'),
   scanBtn: document.getElementById('scanBtn'),
   resetBtn: document.getElementById('resetBtn'),
 };
 
-const sectors = [
-  'Jordan-05 Drift',
-  'Petra Nebula Gate',
-  'Wadi Rum Belt',
-  'Aqaba Blue Rift',
+const stages = [
+  {
+    sector: 'Jordan-05 Drift',
+    title: 'STAGE 1',
+    goal: '별빛 항로 개척',
+    artifacts: 2,
+    distance: 420,
+    treasure: 'Petra Starlight',
+    mission: '소행성 장막을 통과하며 페트라 별빛 보물을 2개 회수하세요.',
+  },
+  {
+    sector: 'Petra Nebula Gate',
+    title: 'STAGE 2',
+    goal: '페트라 성운문 진입',
+    artifacts: 4,
+    distance: 900,
+    treasure: 'Nebula Seal',
+    mission: '워프 게이트를 활용해 성운문까지 진입하고 보물 신호를 추적하세요.',
+  },
+  {
+    sector: 'Wadi Rum Belt',
+    title: 'STAGE 3',
+    goal: '와디럼 벨트 돌파',
+    artifacts: 6,
+    distance: 1360,
+    treasure: 'Wadi Rum Prism',
+    mission: '밀집 소행성대를 회피하며 와디럼 프리즘 조각을 확보하세요.',
+  },
+  {
+    sector: 'Aqaba Blue Rift',
+    title: 'FINAL',
+    goal: '아카바 블루 리프트',
+    artifacts: 7,
+    distance: 1800,
+    treasure: 'Jordan Crown Core',
+    mission: '마지막 왕관 코어를 획득하고 요르단 항로를 완성하세요.',
+  },
 ];
 
 const state = {
@@ -35,9 +72,10 @@ const state = {
   integrity: 100,
   artifacts: 0,
   distance: 0,
-  sectorIndex: 0,
+  stageIndex: 0,
   complete: false,
   lastHit: 0,
+  treasureToastTimer: 0,
 };
 
 const keys = new Set();
@@ -105,22 +143,41 @@ function makeShip() {
   const c = new PIXI.Container();
   c.eventMode = 'none';
 
+  const aura = new PIXI.Graphics();
+  aura.ellipse(0, 14, 72, 92).fill({ color: palette.cyan, alpha: 0.055 });
+  aura.ellipse(0, 24, 48, 70).fill({ color: palette.violet, alpha: 0.05 });
+
+  const wingGlow = new PIXI.Graphics();
+  wingGlow.poly([-24, 17, -80, 58, -28, 42]).fill({ color: palette.cyan, alpha: 0.12 });
+  wingGlow.poly([24, 17, 80, 58, 28, 42]).fill({ color: palette.cyan, alpha: 0.12 });
+  wingGlow.poly([-11, 34, -25, 78, -4, 50, 0, 40]).fill({ color: palette.rose, alpha: 0.16 });
+  wingGlow.poly([11, 34, 25, 78, 4, 50, 0, 40]).fill({ color: palette.rose, alpha: 0.16 });
+
   const body = new PIXI.Graphics();
-  body.poly([0, -40, 26, 28, 0, 16, -26, 28]).fill({ color: 0xe8f7ff, alpha: 0.96 });
-  body.poly([0, -30, 12, 18, 0, 10, -12, 18]).fill({ color: palette.cyan, alpha: 0.32 });
-  body.poly([-20, 20, -46, 42, -17, 30]).fill({ color: 0x39516a, alpha: 0.95 });
-  body.poly([20, 20, 46, 42, 17, 30]).fill({ color: 0x39516a, alpha: 0.95 });
-  body.stroke({ color: palette.cyan, width: 1.4, alpha: 0.78 });
+  body.poly([0, -58, 22, -14, 34, 38, 0, 24, -34, 38, -22, -14]).fill({ color: 0xdff7ff, alpha: 0.98 });
+  body.poly([0, -47, 13, -8, 8, 17, 0, 10, -8, 17, -13, -8]).fill({ color: palette.cyan, alpha: 0.34 });
+  body.poly([0, -55, 8, -18, 0, -25, -8, -18]).fill({ color: palette.white, alpha: 0.3 });
+  body.poly([-21, -4, -67, 37, -82, 64, -29, 46]).fill({ color: 0x34536f, alpha: 0.98 });
+  body.poly([21, -4, 67, 37, 82, 64, 29, 46]).fill({ color: 0x34536f, alpha: 0.98 });
+  body.poly([-31, 33, -65, 54, -34, 47]).fill({ color: palette.amber, alpha: 0.22 });
+  body.poly([31, 33, 65, 54, 34, 47]).fill({ color: palette.amber, alpha: 0.22 });
+  body.poly([-16, 31, -35, 72, -8, 48, 0, 32]).fill({ color: 0x263447, alpha: 0.98 });
+  body.poly([16, 31, 35, 72, 8, 48, 0, 32]).fill({ color: 0x263447, alpha: 0.98 });
+  body.circle(-18, 18, 4).fill({ color: palette.green, alpha: 0.86 });
+  body.circle(18, 18, 4).fill({ color: palette.green, alpha: 0.86 });
+  body.moveTo(0, -58).lineTo(0, 26).stroke({ color: 0x8ee8ff, width: 1.2, alpha: 0.42 });
+  body.stroke({ color: palette.cyan, width: 1.7, alpha: 0.82 });
 
   engineFlame = new PIXI.Graphics();
-  engineFlame.poly([-11, 26, 0, 76, 11, 26]).fill({ color: palette.amber, alpha: 0.7 });
-  engineFlame.poly([-5, 28, 0, 56, 5, 28]).fill({ color: palette.rose, alpha: 0.82 });
+  engineFlame.poly([-20, 38, 0, 100, 20, 38]).fill({ color: palette.amber, alpha: 0.74 });
+  engineFlame.poly([-10, 39, 0, 76, 10, 39]).fill({ color: palette.rose, alpha: 0.9 });
+  engineFlame.poly([-4, 39, 0, 58, 4, 39]).fill({ color: palette.white, alpha: 0.82 });
 
   shieldRing = new PIXI.Graphics();
-  shieldRing.circle(0, 6, 58).stroke({ color: palette.cyan, width: 1.5, alpha: 0.32 });
-  shieldRing.circle(0, 6, 70).stroke({ color: palette.green, width: 1, alpha: 0.16 });
+  shieldRing.ellipse(0, 8, 86, 96).stroke({ color: palette.cyan, width: 1.5, alpha: 0.32 });
+  shieldRing.ellipse(0, 8, 102, 116).stroke({ color: palette.green, width: 1, alpha: 0.16 });
 
-  c.addChild(shieldRing, engineFlame, body);
+  c.addChild(aura, shieldRing, wingGlow, engineFlame, body);
   return c;
 }
 
@@ -326,11 +383,12 @@ function updateObjects(delta, time) {
       obj.container.alpha = 0.76 + Math.sin(time * 0.01) * 0.24;
     }
 
-    if (obj.active && objectCollision(obj, p)) {
+    if (state.integrity > 0 && !state.complete && obj.active && objectCollision(obj, p)) {
       obj.active = false;
       if (obj.type === 'crystal') {
         state.artifacts = Math.min(maxArtifacts, state.artifacts + 1);
-        hud.console.textContent = `Artifact secured. ${maxArtifacts - state.artifacts} fragments left in Jordan route.`;
+        showTreasureToast(currentStage().treasure);
+        hud.console.textContent = `요르단의 보물획득: ${currentStage().treasure}. 다음 목표까지 ${Math.max(0, currentStage().artifacts - state.artifacts)}개.`;
       } else if (obj.type === 'gate') {
         state.distance += 180;
         hud.console.textContent = 'Warp gate aligned. Route compression successful.';
@@ -358,25 +416,78 @@ function updateShip(delta, time) {
   shieldRing.alpha = state.scan ? 0.85 : 0.42 + Math.sin(time * 0.004) * 0.14;
 }
 
+function currentStage() {
+  return stages[state.stageIndex];
+}
+
+function previousStage() {
+  return stages[state.stageIndex - 1] || { artifacts: 0, distance: 0 };
+}
+
+function stageProgress() {
+  const stage = currentStage();
+  const prev = previousStage();
+  const artifactSpan = Math.max(1, stage.artifacts - prev.artifacts);
+  const distanceSpan = Math.max(1, stage.distance - prev.distance);
+  const artifactProgress = clamp((state.artifacts - prev.artifacts) / artifactSpan, 0, 1);
+  const distanceProgress = clamp((state.distance - prev.distance) / distanceSpan, 0, 1);
+  return {
+    artifactProgress,
+    distanceProgress,
+    value: (artifactProgress + distanceProgress) / 2,
+  };
+}
+
+function showTreasureToast(name) {
+  hud.treasureName.textContent = name;
+  hud.treasureToast.classList.add('show');
+  clearTimeout(state.treasureToastTimer);
+  state.treasureToastTimer = setTimeout(() => {
+    hud.treasureToast.classList.remove('show');
+  }, 1400);
+}
+
+function advanceStageIfReady() {
+  const stage = currentStage();
+  if (state.integrity <= 0 || state.complete) return;
+  if (state.artifacts < stage.artifacts || state.distance < stage.distance) return;
+
+  if (state.stageIndex >= stages.length - 1) {
+    state.complete = true;
+    hud.console.textContent = '요르단 우주여행 완료. 모든 보물과 항로 기록을 확보했습니다.';
+    showTreasureToast('Jordan Crown Core Complete');
+    return;
+  }
+
+  state.stageIndex += 1;
+  const next = currentStage();
+  hud.console.textContent = `${next.sector} 진입. 새 목표: ${next.goal}.`;
+  showTreasureToast(`${next.title} UNLOCKED`);
+}
+
 function updateHud() {
+  const stage = currentStage();
+  const progress = stageProgress();
   hud.speed.textContent = state.speed.toFixed(1);
   hud.speedBar.style.width = `${clamp((state.speed / 3.2) * 100, 0, 100)}%`;
   hud.integrity.textContent = Math.round(state.integrity);
   hud.integrityBar.style.width = `${state.integrity}%`;
   hud.artifacts.textContent = `${state.artifacts}`;
   hud.artifactBar.style.width = `${(state.artifacts / maxArtifacts) * 100}%`;
-  hud.progress.style.width = `${clamp((state.distance / 1800) * 100, 0, 100)}%`;
-  hud.sector.textContent = sectors[state.sectorIndex];
+  hud.progress.style.width = `${progress.value * 100}%`;
+  hud.sector.textContent = stage.sector;
+  hud.stageTitle.textContent = stage.title;
+  hud.goalText.textContent = stage.goal;
+  hud.goalValue.textContent = `보물 ${Math.min(state.artifacts, stage.artifacts)}/${stage.artifacts} · 항로 ${Math.round(progress.distanceProgress * 100)}%`;
 
   if (state.integrity <= 0) {
     hud.missionState.textContent = 'RECOVER';
     hud.missionState.style.color = 'var(--rose)';
     hud.mission.textContent = '선체 복구가 필요합니다. Reset으로 항로를 재시작하세요.';
-  } else if (state.artifacts >= maxArtifacts) {
+  } else if (state.complete) {
     hud.missionState.textContent = 'CLEAR';
     hud.missionState.style.color = 'var(--amber)';
-    hud.mission.textContent = '요르단 성운 유물을 모두 회수했습니다. 항로 기록 완료.';
-    state.complete = true;
+    hud.mission.textContent = '요르단의 모든 보물을 획득했습니다. 항로 기록 완료.';
   } else if (state.scan) {
     hud.missionState.textContent = 'SCANNING';
     hud.missionState.style.color = 'var(--cyan)';
@@ -384,23 +495,25 @@ function updateHud() {
   } else {
     hud.missionState.textContent = 'ACTIVE';
     hud.missionState.style.color = 'var(--green)';
-    hud.mission.textContent = '별빛 유물을 회수하고 성운 항로를 개척하세요.';
+    hud.mission.textContent = stage.mission;
   }
 }
 
 function tick(ticker) {
   const delta = Math.min(ticker.deltaTime || 1, 2.5);
   const time = performance.now();
-  updateInput();
-  state.speed = lerp(state.speed, state.boost ? 3.2 : 1.05, 0.08);
-  state.distance += state.speed * delta * 0.9;
-  state.sectorIndex = Math.floor(state.distance / 460) % sectors.length;
+  const playable = state.integrity > 0 && !state.complete;
+  if (playable) updateInput();
+  state.speed = lerp(state.speed, playable ? (state.boost ? 3.2 : 1.05) : 0.55, 0.08);
+  if (playable) state.distance += state.speed * delta * 0.9;
   state.boost = false;
 
   drawLanes(time);
   updateStars(delta, time);
-  updateObjects(delta, time);
+  if (playable) updateObjects(delta, time);
+  else updateObjects(delta * 0.35, time);
   updateShip(delta, time);
+  advanceStageIfReady();
   updateHud();
 }
 
@@ -455,9 +568,11 @@ function resetMission() {
   state.integrity = 100;
   state.artifacts = 0;
   state.distance = 0;
+  state.stageIndex = 0;
   state.complete = false;
   state.scan = false;
   hud.scanBtn.classList.remove('active');
+  hud.treasureToast.classList.remove('show');
   hud.console.textContent = 'Jordan navigation core online. Entering asteroid veil.';
   objects.forEach((obj) => resetObject(obj, true));
 }
