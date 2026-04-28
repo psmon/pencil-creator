@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>요르단의 우주여행 — PixiJS Space Expedition</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="game-shell">
+    <section class="stage-wrap" aria-label="요르단의 우주여행 게임 스테이지">
+      <div id="pixi-stage"></div>
+      <div class="vignette"></div>
+      <div class="scanlines"></div>
+    </section>
+
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">PixiJS Expedition</p>
+        <h1>요르단의 우주여행</h1>
+      </div>
+      <div class="mission-pill">
+        <span id="sectorName">Jordan-05 Drift</span>
+        <strong id="missionState">ACTIVE</strong>
+      </div>
+    </header>
+
+    <aside class="hud hud-left">
+      <div class="panel-title">Ship Telemetry</div>
+      <div class="meter">
+        <span>Warp</span>
+        <strong><span id="speedValue">1.0</span>x</strong>
+      </div>
+      <div class="bar"><i id="speedBar"></i></div>
+      <div class="meter">
+        <span>Integrity</span>
+        <strong><span id="integrityValue">100</span>%</strong>
+      </div>
+      <div class="bar danger"><i id="integrityBar"></i></div>
+      <div class="meter">
+        <span>Artifacts</span>
+        <strong><span id="artifactValue">0</span>/7</strong>
+      </div>
+      <div class="bar treasure"><i id="artifactBar"></i></div>
+    </aside>
+
+    <aside class="hud hud-right">
+      <div class="panel-title">Mission Deck</div>
+      <p id="missionText">별빛 유물을 회수하고 성운 항로를 개척하세요.</p>
+      <div class="mini-grid">
+        <span>WASD</span><span>MOVE</span>
+        <span>SPACE</span><span>BOOST</span>
+        <span>DRAG</span><span>STEER</span>
+      </div>
+      <div class="button-row">
+        <button id="boostBtn" type="button">Warp</button>
+        <button id="scanBtn" type="button">Scan</button>
+        <button id="resetBtn" type="button">Reset</button>
+      </div>
+    </aside>
+
+    <div class="reticle" aria-hidden="true">
+      <span></span><span></span><span></span><span></span>
+    </div>
+
+    <div class="bottom-console">
+      <div class="console-line">
+        <span class="dot"></span>
+        <p id="consoleText">Jordan navigation core online. Entering asteroid veil.</p>
+      </div>
+      <div class="progress-rail"><i id="missionProgress"></i></div>
+    </div>
+  </main>
+
+  <script src="https://pixijs.download/release/pixi.min.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
