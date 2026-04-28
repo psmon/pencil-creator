@@ -11,3 +11,4 @@
 | 2026-03-31 | v1.0.6 | sample05 추가: Astral Voyager (CAT15 Space 6종·4 Universe·Dual Solar Systems·Kepler+Fibonacci·NASA Texture) |
 | 2026-03-31 | v1.0.7 | sample06 추가: 요르단의 반지 (CAT16 RPG Hero·8CAT 통합·3D Canvas Ring·룬 매칭 퍼즐·크라우드펀딩) |
 | 2026-04-16 | v1.0.8 | sample07 추가: 블룸 AI 디자인 시스템 소개 랜딩 (Three.js Orbit·3축 하네스 UI·6 Agents·터미널 시뮬레이션·커스텀 스크롤) |
+| 2026-04-28 | v1.0.9 | sample08 추가: 요르단의 우주여행 (PixiJS 2.5D 우주 탐사·요르단의 보물획득 UX·스테이지 목표 루프·개선된 우주선 HUD) |
