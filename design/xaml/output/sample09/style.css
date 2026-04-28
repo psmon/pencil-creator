@@ -1,0 +1,39 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html,
+body,
+#app-shell,
+#pixi-root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background: #090812;
+  color: #f8fafc;
+  font-family: Consolas, "Cascadia Mono", "Courier New", monospace;
+}
+
+#app-shell {
+  position: relative;
+  min-height: 620px;
+}
+
+#pixi-root canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  cursor: crosshair;
+  touch-action: none;
+}
+
+noscript {
+  position: fixed;
+  inset: 24px;
+  display: grid;
+  place-items: center;
+  color: #f8fafc;
+}
