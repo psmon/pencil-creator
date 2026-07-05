@@ -18,3 +18,4 @@
 | 2026-06-06 | Lv.59→60 | 7,098 | Pixel Orchestra MIDI 데모 sample14 Case W (첫 S→W ×1.3, 5 PD MIDI + 3 stages, A 91) | 전문 디자이너 |
 | 2026-06-16 | Lv.61→62 | 7,254 | ITZY 센터 댄서 전 구간 댄스 영입 Case S (영상 동작 분석 → 14f idle6+play8, S→W ×1.3, A 93) | 전문 디자이너 |
 | 2026-07-06 | Lv.62→63 | 5,580 | 일렉+클래식 연주자 22종 output_ex Case S (GPT+Gemini 하이브리드, 전원 93 A 균일) | 전문 디자이너 |
+| 2026-07-06 | Lv.63→64 | 5,580 | 보컬 분리 시리즈 output_ex_vocal Case S (vocal-1~4 리마스터 전원 93 A, 연주자/보컬 분리) | 전문 디자이너 |

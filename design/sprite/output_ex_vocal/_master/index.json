@@ -1,0 +1,205 @@
+{
+  "version": "2.7.0",
+  "characters": {
+    "vocal-1": {
+      "row": 0,
+      "actions": {
+        "idle": {
+          "sheet": "vocal-1/idle.png",
+          "json": "vocal-1/idle.json"
+        },
+        "play": {
+          "sheet": "vocal-1/play.png",
+          "json": "vocal-1/play.json"
+        }
+      },
+      "group": "vocal-remaster"
+    },
+    "vocal-2": {
+      "row": 1,
+      "actions": {
+        "idle": {
+          "sheet": "vocal-2/idle.png",
+          "json": "vocal-2/idle.json"
+        },
+        "play": {
+          "sheet": "vocal-2/play.png",
+          "json": "vocal-2/play.json"
+        }
+      },
+      "group": "vocal-remaster"
+    },
+    "vocal-3": {
+      "row": 2,
+      "actions": {
+        "idle": {
+          "sheet": "vocal-3/idle.png",
+          "json": "vocal-3/idle.json"
+        },
+        "play": {
+          "sheet": "vocal-3/play.png",
+          "json": "vocal-3/play.json"
+        }
+      },
+      "group": "vocal-remaster"
+    },
+    "vocal-4": {
+      "row": 3,
+      "actions": {
+        "idle": {
+          "sheet": "vocal-4/idle.png",
+          "json": "vocal-4/idle.json"
+        },
+        "play": {
+          "sheet": "vocal-4/play.png",
+          "json": "vocal-4/play.json"
+        }
+      },
+      "group": "vocal-remaster"
+    },
+    "vocal-ex": {
+      "row": 4,
+      "actions": {
+        "idle": {
+          "sheet": "vocal-ex/idle.png",
+          "json": "vocal-ex/idle.json"
+        },
+        "play": {
+          "sheet": "vocal-ex/play.png",
+          "json": "vocal-ex/play.json"
+        }
+      },
+      "group": "vocal-ex"
+    },
+    "vox7-1": {
+      "row": 5,
+      "actions": {
+        "idle": {
+          "sheet": "vox7-1/idle.png",
+          "json": "vox7-1/idle.json"
+        },
+        "dance": {
+          "sheet": "vox7-1/dance.png",
+          "json": "vox7-1/dance.json"
+        }
+      },
+      "group": "vox7"
+    },
+    "vox7-2": {
+      "row": 6,
+      "actions": {
+        "idle": {
+          "sheet": "vox7-2/idle.png",
+          "json": "vox7-2/idle.json"
+        },
+        "dance": {
+          "sheet": "vox7-2/dance.png",
+          "json": "vox7-2/dance.json"
+        }
+      },
+      "group": "vox7"
+    },
+    "vox7-3": {
+      "row": 7,
+      "actions": {
+        "idle": {
+          "sheet": "vox7-3/idle.png",
+          "json": "vox7-3/idle.json"
+        },
+        "dance": {
+          "sheet": "vox7-3/dance.png",
+          "json": "vox7-3/dance.json"
+        }
+      },
+      "group": "vox7"
+    },
+    "vox7-4": {
+      "row": 8,
+      "actions": {
+        "idle": {
+          "sheet": "vox7-4/idle.png",
+          "json": "vox7-4/idle.json"
+        },
+        "dance": {
+          "sheet": "vox7-4/dance.png",
+          "json": "vox7-4/dance.json"
+        }
+      },
+      "group": "vox7"
+    },
+    "vox7-5": {
+      "row": 9,
+      "actions": {
+        "idle": {
+          "sheet": "vox7-5/idle.png",
+          "json": "vox7-5/idle.json"
+        },
+        "dance": {
+          "sheet": "vox7-5/dance.png",
+          "json": "vox7-5/dance.json"
+        }
+      },
+      "group": "vox7"
+    },
+    "vox7-6": {
+      "row": 10,
+      "actions": {
+        "idle": {
+          "sheet": "vox7-6/idle.png",
+          "json": "vox7-6/idle.json"
+        },
+        "dance": {
+          "sheet": "vox7-6/dance.png",
+          "json": "vox7-6/dance.json"
+        }
+      },
+      "group": "vox7"
+    },
+    "vox7-7": {
+      "row": 11,
+      "actions": {
+        "idle": {
+          "sheet": "vox7-7/idle.png",
+          "json": "vox7-7/idle.json"
+        },
+        "dance": {
+          "sheet": "vox7-7/dance.png",
+          "json": "vox7-7/dance.json"
+        }
+      },
+      "group": "vox7"
+    }
+  },
+  "actions": [
+    "idle",
+    "play",
+    "dance"
+  ],
+  "master_sheet": "_master/orchestra-master.png",
+  "frame_size": [
+    192,
+    192
+  ],
+  "padding": 8,
+  "collection": "ex_vocal — vocals separated from performers (vocal-1~4 remaster + vocal-ex/vox7 copies)",
+  "groups": {
+    "vocal-remaster": [
+      "vocal-1",
+      "vocal-2",
+      "vocal-3",
+      "vocal-4"
+    ],
+    "vocal-ex": [
+      "vocal-ex"
+    ],
+    "vox7": [
+      "vox7-1",
+      "vox7-2",
+      "vox7-3",
+      "vox7-4",
+      "vox7-5",
+      "vox7-6",
+      "vox7-7"
+    ]
+  }
+}

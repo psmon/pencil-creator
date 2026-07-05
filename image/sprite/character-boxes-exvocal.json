@@ -1,0 +1,17 @@
+{
+  "source": "vocal series (output_ex_vocal) — vocal-1~4 remaster + vocal-ex/vox7 copies, separated from performers",
+  "characters": [
+    { "slug": "vocal-1", "group": "vocal-remaster" },
+    { "slug": "vocal-2", "group": "vocal-remaster" },
+    { "slug": "vocal-3", "group": "vocal-remaster" },
+    { "slug": "vocal-4", "group": "vocal-remaster" },
+    { "slug": "vocal-ex", "group": "vocal-ex" },
+    { "slug": "vox7-1", "group": "vox7" },
+    { "slug": "vox7-2", "group": "vox7" },
+    { "slug": "vox7-3", "group": "vox7" },
+    { "slug": "vox7-4", "group": "vox7" },
+    { "slug": "vox7-5", "group": "vox7" },
+    { "slug": "vox7-6", "group": "vox7" },
+    { "slug": "vox7-7", "group": "vox7" }
+  ]
+}
