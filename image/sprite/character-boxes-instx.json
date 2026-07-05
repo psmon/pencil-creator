@@ -1,0 +1,27 @@
+{
+  "source": "instrument series (elec + classic) — instrument-only sprites, output_ex",
+  "characters": [
+    { "slug": "elec-guitar", "group": "elec" },
+    { "slug": "elec-bass", "group": "elec" },
+    { "slug": "keytar", "group": "elec" },
+    { "slug": "synth", "group": "elec" },
+    { "slug": "dj-deck", "group": "elec" },
+    { "slug": "drum-machine", "group": "elec" },
+    { "slug": "edrum", "group": "elec" },
+    { "slug": "piano", "group": "classic" },
+    { "slug": "violin", "group": "classic" },
+    { "slug": "viola", "group": "classic" },
+    { "slug": "cello", "group": "classic" },
+    { "slug": "contrabass", "group": "classic" },
+    { "slug": "flute", "group": "classic" },
+    { "slug": "clarinet", "group": "classic" },
+    { "slug": "oboe", "group": "classic" },
+    { "slug": "trumpet", "group": "classic" },
+    { "slug": "trombone", "group": "classic" },
+    { "slug": "horn", "group": "classic" },
+    { "slug": "tuba", "group": "classic" },
+    { "slug": "drum", "group": "classic" },
+    { "slug": "guitar", "group": "classic" },
+    { "slug": "harp", "group": "classic" }
+  ]
+}

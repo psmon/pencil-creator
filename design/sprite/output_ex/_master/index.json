@@ -1,0 +1,352 @@
+{
+  "version": "2.7.0",
+  "characters": {
+    "elec-guitar": {
+      "row": 0,
+      "actions": {
+        "idle": {
+          "sheet": "elec-guitar/idle.png",
+          "json": "elec-guitar/idle.json"
+        },
+        "play": {
+          "sheet": "elec-guitar/play.png",
+          "json": "elec-guitar/play.json"
+        }
+      },
+      "group": "elec"
+    },
+    "elec-bass": {
+      "row": 1,
+      "actions": {
+        "idle": {
+          "sheet": "elec-bass/idle.png",
+          "json": "elec-bass/idle.json"
+        },
+        "play": {
+          "sheet": "elec-bass/play.png",
+          "json": "elec-bass/play.json"
+        }
+      },
+      "group": "elec"
+    },
+    "keytar": {
+      "row": 2,
+      "actions": {
+        "idle": {
+          "sheet": "keytar/idle.png",
+          "json": "keytar/idle.json"
+        },
+        "play": {
+          "sheet": "keytar/play.png",
+          "json": "keytar/play.json"
+        }
+      },
+      "group": "elec"
+    },
+    "synth": {
+      "row": 3,
+      "actions": {
+        "idle": {
+          "sheet": "synth/idle.png",
+          "json": "synth/idle.json"
+        },
+        "play": {
+          "sheet": "synth/play.png",
+          "json": "synth/play.json"
+        }
+      },
+      "group": "elec"
+    },
+    "dj-deck": {
+      "row": 4,
+      "actions": {
+        "idle": {
+          "sheet": "dj-deck/idle.png",
+          "json": "dj-deck/idle.json"
+        },
+        "play": {
+          "sheet": "dj-deck/play.png",
+          "json": "dj-deck/play.json"
+        }
+      },
+      "group": "elec"
+    },
+    "drum-machine": {
+      "row": 5,
+      "actions": {
+        "idle": {
+          "sheet": "drum-machine/idle.png",
+          "json": "drum-machine/idle.json"
+        },
+        "play": {
+          "sheet": "drum-machine/play.png",
+          "json": "drum-machine/play.json"
+        }
+      },
+      "group": "elec"
+    },
+    "edrum": {
+      "row": 6,
+      "actions": {
+        "idle": {
+          "sheet": "edrum/idle.png",
+          "json": "edrum/idle.json"
+        },
+        "play": {
+          "sheet": "edrum/play.png",
+          "json": "edrum/play.json"
+        }
+      },
+      "group": "elec"
+    },
+    "piano": {
+      "row": 7,
+      "actions": {
+        "idle": {
+          "sheet": "piano/idle.png",
+          "json": "piano/idle.json"
+        },
+        "play": {
+          "sheet": "piano/play.png",
+          "json": "piano/play.json"
+        }
+      },
+      "group": "classic"
+    },
+    "violin": {
+      "row": 8,
+      "actions": {
+        "idle": {
+          "sheet": "violin/idle.png",
+          "json": "violin/idle.json"
+        },
+        "play": {
+          "sheet": "violin/play.png",
+          "json": "violin/play.json"
+        }
+      },
+      "group": "classic"
+    },
+    "viola": {
+      "row": 9,
+      "actions": {
+        "idle": {
+          "sheet": "viola/idle.png",
+          "json": "viola/idle.json"
+        },
+        "play": {
+          "sheet": "viola/play.png",
+          "json": "viola/play.json"
+        }
+      },
+      "group": "classic"
+    },
+    "cello": {
+      "row": 10,
+      "actions": {
+        "idle": {
+          "sheet": "cello/idle.png",
+          "json": "cello/idle.json"
+        },
+        "play": {
+          "sheet": "cello/play.png",
+          "json": "cello/play.json"
+        }
+      },
+      "group": "classic"
+    },
+    "contrabass": {
+      "row": 11,
+      "actions": {
+        "idle": {
+          "sheet": "contrabass/idle.png",
+          "json": "contrabass/idle.json"
+        },
+        "play": {
+          "sheet": "contrabass/play.png",
+          "json": "contrabass/play.json"
+        }
+      },
+      "group": "classic"
+    },
+    "flute": {
+      "row": 12,
+      "actions": {
+        "idle": {
+          "sheet": "flute/idle.png",
+          "json": "flute/idle.json"
+        },
+        "play": {
+          "sheet": "flute/play.png",
+          "json": "flute/play.json"
+        }
+      },
+      "group": "classic"
+    },
+    "clarinet": {
+      "row": 13,
+      "actions": {
+        "idle": {
+          "sheet": "clarinet/idle.png",
+          "json": "clarinet/idle.json"
+        },
+        "play": {
+          "sheet": "clarinet/play.png",
+          "json": "clarinet/play.json"
+        }
+      },
+      "group": "classic"
+    },
+    "oboe": {
+      "row": 14,
+      "actions": {
+        "idle": {
+          "sheet": "oboe/idle.png",
+          "json": "oboe/idle.json"
+        },
+        "play": {
+          "sheet": "oboe/play.png",
+          "json": "oboe/play.json"
+        }
+      },
+      "group": "classic"
+    },
+    "trumpet": {
+      "row": 15,
+      "actions": {
+        "idle": {
+          "sheet": "trumpet/idle.png",
+          "json": "trumpet/idle.json"
+        },
+        "play": {
+          "sheet": "trumpet/play.png",
+          "json": "trumpet/play.json"
+        }
+      },
+      "group": "classic"
+    },
+    "trombone": {
+      "row": 16,
+      "actions": {
+        "idle": {
+          "sheet": "trombone/idle.png",
+          "json": "trombone/idle.json"
+        },
+        "play": {
+          "sheet": "trombone/play.png",
+          "json": "trombone/play.json"
+        }
+      },
+      "group": "classic"
+    },
+    "horn": {
+      "row": 17,
+      "actions": {
+        "idle": {
+          "sheet": "horn/idle.png",
+          "json": "horn/idle.json"
+        },
+        "play": {
+          "sheet": "horn/play.png",
+          "json": "horn/play.json"
+        }
+      },
+      "group": "classic"
+    },
+    "tuba": {
+      "row": 18,
+      "actions": {
+        "idle": {
+          "sheet": "tuba/idle.png",
+          "json": "tuba/idle.json"
+        },
+        "play": {
+          "sheet": "tuba/play.png",
+          "json": "tuba/play.json"
+        }
+      },
+      "group": "classic"
+    },
+    "drum": {
+      "row": 19,
+      "actions": {
+        "idle": {
+          "sheet": "drum/idle.png",
+          "json": "drum/idle.json"
+        },
+        "play": {
+          "sheet": "drum/play.png",
+          "json": "drum/play.json"
+        }
+      },
+      "group": "classic"
+    },
+    "guitar": {
+      "row": 20,
+      "actions": {
+        "idle": {
+          "sheet": "guitar/idle.png",
+          "json": "guitar/idle.json"
+        },
+        "play": {
+          "sheet": "guitar/play.png",
+          "json": "guitar/play.json"
+        }
+      },
+      "group": "classic"
+    },
+    "harp": {
+      "row": 21,
+      "actions": {
+        "idle": {
+          "sheet": "harp/idle.png",
+          "json": "harp/idle.json"
+        },
+        "play": {
+          "sheet": "harp/play.png",
+          "json": "harp/play.json"
+        }
+      },
+      "group": "classic"
+    }
+  },
+  "actions": [
+    "idle",
+    "play"
+  ],
+  "master_sheet": "_master/orchestra-master.png",
+  "frame_size": [
+    192,
+    192
+  ],
+  "padding": 8,
+  "collection": "ex — instrument performers (elec + classic remaster)",
+  "groups": {
+    "elec": [
+      "elec-guitar",
+      "elec-bass",
+      "keytar",
+      "synth",
+      "dj-deck",
+      "drum-machine",
+      "edrum"
+    ],
+    "classic": [
+      "piano",
+      "violin",
+      "viola",
+      "cello",
+      "contrabass",
+      "flute",
+      "clarinet",
+      "oboe",
+      "trumpet",
+      "trombone",
+      "horn",
+      "tuba",
+      "drum",
+      "guitar",
+      "harp"
+    ]
+  }
+}
