@@ -8,5 +8,8 @@ __pycache__/
 # 이미 커밋된 파일은 추적 유지(삭제 안 함) — 신규/대용량만 무시.
 image/video-analysis/
 # gpt-image-2 raw 프레임 렌더는 대용량 중간 산출물이라 제외 (컨셉/최종 시트는 커밋)
-image/openai/*-f*.png
+# 주의: *-f*.png는 flute 등 '-f'로 시작하는 단어에도 걸리므로 프레임 번호(-f0, -f12)만 매칭
+image/openai/*-f[0-9]*.png
+# Gemini raw 프레임 렌더도 동일 규칙 — 후처리 산출물(design/sprite/output*)만 커밋
+image/gemini/*-f[0-9]*.png
 .claude/settings.local.json
