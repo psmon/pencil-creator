@@ -33,3 +33,4 @@
 | 2026-06-13 | S | vox7 걸그룹 7인 동시영입 (실제 걸그룹 영상 분석, gpt-image-2 105호출, 멤버별 의상·헤어 차별화 + 리듬 스탠드 댄스 idle6+dance8, per-character 팔레트로 모던색 보존 드리프트0, sample15 통합 63캐릭터) | 7인 평균 93/100 A | [로그](2026-06-13-vox7-girlgroup-caseS.md) |
 | 2026-07-06 | S | 일렉+클래식 연주자 22종 output_ex (GPT컨셉+Gemini프레임 하이브리드, 일렉 신규7+클래식 재개선15, idle=노멀연주/play=스포트라이트 역동, 격자결함 15f fix-pass) | 22종 전원 93/100 A | [로그](2026-07-06-elec-performers-caseS.md) |
 | 2026-07-06 | S | 보컬 분리 시리즈 output_ex_vocal (vocal-1~4 리마스터 + vocal-ex/vox7 복사, 12캐릭터 3액션 마스터, 연주자/보컬 분리 관리) | 리마스터 4인 전원 93/100 A | [로그](2026-07-06-vocal-separation-caseS.md) |
+| 2026-07-07 | S | output_ex play 소프트 리메이크 22종 (idle 프레임 앵커 조정프롬프트, 이음매 0.780→0.970, 그리드결함 0, drum 1종 잔여 기록) | 95/100 A | [로그](2026-07-07-ex-soft-play-caseS.md) |
