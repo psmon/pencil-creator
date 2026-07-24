@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sample17 — ACMER 동탄 시네마틱 3D (Blender → Three.js)</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 100%; height: 100%; overflow: hidden; background: #1a1410; }
+  #app { position: fixed; inset: 0; }
+  canvas { display: block; }
+
+  .brand {
+    position: fixed; top: 28px; left: 32px; z-index: 10;
+    color: #f5ead8; font-family: Georgia, 'Times New Roman', serif;
+    text-shadow: 0 2px 12px rgba(0,0,0,.45);
+    user-select: none; pointer-events: none;
+  }
+  .brand .logo { font-size: 26px; letter-spacing: 10px; font-weight: 700; }
+  .brand .sub  { font-size: 11px; letter-spacing: 6px; margin-top: 6px; opacity: .75;
+                 font-family: 'Malgun Gothic', sans-serif; }
+
+  .caption {
+    position: fixed; left: 50%; bottom: 108px; transform: translateX(-50%);
+    z-index: 10; color: #fdf3e0; font-family: 'Malgun Gothic', sans-serif;
+    font-size: 14px; letter-spacing: 2px; text-align: center;
+    text-shadow: 0 2px 10px rgba(0,0,0,.6); opacity: 0; transition: opacity .8s;
+    pointer-events: none;
+  }
+  .caption.show { opacity: .95; }
+  .caption b { color: #ffd9a0; }
+
+  .panel {
+    position: fixed; left: 50%; bottom: 30px; transform: translateX(-50%);
+    z-index: 10; display: flex; gap: 10px; padding: 10px 12px;
+    background: rgba(20, 14, 10, .55); border: 1px solid rgba(255, 214, 160, .25);
+    border-radius: 14px; backdrop-filter: blur(10px);
+  }
+  .panel button {
+    appearance: none; border: 1px solid rgba(255, 214, 160, .3);
+    background: rgba(60, 44, 30, .5); color: #f0e2c8;
+    font-family: 'Malgun Gothic', sans-serif; font-size: 12.5px; letter-spacing: 1px;
+    padding: 10px 16px; border-radius: 9px; cursor: pointer;
+    transition: all .25s;
+  }
+  .panel button:hover { background: rgba(120, 88, 52, .6); }
+  .panel button.on {
+    background: linear-gradient(160deg, #d9a45c, #a86f32);
+    color: #241605; border-color: #ffd9a0; font-weight: 700;
+    box-shadow: 0 0 18px rgba(255, 190, 110, .35);
+  }
+  .hint {
+    position: fixed; right: 26px; bottom: 34px; z-index: 10;
+    color: rgba(245, 230, 210, .55); font-size: 11px; letter-spacing: 1px;
+    font-family: 'Malgun Gothic', sans-serif; pointer-events: none;
+  }
+  @media (max-width: 720px) {
+    .panel { flex-wrap: wrap; justify-content: center; max-width: 92vw; }
+    .hint { display: none; }
+  }
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<div class="brand">
+  <div class="logo">ACMER</div>
+  <div class="sub">DONGTAN &middot; CINEMATIC 3D</div>
+</div>
+
+<div class="caption" id="caption"></div>
+
+<div class="panel" id="panel">
+  <button data-mode="0">① 시그니처 전경</button>
+  <button data-mode="1">② 드론 선회</button>
+  <button data-mode="2">③ 공원 산책</button>
+  <button data-mode="3">④ 타워 클라임</button>
+  <button data-mode="4">⑤ 선셋 플라이바이</button>
+</div>
+<div class="hint">Blender 모델링 리소스 → Three.js 재구축 · 버튼으로 앵글 전환</div>
+
+<script type="importmap">
+{ "imports": { "three": "https://unpkg.com/three@0.161.0/build/three.module.js" } }
+</script>
+<script type="module">
+import * as THREE from 'three';
+
+/* == 좌표계: Blender(x,y,z) → Three(x, z, -y) ================= */
+const BL = (x, y, z) => new THREE.Vector3(x, z, -y);
+
+/* 시드 랜덤 (블렌더 배치 재현용) */
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;}}
+
+const app = document.getElementById('app');
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setSize(innerWidth, innerHeight);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.15;
+app.appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+scene.fog = new THREE.Fog(0xe3bd8f, 420, 1350);
+const camera = new THREE.PerspectiveCamera(38, innerWidth/innerHeight, 0.5, 4000);
+
+/* == 하늘 돔 (석양 그라데이션) ================================ */
+const skyMat = new THREE.ShaderMaterial({
+  side: THREE.BackSide, depthWrite: false, fog: false,
+  uniforms: { },
+  vertexShader: `varying vec3 vP; void main(){ vP = position;
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
+  fragmentShader: `varying vec3 vP;
+    void main(){
+      float h = normalize(vP).y;
+      vec3 top = vec3(0.45, 0.55, 0.72);
+      vec3 mid = vec3(0.82, 0.80, 0.78);
+      vec3 glo = vec3(0.98, 0.72, 0.42);
+      vec3 c = h > 0.25 ? mix(mid, top, smoothstep(0.25, 0.8, h))
+                        : mix(glo, mid, smoothstep(-0.02, 0.25, h));
+      /* 서쪽(-x) 지평선 강조 글로우 */
+      float west = smoothstep(0.2, 1.0, -normalize(vP).x) * smoothstep(0.3, -0.05, h);
+      c = mix(c, vec3(1.0, 0.62, 0.28), west * 0.55);
+      gl_FragColor = vec4(c, 1.0);
+    }`
+});
+scene.add(new THREE.Mesh(new THREE.SphereGeometry(1800, 32, 16), skyMat));
+
+/* == 라이팅 ==================================================== */
+const sun = new THREE.DirectionalLight(0xffa055, 3.2);
+sun.position.set(-320, 130, 180);
+sun.castShadow = true;
+sun.shadow.mapSize.set(2048, 2048);
+const sc = 320;
+Object.assign(sun.shadow.camera, { left: -sc, right: sc, top: sc, bottom: -sc, far: 1200 });
+sun.shadow.bias = -0.0004;
+scene.add(sun);
+scene.add(new THREE.HemisphereLight(0xbdc7de, 0x4a3b28, 0.75));
+const fill = new THREE.DirectionalLight(0xffd9a8, 0.5);
+fill.position.set(200, 90, 300);
+scene.add(fill);
+
+/* == 머티리얼 ================================================== */
+const M = {
+  grass: new THREE.MeshStandardMaterial({ color: 0x51683a, roughness: 1 }),
+  road:  new THREE.MeshStandardMaterial({ color: 0x4c4744, roughness: .95 }),
+  path:  new THREE.MeshStandardMaterial({ color: 0x9a8a74, roughness: .9 }),
+  crown: new THREE.MeshStandardMaterial({ color: 0xcbb494, roughness: .5 }),
+  podium:new THREE.MeshStandardMaterial({ color: 0xb59a76, roughness: .6 }),
+  glass: new THREE.MeshStandardMaterial({ color: 0xffc27a, roughness: .15, metalness: .4,
+          emissive: 0xff9a45, emissiveIntensity: .35 }),
+  roof:  new THREE.MeshStandardMaterial({ color: 0x3a3a40, roughness: .4, metalness: .6 }),
+  mtn:   new THREE.MeshStandardMaterial({ color: 0x6e5d78, roughness: 1 }),
+  trunk: new THREE.MeshStandardMaterial({ color: 0x6b4a2e, roughness: 1 }),
+  leaf:  new THREE.MeshStandardMaterial({ color: 0x4f7034, roughness: 1 }),
+  bush:  new THREE.MeshStandardMaterial({ color: 0x3c5c2a, roughness: 1 }),
+  water: new THREE.MeshStandardMaterial({ color: 0x2e5a66, roughness: .05, metalness: .3 }),
+  tire:  new THREE.MeshStandardMaterial({ color: 0x151515, roughness: .9 }),
+  carGl: new THREE.MeshStandardMaterial({ color: 0x0e1420, roughness: .1, metalness: .5 }),
+  skin:  new THREE.MeshStandardMaterial({ color: 0xc98f6b, roughness: .7 }),
+  lampG: new THREE.MeshStandardMaterial({ color: 0xfff1cf, emissive: 0xffc878, emissiveIntensity: 1.4 }),
+};
+
+/* 파사드 캔버스 텍스처: 골든 석재 벽 + 딥글라스 창 그리드 */
+function facadeTexture(cols, rows, wallHex, seed){
+  const rnd = mulberry32(seed);
+  const cw = 28, ch = 28;
+  const cv = document.createElement('canvas');
+  cv.width = cols * cw; cv.height = rows * ch;
+  const g = cv.getContext('2d');
+  g.fillStyle = wallHex; g.fillRect(0, 0, cv.width, cv.height);
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      const v = rnd();
+      let col;
+      if (v > 0.96)      col = `rgb(${200+rnd()*40|0}, ${140+rnd()*30|0}, ${70+rnd()*20|0})`; // 석양 반사 글린트
+      else if (v > 0.90) col = 'rgb(96, 84, 66)';   // 흐린 반사
+      else {
+        const d = 22 + rnd()*18 | 0;
+        col = `rgb(${d}, ${d+6}, ${d+14})`;          // 딥 글라스
+      }
+      g.fillStyle = col;
+      g.fillRect(c*cw + cw*0.18, r*ch + ch*0.24, cw*0.64, ch*0.5);
+    }
+  }
+  const tx = new THREE.CanvasTexture(cv);
+  tx.colorSpace = THREE.SRGBColorSpace;
+  tx.anisotropy = 8;
+  return tx;
+}
+function facadeMats(cols, rows, wallHex, wallColor, seed){
+  const tex = facadeTexture(cols, rows, wallHex, seed);
+  const side = new THREE.MeshStandardMaterial({ map: tex, roughness: .55, metalness: .12 });
+  const top  = new THREE.MeshStandardMaterial({ color: wallColor, roughness: .6 });
+  return [side, side, top, top, side, side];
+}
+
+const group = new THREE.Group();
+scene.add(group);
+function box(w, h, d, mat, pos, ry = 0, shadow = true){
+  const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);
+  m.position.copy(pos); m.rotation.y = ry;
+  m.castShadow = shadow; m.receiveShadow = true;
+  group.add(m); return m;
+}
+
+/* == 지면/도로/광장 =========================================== */
+const ground = new THREE.Mesh(new THREE.PlaneGeometry(1700, 1700), M.grass);
+ground.rotation.x = -Math.PI/2; ground.position.copy(BL(0, 0, 0));
+ground.receiveShadow = true; group.add(ground);
+box(900, .3, 14, M.road, BL(0, -70, .15), 0, false);
+box(20, .28, 600, M.road, BL(-110, 40, .14), 0, false);
+box(20, .28, 600, M.road, BL(110, 40, .14), 0, false);
+box(380, .26, 120, M.path, BL(0, 8, .13), 0, false);
+box(10, .3, 80, M.path, BL(0, -45, .15), 0, false);
+
+/* == 메인 타워 5개동 =========================================== */
+const TOWERS = [
+  [-75, 10, 165, '#8d7a5e', 0xa08a68, 11],
+  [-45, -5, 215, '#9b8a70', 0xb09a78, 22],
+  [ -5,-15, 235, '#9b8a70', 0xb09a78, 33],
+  [ 35, -5, 205, '#9b8a70', 0xb09a78, 44],
+  [ 70, 10, 180, '#8d7a5e', 0xa08a68, 55],
+];
+for (const [x, y, h, wallHex, wallCol, seed] of TOWERS) {
+  const floors = Math.round(h / 3.6);
+  const t = new THREE.Mesh(new THREE.BoxGeometry(24, h, 18), facadeMats(7, floors, wallHex, wallCol, seed));
+  t.position.copy(BL(x, y, h/2)); t.castShadow = t.receiveShadow = true;
+  group.add(t);
+  box(1.2, h*0.995, 10, M.crown, BL(x-12, y, h/2));
+  box(1.2, h*0.995, 10, M.crown, BL(x+12, y, h/2));
+  box(22, 5, 15.3, M.crown, BL(x, y, h+2.5));
+  box(13.2, 4, 9.9, M.crown, BL(x, y, h+6.5));
+}
+
+/* == 포디움 상가 =============================================== */
+for (const [px, py, pw, pd] of [[-60,35,55,30],[0,40,70,35],[60,35,55,30]]) {
+  box(pw, 12, pd, M.podium, BL(px, py, 6));
+  box(pw*0.85, 9, 2.5, M.glass, BL(px, py - pd/2 + 1, 5));
+  const roof = box(pw*1.06, 2, pd*1.1, M.roof, BL(px, py, 13.5));
+  roof.rotation.x = 0.07;
+}
+
+/* == 배경 아파트 클러스터 ====================================== */
+{
+  const rnd = mulberry32(42);
+  const uni = (a,b)=>a+(b-a)*rnd();
+  for (const [bx, by] of [[-160,60],[-135,90],[-170,120],[150,60],[135,95],[175,115],[200,80],[-110,150],[110,150],[0,180],[-50,170],[55,175]]) {
+    const h = uni(60,100), w = uni(30,45);
+    const fl = Math.round(h/3.4);
+    const b = new THREE.Mesh(new THREE.BoxGeometry(w, h, 14), facadeMats(9, fl, '#7d6f5c', 0x8f8070, (bx*7^by*13)>>>0));
+    b.position.copy(BL(bx, by, h/2)); b.castShadow = b.receiveShadow = true;
+    group.add(b);
+    box(w*0.9, 3, 12, M.crown, BL(bx, by, h+1.5));
+  }
+}
+
+/* == 원경: 산 + 도시 스카이라인 ================================ */
+for (const [mx,my,mw,mh] of [[-350,460,500,90],[0,500,600,120],[330,470,450,80],[-120,480,400,70],[180,490,380,100]]) {
+  const c = new THREE.Mesh(new THREE.ConeGeometry(mw, mh, 6, 1), M.mtn);
+  c.position.copy(BL(mx, my, mh/2 - 5)); c.scale.set(1, 1, 0.45);
+  group.add(c);
+}
+
+/* == 나무 (InstancedMesh) ====================================== */
+const treeSpots = [];
+{
+  const rnd = mulberry32(7);
+  const uni = (a,b)=>a+(b-a)*rnd();
+  for (let i=0;i<45;i++) treeSpots.push([uni(-170,170), uni(-58,-25), uni(.8,1.4)]);
+  for (let x=-160;x<170;x+=22) treeSpots.push([x, -62, uni(.8,1.4)]);
+  for (let i=0;i<15;i++) treeSpots.push([uni(-90,90), uni(28,55), uni(.8,1.4)]);
+  for (let a=0;a<360;a+=40) treeSpots.push([-120+30*Math.cos(a*Math.PI/180)*1.3, -40+30*Math.sin(a*Math.PI/180)*.75, uni(.9,1.3)]);
+}
+{
+  const n = treeSpots.length;
+  const trunkI = new THREE.InstancedMesh(new THREE.CylinderGeometry(.4,.5,4,7), M.trunk, n);
+  const crownI = new THREE.InstancedMesh(new THREE.IcosahedronGeometry(2.8,1), M.leaf, n);
+  const d = new THREE.Object3D();
+  const col = new THREE.Color();
+  treeSpots.forEach(([x,y,s], i) => {
+    d.position.copy(BL(x, y, 2*s)); d.scale.setScalar(s); d.updateMatrix();
+    trunkI.setMatrixAt(i, d.matrix);
+    d.position.copy(BL(x, y, 5.5*s)); d.updateMatrix();
+    crownI.setMatrixAt(i, d.matrix);
+    crownI.setColorAt(i, col.setHSL(.26, .42, .3 + (i%5)*.025));
+  });
+  trunkI.castShadow = crownI.castShadow = true;
+  group.add(trunkI, crownI);
+}
+
+/* == 관목/화단/연못 ============================================ */
+{
+  const rnd = mulberry32(55);
+  const uni = (a,b)=>a+(b-a)*rnd();
+  const bushG = new THREE.IcosahedronGeometry(1, 1);
+  const bushI = new THREE.InstancedMesh(bushG, M.bush, 50);
+  const d = new THREE.Object3D();
+  for (let i=0;i<50;i++){
+    const z = rnd() < .5 ? [uni(-175,175), uni(-58,-22)] : [uni(-95,95), uni(4,20)];
+    const s = uni(.8,1.8);
+    d.position.copy(BL(z[0], z[1], .5*s)); d.scale.set(s, s*.55, s); d.updateMatrix();
+    bushI.setMatrixAt(i, d.matrix);
+  }
+  bushI.castShadow = true; group.add(bushI);
+
+  const fr = new THREE.MeshStandardMaterial({ color: 0xa62a26, roughness: .8 });
+  const fy = new THREE.MeshStandardMaterial({ color: 0xcf9c1c, roughness: .8 });
+  for (let fx=-60; fx<=60; fx+=12) {
+    for (const [fy2, fm] of [[-22, fr], [-58, fy]]) {
+      const f = new THREE.Mesh(bushG, fm);
+      f.position.copy(BL(fx+uni(-1,1), fy2+uni(-1,1), .35));
+      f.scale.set(1.6, .35, 1.2); group.add(f);
+    }
+  }
+  const pond = new THREE.Mesh(new THREE.CylinderGeometry(22, 22, .15, 40), M.water);
+  pond.position.copy(BL(-120, -40, .1)); pond.scale.set(1.3, 1, .75);
+  group.add(pond);
+}
+
+/* == 가로등 ==================================================== */
+for (let lx=-180; lx<190; lx+=45) {
+  box(.7, 9, .7, M.trunk, BL(lx, -63, 4.5));
+  const b = new THREE.Mesh(new THREE.SphereGeometry(.8, 10, 8), M.lampG);
+  b.position.copy(BL(lx, -63, 9.3)); group.add(b);
+}
+
+/* == 인파 (움직이는 사람들) ==================================== */
+const PEOPLE_N = 120;
+const cloth = [0x8c2620, 0x1f3366, 0xd9ccb8, 0x26522e, 0x4d4d54, 0xa6733f];
+const people = [];
+{
+  const rnd = mulberry32(21);
+  const uni = (a,b)=>a+(b-a)*rnd();
+  const bodyI = new THREE.InstancedMesh(new THREE.CylinderGeometry(.32,.36,1.35,8),
+                new THREE.MeshStandardMaterial({ roughness: .85 }), PEOPLE_N);
+  const headI = new THREE.InstancedMesh(new THREE.SphereGeometry(.2, 8, 6), M.skin, PEOPLE_N);
+  const col = new THREE.Color();
+  for (let i=0;i<PEOPLE_N;i++){
+    let x, y;
+    if (i < 70)      { x = uni(-170,170); y = uni(-56,-24); }
+    else if (i < 95) { x = uni(-8,8);     y = uni(-48,-18); }
+    else { x = [uni(-55,-30), uni(-15,20), uni(30,55)][i%3]; y = uni(6,18); }
+    people.push({ x, y, s: uni(.9,1.1),
+      vx: (rnd()-.5)*2.2, vy: (rnd()-.5)*1.2,
+      x0: x, y0: y, ph: rnd()*Math.PI*2 });
+    bodyI.setColorAt(i, col.setHex(cloth[i % cloth.length]));
+  }
+  bodyI.castShadow = headI.castShadow = true;
+  group.add(bodyI, headI);
+  var peopleBody = bodyI, peopleHead = headI;
+}
+const pDummy = new THREE.Object3D();
+function updatePeople(t){
+  for (let i=0;i<PEOPLE_N;i++){
+    const p = people[i];
+    const wx = p.x0 + Math.sin(t*.14 + p.ph) * p.vx * 6;
+    const wy = p.y0 + Math.cos(t*.11 + p.ph) * p.vy * 6;
+    const bob = Math.abs(Math.sin(t*2.2 + p.ph)) * .06;
+    pDummy.position.copy(BL(wx, wy, .675*p.s + bob));
+    pDummy.scale.setScalar(p.s); pDummy.updateMatrix();
+    peopleBody.setMatrixAt(i, pDummy.matrix);
+    pDummy.position.copy(BL(wx, wy, 1.52*p.s + bob)); pDummy.updateMatrix();
+    peopleHead.setMatrixAt(i, pDummy.matrix);
+  }
+  peopleBody.instanceMatrix.needsUpdate = true;
+  peopleHead.instanceMatrix.needsUpdate = true;
+}
+
+/* == 차량 (주행 애니메이션) ==================================== */
+const carCols = [0xb3b3b8, 0x1a1a20, 0x8c1414, 0x1f3366, 0xcfc9bd, 0x40404a];
+const cars = [];
+function makeCar(colHex, vertical){
+  const g = new THREE.Group();
+  const body = new THREE.Mesh(new THREE.BoxGeometry(4.4, 1.0, 1.9),
+    new THREE.MeshStandardMaterial({ color: colHex, roughness: .3, metalness: .55 }));
+  body.position.y = .75; body.castShadow = true; g.add(body);
+  const cab = new THREE.Mesh(new THREE.BoxGeometry(2.3, .72, 1.7), M.carGl);
+  cab.position.set(-.2, 1.5, 0); g.add(cab);
+  const wg = new THREE.CylinderGeometry(.42,.42,.3,10);
+  for (const [dx,dz] of [[-1.5,-.95],[-1.5,.95],[1.5,-.95],[1.5,.95]]) {
+    const w = new THREE.Mesh(wg, M.tire);
+    w.rotation.x = Math.PI/2; w.position.set(dx, .42, dz); g.add(w);
+  }
+  if (vertical) g.rotation.y = Math.PI/2;
+  group.add(g); return g;
+}
+{
+  const rnd = mulberry32(33);
+  for (let i=0;i<14;i++){
+    const lane = i%2===0 ? -67 : -73;
+    const dir  = i%2===0 ? 1 : -1;
+    const car = makeCar(carCols[i%6], false);
+    cars.push({ g: car, mode:'h', lane, dir, x: -220 + i*32, speed: 9+ (i%4)*2.5 });
+  }
+  for (let j=0;j<5;j++){
+    const rx = j<3 ? -110 + (j%2? 3 : -3) : 110 + (j%2? 3 : -3);
+    const dir = j%2 ? 1 : -1;
+    const car = makeCar(carCols[(j+2)%6], true);
+    cars.push({ g: car, mode:'v', rx, dir, y: -40 + j*55, speed: 8 + j*2 });
+  }
+}
+function updateCars(dt){
+  for (const c of cars){
+    if (c.mode==='h'){
+      c.x += c.dir * c.speed * dt;
+      if (c.x > 240) c.x = -240; if (c.x < -240) c.x = 240;
+      c.g.position.copy(BL(c.x, c.lane, 0));
+      c.g.rotation.y = c.dir > 0 ? 0 : Math.PI;
+    } else {
+      c.y += c.dir * c.speed * dt;
+      if (c.y > 200) c.y = -60; if (c.y < -60) c.y = 200;
+      c.g.position.copy(BL(c.rx, c.y, 0));
+      c.g.rotation.y = c.dir > 0 ? -Math.PI/2 : Math.PI/2;
+    }
+  }
+}
+
+/* ============================================================
+   카메라 연출 5종 — 각 모드는 t(초)에 대한 (pos, target) 함수
+   ============================================================ */
+const CENTER = BL(0, -5, 110);   // 단지 중심(타워 미들높이)
+const MODES = [
+  { name: '① 시그니처 전경',
+    desc: '<b>홍보영상 오프닝 재현</b> — 정면 로우앵글에서 천천히 밀고 들어가는 시그니처 샷',
+    fn: (t) => {
+      const k = (Math.sin(t*.12 - Math.PI/2) + 1) / 2;   // 0→1 슬로우 푸시인 왕복
+      const pos = BL(5, -470 + k*85, 42 - k*10);
+      const tgt = BL(0, -10, 98 - k*8);
+      return [pos, tgt];
+    } },
+  { name: '② 드론 선회',
+    desc: '<b>드론 부감 선회</b> — 단지 상공을 크게 도는 에어리얼 오빗',
+    fn: (t) => {
+      const a = t * .105;
+      const pos = new THREE.Vector3(Math.sin(a)*360, 255 + Math.sin(t*.3)*12, Math.cos(a)*360 + 10);
+      return [pos, BL(0, 5, 70)];
+    } },
+  { name: '③ 공원 산책',
+    desc: '<b>공원 눈높이 워크스루</b> — 산책로를 따라 걷는 시점, 인파와 차량 사이로',
+    fn: (t) => {
+      const x = -110 + ((t*7) % 220);
+      const pos = BL(x, -95, 3.2 + Math.sin(t*1.8)*.12);
+      const tgt = BL(x*.35, -18, 16);
+      return [pos, tgt];
+    } },
+  { name: '④ 타워 클라임',
+    desc: '<b>랜드마크 수직 상승</b> — 235m 최고층 타워를 나선으로 감아 오르는 샷',
+    fn: (t) => {
+      const climb = (t*.055) % 1;
+      const h = 12 + climb*250;
+      const a = t*.28;
+      const pos = new THREE.Vector3(-5 + Math.sin(a)*85, h, 15 + Math.cos(a)*85);
+      const tgt = new THREE.Vector3(-5, Math.min(h + 22, 245), 15);
+      return [pos, tgt];
+    } },
+  { name: '⑤ 선셋 플라이바이',
+    desc: '<b>석양 측면 플라이바이</b> — 황금빛을 스치며 단지를 가로지르는 시네마틱 스윕',
+    fn: (t) => {
+      const k = (Math.sin(t*.09 - Math.PI/2) + 1) / 2;
+      const pos = new THREE.Vector3(-430 + k*860, 95 + Math.sin(k*Math.PI)*55, 320 - k*90);
+      return [pos, BL(0, 0, 95)];
+    } },
+];
+
+let modeIdx = 0, prevIdx = 0, blend = 1;
+let tMode = 0, tPrev = 0;
+const clock = new THREE.Clock();
+
+const capEl = document.getElementById('caption');
+const btns = [...document.querySelectorAll('.panel button')];
+function setMode(i){
+  if (i === modeIdx) return;
+  prevIdx = modeIdx; tPrev = tMode;
+  modeIdx = i; tMode = 0; blend = 0;
+  btns.forEach((b,j)=>b.classList.toggle('on', j===i));
+  showCaption(MODES[i].desc);
+}
+let capTimer;
+function showCaption(html){
+  capEl.innerHTML = html;
+  capEl.classList.add('show');
+  clearTimeout(capTimer);
+  capTimer = setTimeout(()=>capEl.classList.remove('show'), 4200);
+}
+btns.forEach(b => b.addEventListener('click', () => setMode(+b.dataset.mode)));
+btns[0].classList.add('on');
+showCaption(MODES[0].desc);
+
+addEventListener('keydown', e => {
+  const n = parseInt(e.key);
+  if (n >= 1 && n <= 5) setMode(n-1);
+});
+
+const _p1 = new THREE.Vector3(), _t1 = new THREE.Vector3();
+function animate(){
+  requestAnimationFrame(animate);
+  const dt = Math.min(clock.getDelta(), .05);
+  const t = clock.elapsedTime;
+  tMode += dt; tPrev += dt;
+  if (blend < 1) blend = Math.min(1, blend + dt / 1.6);
+  const e = blend<1 ? (1 - Math.cos(blend*Math.PI))/2 : 1;   // easeInOut
+
+  const [pA, tA] = MODES[prevIdx].fn(tPrev);
+  const [pB, tB] = MODES[modeIdx].fn(tMode);
+  _p1.lerpVectors(pA, pB, e); _t1.lerpVectors(tA, tB, e);
+  camera.position.copy(_p1);
+  camera.lookAt(_t1);
+
+  updatePeople(t);
+  updateCars(dt);
+  renderer.render(scene, camera);
+}
+animate();
+
+addEventListener('resize', () => {
+  camera.aspect = innerWidth/innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+});
+</script>
+</body>
+</html>
