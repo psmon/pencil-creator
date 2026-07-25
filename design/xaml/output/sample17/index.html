@@ -98,6 +98,7 @@
     <button data-mode="3">④ 타워 클라임</button>
     <button data-mode="4">⑤ 선셋 플라이바이</button>
     <button data-mode="9">⑩ 건설 타임랩스</button>
+    <button data-mode="10">⑪ 건설 v2 · 층별</button>
   </div>
   <div class="prow">
     <span class="plabel">인테리어 투어</span>
@@ -231,6 +232,7 @@ function facadeTexture(cols, rows, wallHex, seed){
 function facadeMats(cols, rows, wallHex, wallColor, seed, realKey){
   const tex = facadeTexture(cols, rows, wallHex, seed);
   const side = new THREE.MeshStandardMaterial({ map: tex, roughness: .55, metalness: .12 });
+  side.userData.repYReal = rows / 3;   // 건설 v2 크롭용 기준 repeat
   const top  = new THREE.MeshStandardMaterial({ color: wallColor, roughness: .6 });
   if (realKey) regSwap(side, realKey, cols/3, rows/3);   // 실사 타일 = 3x3 창 패턴
   return [side, side, top, top, side, side];
@@ -266,6 +268,28 @@ function riseAdd(riser, obj){
   if (riser) riser.parts.push({ obj, y0: obj.position.y });
 }
 
+/* == 건설 v2 (층별 시공) 그로워 등록부 ========================= */
+/* 바닥을 고정한 채 scale.y + 텍스처 repeat 크롭으로 아래→위 시공.
+   tex: 파사드 박스(창문 비율 유지 크롭) / solid: 단색 수직재
+   cap: 완공 직전 등장(크라운/지붕) / attach: 층 도달 시 등장(인테리어 등) */
+const GROWERS = [];
+const workLightGeo = new THREE.BoxGeometry(1, 1, 1);
+function newGrower(H, delay, dur, cx, cz, fw, fd){
+  const wlMat = new THREE.MeshStandardMaterial({
+    color: 0x331a05, emissive: 0xffa030, emissiveIntensity: 4 });
+  const wl = new THREE.Mesh(workLightGeo, wlMat);
+  wl.scale.set(fw + 2.5, 1.1, fd + 2.5);
+  wl.position.set(cx, 0, cz);
+  wl.visible = false;
+  group.add(wl);
+  const g = { H, delay, dur, tex: [], solids: [], caps: [], attach: [], wl, wlMat };
+  GROWERS.push(g); return g;
+}
+const growTex    = (g, mesh, h) => g.tex.push({ mesh, h, baseY: mesh.position.y - h/2 });
+const growSolid  = (g, mesh, h) => g.solids.push({ mesh, h, baseY: mesh.position.y - h/2 });
+const growCap    = (g, obj) => g.caps.push(obj);
+const growAttach = (g, obj, topY) => g.attach.push({ obj, topY });
+
 /* == 메인 타워 5개동 =========================================== */
 const TOWERS = [
   [-75, 10, 165, '#8d7a5e', 0xa08a68, 11],
@@ -277,27 +301,37 @@ const TOWERS = [
 /* 착공 순서: 랜드마크(T3) → T2 → T4 → T1 → T5 */
 const TOWER_TIMING = [[9, 12], [5, 13], [2, 14], [7, 13], [11, 12]];
 const towerRisers = [];
+const towerGrowers = [];
 TOWERS.forEach(([x, y, h, wallHex, wallCol, seed], i) => {
   const riser = newRiser(h + 9, TOWER_TIMING[i][0], TOWER_TIMING[i][1]);
   towerRisers.push(riser);
+  const grower = newGrower(h, TOWER_TIMING[i][0], TOWER_TIMING[i][1], x, -y, 24, 18);
+  towerGrowers.push(grower);
   const floors = Math.round(h / 3.6);
   const t = new THREE.Mesh(new THREE.BoxGeometry(24, h, 18), facadeMats(7, floors, wallHex, wallCol, seed, 'facadeMain'));
   t.position.copy(BL(x, y, h/2)); t.castShadow = t.receiveShadow = true;
-  group.add(t); riseAdd(riser, t);
-  riseAdd(riser, box(1.2, h*0.995, 10, M.crown, BL(x-12, y, h/2)));
-  riseAdd(riser, box(1.2, h*0.995, 10, M.crown, BL(x+12, y, h/2)));
-  riseAdd(riser, box(22, 5, 15.3, M.crown, BL(x, y, h+2.5)));
-  riseAdd(riser, box(13.2, 4, 9.9, M.crown, BL(x, y, h+6.5)));
+  group.add(t); riseAdd(riser, t); growTex(grower, t, h);
+  const rib1 = box(1.2, h*0.995, 10, M.crown, BL(x-12, y, h/2));
+  const rib2 = box(1.2, h*0.995, 10, M.crown, BL(x+12, y, h/2));
+  riseAdd(riser, rib1); riseAdd(riser, rib2);
+  growSolid(grower, rib1, h*0.995); growSolid(grower, rib2, h*0.995);
+  const cr1 = box(22, 5, 15.3, M.crown, BL(x, y, h+2.5));
+  const cr2 = box(13.2, 4, 9.9, M.crown, BL(x, y, h+6.5));
+  riseAdd(riser, cr1); riseAdd(riser, cr2);
+  growCap(grower, cr1); growCap(grower, cr2);
 });
 
 /* == 포디움 상가 =============================================== */
 [[-60,35,55,30],[0,40,70,35],[60,35,55,30]].forEach(([px, py, pw, pd], i) => {
   const riser = newRiser(16, 24 + i*1.2, 5);
-  riseAdd(riser, box(pw, 12, pd, M.podium, BL(px, py, 6)));
-  riseAdd(riser, box(pw*0.85, 9, 2.5, M.glass, BL(px, py - pd/2 + 1, 5)));
+  const grower = newGrower(14, 24 + i*1.2, 5, px, -py, pw, pd);
+  const base = box(pw, 12, pd, M.podium, BL(px, py, 6));
+  const gl = box(pw*0.85, 9, 2.5, M.glass, BL(px, py - pd/2 + 1, 5));
+  riseAdd(riser, base); riseAdd(riser, gl);
+  growSolid(grower, base, 12); growSolid(grower, gl, 9);
   const roof = box(pw*1.06, 2, pd*1.1, M.roof, BL(px, py, 13.5));
   roof.rotation.x = 0.07;
-  riseAdd(riser, roof);
+  riseAdd(riser, roof); growCap(grower, roof);
 });
 
 /* == 배경 아파트 클러스터 ====================================== */
@@ -307,11 +341,13 @@ TOWERS.forEach(([x, y, h, wallHex, wallCol, seed], i) => {
   [[-160,60],[-135,90],[-170,120],[150,60],[135,95],[175,115],[200,80],[-110,150],[110,150],[0,180],[-50,170],[55,175]].forEach(([bx, by], i) => {
     const h = uni(60,100), w = uni(30,45);
     const riser = newRiser(h + 4, 15 + i*0.7, 8);
+    const grower = newGrower(h, 15 + i*0.7, 8, bx, -by, w, 14);
     const fl = Math.round(h/3.4);
     const b = new THREE.Mesh(new THREE.BoxGeometry(w, h, 14), facadeMats(9, fl, '#7d6f5c', 0x8f8070, (bx*7^by*13)>>>0, 'facadeBg'));
     b.position.copy(BL(bx, by, h/2)); b.castShadow = b.receiveShadow = true;
-    group.add(b); riseAdd(riser, b);
-    riseAdd(riser, box(w*0.9, 3, 12, M.crown, BL(bx, by, h+1.5)));
+    group.add(b); riseAdd(riser, b); growTex(grower, b, h);
+    const bt = box(w*0.9, 3, 12, M.crown, BL(bx, by, h+1.5));
+    riseAdd(riser, bt); growCap(grower, bt);
   });
 }
 
@@ -561,12 +597,14 @@ function buildUnit(key){
   const { cx, front, z0, W, D, H } = u;
   const x0 = cx - W/2;
   const riser = towerRisers[TOWER_OF[key]];
+  const grower = towerGrowers[TOWER_OF[key]];
+  const unitTop = z0 + H + 0.3;   // 이 층까지 시공되면 인테리어 등장
   // 로컬(lx,ly,lz중심) → 월드: three (x0+lx, z0+lz, -(front+ly)), 크기 (sx, sz, sy)
   const put = (lx, ly, lz, sx, sy, sz, matKey) => {
     const m = new THREE.Mesh(new THREE.BoxGeometry(sx, sz, sy), IMAT[matKey]);
     m.position.set(x0 + lx, z0 + lz, -(front + ly));
     m.receiveShadow = true;
-    group.add(m); riseAdd(riser, m); return m;
+    group.add(m); riseAdd(riser, m); growAttach(grower, m, unitTop); return m;
   };
   // 셸
   put(W/2, D/2, .075, W, D, .15, u.floor);            // 바닥
@@ -585,12 +623,12 @@ function buildUnit(key){
   for (const ly of [D*.28, D*.72]) {
     const li = new THREE.PointLight(0xffe0b0, 8, D*3.0, 2);
     li.position.set(cx, z0 + H - .55, -(front + ly));
-    group.add(li); riseAdd(riser, li);
+    group.add(li); riseAdd(riser, li); growAttach(grower, li, unitTop);
   }
   if (key === 'u80') {
     const ch = new THREE.PointLight(0xffd98f, 20, 30, 2);
     ch.position.set(x0 + 9.2, z0 + 2.3, -(front + 2.6));
-    group.add(ch); riseAdd(riser, ch);
+    group.add(ch); riseAdd(riser, ch); growAttach(grower, ch, unitTop);
   }
 }
 for (const k of Object.keys(UNITS)) buildUnit(k);
@@ -762,8 +800,61 @@ const MODES = [
       const tgt = new THREE.Vector3(0, 12 + 110 * e, 15);
       return [pos, tgt, 40];
     } },
+  { name: '⑪ 건설 v2 · 층별 시공',
+    desc: '<b>건설 v2 — 층별 시공</b> — 바닥부터 한 층씩 골조가 올라오고 최상층 작업등이 반짝이는 리얼 타임랩스. 완공 층부터 인테리어 입주',
+    fn: (t) => {
+      const tc = t % CONSTRUCT_CYC;
+      const k = Math.min(tc / 32, 1);
+      const e = (1 - Math.cos(k * Math.PI)) / 2;
+      const a = -.55 + e * .9 + Math.sin(t * .07) * .06;
+      const r = 330 - e * 60;
+      const pos = new THREE.Vector3(Math.sin(a) * r, 14 + 190 * e, Math.cos(a) * r + 30);
+      const tgt = new THREE.Vector3(0, 10 + 112 * e, 12);
+      return [pos, tgt, 40];
+    } },
 ];
 const CONSTRUCT_IDX = 9, CONSTRUCT_CYC = 42;
+const CONSTRUCT2_IDX = 10;
+
+/* 건설 v2 상태 적용: 층별 시공 (바닥 고정 크롭 성장) */
+let construct2Dirty = false;
+function updateConstructionV2(tc, tAbs){
+  const active = Number.isFinite(tc);
+  if (!active && !construct2Dirty) return;
+  for (const g of GROWERS) {
+    const raw = Math.min(Math.max((tc - g.delay) / g.dur, 0), 1);
+    const p = active ? raw * raw * (3 - 2 * raw) : 1;
+    const built = g.H * p;
+    for (const s of g.tex) {                      // 파사드: 크롭 성장 (창문 비율 유지)
+      const vis = p > 0.015;
+      s.mesh.visible = vis;
+      const sy = Math.max(p, 0.015);
+      s.mesh.scale.y = sy;
+      s.mesh.position.y = s.baseY + s.h * sy / 2;
+      const mat = Array.isArray(s.mesh.material) ? s.mesh.material[0] : s.mesh.material;
+      if (mat.map) {
+        const baseRep = mat.map.isCanvasTexture ? 1 : (mat.userData.repYReal || 1);
+        mat.map.repeat.y = baseRep * sy;
+      }
+    }
+    for (const s of g.solids) {                   // 단색 수직재: 단순 성장
+      const sy = Math.max(p, 0.015);
+      s.mesh.visible = p > 0.015;
+      s.mesh.scale.y = sy;
+      s.mesh.position.y = s.baseY + s.h * sy / 2;
+    }
+    for (const c of g.caps) c.visible = !active || p > 0.985;   // 크라운/지붕: 완공 직전
+    for (const at of g.attach) at.obj.visible = !active || built >= at.topY;  // 인테리어: 층 도달
+    // 최상층 작업등
+    const working = active && p > 0.015 && p < 0.99;
+    g.wl.visible = working;
+    if (working) {
+      g.wl.position.y = built + 0.8;
+      g.wlMat.emissiveIntensity = 3.2 + Math.sin(tAbs * 11 + g.delay * 7) * 1.6;
+    }
+  }
+  construct2Dirty = active;
+}
 
 /* 건설 상태 적용: tc(초) 시점의 각 구조물 상승 오프셋 */
 let constructionDirty = false;
@@ -807,6 +898,7 @@ addEventListener('keydown', e => {
   const n = parseInt(e.key);
   if (n >= 1 && n <= 9) setMode(n-1);
   if (e.key === '0') setMode(9);
+  if (e.key === '-') setMode(10);
 });
 
 const _p1 = new THREE.Vector3(), _t1 = new THREE.Vector3();
@@ -821,6 +913,10 @@ function animate(){
   updateConstruction(
     modeIdx === CONSTRUCT_IDX ? tMode % CONSTRUCT_CYC :
     (blend < 1 && prevIdx === CONSTRUCT_IDX ? tPrev % CONSTRUCT_CYC : Infinity)
+  );
+  updateConstructionV2(
+    modeIdx === CONSTRUCT2_IDX ? tMode % CONSTRUCT_CYC :
+    (blend < 1 && prevIdx === CONSTRUCT2_IDX ? tPrev % CONSTRUCT_CYC : Infinity), t
   );
 
   const [pA, tA, fA = 38] = MODES[prevIdx].fn(tPrev);
