@@ -82,6 +82,7 @@
     <button data-mode="2">③ 공원 산책</button>
     <button data-mode="3">④ 타워 클라임</button>
     <button data-mode="4">⑤ 선셋 플라이바이</button>
+    <button data-mode="9">⑩ 건설 타임랩스</button>
   </div>
   <div class="prow">
     <span class="plabel">인테리어 투어</span>
@@ -229,6 +230,17 @@ box(20, .28, 600, M.road, BL(110, 40, .14), 0, false);
 box(380, .26, 120, M.path, BL(0, 8, .13), 0, false);
 box(10, .3, 80, M.path, BL(0, -45, .15), 0, false);
 
+/* == 건설 타임랩스용 라이저 등록부 ============================= */
+/* 구조물 파트를 등록하면 ⑩ 모드에서 지하로부터 솟아오른다 */
+const RISERS = [];                  // {parts:[{obj,y0}], H, delay, dur}
+function newRiser(H, delay, dur){
+  const r = { parts: [], H, delay, dur };
+  RISERS.push(r); return r;
+}
+function riseAdd(riser, obj){
+  if (riser) riser.parts.push({ obj, y0: obj.position.y });
+}
+
 /* == 메인 타워 5개동 =========================================== */
 const TOWERS = [
   [-75, 10, 165, '#8d7a5e', 0xa08a68, 11],
@@ -237,37 +249,45 @@ const TOWERS = [
   [ 35, -5, 205, '#9b8a70', 0xb09a78, 44],
   [ 70, 10, 180, '#8d7a5e', 0xa08a68, 55],
 ];
-for (const [x, y, h, wallHex, wallCol, seed] of TOWERS) {
+/* 착공 순서: 랜드마크(T3) → T2 → T4 → T1 → T5 */
+const TOWER_TIMING = [[9, 12], [5, 13], [2, 14], [7, 13], [11, 12]];
+const towerRisers = [];
+TOWERS.forEach(([x, y, h, wallHex, wallCol, seed], i) => {
+  const riser = newRiser(h + 9, TOWER_TIMING[i][0], TOWER_TIMING[i][1]);
+  towerRisers.push(riser);
   const floors = Math.round(h / 3.6);
   const t = new THREE.Mesh(new THREE.BoxGeometry(24, h, 18), facadeMats(7, floors, wallHex, wallCol, seed));
   t.position.copy(BL(x, y, h/2)); t.castShadow = t.receiveShadow = true;
-  group.add(t);
-  box(1.2, h*0.995, 10, M.crown, BL(x-12, y, h/2));
-  box(1.2, h*0.995, 10, M.crown, BL(x+12, y, h/2));
-  box(22, 5, 15.3, M.crown, BL(x, y, h+2.5));
-  box(13.2, 4, 9.9, M.crown, BL(x, y, h+6.5));
-}
+  group.add(t); riseAdd(riser, t);
+  riseAdd(riser, box(1.2, h*0.995, 10, M.crown, BL(x-12, y, h/2)));
+  riseAdd(riser, box(1.2, h*0.995, 10, M.crown, BL(x+12, y, h/2)));
+  riseAdd(riser, box(22, 5, 15.3, M.crown, BL(x, y, h+2.5)));
+  riseAdd(riser, box(13.2, 4, 9.9, M.crown, BL(x, y, h+6.5)));
+});
 
 /* == 포디움 상가 =============================================== */
-for (const [px, py, pw, pd] of [[-60,35,55,30],[0,40,70,35],[60,35,55,30]]) {
-  box(pw, 12, pd, M.podium, BL(px, py, 6));
-  box(pw*0.85, 9, 2.5, M.glass, BL(px, py - pd/2 + 1, 5));
+[[-60,35,55,30],[0,40,70,35],[60,35,55,30]].forEach(([px, py, pw, pd], i) => {
+  const riser = newRiser(16, 24 + i*1.2, 5);
+  riseAdd(riser, box(pw, 12, pd, M.podium, BL(px, py, 6)));
+  riseAdd(riser, box(pw*0.85, 9, 2.5, M.glass, BL(px, py - pd/2 + 1, 5)));
   const roof = box(pw*1.06, 2, pd*1.1, M.roof, BL(px, py, 13.5));
   roof.rotation.x = 0.07;
-}
+  riseAdd(riser, roof);
+});
 
 /* == 배경 아파트 클러스터 ====================================== */
 {
   const rnd = mulberry32(42);
   const uni = (a,b)=>a+(b-a)*rnd();
-  for (const [bx, by] of [[-160,60],[-135,90],[-170,120],[150,60],[135,95],[175,115],[200,80],[-110,150],[110,150],[0,180],[-50,170],[55,175]]) {
+  [[-160,60],[-135,90],[-170,120],[150,60],[135,95],[175,115],[200,80],[-110,150],[110,150],[0,180],[-50,170],[55,175]].forEach(([bx, by], i) => {
     const h = uni(60,100), w = uni(30,45);
+    const riser = newRiser(h + 4, 15 + i*0.7, 8);
     const fl = Math.round(h/3.4);
     const b = new THREE.Mesh(new THREE.BoxGeometry(w, h, 14), facadeMats(9, fl, '#7d6f5c', 0x8f8070, (bx*7^by*13)>>>0));
     b.position.copy(BL(bx, by, h/2)); b.castShadow = b.receiveShadow = true;
-    group.add(b);
-    box(w*0.9, 3, 12, M.crown, BL(bx, by, h+1.5));
-  }
+    group.add(b); riseAdd(riser, b);
+    riseAdd(riser, box(w*0.9, 3, 12, M.crown, BL(bx, by, h+1.5)));
+  });
 }
 
 /* == 원경: 산 + 도시 스카이라인 ================================ */
@@ -506,16 +526,18 @@ const FURN = {
   ],
 };
 
+const TOWER_OF = { u20: 0, u30: 1, u40: 3, u80: 2 };   // 유닛 → 소속 타워 (건설 연출 동반 상승)
 function buildUnit(key){
   const u = UNITS[key];
   const { cx, front, z0, W, D, H } = u;
   const x0 = cx - W/2;
+  const riser = towerRisers[TOWER_OF[key]];
   // 로컬(lx,ly,lz중심) → 월드: three (x0+lx, z0+lz, -(front+ly)), 크기 (sx, sz, sy)
   const put = (lx, ly, lz, sx, sy, sz, matKey) => {
     const m = new THREE.Mesh(new THREE.BoxGeometry(sx, sz, sy), IMAT[matKey]);
     m.position.set(x0 + lx, z0 + lz, -(front + ly));
     m.receiveShadow = true;
-    group.add(m); return m;
+    group.add(m); riseAdd(riser, m); return m;
   };
   // 셸
   put(W/2, D/2, .075, W, D, .15, u.floor);            // 바닥
@@ -534,12 +556,12 @@ function buildUnit(key){
   for (const ly of [D*.28, D*.72]) {
     const li = new THREE.PointLight(0xffe0b0, 8, D*3.0, 2);
     li.position.set(cx, z0 + H - .55, -(front + ly));
-    group.add(li);
+    group.add(li); riseAdd(riser, li);
   }
   if (key === 'u80') {
     const ch = new THREE.PointLight(0xffd98f, 20, 30, 2);
     ch.position.set(x0 + 9.2, z0 + 2.3, -(front + 2.6));
-    group.add(ch);
+    group.add(ch); riseAdd(riser, ch);
   }
 }
 for (const k of Object.keys(UNITS)) buildUnit(k);
@@ -641,7 +663,36 @@ const MODES = [
   { name: '⑨ 80평 펜트하우스 투어',
     desc: '<b>인테리어 투어 — 80평 펜트하우스 (103동 최상층)</b> — 대리석 그랜드 리빙 + 8인 다이닝 + 골드 마스터 스위트 + 샹들리에',
     fn: tourFn('u80') },
+  { name: '⑩ 건설 타임랩스',
+    desc: '<b>건설 타임랩스</b> — 빈 부지에서 랜드마크동부터 순차 착공, 단지가 솟아오르는 42초 시퀀스 (자동 반복)',
+    fn: (t) => {
+      const tc = t % CONSTRUCT_CYC;
+      const k = Math.min(tc / 30, 1);
+      const e = (1 - Math.cos(k * Math.PI)) / 2;
+      const pos = new THREE.Vector3(
+        115 - 260 * e + Math.sin(t * .1) * 8,
+        10 + 200 * e,
+        298 + 50 * e
+      );
+      const tgt = new THREE.Vector3(0, 12 + 110 * e, 15);
+      return [pos, tgt, 40];
+    } },
 ];
+const CONSTRUCT_IDX = 9, CONSTRUCT_CYC = 42;
+
+/* 건설 상태 적용: tc(초) 시점의 각 구조물 상승 오프셋 */
+let constructionDirty = false;
+function updateConstruction(tc){
+  const active = Number.isFinite(tc);
+  if (!active && !constructionDirty) return;
+  for (const r of RISERS) {
+    const p = Math.min(Math.max((tc - r.delay) / r.dur, 0), 1);
+    const e2 = active ? p * p * (3 - 2 * p) : 1;
+    const dy = -r.H * (1 - e2);
+    for (const pt of r.parts) pt.obj.position.y = pt.y0 + dy;
+  }
+  constructionDirty = active;
+}
 
 let modeIdx = 0, prevIdx = 0, blend = 1;
 let tMode = 0, tPrev = 0;
@@ -653,7 +704,7 @@ function setMode(i){
   if (i === modeIdx) return;
   prevIdx = modeIdx; tPrev = tMode;
   modeIdx = i; tMode = 0; blend = 0;
-  btns.forEach((b,j)=>b.classList.toggle('on', j===i));
+  btns.forEach(b => b.classList.toggle('on', +b.dataset.mode === i));
   showCaption(MODES[i].desc);
 }
 let capTimer;
@@ -670,6 +721,7 @@ showCaption(MODES[0].desc);
 addEventListener('keydown', e => {
   const n = parseInt(e.key);
   if (n >= 1 && n <= 9) setMode(n-1);
+  if (e.key === '0') setMode(9);
 });
 
 const _p1 = new THREE.Vector3(), _t1 = new THREE.Vector3();
@@ -680,6 +732,11 @@ function animate(){
   tMode += dt; tPrev += dt;
   if (blend < 1) blend = Math.min(1, blend + dt / 1.6);
   const e = blend<1 ? (1 - Math.cos(blend*Math.PI))/2 : 1;   // easeInOut
+
+  updateConstruction(
+    modeIdx === CONSTRUCT_IDX ? tMode % CONSTRUCT_CYC :
+    (blend < 1 && prevIdx === CONSTRUCT_IDX ? tPrev % CONSTRUCT_CYC : Infinity)
+  );
 
   const [pA, tA, fA = 38] = MODES[prevIdx].fn(tPrev);
   const [pB, tB, fB = 38] = MODES[modeIdx].fn(tMode);
