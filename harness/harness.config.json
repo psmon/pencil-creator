@@ -1,7 +1,7 @@
 {
   "name": "pencil-design-harness",
-  "version": "2.9.2",
-  "description": "Pencil Design 품질 하네스 — Case A(WPF→템플릿), Case B(템플릿참고→프로젝트 디자인), Case C(웹→JSON→펜슬 컴포넌트), Case D(DesignMD→펜슬 복제), Case S(컨셉아트→스프라이트 시트), Case W(Pencil→HTML) 평가 · v2.8.0 sprite-animator 도입 · v2.9.0 gpt-image-2 프로바이더 + 실제 영상 동작 분석 입력 소스 + 통합 자산 플레이어 · v2.9.1 모던 색상 per-character 팔레트 · v2.9.2 pencil-ops 환경/운영 지식(멀티모니터 창 위치 복구)",
+  "version": "2.10.0",
+  "description": "Pencil Design 품질 하네스 — Case A(WPF→템플릿), Case B(템플릿참고→프로젝트 디자인), Case C(웹→JSON→펜슬 컴포넌트), Case D(DesignMD→펜슬 복제), Case S(컨셉아트→스프라이트 시트), Case W(Pencil→HTML), Case M(Blender 모델링→Three.js 웹) 평가 · v2.9.x gpt-image-2/영상 동작 분석/pencil-ops · v2.10.0 blend3d-web-flow 도입: 모델링 우선 파이프라인(레퍼런스 분석→Blender MCP→.blend 자산(design/blend/)→Three.js 재구축→시네마틱 카메라→Playwright 검증→배포)",
   "scope": "pencil-design",
   "layers": {
     "knowledge": "harness/knowledge/",
@@ -37,6 +37,12 @@
       "name": "level-achievement",
       "path": "harness/engine/level-achievement-system.md",
       "scope": "rpg"
+    },
+    {
+      "name": "blend3d-web-flow",
+      "path": "harness/engine/blend3d-web-flow.md",
+      "scope": "case-M",
+      "since": "v2.10.0"
     }
   ],
   "knowledge_docs": [
@@ -59,6 +65,13 @@
       "since": "v2.9.2",
       "scope": "environment",
       "note": "펜슬 앱 운영/트러블슈팅 — 멀티모니터 창 위치 복구 (windowBounds in config.json)"
+    },
+    {
+      "name": "blend3d-web-craft",
+      "path": "harness/knowledge/blend3d-web-craft.md",
+      "since": "v2.10.0",
+      "scope": "case-M",
+      "note": "Case M 3축 평가 기준 — 모델링 충실도(40)/웹 재구축 정합성(30)/카메라 연출(30)"
     }
   ],
   "evaluation": {
@@ -98,6 +111,13 @@
           "axes": 3,
           "maxScore": 100,
           "label": "Pencil → HTML (SVG Realism + WAAPI)"
+        },
+        "M": {
+          "axes": 3,
+          "maxScore": 100,
+          "label": "Blender Modeling-First → Three.js Web (Cinematic Camera)",
+          "target": "design/blend/*.blend",
+          "reference": "harness/knowledge/blend3d-web-craft.md"
         }
       },
       "pipeline_bonus": {
@@ -156,6 +176,14 @@
         "S_B_W": {
           "multiplier": 1.5,
           "condition": "all >= 60"
+        },
+        "M_W": {
+          "multiplier": 1.3,
+          "condition": "both >= 60"
+        },
+        "S_M": {
+          "multiplier": 1.2,
+          "condition": "both >= 60"
         }
       },
       "reference": "harness/knowledge/design-craft.md"
@@ -201,7 +229,8 @@
         "C": 1.2,
         "D": 1.2,
         "S": 1.2,
-        "W": 1.2
+        "W": 1.2,
+        "M": 1.2
       }
     }
   },

@@ -32,9 +32,14 @@
 
   .panel {
     position: fixed; left: 50%; bottom: 30px; transform: translateX(-50%);
-    z-index: 10; display: flex; gap: 10px; padding: 10px 12px;
+    z-index: 10; display: flex; flex-direction: column; gap: 8px; padding: 10px 12px;
     background: rgba(20, 14, 10, .55); border: 1px solid rgba(255, 214, 160, .25);
     border-radius: 14px; backdrop-filter: blur(10px);
+  }
+  .prow { display: flex; gap: 10px; align-items: center; justify-content: center; }
+  .plabel {
+    color: rgba(255, 217, 160, .8); font-family: 'Malgun Gothic', sans-serif;
+    font-size: 11px; letter-spacing: 2px; padding-right: 2px; user-select: none;
   }
   .panel button {
     appearance: none; border: 1px solid rgba(255, 214, 160, .3);
@@ -71,11 +76,20 @@
 <div class="caption" id="caption"></div>
 
 <div class="panel" id="panel">
-  <button data-mode="0">① 시그니처 전경</button>
-  <button data-mode="1">② 드론 선회</button>
-  <button data-mode="2">③ 공원 산책</button>
-  <button data-mode="3">④ 타워 클라임</button>
-  <button data-mode="4">⑤ 선셋 플라이바이</button>
+  <div class="prow">
+    <button data-mode="0">① 시그니처 전경</button>
+    <button data-mode="1">② 드론 선회</button>
+    <button data-mode="2">③ 공원 산책</button>
+    <button data-mode="3">④ 타워 클라임</button>
+    <button data-mode="4">⑤ 선셋 플라이바이</button>
+  </div>
+  <div class="prow">
+    <span class="plabel">인테리어 투어</span>
+    <button data-mode="5">⑥ 20평 · 101동</button>
+    <button data-mode="6">⑦ 30평 · 102동</button>
+    <button data-mode="7">⑧ 40평 · 104동</button>
+    <button data-mode="8">⑨ 80평 펜트 · 103동</button>
+  </div>
 </div>
 <div class="hint">Blender 모델링 리소스 → Three.js 재구축 · 버튼으로 앵글 전환</div>
 
@@ -418,6 +432,159 @@ function updateCars(dt){
 }
 
 /* ============================================================
+   인테리어 유닛 4종 (한국형 20/30/40/80평) — Blender 모델과 동일 좌표
+   타워 파사드는 FrontSide 렌더 → 카메라가 내부로 들어가면 외벽이
+   자동 컬링되어 인테리어가 드러난다 (컷어웨이 기법).
+   ============================================================ */
+const IMAT = {
+  wood:    new THREE.MeshStandardMaterial({ color: 0x7a5938, roughness: .5 }),
+  woodlt:  new THREE.MeshStandardMaterial({ color: 0x9e7f5c, roughness: .55 }),
+  wallw:   new THREE.MeshStandardMaterial({ color: 0xe6e1d8, roughness: .85 }),
+  sofa:    new THREE.MeshStandardMaterial({ color: 0x525c6b, roughness: .9 }),
+  sofa2:   new THREE.MeshStandardMaterial({ color: 0xb8a88e, roughness: .9 }),
+  tv:      new THREE.MeshStandardMaterial({ color: 0x0a0a0d, roughness: .2, metalness: .3 }),
+  kitchen: new THREE.MeshStandardMaterial({ color: 0xd1ccc2, roughness: .4 }),
+  counter: new THREE.MeshStandardMaterial({ color: 0x2e2e33, roughness: .25 }),
+  bed:     new THREE.MeshStandardMaterial({ color: 0xe0d8c8, roughness: .9 }),
+  bedfrm:  new THREE.MeshStandardMaterial({ color: 0x59422e, roughness: .6 }),
+  rug:     new THREE.MeshStandardMaterial({ color: 0x8c7361, roughness: 1 }),
+  marble:  new THREE.MeshStandardMaterial({ color: 0xe0dcd4, roughness: .15 }),
+  gold:    new THREE.MeshStandardMaterial({ color: 0xd9a64d, roughness: .3, metalness: .9 }),
+  iglass:  new THREE.MeshStandardMaterial({ color: 0x99b8c4, roughness: .05, metalness: .2,
+             transparent: true, opacity: .22, side: THREE.DoubleSide }),
+  table:   new THREE.MeshStandardMaterial({ color: 0x4d3826, roughness: .4 }),
+  plant:   new THREE.MeshStandardMaterial({ color: 0x26591f, roughness: .9 }),
+  lampw:   new THREE.MeshStandardMaterial({ color: 0xfff2d9, emissive: 0xffd98f, emissiveIntensity: .7 }),
+};
+
+/* 유닛 정의: [tag, cx, front(블렌더y), z0, W, D, H, 바닥재] */
+const UNITS = {
+  u20: { cx: -75, front: 1,   z0: 30,  W: 9,  D: 7,  H: 2.7, floor: 'woodlt', label: '20평 · 101동 10층' },
+  u30: { cx: -45, front: -14, z0: 45,  W: 12, D: 9,  H: 2.7, floor: 'woodlt', label: '30평 · 102동 15층' },
+  u40: { cx: 35,  front: -14, z0: 60,  W: 14, D: 10, H: 2.7, floor: 'wood',   label: '40평 · 104동 20층' },
+  u80: { cx: -5,  front: -24, z0: 226, W: 20, D: 14, H: 3.2, floor: 'marble', label: '80평 펜트하우스 · 103동 최상층' },
+};
+
+/* 가구: [lx, ly, lz(중심), sx, sy, sz, mat] — Blender 스크립트와 동일 값 */
+const FURN = {
+  u20: [
+    [5.0,4.5,1.35,.12,5,2.7,'wallw'],[2.2,2.2,.4,2.2,.9,.8,'sofa'],[2.2,2.62,.75,2.2,.25,.7,'sofa'],
+    [2.4,1.8,.16,2.8,1.8,.04,'rug'],[2.4,6.7,1.3,2,.12,1.1,'tv'],[2.4,6.6,.35,2.6,.45,.5,'woodlt'],
+    [.45,5.5,.45,.7,2.6,.9,'kitchen'],[.45,5.5,.93,.75,2.7,.06,'counter'],[2,4.3,.38,1.2,.8,.75,'table'],
+    [7,5.3,.3,1.6,2.1,.5,'bed'],[7,6.35,.6,1.6,.12,1,'bedfrm'],[8.55,3.5,1.1,.6,1.8,2.2,'bedfrm'],
+    [.6,.8,.55,.5,.5,1.1,'plant'],
+  ],
+  u30: [
+    [8,5.5,1.35,.12,7,2.7,'wallw'],[3.5,6.5,1.35,.12,5,2.7,'wallw'],[5.6,2.6,.4,2.8,1,.8,'sofa'],
+    [5.6,3.05,.8,2.8,.25,.75,'sofa'],[5.6,1.9,.16,3.4,2,.04,'rug'],[5.6,.4,1.35,2.6,.1,1.2,'tv'],
+    [5.8,8.5,.45,3.6,.75,.9,'kitchen'],[5.8,8.5,.93,3.7,.8,.06,'counter'],[5.8,7,.45,2.2,.8,.9,'kitchen'],
+    [5.8,7,.93,2.3,.85,.06,'counter'],[2.2,4.6,.38,1.6,.9,.75,'table'],[10.2,6.2,.3,1.8,2.2,.5,'bed'],
+    [10.2,7.3,.65,1.8,.12,1.1,'bedfrm'],[11.6,4.2,1.1,.55,2.4,2.2,'bedfrm'],[1.5,7.8,.28,1.4,1.9,.45,'bed'],
+    [.55,5.2,.4,.7,1.4,.78,'table'],[11.3,1,.55,.5,.5,1.1,'plant'],
+  ],
+  u40: [
+    [9.5,6,1.35,.12,8,2.7,'wallw'],[4,7,1.35,.12,6,2.7,'wallw'],[11.7,8.4,1.35,4.4,.12,2.7,'wallw'],
+    [6.7,2.8,.42,3.4,1.05,.85,'sofa2'],[6.7,3.28,.85,3.4,.25,.8,'sofa2'],[4.9,1.7,.42,1,2,.85,'sofa2'],
+    [6.7,1.9,.17,4.2,2.4,.04,'rug'],[6.7,9.8,1.4,3.2,.12,1.3,'tv'],[6.7,9.7,.4,4,.5,.55,'wood'],
+    [1.8,9.55,.45,3.2,.75,.9,'kitchen'],[1.8,9.55,.93,3.3,.8,.06,'counter'],[2,7.8,.45,2.4,.85,.9,'kitchen'],
+    [2,7.8,.93,2.5,.9,.06,'counter'],[2.2,5.4,.38,2,1,.75,'table'],[11.7,5.6,.32,2,2.3,.55,'bed'],
+    [11.7,6.8,.7,2,.12,1.2,'bedfrm'],[10.2,9.3,1.1,1.5,.55,2.2,'bedfrm'],[13.3,9.3,1.1,1.3,.55,2.2,'bedfrm'],
+    [.6,4,.4,.75,1.6,.78,'table'],[.5,2.2,1,.5,1.6,2,'wood'],[13.3,1,.6,.55,.55,1.2,'plant'],
+  ],
+  u80: [
+    [13,8,1.6,.15,12,3.2,'wallw'],[5.5,9,1.6,.15,10,3.2,'wallw'],[9.2,3.4,.45,4.2,1.1,.9,'sofa'],
+    [9.2,3.92,.9,4.2,.28,.85,'sofa'],[6.9,2.2,.45,1.1,2.6,.9,'sofa'],[11.5,2.2,.45,1.1,2.6,.9,'sofa'],
+    [9.2,2.2,.25,1.6,.9,.42,'gold'],[9.2,2.6,.17,5.6,3.4,.05,'rug'],[9.2,13.62,1.6,4.6,.12,1.6,'tv'],
+    [9.2,13.74,1.6,6,.1,3.2,'counter'],[2.6,13.5,.5,4.4,.8,1,'kitchen'],[2.6,13.5,1.03,4.5,.85,.07,'marble'],
+    [2.8,11.4,.5,3.2,.95,1,'counter'],[2.8,11.4,1.03,3.35,1.05,.07,'marble'],[3.2,8,.4,3,1.3,.78,'table'],
+    [2.0,7.1,.28,.5,.5,.95,'sofa2'],[2.8,7.1,.28,.5,.5,.95,'sofa2'],[3.6,7.1,.28,.5,.5,.95,'sofa2'],[4.4,7.1,.28,.5,.5,.95,'sofa2'],
+    [2.0,8.9,.28,.5,.5,.95,'sofa2'],[2.8,8.9,.28,.5,.5,.95,'sofa2'],[3.6,8.9,.28,.5,.5,.95,'sofa2'],[4.4,8.9,.28,.5,.5,.95,'sofa2'],
+    [16.6,9.5,.38,2.4,2.6,.6,'bed'],[16.6,10.6,.85,2.4,.15,1.5,'gold'],[16.4,4.5,.42,2.2,1,.85,'sofa2'],
+    [19.2,8,1.6,.6,4,3.2,'bedfrm'],[2.6,10.5,.42,2,.9,.8,'wood'],[.6,11.5,1.5,.6,3.5,3,'wood'],
+    [14.5,1.8,.5,1.6,1.5,1,'tv'],[.8,1.2,.75,.7,.7,1.5,'plant'],[19,1.2,.75,.7,.7,1.5,'plant'],
+    [9.2,2.6,2.9,1.4,1.4,.5,'lampw'],
+  ],
+};
+
+function buildUnit(key){
+  const u = UNITS[key];
+  const { cx, front, z0, W, D, H } = u;
+  const x0 = cx - W/2;
+  // 로컬(lx,ly,lz중심) → 월드: three (x0+lx, z0+lz, -(front+ly)), 크기 (sx, sz, sy)
+  const put = (lx, ly, lz, sx, sy, sz, matKey) => {
+    const m = new THREE.Mesh(new THREE.BoxGeometry(sx, sz, sy), IMAT[matKey]);
+    m.position.set(x0 + lx, z0 + lz, -(front + ly));
+    m.receiveShadow = true;
+    group.add(m); return m;
+  };
+  // 셸
+  put(W/2, D/2, .075, W, D, .15, u.floor);            // 바닥
+  put(W/2, D/2, H+.06, W, D, .12, 'wallw');           // 천장
+  put(W/2, D-.075, H/2, W, .15, H, 'wallw');          // 뒷벽
+  put(.075, D/2, H/2, .15, D, H, 'wallw');            // 좌벽
+  put(W-.075, D/2, H/2, .15, D, H, 'wallw');          // 우벽
+  put(W/2, -1.1, .075, W, 2.2, .15, 'marble');        // 발코니
+  put(W/2, -2.16, .55, W, .08, 1.1, 'iglass');        // 난간
+  put(W/2, .03, H/2, W, .06, H, 'iglass');            // 전면 유리
+  put(W/3, .03, H/2, .12, .12, H, 'counter');
+  put(W*2/3, .03, H/2, .12, .12, H, 'counter');
+  // 가구
+  for (const f of FURN[key]) put(...f);
+  // 실내 조명
+  for (const ly of [D*.28, D*.72]) {
+    const li = new THREE.PointLight(0xffe0b0, 8, D*3.0, 2);
+    li.position.set(cx, z0 + H - .55, -(front + ly));
+    group.add(li);
+  }
+  if (key === 'u80') {
+    const ch = new THREE.PointLight(0xffd98f, 20, 30, 2);
+    ch.position.set(x0 + 9.2, z0 + 2.3, -(front + 2.6));
+    group.add(ch);
+  }
+}
+for (const k of Object.keys(UNITS)) buildUnit(k);
+
+/* 인테리어 투어 카메라: 외부 어프로치 → 발코니 관통 진입 → 실내 룩어라운드 */
+function tourFn(key){
+  const u = UNITS[key];
+  const { cx, front, z0, W, D, H } = u;
+  const zFace = -front;                    // 파사드 평면 (three z)
+  const eye = z0 + 1.6;
+  const P0 = new THREE.Vector3(cx + 38, z0 + 20, zFace + 95);   // 원경 어프로치 시점
+  const P1 = new THREE.Vector3(cx, eye + .1, zFace + 7.5);      // 발코니 앞
+  const P2 = new THREE.Vector3(cx, eye, zFace - D * .45);       // 실내 안착점 (중앙부)
+  const ease = s => (1 - Math.cos(Math.min(Math.max(s,0),1) * Math.PI)) / 2;
+  const A = 6, B = 2.5;
+  return (t) => {
+    const pos = new THREE.Vector3(), tgt = new THREE.Vector3();
+    let fov = 42;
+    if (t < A) {                                        // 어프로치
+      pos.lerpVectors(P0, P1, ease(t / A));
+      tgt.set(cx, eye, zFace - 2);
+    } else if (t < A + B) {                             // 유리 관통 진입
+      const s = ease((t - A) / B);
+      pos.lerpVectors(P1, P2, s);
+      tgt.set(cx, eye - .15, zFace - D * .75);
+      fov = 42 + s * 20;
+    } else {                                            // 실내 360° 룩어라운드
+      const tr = t - A - B;
+      const yaw = tr * .3;                               // 약 21초에 한 바퀴
+      const pitch = Math.sin(tr * .21) * .4 - .12;
+      pos.copy(P2);
+      pos.x += Math.sin(tr * .18) * Math.min(W * .06, 1.0);
+      pos.y += Math.sin(tr * .27) * .1;
+      tgt.set(
+        pos.x + Math.sin(yaw) * 7,
+        pos.y + pitch,
+        pos.z - Math.cos(yaw) * 7
+      );
+      fov = 62;
+    }
+    return [pos, tgt, fov];
+  };
+}
+
+/* ============================================================
    카메라 연출 5종 — 각 모드는 t(초)에 대한 (pos, target) 함수
    ============================================================ */
 const CENTER = BL(0, -5, 110);   // 단지 중심(타워 미들높이)
@@ -462,6 +629,18 @@ const MODES = [
       const pos = new THREE.Vector3(-430 + k*860, 95 + Math.sin(k*Math.PI)*55, 320 - k*90);
       return [pos, BL(0, 0, 95)];
     } },
+  { name: '⑥ 20평 투어',
+    desc: '<b>인테리어 투어 — 20평 (101동 10층)</b> — LDK + 침실 · 콤팩트 신혼 평형. 발코니로 진입해 실내를 둘러봅니다',
+    fn: tourFn('u20') },
+  { name: '⑦ 30평 투어',
+    desc: '<b>인테리어 투어 — 30평 (102동 15층)</b> — 국민평형 84㎡ · 거실 미디어월 + 아일랜드 주방 + 침실 2',
+    fn: tourFn('u30') },
+  { name: '⑧ 40평 투어',
+    desc: '<b>인테리어 투어 — 40평 (104동 20층)</b> — L형 카우치 거실 + 다이닝 + 드레스룸 딸린 마스터룸',
+    fn: tourFn('u40') },
+  { name: '⑨ 80평 펜트하우스 투어',
+    desc: '<b>인테리어 투어 — 80평 펜트하우스 (103동 최상층)</b> — 대리석 그랜드 리빙 + 8인 다이닝 + 골드 마스터 스위트 + 샹들리에',
+    fn: tourFn('u80') },
 ];
 
 let modeIdx = 0, prevIdx = 0, blend = 1;
@@ -490,7 +669,7 @@ showCaption(MODES[0].desc);
 
 addEventListener('keydown', e => {
   const n = parseInt(e.key);
-  if (n >= 1 && n <= 5) setMode(n-1);
+  if (n >= 1 && n <= 9) setMode(n-1);
 });
 
 const _p1 = new THREE.Vector3(), _t1 = new THREE.Vector3();
@@ -502,11 +681,13 @@ function animate(){
   if (blend < 1) blend = Math.min(1, blend + dt / 1.6);
   const e = blend<1 ? (1 - Math.cos(blend*Math.PI))/2 : 1;   // easeInOut
 
-  const [pA, tA] = MODES[prevIdx].fn(tPrev);
-  const [pB, tB] = MODES[modeIdx].fn(tMode);
+  const [pA, tA, fA = 38] = MODES[prevIdx].fn(tPrev);
+  const [pB, tB, fB = 38] = MODES[modeIdx].fn(tMode);
   _p1.lerpVectors(pA, pB, e); _t1.lerpVectors(tA, tB, e);
   camera.position.copy(_p1);
   camera.lookAt(_t1);
+  const fv = fA + (fB - fA) * e;
+  if (Math.abs(camera.fov - fv) > .01) { camera.fov = fv; camera.updateProjectionMatrix(); }
 
   updatePeople(t);
   updateCars(dt);
