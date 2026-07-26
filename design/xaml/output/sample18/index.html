@@ -336,7 +336,7 @@ const walkLights=[]; for(let i=0;i<4;i++){ const pl=new THREE.PointLight(0xffca8
 })();
 
 /* ---------------- Spider web line (only in spider scene) ---------------- */
-const webMat=new THREE.LineBasicMaterial({color:0xffffff, transparent:true, opacity:0});
+const webMat=new THREE.LineBasicMaterial({color:0xffffff, transparent:true, opacity:0, blending:THREE.AdditiveBlending, depthWrite:false});
 const webGeo=new THREE.BufferGeometry().setFromPoints([new V(), new V()]);
 const webLine=new THREE.Line(webGeo, webMat); scene.add(webLine);
 
@@ -392,16 +392,50 @@ function sceneSky(t){
 }
 function sampleDescent(t){ return kfSample(kfDescent.concat([{t:12.0001,pos:[300,170,360],look:[0,60,0],fov:56}]), t); }
 
-// Scene 2 — 스파이더맨 액션 (web-swing through the boulevard canyon)
+// Scene 2 — 스파이더맨 액션 (한쪽 클러스터 내 근거리 웹스윙)
+// ⚠️ 공원을 건너지 않는다. 공원 한쪽(북측) 건물 그룹 안에서 인접 타워끼리
+//    짧은 웹으로 지그재그 점프한다. 거미줄은 최대 3칸 이내로 제한.
+function parkFaceCorner(b){                  // 공원(z=0)을 향한 타워 상단 모서리
+  const bz=-b.y; return new V(b.x, b.h, bz + Math.sign(-bz||1)*(b.d/2));
+}
+const MAX_WEB = 165;                         // 거미줄 최대 길이 (≈ 건물 3칸, 밀접 기준)
+const spiderTowers=[];
+(function buildSpiderRoute(){
+  const near=(v,t)=>Math.abs(v-t)<6;
+  const front=BLD.filter(b=>near(-b.y,-150)).sort((a,b)=>a.x-b.x); // 북측 1열 (z=-150)
+  const mid  =BLD.filter(b=>near(-b.y,-225)).sort((a,b)=>a.x-b.x); // 북측 2열 (z=-225)
+  front.forEach((b,k)=>{
+    spiderTowers.push(b);
+    if(k%2===1 && mid[k]) spiderTowers.push(mid[k]);              // 2열로 지그재그 위빙
+  });
+})();
+const spiderCorners = spiderTowers.map(parkFaceCorner);
+const spiderState = { webTarget:new V(), webOn:0 };
+
+function hangOf(C){                           // 타워 앞 스윙 레인 (건물 면과 여유 간격)
+  const hy=clamp(C.y*0.6, 55, 120);
+  return new V(C.x, hy, C.z + Math.sign(-C.z||1)*24);   // 24m 앞으로 → 파사드 클리핑 방지
+}
 function sceneSpider(t){
-  const T=24, p=(t%T)/T;
-  const x=-352 + p*704;                     // fast forward across the city
-  const ph=t*1.55;                          // pendulum phase
-  const y=52 - Math.cos(ph)*34 + 34;        // arc: rise near anchors, dip at bottom
-  const z=Math.sin(ph*0.5)*104;             // swing between north(-z) & south(+z) canyon
-  const roll=-Math.sin(ph*0.5)*0.5;         // bank into the swing
-  const look=new V(x+70, y-6 + Math.sin(ph)*10, z*0.4);
-  return { pos:new V(x,y,z), look, fov:74, roll, swingPhase:ph };
+  const N=spiderCorners.length;
+  const segDur=1.9, total=(N-1)*segDur;
+  let tt=t % total;
+  let i=Math.floor(tt/segDur), u=(tt-i*segDur)/segDur;
+  const Ca=spiderCorners[i], Cb=spiderCorners[i+1];              // 인접 타워 → 인접 타워
+  const Cc=spiderCorners[Math.min(i+2,N-1)];
+  const hangA=hangOf(Ca), hangB=hangOf(Cb);                     // 세그먼트가 타워 공유 → 연속
+  const flat=hangA.clone().lerp(hangB,u);
+  const sag=38;                                                 // 진자 하강 깊이
+  const pos=new V(flat.x, Math.max(16, flat.y - sag*Math.sin(Math.PI*u)), flat.z);
+  // 거미줄: 스윙해 가는 인접 타워(Cb) 옥상에 부착. 최대 길이 초과 시 숨김.
+  spiderState.webTarget.copy(Cb);
+  const reachable = Cb.distanceTo(pos) <= MAX_WEB;
+  spiderState.webOn = (reachable && u>0.05 && u<0.82) ? 1 : 0;
+  // 뱅킹: 진행/위빙 방향으로 기울임
+  const roll=-Math.sign((hangB.z-hangA.z) || (hangB.x-hangA.x)) * 0.42 * Math.sin(Math.PI*u);
+  // 시선: 다음 타워를 바라보며 (인접 건물 간극이 화면에 들어옴)
+  const look=Cb.clone().lerp(Cc,0.3); look.y=pos.y+2; look.x+=14;
+  return { pos, look, fov:76, roll };
 }
 
 const SCENES=[sceneWalk, sceneSky, sceneSpider];
@@ -474,15 +508,17 @@ function animate(){
     walkLights.forEach((pl,i)=>{ if(near[i]){ pl.position.copy(near[i]); pl.intensity=lerp(pl.intensity, 260, 0.1);} else pl.intensity=0; });
   } else { walkLights.forEach(pl=>pl.intensity=lerp(pl.intensity,0,0.2)); }
 
-  // spider scene: draw a web line to an upcoming building top
-  if(cur===2){
-    const anchorX=pos.x+140; let best=null,bd=1e9;
-    for(const b of BLD){ if(b.x>pos.x && b.h>120){ const d=Math.abs(b.x-anchorX); if(d<bd){bd=d;best=b;} } }
-    if(best){ const ap=new V(best.x, best.h, -best.y);
-      webGeo.setFromPoints([new V(pos.x+6, pos.y-3, pos.z), ap]); webGeo.attributes.position.needsUpdate=true;
-      webMat.opacity=lerp(webMat.opacity, 0.5, 0.1);
-    }
-  } else webMat.opacity=lerp(webMat.opacity, 0, 0.2);
+  // spider scene: web line taut from the "hand" (in-view, lower-right) to the real tower
+  if(cur===2 && spiderState.webOn){
+    const fwd=new THREE.Vector3(); camera.getWorldDirection(fwd);
+    const right=new THREE.Vector3().crossVectors(fwd, camera.up).normalize();
+    const hand=camera.position.clone()
+      .add(fwd.clone().multiplyScalar(11))
+      .add(right.multiplyScalar(7))
+      .add(new V(0,-5,0));
+    webGeo.setFromPoints([hand, spiderState.webTarget]); webGeo.attributes.position.needsUpdate=true;
+    webMat.opacity=lerp(webMat.opacity, 0.9, 0.4);
+  } else webMat.opacity=lerp(webMat.opacity, 0, 0.4);
 
   // subtle river shimmer via moon angle already; twinkle lamps
   document.getElementById('clock').textContent=fmt(elapsed);
