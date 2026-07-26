@@ -79,6 +79,7 @@
     <button class="scene-btn active" data-scene="0">🚶 공원 산책</button>
     <button class="scene-btn" data-scene="1">🚁 하늘 → 도시 순회</button>
     <button class="scene-btn" data-scene="2">🕸️ 스파이더맨 액션</button>
+    <button class="scene-btn" data-scene="3">🌀 고공 360</button>
   </div>
   <div class="prow sub">
     <label class="toggle"><input type="checkbox" id="autoChk" checked>자동 순환</label>
@@ -392,58 +393,89 @@ function sceneSky(t){
 }
 function sampleDescent(t){ return kfSample(kfDescent.concat([{t:12.0001,pos:[300,170,360],look:[0,60,0],fov:56}]), t); }
 
-// Scene 2 — 스파이더맨 액션 (한쪽 클러스터 내 근거리 웹스윙)
-// ⚠️ 공원을 건너지 않는다. 공원 한쪽(북측) 건물 그룹 안에서 인접 타워끼리
-//    짧은 웹으로 지그재그 점프한다. 거미줄은 최대 3칸 이내로 제한.
-function parkFaceCorner(b){                  // 공원(z=0)을 향한 타워 상단 모서리
-  const bz=-b.y; return new V(b.x, b.h, bz + Math.sign(-bz||1)*(b.d/2));
+// Scene 2 — 스파이더맨 액션 (건물 사이 빈 통로 웹스윙, 건물 통과 없음)
+// ⚠️ 카메라는 1열(z=-150)과 2열(z=-225) 사이의 '빈 레인'(z≈-187) 안에서만 이동한다.
+//    이 레인에는 건물 footprint가 없으므로 절대 건물을 통과하지 않는다.
+//    거미줄만 양옆 타워 옥상으로 쏜다.
+const LANE_Z=-187, LANE_HALF=11;             // 카메라 z는 이 레인 폭 안에서만
+const MAX_WEB=170;                            // 거미줄 최대 길이 (≈ 밀접 건물 3칸)
+function towerTop(b){                          // 레인을 향한 타워 상단 모서리 (웹 부착점)
+  const bz=-b.y; return new V(b.x, b.h, bz + Math.sign(LANE_Z-bz||1)*(b.d/2));
 }
-const MAX_WEB = 165;                         // 거미줄 최대 길이 (≈ 건물 3칸, 밀접 기준)
 const spiderTowers=[];
 (function buildSpiderRoute(){
   const near=(v,t)=>Math.abs(v-t)<6;
-  const front=BLD.filter(b=>near(-b.y,-150)).sort((a,b)=>a.x-b.x); // 북측 1열 (z=-150)
-  const mid  =BLD.filter(b=>near(-b.y,-225)).sort((a,b)=>a.x-b.x); // 북측 2열 (z=-225)
-  front.forEach((b,k)=>{
-    spiderTowers.push(b);
-    if(k%2===1 && mid[k]) spiderTowers.push(mid[k]);              // 2열로 지그재그 위빙
-  });
+  const r1=BLD.filter(b=>near(-b.y,-150)); const r2=BLD.filter(b=>near(-b.y,-225));
+  spiderTowers.push(...r1, ...r2);
+  spiderTowers.sort((a,b)=>a.x-b.x);          // x 순으로 → 레인을 따라 전진, 양옆 교대
 })();
-const spiderCorners = spiderTowers.map(parkFaceCorner);
+// 레인 내 waypoint: 타워 쪽으로 살짝 lean (레인 폭 안으로 클램프) + 스윙 고도
+function laneWaypoint(b){
+  const bz=-b.y;
+  const lean=clamp((bz-LANE_Z)*0.4, -LANE_HALF, LANE_HALF); // 타워 방향으로 위빙
+  return new V(b.x, clamp(b.h*0.58, 52, 118), LANE_Z+lean);
+}
 const spiderState = { webTarget:new V(), webOn:0 };
 
-function hangOf(C){                           // 타워 앞 스윙 레인 (건물 면과 여유 간격)
-  const hy=clamp(C.y*0.6, 55, 120);
-  return new V(C.x, hy, C.z + Math.sign(-C.z||1)*24);   // 24m 앞으로 → 파사드 클리핑 방지
-}
 function sceneSpider(t){
-  const N=spiderCorners.length;
-  const segDur=1.9, total=(N-1)*segDur;
+  const N=spiderTowers.length;
+  const segDur=1.75, total=(N-1)*segDur;
   let tt=t % total;
   let i=Math.floor(tt/segDur), u=(tt-i*segDur)/segDur;
-  const Ca=spiderCorners[i], Cb=spiderCorners[i+1];              // 인접 타워 → 인접 타워
-  const Cc=spiderCorners[Math.min(i+2,N-1)];
-  const hangA=hangOf(Ca), hangB=hangOf(Cb);                     // 세그먼트가 타워 공유 → 연속
-  const flat=hangA.clone().lerp(hangB,u);
-  const sag=38;                                                 // 진자 하강 깊이
-  const pos=new V(flat.x, Math.max(16, flat.y - sag*Math.sin(Math.PI*u)), flat.z);
-  // 거미줄: 스윙해 가는 인접 타워(Cb) 옥상에 부착. 최대 길이 초과 시 숨김.
-  spiderState.webTarget.copy(Cb);
-  const reachable = Cb.distanceTo(pos) <= MAX_WEB;
-  spiderState.webOn = (reachable && u>0.05 && u<0.82) ? 1 : 0;
-  // 뱅킹: 진행/위빙 방향으로 기울임
-  const roll=-Math.sign((hangB.z-hangA.z) || (hangB.x-hangA.x)) * 0.42 * Math.sin(Math.PI*u);
-  // 시선: 다음 타워를 바라보며 (인접 건물 간극이 화면에 들어옴)
-  const look=Cb.clone().lerp(Cc,0.3); look.y=pos.y+2; look.x+=14;
+  const Ta=spiderTowers[i], Tb=spiderTowers[i+1], Tc=spiderTowers[Math.min(i+2,N-1)];
+  const Wa=laneWaypoint(Ta), Wb=laneWaypoint(Tb);   // 둘 다 레인 안 → 보간해도 레인 안(통과 없음)
+  const flat=Wa.clone().lerp(Wb,u);
+  const sag=32;
+  const pos=new V(flat.x, Math.max(18, flat.y - sag*Math.sin(Math.PI*u)), flat.z);
+  // 거미줄: 스윙해 가는 인접 타워(Tb) 옥상에 부착 (레인→타워, 짧은 길이)
+  const tip=towerTop(Tb); spiderState.webTarget.copy(tip);
+  spiderState.webOn = (tip.distanceTo(pos)<=MAX_WEB && u>0.05 && u<0.82) ? 1 : 0;
+  // 뱅킹: 레인 위빙 방향으로 기울임
+  const roll=-Math.sign((Wb.z-Wa.z) || (Wb.x-Wa.x)) * 0.4 * Math.sin(Math.PI*u);
+  // 시선: 진행 방향(다음 타워 쪽) — 빈 통로가 화면에 들어옴
+  const look=new V(lerp(Tb.x,Tc.x,0.3), pos.y+3, lerp(-Tb.y,-Tc.y,0.3)*0.4 + LANE_Z*0.6);
   return { pos, look, fov:76, roll };
 }
 
-const SCENES=[sceneWalk, sceneSky, sceneSpider];
-const DUR=[44, 38, 24];
+// Scene 3 — 고공 360 (큰 스윙으로 상승 → 정점에서 천천히 한 바퀴 조망 → 스파이럴 하강)
+let bigAnchor=new V(-200,180,-150);
+(function(){ let best=null; for(const b of BLD){ if(b.x>-280 && b.x<-120 && (!best||b.h>best.h)) best=b; }
+  if(best) bigAnchor=new V(best.x, best.h, -best.y + best.d/2); })();
+function sceneBigSwing(t){
+  const T=30; let tt=t%T;
+  if(tt<9){                                   // ① 큰 스윙 — 저공에서 고공까지 가속 상승
+    const u=tt/9, e=smooth(u);
+    const pos=new V(lerp(-240,10,e), lerp(48,372,e*e), lerp(-150,26,e));
+    spiderState.webTarget.copy(bigAnchor);
+    spiderState.webOn = (u>0.04 && u<0.6) ? 1 : 0;    // 초반에 거미줄 걸고 → 정점서 릴리즈(발사)
+    const roll=Math.sin(u*Math.PI)*-0.4;
+    const look=new V(pos.x+50, pos.y-70*(1-e)-20, pos.z+70);
+    return { pos, look, fov:lerp(74,60,e), roll };
+  } else if(tt<23){                           // ② 정점 — 천천히 360° 회전하며 아래를 모두 조망
+    const u=(tt-9)/14; spiderState.webOn=0;
+    const yaw=u*Math.PI*2;                     // 1회전
+    const cy=360 + Math.sin(u*Math.PI)*22;     // 살짝 떠오름
+    const pos=new V(0, cy, 24);
+    const R=180, drop=250;                     // 아래로 크게 숙인 시선
+    const look=new V(Math.sin(yaw)*R, cy-drop, 24 + Math.cos(yaw)*R);
+    return { pos, look, fov:66, roll:0 };
+  } else {                                     // ③ 스파이럴 하강 (루프 복귀)
+    const u=(tt-23)/7, e=smooth(u);
+    const yaw=Math.PI*2 + u*Math.PI*1.2;
+    const pos=new V(lerp(0,-240,e), lerp(360,48,e*e), lerp(24,-150,e));
+    spiderState.webOn=0;
+    const look=new V(pos.x+Math.sin(yaw)*60, pos.y-80, pos.z+Math.cos(yaw)*60);
+    return { pos, look, fov:64, roll:0 };
+  }
+}
+
+const SCENES=[sceneWalk, sceneSky, sceneSpider, sceneBigSwing];
+const DUR=[44, 38, 30, 30];
 const CAPTIONS=[
   '🚶 <b>공원 산책</b> — 여의도공원 산책로를 따라 걸으며 주변 마천루를 올려다본다',
   '🚁 <b>하늘 → 도시 순회</b> — 상공에서 도시 전체를 조망하며 내려와 공원을 선회한다',
-  '🕸️ <b>스파이더맨 액션</b> — 빌딩 숲을 가로지르며 웹스윙으로 도심 협곡을 질주한다'
+  '🕸️ <b>스파이더맨 액션</b> — 건물 사이 빈 통로를 웹스윙으로 질주한다 (건물 통과 없음)',
+  '🌀 <b>고공 360</b> — 큰 스윙으로 고공까지 솟구쳐 천천히 한 바퀴 돌며 도시 전체를 내려다본다'
 ];
 
 /* ---------------- scene state & smooth switching ---------------- */
@@ -508,8 +540,8 @@ function animate(){
     walkLights.forEach((pl,i)=>{ if(near[i]){ pl.position.copy(near[i]); pl.intensity=lerp(pl.intensity, 260, 0.1);} else pl.intensity=0; });
   } else { walkLights.forEach(pl=>pl.intensity=lerp(pl.intensity,0,0.2)); }
 
-  // spider scene: web line taut from the "hand" (in-view, lower-right) to the real tower
-  if(cur===2 && spiderState.webOn){
+  // spider / big-swing scenes: web line taut from the "hand" (in-view) to the real tower
+  if((cur===2 || cur===3) && spiderState.webOn){
     const fwd=new THREE.Vector3(); camera.getWorldDirection(fwd);
     const right=new THREE.Vector3().crossVectors(fwd, camera.up).normalize();
     const hand=camera.position.clone()
