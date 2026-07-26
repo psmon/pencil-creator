@@ -19,6 +19,12 @@ Optionally, by using the **Blend tool** in addition,
 you can control the detailed movements of animations more directly.
 It serves as a **complement to Pencil's timeline & storyboard features**.
 
+> ⚠️ **Terminology — two similarly-named tools appear in this project.**
+> - **MS Blend for Visual Studio** (above) — the WPF XAML timeline/storyboard design tool, used in Case A/W work.
+> - **Blender 3D** — the open-source 3D modeling tool, driven via Blender MCP in [Case M](#case-m-3d-modeling---web-3d-animation-blender---threejs) to produce 3D assets.
+>
+> They are completely different tools.
+
 ---
 
 ## Pencil Design Files (.pen)
@@ -172,7 +178,7 @@ Create Pencil card
 
 ---
 
-## 3-Case Harness Workflow
+## Harness Workflow (Case A · B · W · S · M)
 
 ### Case A: WPF Template Enrichment
 
@@ -253,6 +259,47 @@ Concept (gpt-image-2) -> sprite sheet (play, 8 frames):
 | S2 Animation Quality | 35 | Frame count, grid alignment, loop seam |
 | S3 Engineering Usability | 30 | Alpha, Aseprite JSON, packed master + index |
 
+### Case M: 3D Modeling -> Web 3D Animation (Blender -> Three.js)
+
+```bash
+> "Analyze this promo video, model the apartment complex in 3D, and build it for the web"
+> "Model it in Blender first, then make a web 3D page with 5 cinematic camera moves"
+```
+
+> ⚠️ **Blender** here means the open-source 3D modeling tool **Blender 3D** —
+> not **MS Blend for Visual Studio** (the WPF XAML design tool described above).
+
+This is the **"model first -> implement web second"** pipeline.
+The 3D space is finalized in Blender (real coordinates, real dimensions) and the
+**`.blend` file is adopted as a design asset** (`design/blend/` — a reusable asset on par
+with `.pen` files). The web side (Three.js) ports those placement numbers verbatim via the
+coordinate rule (`x,y,z -> x,z,-y`) and layers cinematic camera direction on top.
+
+**💡 If prompting the 3D model is hard — go through video footage instead.**
+When a 3D structure is difficult to describe in words, analyze a YouTube/local video first.
+Extracting frames with ffmpeg (or the `video-motion-analysis` skill) turns the reference into
+**numbers** — building count, floor counts, height hierarchy, layout, lighting mood — and those
+numbers become the Blender modeling spec. Instead of describing "what it looks like,"
+you just say "like this video."
+
+The 7-step flow:
+1. Reference analysis (video/image) -> 2. Blender MCP modeling (render-verify per chunk) ->
+3. Save the `.blend` asset (`design/blend/`) -> 4. Three.js rebuild (port the numbers) ->
+5. Camera direction (ease-in-out blending) -> 6. Playwright verification -> 7. Deploy
+
+**Featured case — `sample17` (ACMER Dongtan Cinematic 3D)**:
+a 61s apartment promo video -> 30 analyzed frames -> 5 towers + Korean 20/30/40/80-pyeong
+interiors -> 11 camera modes (5 cinematic + 4 balcony-entry cutaway interior tours +
+2 construction timelapses) + a 9-piece gpt-image-2 photoreal texture ON/OFF toggle.
+Master asset: [`design/blend/acmer-dongtan.blend`](design/blend/acmer-dongtan.blend) ·
+[live demo](https://psmon.github.io/pencil-creator/sample17/)
+
+| Evaluation Axis | Max Score | Key Criteria |
+|-----------------|-----------|-------------|
+| M1 Modeling Fidelity | 40 | Reference match, real-scale space, lighting mood, verify renders |
+| M2 Web Rebuild Consistency | 30 | Coordinate/dimension porting, material parity, performance (InstancedMesh) |
+| M3 Camera Direction | 30 | 5+ modes, transition blending, 3-phase interior entry |
+
 ### Pipeline Bonus
 
 | Path | Condition | XP Bonus |
@@ -261,6 +308,8 @@ Concept (gpt-image-2) -> sprite sheet (play, 8 frames):
 | A -> W | Both 60+ pts | x1.2 |
 | B -> W | Both 60+ pts | x1.3 |
 | S -> W | Both 60+ pts | x1.3 |
+| M -> W | Both 60+ pts | x1.3 |
+| S -> M | Both 60+ pts | x1.2 |
 | A -> B -> W | All 60+ pts | x1.5 |
 | S -> B -> W | All 60+ pts | x1.5 |
 

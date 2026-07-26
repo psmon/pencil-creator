@@ -26,6 +26,7 @@ Pencil Creator is an **animation-first design project** driven by Claude Code + 
 - **Case B**: Reference wpf-animation.pen → design project-specific .pen files
 - **Case C**: Web animation research → JSON metadata → Pencil component
 - **Case W**: Convert .pen design → HTML/CSS/JS in `design/xaml/output/sample{N}/`
+- **Case M**: Modeling-first — reference analysis (video frames) → Blender MCP modeling → `.blend` asset in `design/blend/` → Three.js web rebuild with cinematic cameras. **Blender 3D ≠ MS Blend** (WPF tool). If a 3D structure is hard to prompt, analyze video footage first to extract numeric specs.
 
 ## Path Conventions
 
