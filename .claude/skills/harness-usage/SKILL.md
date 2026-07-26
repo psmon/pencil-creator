@@ -2,7 +2,7 @@
 name: harness-usage
 description: |
   Pencil Design Harness를 이용한 디자인 작업을 실행하는 스킬.
-  Case A(WPF 조사→템플릿 보강), Case B(템플릿 참고→프로젝트 디자인), Case C(웹 애니메이션→JSON→펜슬 컴포넌트), Case D(DesignMD 영입→펜슬 복제), Case S(컨셉아트→스프라이트 시트), Case W(Pencil→HTML) 워크플로우를 실행하고 평가한다.
+  Case A(WPF 조사→템플릿 보강), Case B(템플릿 참고→프로젝트 디자인), Case C(웹 애니메이션→JSON→펜슬 컴포넌트), Case D(DesignMD 영입→펜슬 복제), Case S(컨셉아트→스프라이트 시트), Case M(영상/레퍼런스→Blender 3D 모델링→Three.js 웹), Case W(Pencil→HTML) 워크플로우를 실행하고 평가한다.
   다음 상황에서 반드시 이 스킬을 사용할 것:
   - "WPF 애니메이션 조사해서 펜슬에 그려줘" → Case A
   - "wpf-템플릿조사 후 템플릿보강해" → Case A
@@ -19,15 +19,19 @@ description: |
   - "캐릭터별 스프라이트 시트 생성" → Case S
   - "컨셉아트에서 캐릭터 분리해줘" → Case S
   - "배경 투명 스프라이트 추출" → Case S
+  - "유튜브 영상 분석해서 블렌더로 모델링하고 웹으로 구현해줘" → Case M
+  - "영상→blend 3d→html 플로우" → Case M
+  - "블렌더로 모델링 먼저 하고 Three.js로 재구축해줘" → Case M
+  - "레퍼런스 영상 보고 3D 씬 만들어 웹으로" → Case M
   - "펜슬 참고해서 HTML 페이지 만들어줘" → Case W
   - "디자인을 웹으로 구현해줘" → Case W
   - "디자인 평가해줘", "점수 매겨줘" → 평가 실행
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash, Agent, WebSearch, WebFetch, mcp__pencil__get_guidelines, mcp__pencil__open_document, mcp__pencil__get_editor_state, mcp__pencil__batch_design, mcp__pencil__get_screenshot, mcp__pencil__find_empty_space_on_canvas, mcp__pencil__snapshot_layout, mcp__pencil__batch_get, mcp__pencil__get_style_guide_tags, mcp__pencil__get_style_guide, mcp__pencil__get_variables
+allowed-tools: Read, Write, Edit, Glob, Grep, Bash, Agent, Skill, WebSearch, WebFetch, mcp__pencil__get_guidelines, mcp__pencil__open_document, mcp__pencil__get_editor_state, mcp__pencil__batch_design, mcp__pencil__get_screenshot, mcp__pencil__find_empty_space_on_canvas, mcp__pencil__snapshot_layout, mcp__pencil__batch_get, mcp__pencil__get_style_guide_tags, mcp__pencil__get_style_guide, mcp__pencil__get_variables, mcp__blender__execute_blender_code, mcp__blender__get_viewport_screenshot, mcp__blender__get_scene_info, mcp__blender__get_object_info
 ---
 
 # Harness Usage — Pencil Design 작업 실행
 
-`harness/` 3계층 구조를 기반으로 **Case A(WPF→템플릿), Case B(템플릿참고→프로젝트 디자인), Case C(웹 애니메이션→JSON→펜슬 컴포넌트), Case D(DesignMD 영입→펜슬 복제), Case S(컨셉아트→스프라이트 시트), Case W(Pencil→HTML) 워크플로우**를 실행한다.
+`harness/` 3계층 구조를 기반으로 **Case A(WPF→템플릿), Case B(템플릿참고→프로젝트 디자인), Case C(웹 애니메이션→JSON→펜슬 컴포넌트), Case D(DesignMD 영입→펜슬 복제), Case S(컨셉아트→스프라이트 시트), Case M(영상/레퍼런스→Blender 3D 모델링→Three.js 웹), Case W(Pencil→HTML) 워크플로우**를 실행한다.
 
 ---
 
@@ -39,9 +43,9 @@ idle → prompted → researching → designing → design-evaluating → record
 
 | 상태 | 핵심 행동 |
 |------|----------|
-| prompted | Case A/B/C/D/S/W 판별, 기존 파일 상태 확인 |
-| researching | WPF 조사 (A) / wpf-animation.pen 파악 (B) / 웹 애니메이션 분석 (C) / designmd CLI 수집 (D) / 컨셉아트 비전 분석·팔레트 추출 (S) |
-| designing | 카드 추가 (A) / 프로젝트 디자인 (B) / JSON→펜슬 컴포넌트 (C) / design-md.pen 프레임 복제 (D) / Gemini edit + 후처리 + 시트 (S) / HTML 구현 (W) |
+| prompted | Case A/B/C/D/S/M/W 판별, 기존 파일 상태 확인 |
+| researching | WPF 조사 (A) / wpf-animation.pen 파악 (B) / 웹 애니메이션 분석 (C) / designmd CLI 수집 (D) / 컨셉아트 비전 분석·팔레트 추출 (S) / 영상 프레임·레퍼런스 수치화 (M) |
+| designing | 카드 추가 (A) / 프로젝트 디자인 (B) / JSON→펜슬 컴포넌트 (C) / design-md.pen 프레임 복제 (D) / Gemini edit + 후처리 + 시트 (S) / Blender 모델링→.blend→Three.js 재구축 (M) / HTML 구현 (W) |
 | design-evaluating | 3축 채점 (harness/knowledge/design-craft.md 참조) |
 | recording | 로그 작성 + RPG(XP/레벨/업적) 처리 |
 
@@ -450,6 +454,62 @@ Phase 3 — Verify (design-evaluating):
 
 ---
 
+## 5-2. Case M: 영상/레퍼런스 → Blender 3D 모델링 → Three.js 웹 (Modeling-First)
+
+레퍼런스(유튜브/로컬 영상·이미지·실측 자료)를 **수치로 분석 → Blender에서 실좌표·실치수로 3D 씬을 확정 → `.blend` 자산 저장 → 동일 좌표/치수로 Three.js 웹 재구축**하는 워크플로우.
+**핵심 원칙: 3D 공간 설계는 Blender에서 먼저 확정한다. 웹은 그 결과를 재구축할 뿐, 웹에서 즉흥적으로 공간을 설계하지 않는다.**
+⚠️ **Blender 3D ≠ MS Blend**(WPF 도구). 3D 구조를 프롬프트로 잡기 어려우면 먼저 영상 프레임을 분석해 수치 스펙을 추출한다.
+
+> 실제 Blender/Three.js 작업은 **`blend3d` 스킬 + `blend3d-architect` 에이전트**에 위임한다.
+> 워크플로우 정의: `harness/engine/blend3d-web-flow.md` · 평가 기준: `harness/knowledge/blend3d-web-craft.md`
+
+```
+Phase 1 — Gather (researching): ① 레퍼런스 분석
+  → 영상 입력: video-motion-analysis 스킬 / ffmpeg 프레임 추출로 구조·배치·비례·라이팅·무드를 수치화
+  → 이미지/실측 자료: 동 수, 층수, 높이 위계, 평형 구조 등 수치 근거 정리
+  → 배치 데이터를 파이썬 리스트/딕셔너리 스펙으로 명세화 (미터 실치수)
+
+Phase 2a — Action: Blender MCP 모델링 (designing): ② + ③
+  → blend3d 스킬 위임 — execute_blender_code로 단계별(청크) 모델링
+  → 각 청크 후 get_viewport_screenshot 또는 EEVEE 렌더로 즉시 검증 (스케일/부유 지오메트리 결함 잡기)
+  → 실내 컷어웨이 필요 시 파사드 머티리얼 use_backface_culling=True
+  → ③ .blend 자산 저장: design/blend/{scene-name}.blend  ← 재활용 디자인 자산, 커밋 대상 (외부 임시폴더 금지)
+
+Phase 2b — Action: Three.js 웹 재구축 (designing): ④ + ⑤
+  → 좌표 변환 규칙: Blender(x, y, z) → Three(x, z, -y)  ← 배치 수치를 그대로 이식 (좌표 새로 잡기 금지)
+  → 프로시저럴 텍스처(노드) → CanvasTexture/셰이더 등가 재현 (창문 그리드, 그라데이션 스카이 등)
+  → 대량 반복 오브젝트는 InstancedMesh
+  → ⑤ 카메라 연출: 모드별 t(초)→(pos, target[, fov]) 순수 함수, 이즈인아웃 블렌딩(급점프 금지)
+    실내 진입 3단: 어프로치 → 개구부(유리) 관통 → 룩어라운드 / 실내 FOV 55~65, 실외 35~45
+  → 저장: design/xaml/output/sample{N}/index.html (단일 파일)
+
+Phase 2c — Action: 검증 (designing): ⑥
+  → 로컬 HTTP 서버 + Playwright로 콘솔 에러 0 확인 (사용자 요청 시)
+  → 모드별 스크린샷으로 구도/노출/지오메트리 검수 (z-파이팅·노출 과다·프레임 저하 점검)
+
+Phase 3 — Verify (design-evaluating): ⑦은 배포(pencil-deploy)로 이관
+  → blend3d-web-craft.md Case M 3축 평가
+    M1: 모델링 충실도 (40점) — 레퍼런스 정합·공간 구성·라이팅/무드·검증 렌더
+    M2: 웹 재구축 정합성 (30점) — 좌표/치수 이식·머티리얼 등가·성능 설계
+    M3: 카메라 연출 완성도 (30점) — 연출 다양성(5종+)·전환 품질·진입 연출
+  → recording: 로그 + RPG
+```
+
+### Case M 체크리스트
+
+```
+□ 레퍼런스(영상/이미지/실측)를 수치 스펙으로 정리했는가? (동 수/층수/높이/평형)
+□ Blender에서 미터 실치수로 청크 단위 모델링하고 청크별로 검증 렌더했는가?
+□ design/blend/{name}.blend 자산이 저장소 내부에 커밋되었는가? (외부 방치 시 -10)
+□ Three.js 재구축이 Blender 좌표를 그대로 이식했는가? (재설계 시 -10)
+□ 프로시저럴 머티리얼을 CanvasTexture/셰이더로 등가 재현했는가?
+□ 카메라 모드 5종 이상 + 레퍼런스 재현 샷 1개 이상을 포함했는가?
+□ 실내 투어 시 어프로치→관통→룩어라운드 3단 + 컷어웨이 처리를 했는가?
+□ 콘솔 에러 0, z-파이팅/노출 과다 등 검증 가능한 결함을 잡았는가?
+```
+
+---
+
 ## 6. Playwright 섹션별 캡처 (선택 — 사용자 요청 시에만)
 
 ⚠️ **이 단계는 자동 실행하지 않는다.** 사용자가 "스크린샷 캡처해줘", "Playwright로 검수해줘" 등 명시적으로 요청한 경우에만 수행한다.
@@ -474,9 +534,9 @@ HTML 데모의 각 섹션을 스크린샷으로 캡처하는 워크플로우.
 모든 작업 완료 후 recording 단계에서 실행한다.
 
 ```
-1. 로그: harness/logs/yyyy-mm-dd-{키워드}-case{A|B|C|D|S|W}.md
+1. 로그: harness/logs/yyyy-mm-dd-{키워드}-case{A|B|C|D|S|M|W}.md
 2. 인덱스: harness/logs/harness-usage.md에 1줄 추가
-3. XP 계산: 기본XP(점수×10) × 등급배율(A:5/B:3/C:1/D:0.5) × 유형배율(A:1.2/B:1.2/C:1.2/D:1.2/S:1.2/W:1.2)
+3. XP 계산: 기본XP(점수×10) × 등급배율(A:5/B:3/C:1/D:0.5) × 유형배율(A:1.2/B:1.2/C:1.2/D:1.2/S:1.2/M:1.2/W:1.2)
 4. 레벨업 판정 + 업적 갱신 (harness/engine/level-achievement-system.md 참조)
 ```
 
@@ -496,6 +556,8 @@ HTML 데모의 각 섹션을 스크린샷으로 캡처하는 워크플로우.
 | S → W | 양쪽 60점+ | 각 XP × 1.3 |
 | S → B | 양쪽 60점+ | 각 XP × 1.2 |
 | A → S | 양쪽 60점+ | 각 XP × 1.2 |
+| M → W | 양쪽 60점+ | 각 XP × 1.3 |
+| S → M | 양쪽 60점+ | 각 XP × 1.2 |
 | A → B → W | 전체 60점+ | 각 XP × 1.5 |
 | C → B → W | 전체 60점+ | 각 XP × 1.5 |
 | D → B → W | 전체 60점+ | 각 XP × 1.5 |
