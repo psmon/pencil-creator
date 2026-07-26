@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sample18 — 여의도 야경 시네마틱 3D (Blender → Three.js)</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 100%; height: 100%; overflow: hidden; background: #05070d; }
+  #app { position: fixed; inset: 0; }
+  canvas { display: block; }
+
+  .brand {
+    position: fixed; top: 26px; left: 30px; z-index: 10;
+    color: #eaf1ff; font-family: 'Malgun Gothic', sans-serif;
+    text-shadow: 0 2px 14px rgba(0,0,0,.6); user-select: none; pointer-events: none;
+  }
+  .brand .logo { font-size: 23px; letter-spacing: 8px; font-weight: 800; }
+  .brand .sub  { font-size: 11px; letter-spacing: 4px; margin-top: 6px; opacity: .7; color:#9fb6d8; }
+
+  .caption {
+    position: fixed; left: 50%; bottom: 118px; transform: translateX(-50%);
+    z-index: 10; color: #eef4ff; font-family: 'Malgun Gothic', sans-serif;
+    font-size: 15px; letter-spacing: 1.5px; text-align: center;
+    text-shadow: 0 2px 12px rgba(0,0,0,.7); opacity: 0; transition: opacity .7s;
+    pointer-events: none; max-width: 86vw;
+  }
+  .caption.show { opacity: .96; }
+  .caption b { color: #8fd0ff; font-weight: 700; }
+
+  .panel {
+    position: fixed; left: 50%; bottom: 26px; transform: translateX(-50%);
+    z-index: 10; display: flex; flex-direction: column; gap: 10px; padding: 12px 14px;
+    background: rgba(10, 16, 28, .55); border: 1px solid rgba(140, 190, 255, .22);
+    border-radius: 16px; backdrop-filter: blur(12px);
+    font-family: 'Malgun Gothic', sans-serif;
+  }
+  .prow { display: flex; gap: 8px; align-items: center; justify-content: center; flex-wrap: wrap; }
+  .scene-btn {
+    appearance: none; border: 1px solid rgba(140,190,255,.28); cursor: pointer;
+    background: rgba(20,30,50,.6); color: #cdddf5; font-size: 13px; letter-spacing: 1px;
+    padding: 9px 16px; border-radius: 11px; transition: all .2s;
+    font-family: inherit; white-space: nowrap;
+  }
+  .scene-btn:hover { background: rgba(40,60,95,.7); color: #fff; }
+  .scene-btn.active {
+    background: linear-gradient(135deg, #2f6dd0, #35c0e6); color: #fff; border-color: transparent;
+    box-shadow: 0 4px 18px rgba(53,160,230,.4);
+  }
+  .prow.sub { gap: 14px; font-size: 12px; color: #9fb6d8; }
+  .toggle { display: flex; align-items: center; gap: 6px; cursor: pointer; user-select: none; }
+  .toggle input { accent-color: #35c0e6; width: 15px; height: 15px; }
+  .slider { display: flex; align-items: center; gap: 8px; }
+  .slider input { width: 108px; accent-color: #35c0e6; }
+  .idx { color:#8fd0ff; font-variant-numeric: tabular-nums; }
+
+  .loader {
+    position: fixed; inset: 0; z-index: 30; display: flex; align-items: center; justify-content: center;
+    background: #05070d; color: #9fb6d8; font-family: 'Malgun Gothic', sans-serif;
+    font-size: 14px; letter-spacing: 3px; transition: opacity .8s;
+  }
+  .loader.hide { opacity: 0; pointer-events: none; }
+  .hint { position: fixed; top: 26px; right: 30px; z-index: 10; color:#6d84a6;
+          font-family:'Malgun Gothic',sans-serif; font-size: 11px; letter-spacing: 1px;
+          text-align:right; line-height:1.7; pointer-events:none; }
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div class="brand">
+  <div class="logo">YEOUIDO</div>
+  <div class="sub">여의도 야경 · CINEMATIC CITY</div>
+</div>
+<div class="hint">Blender → Three.js · Case M<br>참고: 여의도공원 야간 촬영 7컷</div>
+<div class="caption" id="caption"></div>
+
+<div class="panel">
+  <div class="prow" id="sceneRow">
+    <button class="scene-btn active" data-scene="0">🚶 공원 산책</button>
+    <button class="scene-btn" data-scene="1">🚁 하늘 → 도시 순회</button>
+    <button class="scene-btn" data-scene="2">🕸️ 스파이더맨 액션</button>
+  </div>
+  <div class="prow sub">
+    <label class="toggle"><input type="checkbox" id="autoChk" checked>자동 순환</label>
+    <label class="toggle"><input type="checkbox" id="playChk" checked>재생</label>
+    <span class="slider">속도 <input type="range" id="speed" min="0.2" max="2.5" step="0.1" value="1"></span>
+    <span class="idx" id="clock">00:00</span>
+  </div>
+</div>
+
+<div class="loader" id="loader">여의도 야경을 불러오는 중…</div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.161.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.161.0/examples/jsm/"
+  }
+}
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+
+/* =========================================================================
+   여의도 야경 — Blender(design/blend/yeouido-city.blend) 좌표를 그대로 이식.
+   좌표 변환 규칙:  Blender(x, y, z)  →  Three(x, z, -y)
+   ========================================================================= */
+
+const V = THREE.Vector3;
+const lerp = (a,b,t)=>a+(b-a)*t;
+const clamp = (v,a,b)=>Math.min(b,Math.max(a,v));
+const smooth = (t)=>t*t*(3-2*t);
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return ((t^t>>>14)>>>0)/4294967296;};}
+
+// ---- renderer / scene / camera ----
+const app = document.getElementById('app');
+const renderer = new THREE.WebGLRenderer({ antialias:true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setSize(innerWidth, innerHeight);
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 0.92;
+app.appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+scene.fog = new THREE.FogExp2(0x0a1122, 0.00135);
+
+const camera = new THREE.PerspectiveCamera(60, innerWidth/innerHeight, 0.5, 8000);
+camera.position.set(0, 300, 700);
+
+// ---- lights (night) ----
+const hemi = new THREE.HemisphereLight(0x24314f, 0x05060c, 0.38);
+scene.add(hemi);
+const moon = new THREE.DirectionalLight(0x9fb6ff, 0.55);
+moon.position.set(200, 400, -260);
+scene.add(moon);
+scene.add(new THREE.AmbientLight(0x0c1428, 0.5));
+
+/* ---------------- SKY dome (gradient) + stars ---------------- */
+(function buildSky(){
+  const uni = {
+    top:    { value: new THREE.Color(0x040610) },
+    mid:    { value: new THREE.Color(0x0b1430) },
+    horizon:{ value: new THREE.Color(0x1c2b52) },
+  };
+  const sky = new THREE.Mesh(
+    new THREE.SphereGeometry(4000, 32, 16),
+    new THREE.ShaderMaterial({
+      side: THREE.BackSide, depthWrite:false, uniforms: uni,
+      vertexShader:`varying vec3 vP; void main(){ vP=position; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}`,
+      fragmentShader:`varying vec3 vP; uniform vec3 top; uniform vec3 mid; uniform vec3 horizon;
+        void main(){ float h=normalize(vP).y;
+          vec3 c = h>0.0 ? mix(mid, top, pow(h,0.6)) : mix(mid, horizon, pow(-h*1.4+0.0,1.0));
+          gl_FragColor=vec4(c,1.0);}`
+    })
+  );
+  scene.add(sky);
+  // stars
+  const N=1400, pos=new Float32Array(N*3);
+  const r=mulberry32(7);
+  for(let i=0;i<N;i++){
+    const th=r()*Math.PI*2, ph=Math.acos(r()*0.9+0.05), R=3200;
+    pos[i*3]=R*Math.sin(ph)*Math.cos(th);
+    pos[i*3+1]=R*Math.cos(ph)*0.9+400;
+    pos[i*3+2]=R*Math.sin(ph)*Math.sin(th);
+  }
+  const gg=new THREE.BufferGeometry(); gg.setAttribute('position', new THREE.BufferAttribute(pos,3));
+  scene.add(new THREE.Points(gg, new THREE.PointsMaterial({color:0xbcd0ff, size:2.2, transparent:true, opacity:0.85, sizeAttenuation:false, blending:THREE.AdditiveBlending, depthWrite:false})));
+})();
+
+/* ---------------- GROUND ---------------- */
+scene.add(new THREE.Mesh(
+  new THREE.PlaneGeometry(3000,3000).rotateX(-Math.PI/2),
+  new THREE.MeshStandardMaterial({color:0x070a12, roughness:0.95, metalness:0.0})
+));
+
+/* ---------------- PARK (grass + promenade texture) ----------------
+   Blender park: X[-300,300], Y[-70,70]. → Three: X same, Z = -Y  (so Z[-70,70]) */
+const PX=300, PZ=70;
+(function buildPark(){
+  const cw=1024, ch=Math.round(cw*(PZ*2)/(PX*2)); // aspect 600:140
+  const c=document.createElement('canvas'); c.width=cw; c.height=ch;
+  const g=c.getContext('2d');
+  // grass base w/ subtle noise
+  g.fillStyle='#0c2413'; g.fillRect(0,0,cw,ch);
+  const rnd=mulberry32(11);
+  for(let i=0;i<2600;i++){ g.fillStyle=`rgba(${20+rnd()*20|0},${60+rnd()*40|0},${28+rnd()*20|0},.12)`;
+    g.fillRect(rnd()*cw, rnd()*ch, 3, 3); }
+  const X=(wx)=> (wx+PX)/(PX*2)*cw;      // world X -> canvas x
+  const Y=(wz)=> (wz+PZ)/(PZ*2)*ch;      // world Z -> canvas y
+  // central promenade (spine)
+  g.fillStyle='#5a4f42'; g.fillRect(X(-285), Y(-7), X(285)-X(-285), Y(7)-Y(-7));
+  g.strokeStyle='rgba(230,230,230,.35)'; g.lineWidth=1.4;
+  g.strokeRect(X(-285), Y(-7), X(285)-X(-285), Y(7)-Y(-7));
+  // bike lane (reddish) alongside
+  g.fillStyle='#5a2c2c'; g.fillRect(X(-285), Y(9), X(285)-X(-285), Y(13)-Y(9));
+  // cross paths
+  g.fillStyle='#4d4438';
+  [-180,-60,60,180].forEach(cx=>{ g.fillRect(X(cx-5), Y(-64), X(cx+5)-X(cx-5), Y(64)-Y(-64)); });
+  // pond (Blender 120,28 -> Three X120 Z-28)
+  g.fillStyle='#0a2036'; g.beginPath();
+  g.ellipse(X(120), Y(-28), (X(48)-X(0)), (Y(26)-Y(0)), 0, 0, Math.PI*2); g.fill();
+  const tex=new THREE.CanvasTexture(c); tex.anisotropy=8;
+  const park=new THREE.Mesh(
+    new THREE.PlaneGeometry(PX*2, PZ*2).rotateX(-Math.PI/2),
+    new THREE.MeshStandardMaterial({map:tex, roughness:0.9, metalness:0.0})
+  );
+  park.position.y=0.1; scene.add(park);
+})();
+
+/* ---------------- WINDOW textures (emissive) ---------------- */
+function makeWindowTex(seed){
+  const cols=8, rows=8, cell=18;
+  const c=document.createElement('canvas'); c.width=cols*cell; c.height=rows*cell;
+  const g=c.getContext('2d'); g.fillStyle='#04060c'; g.fillRect(0,0,c.width,c.height);
+  const rnd=mulberry32(seed);
+  for(let y=0;y<rows;y++)for(let x=0;x<cols;x++){
+    const r=rnd(); let col;
+    if(r<0.42) col='#060810';            // off
+    else if(r<0.72) col='#ffcf8f';       // warm office
+    else if(r<0.9)  col='#a8c6ff';       // cool
+    else col='#fff0cf';                  // bright
+    g.fillStyle=col; g.fillRect(x*cell+2, y*cell+3, cell-4, cell-5);
+  }
+  const t=new THREE.CanvasTexture(c); t.wrapS=t.wrapT=THREE.RepeatWrapping; return t;
+}
+const winTex=[]; for(let i=0;i<8;i++) winTex.push(makeWindowTex(100+i*37));
+
+/* ---------------- BUILDINGS (deterministic — MATCHES Blender gen_buildings) ---------------- */
+function genBuildings(){
+  const o=[];
+  [[150,12],[225,11],[305,10]].forEach(([yc,n],r)=>{           // north deep city
+    for(let i=0;i<n;i++){ const x=-300+i*(600/(n-1));
+      const h=45+65*(0.5+0.5*Math.sin(i*1.7+r*2.1))+22*((i+r)%4);
+      const w=24+8*((i+r)%3), d=24+6*((i*2+r)%3); o.push({x,y:yc,w,d,h}); } });
+  [[-150,12],[-238,10]].forEach(([yc,n],r)=>{                  // south riverside (taller)
+    for(let i=0;i<n;i++){ const x=-300+i*(600/(n-1));
+      const h=60+90*(0.5+0.5*Math.sin(i*1.3+r*3.0))+30*((i+r)%3);
+      const w=26+9*((i+r)%3), d=26+7*((i*2+r)%3); o.push({x,y:yc,w,d,h}); } });
+  [[-368,0,240],[368,24,210],[-368,-92,150],[368,-96,175]].forEach(([x,y,h])=>o.push({x,y,w:42,d:42,h}));
+  return o;
+}
+const BLD = genBuildings();
+const box = new THREE.BoxGeometry(1,1,1);
+const cityGroup = new THREE.Group(); scene.add(cityGroup);
+const rooftopLights = new THREE.Group(); scene.add(rooftopLights);
+const redMat = new THREE.MeshBasicMaterial({color:0xff2a2a});
+const redDot = new THREE.SphereGeometry(1.4, 8, 6);
+
+BLD.forEach((b,i)=>{
+  const tex = winTex[i%winTex.length].clone(); tex.needsUpdate=true;
+  tex.repeat.set(Math.max(1,Math.round(b.w/17)), Math.max(2,Math.round(b.h/15)));
+  const mat = new THREE.MeshStandardMaterial({
+    color:0x090e1a, metalness:0.55, roughness:0.4,
+    map:tex, emissive:0xffffff, emissiveMap:tex, emissiveIntensity:0.72
+  });
+  const m = new THREE.Mesh(box, mat);
+  m.position.set(b.x, b.h/2, -b.y);          // Blender(x,y,z)→Three(x,z,-y)
+  m.scale.set(b.w, b.h, b.d);
+  cityGroup.add(m);
+  // aviation red light on tall towers (ref: red rooftop lights)
+  if(b.h>150){
+    const rl=new THREE.Mesh(redDot, redMat);
+    rl.position.set(b.x, b.h+2, -b.y); rooftopLights.add(rl);
+  }
+});
+// landmark red vertical accent (ref Image3: red-striped tower) on two towers
+[BLD[0], BLD[BLD.length-4]].forEach(b=>{
+  const strip=new THREE.Mesh(box, new THREE.MeshBasicMaterial({color:0xff3b3b}));
+  strip.position.set(b.x, b.h*0.55, -b.y - b.d/2 - 0.4);
+  strip.scale.set(2.2, b.h*0.9, 0.6); cityGroup.add(strip);
+});
+
+/* ---------------- STREET LAMPS (emissive, along promenade) ---------------- */
+const lampGeo=new THREE.SphereGeometry(1.0, 10, 8);
+const lampMat=new THREE.MeshBasicMaterial({color:0xffd58a});
+const lampGroup=new THREE.Group(); scene.add(lampGroup);
+const lampPositions=[];
+for(let lx=-280; lx<=280; lx+=40){ for(const lz of [-9,9]){
+  const pole=new THREE.Mesh(new THREE.CylinderGeometry(0.35,0.35,7,6), new THREE.MeshStandardMaterial({color:0x05060a, metalness:0.6, roughness:0.4}));
+  pole.position.set(lx, 3.5, lz); lampGroup.add(pole);
+  const glow=new THREE.Mesh(lampGeo, lampMat); glow.position.set(lx, 7.2, lz); lampGroup.add(glow);
+  lampPositions.push(new V(lx,7.2,lz));
+}}
+// a handful of real point lights (warm) that follow near the walk camera for grounded light
+const walkLights=[]; for(let i=0;i<4;i++){ const pl=new THREE.PointLight(0xffca82, 0, 60, 2); scene.add(pl); walkLights.push(pl); }
+
+/* ---------------- TREES (instanced cones) ---------------- */
+(function buildTrees(){
+  const trunkG=new THREE.CylinderGeometry(0.5,0.6,5,5);
+  const leafG=new THREE.ConeGeometry(3.2,9,7);
+  const trunkM=new THREE.MeshStandardMaterial({color:0x241a12, roughness:0.9});
+  const leafM=new THREE.MeshStandardMaterial({color:0x123a1c, roughness:0.95});
+  const spots=[]; const rnd=mulberry32(23);
+  for(let tx=-290; tx<=290; tx+=20){ for(const tz of [-52,-32,32,52]){
+    spots.push([tx+(rnd()*8-4), tz+(rnd()*8-4), 0.75+rnd()*0.7]); } }
+  const trunks=new THREE.InstancedMesh(trunkG,trunkM,spots.length);
+  const leaves=new THREE.InstancedMesh(leafG,leafM,spots.length);
+  const dm=new THREE.Object3D();
+  spots.forEach((s,i)=>{
+    dm.position.set(s[0], 2.5*s[2], s[1]); dm.scale.set(s[2],s[2],s[2]); dm.rotation.set(0,0,0); dm.updateMatrix();
+    trunks.setMatrixAt(i, dm.matrix);
+    dm.position.set(s[0], 7.5*s[2], s[1]); dm.updateMatrix(); leaves.setMatrixAt(i, dm.matrix);
+  });
+  scene.add(trunks); scene.add(leaves);
+})();
+
+/* ---------------- HAN RIVER + CABLE-STAYED BRIDGE ----------------
+   Blender river center y=-430 → Three z=+430 */
+(function buildRiver(){
+  const river=new THREE.Mesh(
+    new THREE.PlaneGeometry(1600, 220).rotateX(-Math.PI/2),
+    new THREE.MeshStandardMaterial({color:0x081627, metalness:0.4, roughness:0.15})
+  );
+  river.position.set(0, 0.05, 430); scene.add(river);
+  // bridge deck
+  const deck=new THREE.Mesh(box, new THREE.MeshStandardMaterial({color:0x0a0d14, metalness:0.5, roughness:0.5}));
+  deck.position.set(0, 6, 430); deck.scale.set(24, 1.4, 210); scene.add(deck);
+  // pylon
+  const pylon=new THREE.Mesh(new THREE.CylinderGeometry(2.4,3.2,72,12), new THREE.MeshStandardMaterial({color:0x8590a0, metalness:0.8, roughness:0.3}));
+  pylon.position.set(0, 36, 430); scene.add(pylon);
+  // cables
+  const cmat=new THREE.LineBasicMaterial({color:0x9fb6d8, transparent:true, opacity:0.6});
+  const top=new V(0,70,430);
+  for(const tz of [-95,-70,-45,-20,20,45,70,95]){
+    const gg=new THREE.BufferGeometry().setFromPoints([top, new V(0,6.6,430+tz)]);
+    scene.add(new THREE.Line(gg, cmat));
+  }
+  // distant sister bridge glow (ref Image7 right side)
+  const s=new THREE.Mesh(new THREE.CylinderGeometry(1.5,2,60,8), new THREE.MeshBasicMaterial({color:0x2a4a7a}));
+  s.position.set(560, 30, 430); scene.add(s);
+})();
+
+/* ---------------- Spider web line (only in spider scene) ---------------- */
+const webMat=new THREE.LineBasicMaterial({color:0xffffff, transparent:true, opacity:0});
+const webGeo=new THREE.BufferGeometry().setFromPoints([new V(), new V()]);
+const webLine=new THREE.Line(webGeo, webMat); scene.add(webLine);
+
+/* ---------------- POST: bloom ---------------- */
+const composer=new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, camera));
+const bloom=new UnrealBloomPass(new THREE.Vector2(innerWidth, innerHeight), 0.5, 0.5, 0.82);
+composer.addPass(bloom);
+composer.addPass(new OutputPass());
+
+/* =========================================================================
+   CAMERA SCENES  — 각 씬: t(초) → {pos, look, fov, roll}
+   ========================================================================= */
+// key-frame interpolation helper for scene B
+function kfSample(kfs, t){
+  const T=kfs[kfs.length-1].t;
+  t=t%T;
+  let a=kfs[0], b=kfs[1];
+  for(let i=0;i<kfs.length-1;i++){ if(t>=kfs[i].t && t<=kfs[i+1].t){ a=kfs[i]; b=kfs[i+1]; break; } }
+  const u=smooth(clamp((t-a.t)/(b.t-a.t||1),0,1));
+  const mix=(p,q)=>new V(lerp(p[0],q[0],u), lerp(p[1],q[1],u), lerp(p[2],q[2],u));
+  return { pos:mix(a.pos,b.pos), look:mix(a.look,b.look), fov:lerp(a.fov,b.fov,u), roll:0 };
+}
+
+// Scene 0 — 공원 산책 (eye-level walk down the promenade)
+function sceneWalk(t){
+  const T=44, p=(t%T)/T;
+  const x=-272 + p*544;                    // west → east along spine
+  const z=Math.sin(t*0.22)*4.5;            // gentle weave on path
+  const y=1.72 + Math.sin(t*2.3)*0.07;     // head bob
+  const glance=Math.sin(t*0.16);           // occasional look toward towers
+  const gUp=Math.abs(glance);
+  const look=new V(x+38, 2.4 + gUp*26, z + glance*70);
+  return { pos:new V(x,y,z), look, fov:62, roll:Math.sin(t*0.8)*0.008 };
+}
+
+// Scene 1 — 하늘 → 도시 순회 (bird's-eye descent, then true orbit)
+const kfDescent=[
+  { t:0,  pos:[0,660,120],  look:[0,10,0],   fov:48 },
+  { t:6.5,pos:[60,360,470], look:[0,60,150], fov:52 },   // drop toward river (south, +z)
+  { t:12, pos:[300,170,360],look:[0,60,0],   fov:56 },   // arrive at orbit ring
+];
+function sceneSky(t){
+  const orbitStart=12, orbitDur=26, T=orbitStart+orbitDur;
+  t=t%T;
+  if(t<orbitStart) return kfDescent.length? sampleDescent(t):null;
+  // true circular orbit around park center
+  const u=(t-orbitStart)/orbitDur;
+  const ang=0.5 + u*Math.PI*1.6;           // ~0.8 turn
+  const R=475, y=160 - Math.sin(u*Math.PI)*40;
+  const pos=new V(Math.cos(ang)*R, y, Math.sin(ang)*R);
+  return { pos, look:new V(0,45,0), fov:57, roll:0 };
+}
+function sampleDescent(t){ return kfSample(kfDescent.concat([{t:12.0001,pos:[300,170,360],look:[0,60,0],fov:56}]), t); }
+
+// Scene 2 — 스파이더맨 액션 (web-swing through the boulevard canyon)
+function sceneSpider(t){
+  const T=24, p=(t%T)/T;
+  const x=-352 + p*704;                     // fast forward across the city
+  const ph=t*1.55;                          // pendulum phase
+  const y=52 - Math.cos(ph)*34 + 34;        // arc: rise near anchors, dip at bottom
+  const z=Math.sin(ph*0.5)*104;             // swing between north(-z) & south(+z) canyon
+  const roll=-Math.sin(ph*0.5)*0.5;         // bank into the swing
+  const look=new V(x+70, y-6 + Math.sin(ph)*10, z*0.4);
+  return { pos:new V(x,y,z), look, fov:74, roll, swingPhase:ph };
+}
+
+const SCENES=[sceneWalk, sceneSky, sceneSpider];
+const DUR=[44, 38, 24];
+const CAPTIONS=[
+  '🚶 <b>공원 산책</b> — 여의도공원 산책로를 따라 걸으며 주변 마천루를 올려다본다',
+  '🚁 <b>하늘 → 도시 순회</b> — 상공에서 도시 전체를 조망하며 내려와 공원을 선회한다',
+  '🕸️ <b>스파이더맨 액션</b> — 빌딩 숲을 가로지르며 웹스윙으로 도심 협곡을 질주한다'
+];
+
+/* ---------------- scene state & smooth switching ---------------- */
+let cur=0, tMode=0, autoCycle=true, playing=true, speed=1;
+let blend=1, fromPos=new V(), fromLook=new V(), fromFov=60;
+let curLook=new V(0,10,0);
+
+function setScene(i, instant=false){
+  if(i===cur && !instant) return;
+  // snapshot current for crossfade
+  fromPos.copy(camera.position); fromLook.copy(curLook); fromFov=camera.fov;
+  cur=i; tMode=0; blend=instant?1:0;
+  document.querySelectorAll('.scene-btn').forEach(b=>b.classList.toggle('active', +b.dataset.scene===i));
+  const cap=document.getElementById('caption'); cap.innerHTML=CAPTIONS[i]; cap.classList.add('show');
+}
+
+// UI
+document.getElementById('sceneRow').addEventListener('click', e=>{
+  const btn=e.target.closest('.scene-btn'); if(!btn) return;
+  autoCycle=false; document.getElementById('autoChk').checked=false;
+  setScene(+btn.dataset.scene);
+});
+document.getElementById('autoChk').addEventListener('change', e=> autoCycle=e.target.checked);
+document.getElementById('playChk').addEventListener('change', e=> playing=e.target.checked);
+document.getElementById('speed').addEventListener('input', e=> speed=+e.target.value);
+
+setScene(0, true);
+document.getElementById('caption').classList.add('show');
+
+/* ---------------- animation loop ---------------- */
+const clock=new THREE.Clock();
+let elapsed=0;
+function fmt(s){ const m=(s/60)|0, ss=(s%60)|0; return String(m).padStart(2,'0')+':'+String(ss).padStart(2,'0'); }
+
+function animate(){
+  requestAnimationFrame(animate);
+  const dtRaw=Math.min(clock.getDelta(), 0.05);
+  const dt=dtRaw*speed;
+  if(playing){ tMode+=dt; elapsed+=dtRaw; }
+
+  // auto-cycle between scenes
+  if(autoCycle && playing && tMode>DUR[cur]){ setScene((cur+1)%SCENES.length); }
+
+  const s=SCENES[cur](tMode);
+  let pos=s.pos.clone(), look=s.look.clone(), fov=s.fov, roll=s.roll||0;
+
+  // crossfade from previous scene
+  if(blend<1){ blend=Math.min(1, blend+dtRaw/1.3); const b=smooth(blend);
+    pos.lerpVectors(fromPos, s.pos, b); look.lerpVectors(fromLook, s.look, b); fov=lerp(fromFov, s.fov, b);
+    roll*=b;
+  }
+
+  camera.position.copy(pos);
+  curLook.copy(look);
+  camera.fov=fov; camera.updateProjectionMatrix();
+  camera.lookAt(look);
+  if(roll) camera.rotateZ(roll);
+
+  // walk scene: warm point lights track the nearest lamps ahead
+  if(cur===0){
+    const near=[...lampPositions].sort((a,b)=>a.distanceToSquared(pos)-b.distanceToSquared(pos)).slice(0,4);
+    walkLights.forEach((pl,i)=>{ if(near[i]){ pl.position.copy(near[i]); pl.intensity=lerp(pl.intensity, 260, 0.1);} else pl.intensity=0; });
+  } else { walkLights.forEach(pl=>pl.intensity=lerp(pl.intensity,0,0.2)); }
+
+  // spider scene: draw a web line to an upcoming building top
+  if(cur===2){
+    const anchorX=pos.x+140; let best=null,bd=1e9;
+    for(const b of BLD){ if(b.x>pos.x && b.h>120){ const d=Math.abs(b.x-anchorX); if(d<bd){bd=d;best=b;} } }
+    if(best){ const ap=new V(best.x, best.h, -best.y);
+      webGeo.setFromPoints([new V(pos.x+6, pos.y-3, pos.z), ap]); webGeo.attributes.position.needsUpdate=true;
+      webMat.opacity=lerp(webMat.opacity, 0.5, 0.1);
+    }
+  } else webMat.opacity=lerp(webMat.opacity, 0, 0.2);
+
+  // subtle river shimmer via moon angle already; twinkle lamps
+  document.getElementById('clock').textContent=fmt(elapsed);
+  composer.render();
+}
+animate();
+
+// hide loader after first frames
+setTimeout(()=>document.getElementById('loader').classList.add('hide'), 600);
+
+addEventListener('resize', ()=>{
+  camera.aspect=innerWidth/innerHeight; camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+  composer.setSize(innerWidth, innerHeight);
+});
+</script>
+</body>
+</html>

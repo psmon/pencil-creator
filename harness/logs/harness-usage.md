@@ -35,3 +35,4 @@
 | 2026-07-06 | S | 보컬 분리 시리즈 output_ex_vocal (vocal-1~4 리마스터 + vocal-ex/vox7 복사, 12캐릭터 3액션 마스터, 연주자/보컬 분리 관리) | 리마스터 4인 전원 93/100 A | [로그](2026-07-06-vocal-separation-caseS.md) |
 | 2026-07-07 | S | output_ex play 소프트 리메이크 22종 (idle 프레임 앵커 조정프롬프트, 이음매 0.780→0.970, 그리드결함 0, drum 1종 잔여 기록) | 95/100 A | [로그](2026-07-07-ex-soft-play-caseS.md) |
 | 2026-07-08 | S | output_ex_vocal 순수 보컬 4종 play 소프트 리메이크 (vocal-ex/vox7 제외, 이음매 0.726→0.978, 마이크 유형 보존 fix-pass 1) | 96/100 A | [로그](2026-07-08-vocal-soft-play-caseS.md) |
+| 2026-07-27 | M | 여의도 야경 시네마틱 3D 도시 (Case M 첫 사례, 야간 촬영 7컷→Blender 360오브젝트 모델링→Three.js 3씬: 공원산책/하늘순회/스파이더맨, 동일 genBuildings 공식 이식, bloom 야경, JS에러0) | 82/100 A | [로그](2026-07-27-yeouido-cinematic-caseM.md) |
