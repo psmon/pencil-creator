@@ -300,6 +300,43 @@ Master asset: [`design/blend/acmer-dongtan.blend`](design/blend/acmer-dongtan.bl
 | M2 Web Rebuild Consistency | 30 | Coordinate/dimension porting, material parity, performance (InstancedMesh) |
 | M3 Camera Direction | 30 | 5+ modes, transition blending, 3-phase interior entry |
 
+#### Case M variant — Rigged Idol Concert Music Video (Blender, no web)
+
+```bash
+> "Analyze design/idola, model 4 idols photorealistically, dress them, rig them, and
+>  choreograph a groove dance to music/BEAT_Mastered_run.wav on a night outdoor stage"
+```
+
+A **character + performance** branch of Case M that outputs a **music-synced concert video**
+instead of a web page. Everything is built procedurally in Blender via MCP / headless CLI and
+saved as reusable assets under `design/idola/` (scripts in `design/idola/scripts/`).
+
+The pipeline, end to end:
+
+1. **Members** — reference analysis (album art) + K-pop body/face proportion research →
+   Gemini realistic face & fabric textures (sphere-pre-distorted for clean head wrapping).
+2. **Rig** — skin-modifier idol base body + humanoid armature (17 bones) + automatic skinning
+   + **separate swappable garments** (hanbok: jeogori bodice, baerae sleeves, gloves, slim
+   skinned chima) + member initials (Y·U·N·A) + head-on-bone.
+3. **Physical walk** — world-pinned foot IK (no ghost glide), reach clamp + knee-pole parenting
+   (no reverse/side knee), shoulder ROM forward-bias (no chicken-wing arm).
+4. **Choreography** — pure-stdlib beat analysis (BPM 84.2) → beat-locked gentle groove with
+   per-member phase offset + rotating spotlight (member steps forward) + arc blocking.
+5. **Night stage** — generated skybox backplate, stage/truss/LED/speakers, **Lego-style crowd**
+   (one minifig instanced, hat/hair toppers, color-varied, beat bob), night concert lighting
+   (color spots + cool key + warm rim + footlight).
+6. **Broadcast camera (31 cuts)** — drone establishes/sweeps, audience-reaction cutaways,
+   spotlight push-ins, audience-POV, 3/4 dolly, low hero, crane; hard cuts on phrase boundaries.
+7. **LED jumbotron (2-pass)** — a broadcast cam close-up of the on-stage artist is rendered,
+   then fed to the LED wall as a frame-synced image sequence → real live-relay screen.
+
+**Featured output — YUNA night concert**: full 177 s music video
+[`design/idola/renders/yuna-concert-full.mp4`](design/idola/renders/yuna-concert-full.mp4) ·
+rig asset [`design/blend/yuna-rig4.blend`](design/blend/yuna-rig4.blend) ·
+render performance log [`design/idola/render-performance-log.md`](design/idola/render-performance-log.md)
+(AMD Radeon 8060S, EEVEE, 2-pass full song ≈ 20 min).
+*Ongoing: swappable songs (e.g. `music/05_Ice cream moon.flac`), finger rig, richer crowd.*
+
 ### Pipeline Bonus
 
 | Path | Condition | XP Bonus |
