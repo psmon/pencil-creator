@@ -36,3 +36,5 @@
 | 2026-07-07 | S | output_ex play 소프트 리메이크 22종 (idle 프레임 앵커 조정프롬프트, 이음매 0.780→0.970, 그리드결함 0, drum 1종 잔여 기록) | 95/100 A | [로그](2026-07-07-ex-soft-play-caseS.md) |
 | 2026-07-08 | S | output_ex_vocal 순수 보컬 4종 play 소프트 리메이크 (vocal-ex/vox7 제외, 이음매 0.726→0.978, 마이크 유형 보존 fix-pass 1) | 96/100 A | [로그](2026-07-08-vocal-soft-play-caseS.md) |
 | 2026-07-27 | M | 여의도 야경 시네마틱 3D 도시 (Case M 첫 사례, 야간 촬영 7컷→Blender 360오브젝트 모델링→Three.js 3씬: 공원산책/하늘순회/스파이더맨, 동일 genBuildings 공식 이식, bloom 야경, JS에러0) | 82/100 A | [로그](2026-07-27-yeouido-cinematic-caseM.md) |
+| 2026-08-06 | M | BabyMonster "Asa" 댄스 모션 재연 (직캠 39s 분석→신체비율 인심0.53H·7.8헤드 측정→FK 오브젝트페어런팅 리그→8키프레임 프레이즈: 크라우치→힙힌지→스윕업, 130f 프리뷰. 스코프=Blender 모션애니, 웹재구축 미포함) | M1 35/40 (부분·A급) | [로그](2026-08-06-asa-dance-motion-caseM.md) |
+| 2026-08-08 | M | Y-U-N-A 4인 아이돌 실사 캐릭터 (레퍼런스 13장 분석→멤버스펙→Gemini 실사 얼굴4+패브릭6 텍스처 생성→Blender 절차적 4체 모델링: 얼굴 Generated투영·헤어/의상 텍스처→파스텔 선셋 앨범 렌더. 스코프=Blender 캐릭터, 웹재구축 미포함) | M1 33/40 (부분·B급) | [로그](2026-08-08-yuna-idols-caseM.md) |

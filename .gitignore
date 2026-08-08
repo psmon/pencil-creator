@@ -13,3 +13,6 @@ image/openai/*-f[0-9]*.png
 # Gemini raw 프레임 렌더도 동일 규칙 — 후처리 산출물(design/sprite/output*)만 커밋
 image/gemini/*-f[0-9]*.png
 .claude/settings.local.json
+
+# Blender auto-backups
+*.blend1
