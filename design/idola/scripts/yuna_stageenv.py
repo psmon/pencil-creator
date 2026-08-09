@@ -200,6 +200,124 @@ def place_audience():
             idx += 1
     return masters
 
+# ---------------- desert festival surroundings ----------------
+def _cap(name, loc, r, m):
+    bpy.ops.mesh.primitive_uv_sphere_add(radius=r, segments=12, ring_count=8, location=loc)
+    o = bpy.context.object; o.name = name; smooth(o)
+    if m: o.data.materials.append(m)
+    return o
+
+def build_cactus():
+    """Saguaro: trunk + rounded cap + two L-arms. Joined, ~2.6m, faces +Y."""
+    g = mat("M_Cactus", (0.09, 0.20, 0.11, 1), rough=0.85)
+    parts = [cyl("cac_trunk", (0,0,1.1), 0.20, 2.2, g, verts=12),
+             _cap("cac_top", (0,0,2.2), 0.20, g)]
+    for s, zz in ((1, 1.15), (-1, 1.55)):
+        parts.append(cyl(f"cac_a{s}", (s*0.30, 0, zz), 0.11, 0.62, g,
+                         rot=(0, math.radians(s*58), 0), verts=10))
+        parts.append(cyl(f"cac_au{s}", (s*0.50, 0, zz+0.42), 0.11, 0.60, g, verts=10))
+        parts.append(_cap(f"cac_ac{s}", (s*0.50, 0, zz+0.72), 0.11, g))
+    for p in parts: smooth(p)
+    bpy.ops.object.select_all(action='DESELECT')
+    for p in parts: p.select_set(True)
+    bpy.context.view_layer.objects.active = parts[0]
+    bpy.ops.object.join()
+    o = bpy.context.object; o.name = "Cactus_master"; return o
+
+def build_lego_car():
+    """Simple lego block car: body + cabin + 4 wheels + 2 emissive headlights.
+    Slot 0 = BODY (recolored per instance). Joined, ~2m long, faces +Y."""
+    body = mat("M_CarBody", (0.75, 0.2, 0.2, 1), rough=0.35, metallic=0.2)
+    blk = mat("M_CarBlack", (0.03, 0.03, 0.03, 1), rough=0.6)
+    head = mat("M_CarHead", (1.0, 0.95, 0.7, 1), rough=0.3, emit=(1.0, 0.92, 0.6, 1), emit_str=6.0)
+    parts = [box("car_body", (0,0,0.34), (1.0, 2.0, 0.44), body),
+             box("car_cabin", (0,-0.05,0.66), (0.86, 1.05, 0.36), body)]
+    for sx in (1,-1):
+        for sy in (1,-1):
+            parts.append(cyl(f"car_w{sx}{sy}", (sx*0.52, sy*0.62, 0.20), 0.20, 0.16, blk,
+                             rot=(0, math.radians(90), 0), verts=12))
+    for sx in (1,-1):
+        parts.append(box(f"car_hl{sx}", (sx*0.34, 1.0, 0.36), (0.16, 0.05, 0.12), head))
+    bpy.ops.object.select_all(action='DESELECT')
+    for p in parts: p.select_set(True)
+    bpy.context.view_layer.objects.active = parts[0]
+    bpy.ops.object.join()
+    o = bpy.context.object; o.name = "Car_master"; return o
+
+def build_tent():
+    """Striped canopy info-booth: flat roof + 4 legs + a glowing banner. Placed as-is."""
+    poles = mat("M_TentPole", (0.2,0.2,0.22,1), rough=0.6, metallic=0.7)
+    canopy = mat("M_Tent", (0.85,0.82,0.75,1), rough=0.8)
+    ban = mat("M_Banner", (0.95,0.35,0.45,1), rough=0.5, emit=(0.9,0.3,0.4,1), emit_str=1.6)
+    grp = []
+    grp.append(box("Tent_roofA", (0,0,2.05), (3.2,3.2,0.08), canopy))
+    grp.append(box("Tent_roofB", (0,0,2.16), (2.4,2.4,0.08), mat("M_TentStripe",(0.8,0.3,0.35,1),0.8)))
+    for sx in (1,-1):
+        for sy in (1,-1):
+            grp.append(cyl(f"Tent_leg{sx}{sy}", (sx*1.4, sy*1.4, 1.0), 0.06, 2.0, poles))
+    grp.append(box("Tent_banner", (0,1.55,1.45), (2.6,0.05,0.5), ban))
+    return grp
+
+def build_desert():
+    """Turn the empty surroundings into a night desert festival: sand ground,
+    dunes ring, scattered cacti, two lego-car parking lots, an info tent."""
+    sand = mat("M_Sand", (0.19,0.15,0.10,1), rough=0.95)
+    # retint the existing grass ground to sand
+    g = bpy.data.objects.get("Ground")
+    if g and g.data.materials:
+        gm = g.data.materials[0]
+        try: gm.node_tree.nodes["Principled BSDF"].inputs["Base Color"].default_value = (0.19,0.15,0.10,1)
+        except Exception: pass
+    # dune ring (big flattened mounds, half-sunk) around the perimeter
+    import math as _m
+    dunes = [(-46,20,10,7),(-30,55,13,8),(0,64,16,9),(34,52,12,8),(48,18,10,7),
+             (44,-20,9,6),(-48,-22,10,7),(-58,8,12,8),(58,4,11,7)]
+    for i,(x,y,rx,ry) in enumerate(dunes):
+        d = _cap(f"Dune_{i}", (x,y,-1.6), 1.0, sand)
+        d.scale = (rx, ry, 3.2)
+    # cacti scattered flanking the crowd (avoid stage/audience footprint |x|<9,y<2)
+    cac = build_cactus(); cac.hide_render=True; cac.hide_viewport=True
+    spots = [(-16,-6),(-22,-13),(-14,-20),(17,-5),(23,-12),(15,-19),(-26,3),(27,2),
+             (-19,8),(22,10),(-33,-6),(31,-8)]
+    for i,(x,y) in enumerate(spots):
+        inst = cac.copy(); inst.name=f"Cactus_{i}"; bpy.context.collection.objects.link(inst)
+        inst.location=(x,y,0); s=0.8+((i*7)%5)*0.12; inst.scale=(s,s,s)
+        inst.rotation_euler=(0,0,_m.radians((i*47)%360))
+    # two parking lots of lego cars (stage-left & stage-right, behind the crowd)
+    car = build_lego_car(); car.hide_render=True; car.hide_viewport=True
+    car_cols=[(0.8,0.2,0.2),(0.2,0.4,0.8),(0.9,0.75,0.2),(0.85,0.85,0.88),
+              (0.2,0.6,0.35),(0.7,0.35,0.15),(0.5,0.3,0.6)]
+    idx=0
+    for (x0,ydir) in ((-30,1),(30,-1)):
+        for r in range(3):
+            for c in range(6):
+                x = x0 + (c*2.4)*(1 if x0<0 else -1)
+                y = -6 - r*3.2
+                inst=car.copy(); inst.data=car.data.copy()
+                inst.name=f"Car_{idx}"; bpy.context.collection.objects.link(inst)
+                inst.location=(x,y,0); inst.rotation_euler=(0,0,_m.radians(90+ (5 if r%2 else -5)))
+                inst.scale=(0.9,0.9,0.9)
+                slot=inst.data.materials[0]
+                if slot and "Body" in slot.name:
+                    nm=slot.copy(); nm.node_tree.nodes["Principled BSDF"].inputs["Base Color"].default_value=(*car_cols[idx%len(car_cols)],1)
+                    inst.data.materials[0]=nm
+                idx+=1
+    # info tent near the crowd's right entrance
+    for p in build_tent():
+        p.location = (p.location.x+15.5, p.location.y-15.0, p.location.z)
+    # MOONLIGHT: cool sun reveals the whole desert (dunes/cacti/cars/tent) without
+    # killing the night concert mood — stage spots (900W) still dominate the stage.
+    bpy.ops.object.light_add(type='SUN', location=(-20,-30,40))
+    moon = bpy.context.object; moon.name = "DesertMoon"
+    moon.data.energy = 1.1; moon.data.color = (0.55,0.68,1.0); moon.data.angle = math.radians(3)
+    moon.rotation_euler = (math.radians(38), math.radians(-14), math.radians(20))
+    # lift world ambient a touch so shadowed sand isn't pure black
+    w = bpy.context.scene.world
+    if w and w.use_nodes:
+        bg = w.node_tree.nodes.get("Background")
+        if bg: bg.inputs["Strength"].default_value = 0.42
+    print("DESERT_CARS", idx, "CACTI", len(spots), "DUNES", len(dunes))
+
 def setup_camera():
     bpy.ops.object.camera_add(); cam = bpy.context.object; bpy.context.scene.camera = cam
     return cam
