@@ -51,8 +51,9 @@ L={"pelvis":(0,0,0.90),"waist":(0,0,1.05),"chest":(0,0,1.37),
    "neck":(0,0,1.45),"head":(0,0,1.52)}
 def side(s):
     # shoulders OUTSIDE the torso; REST pose = open A-pose (~25 deg), never 차렷
-    return {"shoulder":(s*0.112,0,1.395),"elbow":(s*0.20,0.02,1.115),
-            "wrist":(s*0.30,-0.05,0.875),"hand":(s*0.315,-0.06,0.79),
+    # arms hang naturally close to the body (minimal spread) — static rest pose
+    return {"shoulder":(s*0.112,0,1.395),"elbow":(s*0.128,0.02,1.10),
+            "wrist":(s*0.140,0.03,0.86),"hand":(s*0.150,0.03,0.76),
             "hip":(s*0.085,0,0.90),"knee":(s*0.095,0.01,0.49),
             "ankle":(s*0.10,0.01,0.09),"toe":(s*0.10,-0.12,0.04)}
 
@@ -65,8 +66,8 @@ def build_base(key):
     E+=[(ip,iw),(iw,ic),(ic,ineck),(ineck,ihd)]
     for nm,s in (("L",1),("R",-1)):
         S=side(s)
-        sh=add(S["shoulder"],(0.042,0.042)); el=add(S["elbow"],(0.027,0.027))   # deltoid mass
-        wr=add(S["wrist"],(0.019,0.019)); hd=add(S["hand"],(0.024,0.021))
+        sh=add(S["shoulder"],(0.050,0.048)); el=add(S["elbow"],(0.032,0.032))   # deltoid mass + fuller upper arm
+        wr=add(S["wrist"],(0.022,0.022)); hd=add(S["hand"],(0.024,0.021))       # smoother taper (less spindly)
         hp=add(S["hip"],(0.064,0.064)); kn=add(S["knee"],(0.035,0.037))
         an=add(S["ankle"],(0.021,0.025)); to=add(S["toe"],(0.021,0.021))
         E+=[(ic,sh),(sh,el),(el,wr),(wr,hd),(ip,hp),(hp,kn),(kn,an),(an,to)]
@@ -273,7 +274,9 @@ def build_hanbok(key):
     chi = mat_cloth(f"M_Chima_{key}", FAB_TEX[key], tile=1.0, rough=0.42)
     # jeogori: FITTED bodice — narrower than the shoulders so arms read clearly
     # SLIM fitted bodice — hugs chest->waist tightly (no hip constraint up here)
-    top = cone(f"G_Jeo_{key}", (0, -0.008, 1.335), 0.066, 0.062, 0.24, jeo, sy=0.82)
+    # extended DOWN (z 1.305, depth 0.30) + flared bottom (r1 0.078) so the bodice
+    # overlaps the chima waist (~z1.18) -> no bare-midriff gap between top and skirt
+    top = cone(f"G_Jeo_{key}", (0, -0.008, 1.305), 0.078, 0.062, 0.30, jeo, sy=0.82)
     parts.append(top)
     # member INITIAL badge on the chest (Y/U/N/A) — alpha decal plane facing -Y
     initm = bpy.data.materials.new(f"M_Init_{key}"); initm.use_nodes = True
@@ -292,24 +295,23 @@ def build_hanbok(key):
     # 동정 collar band — white hanbok collar wrapping the neck base, bridges the
     # head/neck bust into the bodice so the junction reads continuous (no cut-off).
     dong = mat("M_Dongjeong", (0.98, 0.98, 0.97, 1), 0.35)
-    bpy.ops.mesh.primitive_cone_add(radius1=0.062, radius2=0.050, depth=0.12,
-                                    location=(0, 0.004, 1.435), vertices=24)
+    bpy.ops.mesh.primitive_cone_add(radius1=0.064, radius2=0.056, depth=0.15,
+                                    location=(0, 0.004, 1.428), vertices=24)
     col = bpy.context.object; col.name = f"G_Collar_{key}"; col.scale = (1, 0.92, 1)
     smooth(col); col.data.materials.append(dong); parts.append(col)
-    # shoulder caps (deltoid puffs in jeogori silk) — arms attach to visible shoulders
+    # shoulder caps (deltoid puffs in jeogori silk) — bigger, blend arm into bodice
     for s in (1, -1):
-        bpy.ops.mesh.primitive_uv_sphere_add(radius=0.050, segments=18, ring_count=12,
-            location=(s*0.108, 0.0, 1.392))
+        bpy.ops.mesh.primitive_uv_sphere_add(radius=0.062, segments=20, ring_count=14,
+            location=(s*0.104, 0.0, 1.388))
         cap = bpy.context.object; cap.name = f"G_SlvCap_{key}_{s}"
-        cap.scale = (1.0, 0.85, 0.95); smooth(cap); cap.data.materials.append(jeo)
+        cap.scale = (1.05, 0.9, 1.0); smooth(cap); cap.data.materials.append(jeo)
         parts.append(cap)
-    # fabric bust volume over the jeogori — soft merged curve, not two balls
-    for s in (1, -1):
-        bpy.ops.mesh.primitive_uv_sphere_add(radius=0.047, segments=20, ring_count=12,
-            location=(s*0.036, -0.040, 1.315))
-        b = bpy.context.object; b.name = f"G_JeoBust_{key}_{s}"
-        b.scale = (1.05, 0.58, 0.85); smooth(b); b.data.materials.append(jeo)
-        parts.append(b)
+    # fabric bust volume over the jeogori — ONE soft continuous curve (was two balls)
+    bpy.ops.mesh.primitive_uv_sphere_add(radius=0.050, segments=28, ring_count=16,
+        location=(0, -0.040, 1.315))
+    b = bpy.context.object; b.name = f"G_JeoBust_{key}"
+    b.scale = (1.75, 0.62, 0.74); smooth(b); b.data.materials.append(jeo)
+    parts.append(b)
     # chima: SLIM modern (계량) A-line — hem 0.17, waist 0.145 (was tent 0.28).
     # SKINNED to the body (not cloth sim): follows hips/legs -> never poked, stable.
     # Clears the hips (>=0.15 at hip height) so the static skirt has no leg poke.
@@ -350,12 +352,17 @@ def build_hanbok(key):
         return o
     glv = mat_cloth("M_Glove", FAB_TEX["glove"], tile=2.0, rough=0.5)
     for s in (1, -1):
-        sh = (s*0.112, 0, 1.395); el = (s*0.20, 0.02, 1.115); wr = (s*0.30, -0.05, 0.875)
-        parts.append(_tube(f"G_SlvU_{key}_{s}", sh, el, 0.038, 0.034, jeo))
-        parts.append(_tube(f"G_SlvF_{key}_{s}", el, wr, 0.035, 0.052, jeo))
+        sh = (s*0.112, 0, 1.395); el = (s*0.128, 0.02, 1.10); wr = (s*0.140, 0.03, 0.86)
+        parts.append(_tube(f"G_SlvU_{key}_{s}", sh, el, 0.044, 0.036, jeo))   # slimmer upper sleeve (less chunky)
+        parts.append(_tube(f"G_SlvF_{key}_{s}", el, wr, 0.036, 0.050, jeo))
+        # elbow filler — jeogori sphere bridges the two sleeve cones so a bent elbow
+        # never opens a gap (the 'ball-joint' look up close). Same for the whole ROM.
+        bpy.ops.mesh.primitive_uv_sphere_add(radius=0.036, segments=16, ring_count=10, location=el)
+        eb = bpy.context.object; eb.name = f"G_SlvElbow_{key}_{s}"
+        smooth(eb); eb.data.materials.append(jeo); parts.append(eb)
         # silk GLOVE — smooth mitten cover, hides the finger-less hand stub
         bpy.ops.mesh.primitive_uv_sphere_add(radius=0.034, segments=18, ring_count=12,
-            location=(s*0.315, -0.06, 0.775))
+            location=(s*0.150, 0.03, 0.75))
         gl = bpy.context.object; gl.name = f"G_SlvGlove_{key}_{s}"
         gl.scale = (0.85, 1.0, 1.55); smooth(gl); gl.data.materials.append(glv)
         parts.append(gl)

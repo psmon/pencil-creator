@@ -6,6 +6,11 @@ offset. Verifies smooth motion-to-motion transitions.
 Run: blender -b --factory-startup -P yuna_motionlib.py
 """
 import bpy, math, os, sys
+from mathutils import Quaternion
+
+# amplify ARMS ONLY for punchier dance. NOT neck/head (amplifying them flops the
+# head 90deg -> 'zombie neck'); NOT hips/legs (tipping / breaks planted stance).
+AMP_BONES = {"upperarm.L","forearm.L","hand.L","upperarm.R","forearm.R","hand.R"}
 BLEND = r"C:\code\psmon\pencil-creator\design\blend\yuna-rig4.blend"
 LIB = r"C:\code\psmon\pencil-creator\design\idola\mocap"
 OUT = r"C:\Users\psmon\infra\blender\out\motionlib"
@@ -71,7 +76,7 @@ def import_clip(path):
     sc = bpy.context.scene
     return o, sc.frame_start, sc.frame_end
 
-def bake_slot(member, clip, tl_start, dur_frames, phase, step=1):
+def bake_slot(member, clip, tl_start, dur_frames, phase, step=1, gain=1.0, skip=None):
     """Retarget `clip` (bvh, f0,f1) directly onto `member` timeline [tl_start..],
     time-scaled to dur_frames. Writes rotation_quaternion keys. Slerp-crossfade
     with whatever is already keyed in the first BLEND_F frames (smooth transition)."""
@@ -82,12 +87,12 @@ def bake_slot(member, clip, tl_start, dur_frames, phase, step=1):
     MW, MWi = member.matrix_world, member.matrix_world.inverted()
     for u in ORDER: opb[u].rotation_mode='QUATERNION'
     # rest ref = clip f0
-    sc.frame_set(f0); off={}
+    sc.frame_set(f0); off={}; rest={}
     for b,u in MAP:
         if u in opb and b in bpb:
             rq=(bvh.matrix_world@bpb[b].matrix).to_quaternion()
             orq=(MW@member.data.bones[u].matrix_local).to_quaternion()
-            off[u]=rq.inverted()@orq
+            off[u]=rq.inverted()@orq; rest[u]=orq
     n = f1 - f0
     BLEND_F = 8
     ks = list(range(0, dur_frames + 1, step))
@@ -99,7 +104,14 @@ def bake_slot(member, clip, tl_start, dur_frames, phase, step=1):
         w = min(1.0, k / BLEND_F) if k < BLEND_F else 1.0   # crossfade in
         for u in ORDER:
             if u not in off: continue
+            if skip and u in skip: continue   # leg bones -> driven by IK, not mocap
             q = (bvh.matrix_world@bpb[our_map[u]].matrix).to_quaternion() @ off[u]
+            # amplitude gain: exaggerate the rotation ANGLE (about same axis) relative
+            # to rest -> punchier dance. Arms/torso only (AMP_BONES); hips/legs stay 1.0.
+            if gain != 1.0 and u in AMP_BONES:
+                d = q @ rest[u].inverted()
+                if abs(d.angle) > 1e-4:
+                    q = Quaternion(d.axis, d.angle * gain) @ rest[u]
             pbb = opb[u]
             if w < 1.0:
                 # crossfade in WORLD space (same frame as q). Mixing q(world) with
@@ -114,6 +126,33 @@ def bake_slot(member, clip, tl_start, dur_frames, phase, step=1):
             # STALE parent -> error compounds on large rotations -> rig flips on render.
             bpy.context.view_layer.update()
             pbb.keyframe_insert("rotation_quaternion", frame=T)
+
+def _action_fcurves(act):
+    """Blender 5.x removed Action.fcurves — dig into layers/strips/channelbags."""
+    if act is None: return []
+    if hasattr(act, "fcurves") and len(act.fcurves): return list(act.fcurves)
+    fcs = []
+    for layer in getattr(act, "layers", []):
+        for strip in layer.strips:
+            for cb in getattr(strip, "channelbags", []):
+                fcs.extend(cb.fcurves)
+    return fcs
+
+def smooth_arm_fcurves(arm, bones, passes=2):
+    """Box-filter the rotation_quaternion keyframes of `bones` -> removes the
+    frame-to-frame tremble ('yoga shake') that amplitude gain exaggerates."""
+    ad = getattr(arm, "animation_data", None)
+    if not ad or not ad.action: return
+    targets = {f'pose.bones["{b}"].rotation_quaternion' for b in bones}
+    for fc in _action_fcurves(ad.action):
+        if fc.data_path not in targets: continue
+        kfs = fc.keyframe_points; n = len(kfs)
+        if n < 3: continue
+        for _ in range(passes):
+            vals = [k.co.y for k in kfs]
+            for i in range(1, n - 1):
+                kfs[i].co.y = (vals[i-1] + 2.0*vals[i] + vals[i+1]) / 4.0
+        fc.update()
 
 def main():
     bpy.ops.wm.open_mainfile(filepath=BLEND)
