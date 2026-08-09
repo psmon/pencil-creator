@@ -353,4 +353,5 @@ def main():
         bpy.ops.render.render(animation=True)
         print("CONCERT2_FULL_DONE frames %d" % sc.frame_end)
 
-main()
+if __name__ == "__main__":
+    main()
