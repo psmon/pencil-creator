@@ -337,6 +337,48 @@ render performance log [`design/idola/render-performance-log.md`](design/idola/r
 (AMD Radeon 8060S, EEVEE, 2-pass full song ≈ 20 min).
 *Ongoing: swappable songs (e.g. `music/05_Ice cream moon.flac`), finger rig, richer crowd.*
 
+#### Case M variant — Unity Real-Time Idol Performance (Unity backend, Play-capture video)
+
+```bash
+> "Set up Unity MCP as a Blender alternative for Case M"
+> "Base a cute YUNA k-pop group on a Mixamo character, choreograph a group dance to
+>  Ice cream moon, build a storybook ice-cream stage, and render the performance video"
+```
+
+The **Unity real-time backend** for the Case M character-performance branch (the Blender
+alternative). A live Unity 6.2 Editor is driven via **Unity MCP** (`Unity_RunCommand` C# +
+Playwright for asset sourcing). Everything is authored in **URP** and the final video is made by
+**capturing the real Play-mode Animator** — not offline sampling.
+
+The 6-step flow (details: [`harness/engine/unity3d-flow.md`](harness/engine/unity3d-flow.md)):
+
+1. **Character** — a **Mixamo** humanoid base (Playwright download → `FBX for Unity`) imported as
+   Humanoid; embedded textures extracted, face decals set to URP alpha-clip; members
+   differentiated by **HSV atlas recolor** (mask the pure garment hue, skip skin).
+2. **Solo skills** — Mixamo *Without-Skin* clips imported Humanoid → **Mecanim auto-retarget**
+   (no Blender retarget-flip pain); all members share one transition-free controller a director
+   drives via `CrossFade`.
+3. **Group choreography** — song analyzed with `soundfile`+`numpy` (BPM/section/climax) →
+   `ChoreographyDirector` (unison ≈ 20% + **Y→U→N→A spotlight rotation** + curved-arc blocking).
+4. **Storybook stage** — procedural ice-cream cones/moon/balloons/candy particles + gradient sky
+   dome + URP post (Bloom/Color/Vignette); `MoonController` sweeps the moon right→left and flies an
+   **E.T.-bicycle silhouette across the moon mid-song** (parody event).
+5. **Broadcast camera** — `CameraDirector` cuts (drone / dolly / spotlight push-in / hero / crane),
+   all synced to the shared clock; **close framings so gentle moves read**.
+6. **Video render** — ⚠️ the reliable path is **`PlayCapture`**: `Time.captureFramerate` steps the
+   real Animator at a fixed fps, `LateUpdate` renders the Main Camera to disk, a shared `PerfClock`
+   drives the three directors, audio is muxed by ffmpeg. *(Offline `AnimationMode` sampling freezes
+   the skinned mesh; Unity Recorder 5.1.2 is incompatible with Unity 6.2 — both avoided.)*
+
+**Featured output — YUNA "Ice Cream Moon"**: full 3:35 performance video
+[`design/idola/renders/yuna-icecream-moon.mp4`](design/idola/renders/yuna-icecream-moon.mp4)
+(720p24 + music, real Play-mode animation). Unity project lives under
+`G:\Unity\Projects\My project\Assets\YUNA\` (Base / Dances / Stage / Scripts).
+
+> **Blender vs Unity backend for Case M:** Blender = photoreal offline render, procedural control,
+> `.blend` asset. Unity = real-time engine, trivial Mecanim retargeting, URP + Cinemachine, and
+> fast Play-capture video — better for interactive / game-oriented idol performances.
+
 ### Pipeline Bonus
 
 | Path | Condition | XP Bonus |

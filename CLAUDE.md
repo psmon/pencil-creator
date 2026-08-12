@@ -10,6 +10,8 @@ Pencil Creator is an **animation-first design project** driven by Claude Code + 
 
 - **Pencil MCP**: Read/write .pen files via `batch_get`, `batch_design`, `get_screenshot`, etc. `.pen` files are encrypted — **never use Read/Grep on .pen files**, always use Pencil MCP tools.
 - **Playwright MCP**: Browser automation for HTML screenshot capture (optional).
+- **Blender MCP** (`uvx blender-mcp`): Live 3D modeling/render control over TCP for Case M. Requires the Blender addon listening on `:9876`.
+- **Unity MCP** (official, via `com.unity.ai.assistant`): 3D authoring alternative to Blender for Case M. Registered as the `unity` stdio server running the Unity relay in `--mcp` mode (`~/.unity/relay/relay_win.exe --mcp --project-path "G:\Unity\Projects\My project"`), bridged to a live Unity 6.2 (`6000.5.7f1`) Editor. The Editor must be **open on the target project** for tools to respond; the bridge is a named pipe keyed to the Editor PID, so `--project-path` (not `--instance-id`) keeps the link stable across Editor restarts. Approve first-time client connections in `Edit > Project Settings > AI > Unity MCP` → Pending Connections.
 
 ## Skills (Slash Commands)
 
@@ -26,7 +28,7 @@ Pencil Creator is an **animation-first design project** driven by Claude Code + 
 - **Case B**: Reference wpf-animation.pen → design project-specific .pen files
 - **Case C**: Web animation research → JSON metadata → Pencil component
 - **Case W**: Convert .pen design → HTML/CSS/JS in `design/xaml/output/sample{N}/`
-- **Case M**: Modeling-first — reference analysis (video frames) → Blender MCP modeling → `.blend` asset in `design/blend/` → Three.js web rebuild with cinematic cameras. **Blender 3D ≠ MS Blend** (WPF tool). If a 3D structure is hard to prompt, analyze video footage first to extract numeric specs.
+- **Case M**: Modeling-first — reference analysis (video frames) → 3D modeling → engine-native asset (`.blend` in `design/blend/` for Blender, or a Unity scene/prefab under `G:\Unity\Projects\My project` for Unity) → Three.js web rebuild with cinematic cameras. **Two 3D backends**: Blender MCP (default, workflow `harness/engine/blend3d-web-flow.md`) or Unity MCP (alternative — real-time engine, URP + Cinemachine, idol-performance video; workflow `harness/engine/unity3d-flow.md`, eval `harness/knowledge/unity3d-craft.md`). **Unity performance video = Play-mode capture** (`PlayCapture` + `Time.captureFramerate` + shared `PerfClock`), NOT offline `AnimationMode` sampling (freezes skinned mesh) and NOT Unity Recorder 5.1.2 (incompatible with Unity 6.2). **Blender 3D ≠ MS Blend** (WPF tool). If a 3D structure is hard to prompt, analyze video footage first to extract numeric specs.
 
 ## Path Conventions
 

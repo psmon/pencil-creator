@@ -290,6 +290,50 @@ gpt-image-2 실사 텍스처 9종 ON/OFF 토글.
 | M2 웹 재구축 정합성 | 30 | 좌표/치수 이식 · 머티리얼 등가 재현 · 성능(InstancedMesh) |
 | M3 카메라 연출 완성도 | 30 | 5종+ 모드 · 전환 블렌딩 · 실내 진입 3단 연출 |
 
+#### Case M 변형 — Unity 실시간 아이돌 공연 (Unity 백엔드, Play 캡처 영상)
+
+```bash
+> "Case M의 Blender 대안으로 Unity MCP 셋업해줘"
+> "믹사모 캐릭터 기반 큐트 YUNA 그룹 만들고, Ice cream moon에 맞춰 그룹댄스 짜고,
+>  동화풍 아이스크림 무대 만들어서 공연 영상 렌더해줘"
+```
+
+Case M **캐릭터-공연** 브랜치의 **Unity 실시간 백엔드**(Blender 대안). 라이브 Unity 6.2 에디터를
+**Unity MCP**(`Unity_RunCommand` C# + 에셋 수급용 Playwright)로 제어하며, 전부 **URP**로 저작하고
+최종 영상은 **Play 모드의 실제 Animator 모션을 프레임 캡처**해서 만든다(오프라인 샘플링 X).
+
+6단계 플로우(상세: [`harness/engine/unity3d-flow.md`](harness/engine/unity3d-flow.md)):
+
+1. **캐릭터** — **Mixamo** 휴머노이드 베이스(Playwright로 `FBX for Unity` 다운로드)를 Humanoid 임포트.
+   임베디드 텍스처 추출 + 얼굴 데칼 URP 알파클립. 멤버 차별화는 **디퓨즈 HSV 리컬러**(의상 순수색만
+   마스크, 피부 제외).
+2. **개인기** — Mixamo *Without-Skin* 클립을 Humanoid 임포트 → **Mecanim 자동 리타겟**(Blender
+   리타겟 뒤집힘 지옥 없음). 전 멤버가 전환없는 공통 컨트롤러 공유, 디렉터가 `CrossFade`로 제어.
+3. **그룹 안무** — 곡을 `soundfile`+`numpy`로 분석(BPM/섹션/고조) → `ChoreographyDirector`
+   (유니즌 ≈20% + **Y→U→N→A 스포트라이트 로테이션** + 곡선 아크 동선).
+4. **동화 무대** — 프로시저럴 콘/문/풍선/캔디 파티클 + 그라데이션 스카이돔 + URP Post(블룸/컬러/비네트).
+   `MoonController`가 달을 우→좌로 이동시키고 곡 중반 **E.T. 자전거 실루엣이 달을 가로지르는** 패러디.
+5. **방송 카메라** — `CameraDirector` 컷(드론/돌리/스포트라이트 푸시인/히어로/크레인), 공유 클럭 동기.
+   **근접 프레이밍**으로 잔잔한 안무도 보이게.
+6. **영상 렌더** — ⚠️ 신뢰 경로는 **`PlayCapture`**: `Time.captureFramerate`로 실제 Animator를
+   고정 fps로 진행, `LateUpdate`에서 메인 카메라를 디스크로 렌더, 공유 `PerfClock`이 디렉터 3종 구동,
+   오디오는 ffmpeg mux. *(오프라인 `AnimationMode` 샘플링은 스킨드메시가 정지; Unity Recorder 5.1.2는
+   Unity 6.2 비호환 — 둘 다 회피.)*
+
+**대표 산출 — YUNA "Ice Cream Moon"**: 전곡 3:35 공연 영상
+[`design/idola/renders/yuna-icecream-moon.mp4`](design/idola/renders/yuna-icecream-moon.mp4)
+(720p24 + 음악, 실제 Play 모드 애니메이션). Unity 프로젝트는 `G:\Unity\Projects\My project\Assets\YUNA\`.
+
+> **Case M의 Blender vs Unity 백엔드:** Blender = 실사 오프라인 렌더·프로시저럴 제어·`.blend` 자산.
+> Unity = 실시간 엔진·Mecanim 리타겟 간편·URP + Cinemachine·빠른 Play 캡처 영상 — 인터랙티브/게임형
+> 아이돌 공연에 유리.
+
+| 평가 축 | 만점 | 핵심 |
+|---------|------|------|
+| M1 캐릭터·리그 충실도 | 35 | 베이스 품질·멤버 차별화 · 텍스처/데칼 · Humanoid 리타겟 |
+| M2 안무·연출 | 35 | 음악 동기 · 스포트라이트 로테이션·곡선 동선 · 근접 카메라 컷 |
+| M3 무대·영상화 | 30 | 무대 무드·URP Post · 이벤트 연출 · **Play 캡처 실제 애니 영상** |
+
 ### Pipeline 보너스
 
 | 경로 | 조건 | XP 보너스 |

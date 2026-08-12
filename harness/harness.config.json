@@ -1,6 +1,6 @@
 {
   "name": "pencil-design-harness",
-  "version": "2.11.0",
+  "version": "2.12.0",
   "description": "Pencil Design 품질 하네스 — Case A(WPF→템플릿), Case B(템플릿참고→프로젝트 디자인), Case C(웹→JSON→펜슬 컴포넌트), Case D(DesignMD→펜슬 복제), Case S(컨셉아트→스프라이트 시트), Case W(Pencil→HTML), Case M(Blender 모델링→Three.js 웹) 평가 · v2.10.0 blend3d-web-flow 도입 · v2.11.0 blend3d-architect 에이전트(Case M 전문가: 컷어웨이 인테리어 투어·층별 시공 타임랩스·gpt-image-2 실사 텍스처 토글 노하우 내장)",
   "scope": "pencil-design",
   "layers": {
