@@ -31,7 +31,13 @@
 - **최종**: `design/idola/renders/azero-taro-live-2songs.mp4` (7:12, 705MB — **대용량 산출물은 커밋 제외, 별도 관리**).
 - 검토 워크플로: PlayCapture disable → 사용자가 에디터 ▶로 실시간 검토 → 확정 후 캡처 재무장(프리뷰 렌더 반복보다 효율적). 주의: Play 중 RunCommand 변경은 씬에 저장 안 됨(정지 후 재적용 필요).
 
+## SE~SE3 에디션 (2026-08-15)
+- **SE**: 칠흑 배경(camera black clear + Fog ConstantColor — SkyColor 모드가 하늘색 wash 원인) + 검정 바닥 + **암전 인트로**(IntroDirector: 기둥 점등→림 실루엣→관객 호흡→별비). VolumeProfile 소실 함정 → 전 컴포넌트 일괄 생성한 SparklePostSE.asset. 카메라 12샷/104s(드론·오빗·에어리얼·관객POV). `EditorPrefs InteractionMode=1`(No Throttling)로 무포커스 렌더 확립(외부 .cs 수정 후 Refresh 필수).
+- **SE2**: 곡 교체 — 1/2 별빛이 머문 자리(TARO·남성 피아노), 2/2 반짝인 너와 나(AZero). 피아니스트 착석 교정(뒤로+축소+본 재정렬). 반짝인 = **4인 YUNA(Y/U/N/A 리컬러) + 백댄서 6인 댄스**(WaveHipHop↔HipHopDancing 32s 교대, DanceCycle.cs), 백라이트 강화.
+- **SE3**: **반응 피아노 건반**(PianoKeys.cs — 개별 키 30개, 손가락 본 근접시 눌림/틸트), 댄스 전용 카메라(PerfCam.dance) + **바닥 조명 5기**, **얼굴 깨짐 수정**(Brows/Eyes/Mouth 메시는 FacialAnimMap+알파클립 전용 — 몸통 디퓨즈 금지), **사이버틱 백댄서**(화이트 바디+네온 밴드 6색), **HDR 출력**(단일 zscale bt709→HLG/BT.2020 직접 변환 → libx265 10bit; linear 경유 체인은 zimg "no path" 실패).
+- 산출물(커밋 제외): `taro-azero-live-2songs-se3-hdr.mp4`(HDR, 8:22, 143MB) + SDR 호환본.
+
 ## 확장 여지
-- 카메라 48s 루프 → 곡 구간별 샷 다양화
-- YUNA 클로즈업 텍스처 더 어둡게/의상 교체
 - 스파클 색 배리에이션(청백/금) 및 곡 클라이맥스 동기화
+- 네온 밴드 색 시퀀스 애니메이션(비트 동기 점멸)
+- 리드 4인 개별 안무 파트 분배
