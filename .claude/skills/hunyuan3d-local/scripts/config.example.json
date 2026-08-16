@@ -1,0 +1,31 @@
+{
+  "_comment": "install.ps1 이 %LOCALAPPDATA%\\hunyuan3d-local\\config.json 으로 실제 경로를 채워 생성한다. 이 파일은 형식 예시일 뿐.",
+  "backend": "rocm",
+  "gfx_arch": "gfx1151",
+  "install_dir": "%LOCALAPPDATA%\\hunyuan3d-local",
+  "venv_python": "%LOCALAPPDATA%\\hunyuan3d-local\\venv\\Scripts\\python.exe",
+  "repo_dir": "%LOCALAPPDATA%\\hunyuan3d-local\\Hunyuan3D-2.1",
+  "server": { "host": "127.0.0.1", "port": 8781 },
+  "models": {
+    "shape_repo": "tencent/Hunyuan3D-2.1",
+    "shape_subfolder": "hunyuan3d-dit-v2-1",
+    "paint_repo": "tencent/Hunyuan3D-2.1",
+    "paint_subfolder": "hunyuan3d-paintpbr-v2-1"
+  },
+  "defaults": {
+    "views": 6,
+    "resolution": 512,
+    "skip_paint": false,
+    "low_vram": false
+  },
+  "t2i_cmd": [
+    "py", "-3.14",
+    "C:\\code\\psmon\\pencil-creator\\.claude\\skills\\pencil-design\\scripts\\image-gen.py",
+    "generate",
+    "--prompt", "{prompt}, single object, centered, plain background, product shot",
+    "--topic", "hy3d-t2i",
+    "--out", "{image_out}",
+    "--provider", "gemini"
+  ],
+  "_t2i_note": "{prompt} 와 {image_out} 는 런타임에 치환된다. 참조 이미지를 --image 로 직접 주면 이 명령은 실행되지 않는다."
+}

@@ -1,0 +1,68 @@
+using System;
+using UnityEditor;
+using UnityEngine;
+using UnityEditor.SceneManagement;
+
+public static class IdolDancerSetup
+{
+    const string FbxPath  = "Assets/ExternalModels/idol_star/idol-star-rigged.fbx";
+    const string TexPath  = "Assets/ExternalModels/idol_star/idol_star.png";
+    const string CtrlPath = "Assets/PerformerYuna/DanceAB.controller";
+
+    [MenuItem("Tools/Setup Idol Dancer")]
+    public static void Setup()
+    {
+        AssetDatabase.Refresh();
+        AssetDatabase.ImportAsset(FbxPath, ImportAssetOptions.ForceUpdate);
+
+        var imp = AssetImporter.GetAtPath(FbxPath) as ModelImporter;
+        if (imp != null)
+        {
+            imp.animationType = ModelImporterAnimationType.Human;
+            imp.avatarSetup   = ModelImporterAvatarSetup.CreateFromThisModel;
+            imp.SaveAndReimport();
+        }
+
+        Avatar avatar = null;
+        foreach (var a in AssetDatabase.LoadAllAssetsAtPath(FbxPath))
+            if (a is Avatar av) avatar = av;
+        bool avatarValid = avatar != null && avatar.isValid && avatar.isHuman;
+
+        var fbx = AssetDatabase.LoadAssetAtPath<GameObject>(FbxPath);
+        if (fbx == null) { Debug.LogError("[IdolDancer] FBX load failed"); return; }
+        var go = (GameObject)PrefabUtility.InstantiatePrefab(fbx);
+        if (go == null) go = (GameObject)GameObject.Instantiate(fbx);
+        if (go == null) { Debug.LogError("[IdolDancer] instantiate failed"); return; }
+        go.name = "IdolDancer";
+        go.transform.position = Vector3.zero;
+
+        var tex = AssetDatabase.LoadAssetAtPath<Texture2D>(TexPath);
+        var sh  = Shader.Find("HDRP/Lit");
+        if (sh != null)
+        {
+            var mat = new Material(sh);
+            if (tex != null) mat.SetTexture("_BaseColorMap", tex);
+            var matPath = "Assets/ExternalModels/idol_star/IdolDancer_Mat.mat";
+            AssetDatabase.DeleteAsset(matPath);
+            AssetDatabase.CreateAsset(mat, matPath);
+            foreach (var smr in go.GetComponentsInChildren<SkinnedMeshRenderer>()) smr.sharedMaterial = mat;
+            foreach (var mr in go.GetComponentsInChildren<MeshRenderer>())        mr.sharedMaterial = mat;
+        }
+
+        var anim = go.GetComponent<Animator>();
+        if (anim == null) anim = go.AddComponent<Animator>();
+        if (avatar != null) anim.avatar = avatar;
+        anim.runtimeAnimatorController = AssetDatabase.LoadAssetAtPath<RuntimeAnimatorController>(CtrlPath);
+        anim.applyRootMotion = false;
+
+        Type dcType = null;
+        foreach (var asm in AppDomain.CurrentDomain.GetAssemblies())
+        { var t = asm.GetType("DanceCycle"); if (t != null) { dcType = t; break; } }
+        if (dcType != null) go.AddComponent(dcType);
+
+        Selection.activeGameObject = go;
+        EditorSceneManager.MarkSceneDirty(go.scene);
+        int smrCount = go.GetComponentsInChildren<SkinnedMeshRenderer>().Length;
+        Debug.Log("[IdolDancer] DONE avatarValid=" + avatarValid + " ctrl=" + (anim.runtimeAnimatorController!=null) + " dance=" + (dcType!=null) + " skinnedMeshes=" + smrCount);
+    }
+}
