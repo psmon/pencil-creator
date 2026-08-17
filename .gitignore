@@ -23,3 +23,6 @@ design/idola/renders/*preview*.mp4
 design/idola/renders/*pilot*.mp4
 # 원본 음악에서 재생성되는 중간 오디오 → 제외
 design/idola/renders/*_audio.m4a
+design/idola/renders/*.mp4
+design/idola/unity-sparkle-hdrp/fonts/
+design/blend/test.blend

@@ -10,6 +10,10 @@ public class FallingSparks : MonoBehaviour
     public float yTop = 13f, yBottom = -0.5f;
     public float sizeMin = 0.03f, sizeMax = 0.09f, streak = 7f, hdr = 5.5f;
     public float fallMin = 2.0f, fallMax = 5.5f;
+    // 연출: startTime 이전엔 스파클 없음, 이후 rampIn 초 동안 쏟아지듯 페이드인.
+    // 1부: startTime=30 (30초 이후 쏟아짐). 2부: startTime=0 (이어서 계속).
+    public float startTime = 0f;
+    public float rampIn = 2.5f;
 
     Transform[] pts; MeshRenderer[] rends; MaterialPropertyBlock mpb;
     float[] px, pz, phase, speed, baseI, size;
@@ -58,10 +62,15 @@ public class FallingSparks : MonoBehaviour
         if (pts==null) return;
         if (cam==null) cam=Camera.main;
         float t=T;
+        // startTime 지연: 이전엔 ramp=0(비가시), 이후 rampIn 초에 걸쳐 쏟아지듯 등장
+        float ts = t - startTime;
+        bool active = ts >= 0f;
+        float ramp = active ? Mathf.Clamp01(ts / Mathf.Max(0.01f, rampIn)) : 0f;
+        float tf = active ? ts : 0f;
         Vector3 cf = cam!=null?cam.transform.forward:Vector3.forward;
         for (int i=0;i<count;i++)
         {
-            float y = yTop - Mathf.Repeat(t*speed[i] + phase[i], span);
+            float y = yTop - Mathf.Repeat(tf*speed[i] + phase[i], span);
             pts[i].position = new Vector3(px[i], y, pz[i]);
             // face camera in yaw but keep vertical streak
             Vector3 look = new Vector3(cf.x,0f,cf.z); if (look.sqrMagnitude<1e-4f) look=Vector3.forward;
@@ -70,7 +79,7 @@ public class FallingSparks : MonoBehaviour
             // twinkle + fade near the bottom
             float fade = Mathf.Clamp01((y - yBottom)/2.0f);
             float tw = 0.6f+0.4f*Mathf.Sin(t*6f+phase[i]*3f);
-            float inten = baseI[i]*hdr*tw*fade;
+            float inten = baseI[i]*hdr*tw*fade*ramp;
             mpb.SetColor(UnlitColor, new Color(inten,inten,inten*1.02f,1f));
             rends[i].SetPropertyBlock(mpb);
         }

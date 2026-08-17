@@ -121,3 +121,8 @@ pwsh -File .claude/skills/hunyuan3d-local/scripts/run.ps1 status               #
 
 리포가 바뀌어 시그니처가 달라지면 `hy3d.py` 의 `HY3DEngine.load()/generate()` 만 수정하면 된다.
 (서버·CLI·회수 로직은 그대로 재사용.)
+
+## 빌드 시 auth.docker.io "no route to host" (레지스트리 metadata 조회 실패)
+증상: `docker build` #2 "load metadata for ubuntu:24.04" → `failed to fetch oauth token: Post https://auth.docker.io/token: dial tcp 172.64.x.x:443: connect: no route to host`.
+원인: **DNS 불일치** — 호스트/ISP는 auth.docker.io를 도달가능한 국내 캐시 IP로 해석하지만 BuildKit 내부 DNS는 도달불가 Cloudflare IP로 해석. (WSL 재시작 반복 후 vNAT 상태에서 특히.)
+해결: ①`docker pull ubuntu:24.04`로 베이스를 **로컬 확보**(데몬 네트워크는 정상) → ②`docker build --pull=false ...`로 FROM의 레지스트리 조회를 건너뜀. RUN 단계(apt/pip)는 정상 동작하므로 이후 빌드 완주. `wsl --shutdown`으로도 안 풀리면 이 우회가 가장 확실.

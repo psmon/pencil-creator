@@ -37,6 +37,15 @@
 - **SE3**: **반응 피아노 건반**(PianoKeys.cs — 개별 키 30개, 손가락 본 근접시 눌림/틸트), 댄스 전용 카메라(PerfCam.dance) + **바닥 조명 5기**, **얼굴 깨짐 수정**(Brows/Eyes/Mouth 메시는 FacialAnimMap+알파클립 전용 — 몸통 디퓨즈 금지), **사이버틱 백댄서**(화이트 바디+네온 밴드 6색), **HDR 출력**(단일 zscale bt709→HLG/BT.2020 직접 변환 → libx265 10bit; linear 경유 체인은 zimg "no path" 실패).
 - 산출물(커밋 제외): `taro-azero-live-2songs-se3-hdr.mp4`(HDR, 8:22, 143MB) + SDR 호환본.
 
+## SE4 에디션 (2026-08-17) — 별비 지연 연출 + 무대 증설
+- **FallingSparks.startTime/rampIn 추가**: 1부(별빛-TARO) 스파클을 **2:50(170초) 이후 4초에 걸쳐 쏟아지게**(클라이맥스 연출), 2부(반짝인-AZero)는 startTime=0으로 이어서 계속. IntroDirector의 6-10s 스파크 램프는 게이트(ramp 곱)가 덮어써 170초 전 비가시. ※관객 폰라이트(LightSea/CrowdSilhouette 보케)는 별비와 별개로 상시 표시 — 혼동 주의.
+- **피아노 위 웜 스팟**(`PianoLight.cs`, `Tools/Add Piano Top Light`): 피아니스트/건반 위 19000lm 텅스텐 스팟(볼류메트릭) — 연주자 약간 부각.
+- **별자리 백라이트 스크린**(`ConstellationScreen.cs`, `Tools/Add Constellation Screen`): 무대 뒤(z=9.6) '대형 스크린' 발광 별점 420개(앵커 46 밝게)+PerfClock 트윙클, 카메라 빌보드. 관객 정면 시점(예: 1:20 샷)에서 암흑 속 연주자를 **별밭 배경 실루엣**으로 띄움. hdr 2.2/앵커 4.6. **1·2부 공용**(2부는 낙하 별비와 합쳐져 별밭 대형스크린 백드롭). 낙하 별비(170s~)와 별개로 상시 표시.
+- **후방 LED 기둥 2개**: 전방 기둥(x=±6.2, z=0.3) 미러 → 후방 z=8.5. 어두운 공연 백라이트(양 씬 4기둥 프레임). `Tools/Add Rear LED Pillars`.
+- **LLaMA-Mesh 무대 소품**(2부): 스피커·앰프·드럼·마이크스탠드·모니터·건반 6종 생성→배치. `Tools/Place Stage Props`.
+- **캡처**: no-throttle(`Tools/Render NoThrottle On`) → 1부 6233f(별빛-a.mp3 259.7s) + 2부 5821f(반짝인-ORIGIN.mp3 242.6s) @1080p, 각 ~6.4fps. 곡별 UI mux(build_song_ui.py, malgun 폰트) → concat -c copy.
+- **산출물(커밋 제외)**: `design/idola/renders/taro-azero-live-2songs-se4.mp4` (8:22=502s, 291MB, h264+aac).
+
 ## 확장 여지
 - 스파클 색 배리에이션(청백/금) 및 곡 클라이맥스 동기화
 - 네온 밴드 색 시퀀스 애니메이션(비트 동기 점멸)
