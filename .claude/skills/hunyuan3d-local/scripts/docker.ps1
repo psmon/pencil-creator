@@ -18,7 +18,7 @@ $SkillDir   = Split-Path -Parent $ScriptDir
 $DockerCtx  = Join-Path $SkillDir 'docker'
 $Image      = 'hunyuan3d-rocm:latest'
 $WorkWin    = Join-Path $SkillDir 'work'   # 입출력 교환 디렉토리 (Windows)
-$ImageGen   = Join-Path (Split-Path (Split-Path $SkillDir)) 'pencil-design\scripts\image-gen.py'
+$ImageGen   = Join-Path (Split-Path $SkillDir) 'pencil-design\scripts\image-gen.py'
 
 function To-WslPath([string]$winPath) {
   # C:\a\b → /mnt/c/a/b
