@@ -69,6 +69,7 @@
 </script>
 <script type="module">
 import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
@@ -91,7 +92,7 @@ app.appendChild(renderer.domElement);
 const scene=new THREE.Scene(); scene.background=new THREE.Color(0x05060d);
 scene.fog=new THREE.FogExp2(0x05060d,0.045);
 const camera=new THREE.PerspectiveCamera(42,innerWidth/innerHeight,0.1,200);
-camera.position.set(0,1.55,4.15); camera.lookAt(0,1.5,0);
+camera.position.set(0.22,1.62,4.95); camera.lookAt(0.22,1.42,0);
 
 // lights
 scene.add(new THREE.AmbientLight(0x334466,0.55));
@@ -280,7 +281,7 @@ function evaluate(){
   if(triple){ win=PAY[sym]*bet; setMsg(sym===6?'★ GOLDEN JACKPOT ★':NAME[sym]+' x3', true); }
   else { const pair=wilds>=1||s[0]===s[1]||s[1]===s[2]||s[0]===s[2]; win=pair?bet*2:0; setMsg(pair?'NICE PAIR':'TRY AGAIN', pair); }
   if(win>0){ credits+=win; winFlash=triple?3.5:2.0; lastJackpot=(triple&&sym===6); popT=4.2;
-    payoutCoins(win,lastJackpot); }
+    payoutCoins(win,lastJackpot); playReaction(lastJackpot); }
   refresh();
 }
 
@@ -317,6 +318,66 @@ $('spin').onclick=spin; $('betup').onclick=()=>changeBet(10); $('betdn').onclick
 $('maxbet').onclick=()=>{ bet=200; refresh(); };
 addEventListener('keydown',e=>{ if(e.code==='Space'){e.preventDefault();spin();} });
 
+// ---------- reaction characters (sample19 리소스 재사용) ----------
+// Win 시 영입 캐릭 중 랜덤 1인이 랜덤 모션으로 리액션. 슬롯 우측에 배치.
+const REACT_CHARS=['claire'];   // Claire 한 명만 영입 — 그의 16개 모션을 랜덤 위너로
+const reactors=[]; // {root,mixer,clips,action}
+const reactPos=new THREE.Vector3(2.15,0,0.75);
+let reactHideAt=0;
+function buildReactionStage(){
+  // 리액션 캐릭 전용 조명(스포트 + 정면 필 포인트)
+  const rl=new THREE.SpotLight(0xfff2e0, 5, 18, 0.9, 0.4, 0.7);
+  rl.position.set(reactPos.x+0.4, 3.4, reactPos.z+1.6); rl.target.position.set(reactPos.x, 1.0, reactPos.z);
+  scene.add(rl, rl.target);
+  const fillP=new THREE.PointLight(0xffe8c8, 4.5, 10, 1.1);   // 정면 필
+  fillP.position.set(reactPos.x, 1.6, reactPos.z+1.4); scene.add(fillP);
+  const fillP2=new THREE.PointLight(0x9ec0ff, 2.2, 10, 1.1);  // 측면 림
+  fillP2.position.set(reactPos.x+1.1, 1.4, reactPos.z+0.3); scene.add(fillP2);
+  const fillP3=new THREE.PointLight(0xffd0a0, 2.5, 9, 1.2);   // 하단 바운스
+  fillP3.position.set(reactPos.x, 0.55, reactPos.z+1.1); scene.add(fillP3);
+  const disc=new THREE.Mesh(new THREE.CylinderGeometry(0.7,0.7,0.04,32),
+    new THREE.MeshStandardMaterial({color:0x140306,metalness:0.4,roughness:0.5,emissive:0x3a0810,emissiveIntensity:0.6}));
+  disc.position.set(reactPos.x,0.02,reactPos.z); scene.add(disc);
+}
+function loadReactors(){
+  const gl=new GLTFLoader();
+  REACT_CHARS.forEach(name=>{
+    gl.load('../sample19/models/'+name+'.glb', g=>{
+      const inner=g.scene;  // GLB 씬은 identity 유지(스킨 바인드 보존)
+      inner.traverse(o=>{ if(o.isMesh){o.frustumCulled=false; o.castShadow=false;} });
+      inner.updateMatrixWorld(true);
+      const box=new THREE.Box3().setFromObject(inner); const s=1.55/Math.max(0.1,box.max.y-box.min.y);
+      const pivot=new THREE.Group();
+      pivot.add(inner);
+      pivot.scale.setScalar(s);
+      pivot.position.set(reactPos.x, -box.min.y*s, reactPos.z);
+      pivot.rotation.y=-0.6;
+      pivot.visible=false;
+      scene.add(pivot);
+      const clips=(g.animations||[]);
+      clips.forEach(c=>{ c.tracks=c.tracks.filter(t=>!t.name.endsWith('.position')); });
+      reactors.push({root:pivot, mixer:new THREE.AnimationMixer(inner), clips, action:null, name});
+    }, undefined, ()=>{ /* 로드 실패 무시 */ });
+  });
+}
+function playReaction(jackpot){
+  if(!reactors.length) return;
+  reactors.forEach(r=>{ if(r.action) r.action.fadeOut(0.2); r.root.visible=false; });
+  const r=reactors[Math.floor(Math.random()*reactors.length)];
+  r.root.visible=true;
+  if(r.clips.length){
+    const clip=r.clips[Math.floor(Math.random()*r.clips.length)];
+    r.action=r.mixer.clipAction(clip); r.action.reset().setLoop(THREE.LoopRepeat,Infinity).fadeIn(0.25).play();
+  }
+  reactHideAt=performance.now()+(jackpot?8000:6000);
+}
+function updateReactors(dt){
+  for(const r of reactors){ if(r.root.visible) r.mixer.update(dt); }
+  if(reactHideAt && performance.now()>reactHideAt){ reactHideAt=0;
+    reactors.forEach(r=>{ if(r.action) r.action.fadeOut(0.4); setTimeout(()=>{r.root.visible=false;},420); });
+  }
+}
+
 // ---------- post fx ----------
 let composer,bloom;
 function setupFX(){
@@ -333,6 +394,7 @@ function animate(){
   const dt=Math.min(clock.getDelta(),0.05), t=clock.elapsedTime;
   reels.forEach(r=>r.update(dt));
   updateCoins(dt);
+  updateReactors(dt);
   if(winFlash>0) winFlash-=dt;
   // marquee chase
   for(let i=0;i<bulbs.length;i++){
@@ -361,6 +423,8 @@ function start(){
   buildCabinet();
   for(let i=0;i<3;i++) reels.push(new Reel(i));
   setupFX();
+  buildReactionStage();
+  loadReactors();   // 캐릭터는 지연 로드(슬롯은 즉시 플레이 가능)
   refresh();
   alive=true;
   $('load').style.opacity=0; setTimeout(()=>$('load').style.display='none',600);
