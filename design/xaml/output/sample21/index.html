@@ -1,0 +1,356 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sample 21 — GOLDEN FORTUNE 슬롯 (Unity→Web)</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%;background:#05060d;overflow:hidden;font-family:'Segoe UI',system-ui,sans-serif;color:#fff;
+    user-select:none;-webkit-user-select:none}
+  #app{position:fixed;inset:0}
+  canvas{display:block}
+  /* HUD */
+  #hud{position:fixed;left:18px;top:16px;z-index:10;background:rgba(6,8,16,.62);backdrop-filter:blur(6px);
+    border:1px solid rgba(220,180,90,.3);border-radius:12px;padding:12px 16px;min-width:220px;
+    font-variant-numeric:tabular-nums}
+  .row{display:flex;justify-content:space-between;align-items:baseline;gap:18px;line-height:1.7}
+  .k{font-size:12px;letter-spacing:.12em;color:#c8a24a}
+  .v{font-size:20px;font-weight:700;color:#ffe8a8}
+  #vwin.hot{color:#7dff9a}
+  #title{position:fixed;left:50%;top:14px;transform:translateX(-50%);z-index:10;text-align:center}
+  #title b{font-size:15px;letter-spacing:.05em;color:#ffd479;text-shadow:0 0 12px rgba(255,180,60,.6)}
+  #title span{display:block;font-size:11px;color:#9aa2c4;margin-top:2px}
+  #msg{position:fixed;left:50%;top:52px;transform:translateX(-50%);z-index:10;font-size:20px;font-weight:700;
+    letter-spacing:.04em;color:#cfd6ff;text-shadow:0 2px 8px #000}
+  #msg.win{color:#ffdf6e}
+  /* win popup */
+  #pop{position:fixed;left:50%;top:40%;transform:translate(-50%,-50%) scale(.2);z-index:11;text-align:center;
+    opacity:0;pointer-events:none;transition:none;padding:18px 40px;border-radius:20px;
+    background:radial-gradient(ellipse at center,rgba(30,10,0,.82),rgba(10,4,0,.35) 70%,transparent);
+    box-shadow:0 0 60px rgba(0,0,0,.6)}
+  #pop .big{font-size:60px;font-weight:900;color:#ffd23f;
+    text-shadow:0 0 24px rgba(255,170,40,1),0 4px 12px #000,-2px -2px 0 #7a4b00,2px 2px 0 #7a4b00}
+  #pop .sub{font-size:24px;font-weight:800;color:#fff2c8;letter-spacing:.2em;text-shadow:0 2px 6px #000}
+  /* controls */
+  #ctl{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:10;display:flex;gap:10px}
+  button{font:inherit;font-size:15px;font-weight:700;color:#ffe8b0;background:rgba(40,30,12,.7);
+    border:1px solid rgba(220,180,90,.4);border-radius:10px;padding:12px 18px;cursor:pointer;transition:.12s}
+  button:hover{background:rgba(80,60,20,.8);border-color:#ffcf6a}
+  button:disabled{opacity:.4;cursor:default}
+  #spin{background:linear-gradient(180deg,#e0402e,#a01818);border-color:#ff8a6a;color:#fff;min-width:130px;font-size:18px}
+  #spin:hover:not(:disabled){background:linear-gradient(180deg,#ff5a44,#c02020)}
+  #hint{position:fixed;left:50%;bottom:6px;transform:translateX(-50%);z-index:10;font-size:11px;color:rgba(255,255,255,.4)}
+  #load{position:fixed;inset:0;background:#05060d;display:flex;align-items:center;justify-content:center;
+    z-index:20;color:#ffd479;letter-spacing:.15em;transition:opacity .6s}
+</style>
+<div id="app"></div>
+<div id="load">LOADING…</div>
+<div id="title"><b>🎰 GOLDEN FORTUNE</b><span>Unity 미니게임 → Web3D 재연 · Three.js</span></div>
+<div id="msg">SPIN TO WIN!</div>
+<div id="pop"><div class="big">WIN +0</div><div class="sub">COINS!</div></div>
+
+<div id="hud">
+  <div class="row"><span class="k">CREDITS</span><span class="v" id="vcred">1000</span></div>
+  <div class="row"><span class="k">BET</span><span class="v" id="vbet">10</span></div>
+  <div class="row"><span class="k">WIN</span><span class="v" id="vwin">0</span></div>
+</div>
+
+<div id="ctl">
+  <button id="betdn">BET −</button>
+  <button id="betup">BET +</button>
+  <button id="maxbet">MAX</button>
+  <button id="spin">SPIN</button>
+</div>
+<div id="hint">클릭 SPIN · 황금동전은 스크린 안에서만 연출 (Unity CasinoSlot 재연)</div>
+
+<script type="importmap">
+{ "imports": {
+  "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+}}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+
+// ---------- game data (same as Unity) ----------
+const STRIP=[[0,3,1,5,2,4,6,1,3,5,0,2],[1,5,0,3,6,2,4,0,5,1,3,6],[5,2,3,0,1,6,4,3,2,0,5,1]];
+const PAY=[40,12,8,16,20,25,100];
+const NAME=['SEVEN','BAR','CHERRY','BELL','DIAMOND','COIN','WILD'];
+const SYM=['seven','bar','cherry','bell','diamond','coin','wild'];
+
+// ---------- renderer / scene / camera ----------
+const app=document.getElementById('app');
+const renderer=new THREE.WebGLRenderer({antialias:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.setSize(innerWidth,innerHeight);
+renderer.toneMapping=THREE.ACESFilmicToneMapping; renderer.toneMappingExposure=0.85;
+renderer.outputColorSpace=THREE.SRGBColorSpace;
+app.appendChild(renderer.domElement);
+const scene=new THREE.Scene(); scene.background=new THREE.Color(0x05060d);
+scene.fog=new THREE.FogExp2(0x05060d,0.045);
+const camera=new THREE.PerspectiveCamera(42,innerWidth/innerHeight,0.1,200);
+camera.position.set(0,1.55,4.15); camera.lookAt(0,1.5,0);
+
+// lights
+scene.add(new THREE.AmbientLight(0x334466,0.55));
+const key=new THREE.SpotLight(0xfff0d8,42,25,0.6,0.5,1.2); key.position.set(-2,4.5,3.5); key.target.position.set(0,1.5,0);
+scene.add(key,key.target);
+const fill=new THREE.SpotLight(0x88aaff,20,25,0.7,0.5,1.2); fill.position.set(2.5,3.5,3); fill.target.position.set(0,1.4,0);
+scene.add(fill,fill.target);
+const rim=new THREE.PointLight(0xff4488,12,14,2); rim.position.set(0,3,-2); scene.add(rim);
+
+// ---------- textures ----------
+const loader=new THREE.TextureLoader();
+const tex={}; let toLoad=SYM.length+1, loaded=0;
+function onload(){ if(++loaded>=toLoad) start(); }
+SYM.forEach(s=>{ tex[s]=loader.load('tex/'+s+'.jpg', onload); tex[s].colorSpace=THREE.SRGBColorSpace; });
+tex.backglass=loader.load('tex/backglass.jpg', onload); tex.backglass.colorSpace=THREE.SRGBColorSpace;
+
+// ---------- materials ----------
+const gold=new THREE.MeshStandardMaterial({color:0xcaa030,metalness:1,roughness:0.28});
+const dark=new THREE.MeshStandardMaterial({color:0x0a0a12,metalness:0.3,roughness:0.5});
+const velvet=new THREE.MeshStandardMaterial({color:0x140306,metalness:0,roughness:0.6});
+function box(w,h,d,mat,x,y,z){ const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat); m.position.set(x,y,z); scene.add(m); return m; }
+
+// ---------- reels ----------
+const REEL_X=[-0.8,0,0.8], R=0.86, N=12, CY=1.55;
+const reels=[];
+class Reel{
+  constructor(i){
+    this.i=i; this.g=new THREE.Group(); this.g.position.set(REEL_X[i],CY,0); scene.add(this.g);
+    // dark drum backing
+    const drum=new THREE.Mesh(new THREE.CylinderGeometry(R*0.99,R*0.99,0.72,32,1,true), dark);
+    drum.rotation.z=Math.PI/2; this.g.add(drum);
+    for(let j=0;j<N;j++){
+      const a=j*(2*Math.PI/N);
+      const o=new THREE.Vector3(0,Math.cos(a),Math.sin(a));
+      const p=new THREE.Mesh(new THREE.PlaneGeometry(0.74,0.54),
+        new THREE.MeshBasicMaterial({map:tex[SYM[STRIP[i][j]]],toneMapped:false}));
+      p.position.copy(o.clone().multiplyScalar(R+0.02));
+      p.lookAt(o.clone().multiplyScalar(R+2)); // face outward
+      this.g.add(p);
+    }
+    this.state=0; this.angle=0; this.vel=0; this.target=0; this.landed=0;
+  }
+  get spinning(){ return this.state!==0; }
+  startSpin(){ this.state=1; }
+  stopAt(pos){
+    this.landed=pos;
+    const t=Math.PI/2 - pos*(2*Math.PI/N);
+    const k=Math.ceil((this.angle+Math.PI*3 - t)/(2*Math.PI));
+    this.target=t+k*2*Math.PI; this.start=this.angle; this.stopT=0; this.stopDur=0.75; this.state=2;
+  }
+  update(dt){
+    if(this.state===1){ this.vel=Math.min(this.vel+16*dt, 15); this.angle+=this.vel*dt; }
+    else if(this.state===2){
+      this.stopT+=dt; const k=this.stopT/this.stopDur;
+      if(k>=1){ this.angle=this.target; this.state=0; this.vel=0; this.bounce=0.16; }
+      else { const e=1-Math.pow(1-k,3); this.angle=this.start+(this.target-this.start)*e; }
+    }
+    let a=this.angle;
+    if(this.bounce>0){ this.bounce-=dt; a=this.target - Math.sin(Math.max(0,this.bounce)/0.16*Math.PI)*0.09; }
+    this.g.rotation.x=a;
+  }
+}
+
+// ---------- cabinet / bezel / marquee ----------
+let bulbs=[];
+function buildCabinet(){
+  // reel housing (dark) behind window
+  box(2.75,1.85,0.2, new THREE.MeshStandardMaterial({color:0x02030a,roughness:0.4}), 0,1.55,-0.35);
+  // pillars + marquee + console
+  box(0.34,3.0,0.95, gold, -1.42,1.55,0.15);
+  box(0.34,3.0,0.95, gold, 1.42,1.55,0.15);
+  box(3.4,0.95,0.9, gold, 0,3.18,0.05);
+  box(3.0,0.72,1.1, gold, 0,0.4,0.55).rotation.x=0.28;
+  box(3.0,2.6,0.2, velvet, 0,1.55,-1.0);
+  // backglass
+  const bg=new THREE.Mesh(new THREE.PlaneGeometry(3.0,0.78),
+    new THREE.MeshBasicMaterial({map:tex.backglass,toneMapped:false}));
+  bg.position.set(0,3.18,0.52); scene.add(bg);
+  // bezel frame (emissive gold)
+  const be=new THREE.MeshStandardMaterial({color:0xe0b040,emissive:0x6a4500,emissiveIntensity:0.7,metalness:1,roughness:0.3});
+  box(2.9,0.22,0.18, be, 0,2.45,1.0);
+  box(2.9,0.22,0.18, be, 0,0.66,1.0);
+  box(0.22,2.0,0.18, be, -1.34,1.55,1.0);
+  box(0.22,2.0,0.18, be, 1.34,1.55,1.0);
+  box(0.07,1.75,0.16, gold, -0.4,1.55,1.0);
+  box(0.07,1.75,0.16, gold, 0.4,1.55,1.0);
+  // payline
+  const pl=new THREE.MeshStandardMaterial({color:0xff1122,emissive:0xff0010,emissiveIntensity:1.6});
+  box(2.7,0.035,0.02, pl, 0,1.55,1.03);
+  // spin button dome
+  const btn=new THREE.Mesh(new THREE.SphereGeometry(0.22,20,14),
+    new THREE.MeshStandardMaterial({color:0xd01818,emissive:0xff1020,emissiveIntensity:1.5,roughness:0.3}));
+  btn.scale.set(1,0.5,1); btn.position.set(0,0.7,1.12); scene.add(btn);
+  // marquee bulbs
+  const bm=new THREE.MeshStandardMaterial({color:0xffe6a0,emissive:0xffcf70,emissiveIntensity:1.4});
+  for(let k=0;k<22;k++){
+    const b=new THREE.Mesh(new THREE.SphereGeometry(0.055,10,8), bm.clone());
+    b.position.set(-1.55+k*3.1/21, 3.72, 0.5); scene.add(b); bulbs.push(b);
+  }
+  // dark backdrop
+  box(40,16,0.3, new THREE.MeshStandardMaterial({color:0x04030a,roughness:0.5}), 0,4,-7);
+  box(30,0.3,20, dark, 0,9,-1);
+  box(30,0.3,20, new THREE.MeshStandardMaterial({color:0x03040a,roughness:0.7,metalness:0.3}), 0,0,0);
+}
+
+// ---------- coins (contained in reel window) ----------
+const BOX={xmin:-1.28,xmax:1.28,ymin:0.78,ymax:2.32,zmin:0.72,zmax:1.0};
+let coinSprMat;
+const coins=[]; // {mesh, vx,vy,vz, life, absorb, tt}
+function makeCoinMat(){
+  coinSprMat=new THREE.SpriteMaterial({map:tex.coin, blending:THREE.AdditiveBlending,
+    depthWrite:false, transparent:true, toneMapped:false});
+}
+function spawnCoin(x,y,z,size,vx,vy,vz,life,absorb){
+  const m=new THREE.Sprite(coinSprMat);
+  const s=size*2.6; m.scale.set(s,s,1);
+  m.position.set(x,y,z);
+  scene.add(m);
+  coins.push({mesh:m,vx,vy,vz,life,absorb,tt:0,size:s*0.45});
+}
+function betCoins(n){
+  for(let i=0;i<n;i++){
+    setTimeout(()=>{ if(!alive) return;
+      spawnCoin((Math.random()-0.5)*0.9, 2.2+Math.random()*0.12, 0.88+(Math.random()-0.5)*0.08,
+        0.14+Math.random()*0.04, (Math.random()-0.5)*0.4, -1.6-Math.random()*0.8, 0, 0.9, true);
+    }, i*45);
+  }
+}
+function payoutCoins(amount,jackpot){
+  const n=Math.min(Math.max(14,amount/2|0), jackpot?70:46);
+  for(let i=0;i<n;i++){
+    setTimeout(()=>{ if(!alive) return;
+      const z=0.80+Math.random()*0.16, size=0.12+Math.random()*0.06;
+      spawnCoin((Math.random()-0.5)*0.7, 0.9+Math.random()*0.1, z, size,
+        (Math.random()-0.5)*2.0, 4.0+Math.random()*2.4, (Math.random()-0.5)*0.35, jackpot?4.0:3.2, false);
+    }, i*22);
+  }
+}
+function updateCoins(dt){
+  for(let i=coins.length-1;i>=0;i--){
+    const c=coins[i]; c.tt+=dt;
+    if(c.absorb && c.tt>0.42){ // suck into slot + shrink
+      const sx=0, sy=0.85, sz=0.86; const k=Math.min(1,(c.tt-0.42)/0.32);
+      c.mesh.position.lerp(new THREE.Vector3(sx,sy,sz), 0.18);
+      c.mesh.scale.multiplyScalar(0.9);
+      c.mesh.rotation.y+=12*dt;
+      if(k>=1){ scene.remove(c.mesh); coins.splice(i,1); continue; }
+    } else {
+      c.vy-=9.8*dt;
+      c.mesh.position.x+=c.vx*dt; c.mesh.position.y+=c.vy*dt; c.mesh.position.z+=c.vz*dt;
+      c.mesh.rotation.x+=8*dt; c.mesh.rotation.z+=6*dt;
+      const p=c.mesh.position, r=c.size*0.5;
+      if(p.x<BOX.xmin+r){p.x=BOX.xmin+r;c.vx=Math.abs(c.vx)*0.5;} if(p.x>BOX.xmax-r){p.x=BOX.xmax-r;c.vx=-Math.abs(c.vx)*0.5;}
+      if(p.z<BOX.zmin+r){p.z=BOX.zmin+r;c.vz=Math.abs(c.vz)*0.5;} if(p.z>BOX.zmax-r){p.z=BOX.zmax-r;c.vz=-Math.abs(c.vz)*0.5;}
+      if(p.y>BOX.ymax-r){p.y=BOX.ymax-r;c.vy=-Math.abs(c.vy)*0.4;}
+      if(p.y<BOX.ymin+r){p.y=BOX.ymin+r;c.vy=Math.abs(c.vy)*0.45;c.vx*=0.7;c.vz*=0.7;}
+    }
+    if(c.life>0){ c.life-=dt; if(c.life<=0){ scene.remove(c.mesh); coins.splice(i,1); } }
+  }
+}
+
+// ---------- game state ----------
+let credits=1000, bet=10, win=0, spinning=false;
+let dispCred=1000, dispWin=0, winFlash=0, popT=0, lastJackpot=false;
+const $=id=>document.getElementById(id);
+
+function evaluate(){
+  const s=[STRIP[0][reels[0].landed],STRIP[1][reels[1].landed],STRIP[2][reels[2].landed]];
+  let wilds=s.filter(x=>x===6).length;
+  let nw=-1, allSame=true;
+  for(const x of s){ if(x===6) continue; if(nw===-1) nw=x; else if(x!==nw) allSame=false; }
+  let triple=false, sym=-1;
+  if(nw===-1){ triple=true; sym=6; } else if(allSame){ triple=true; sym=nw; }
+  if(triple){ win=PAY[sym]*bet; setMsg(sym===6?'★ GOLDEN JACKPOT ★':NAME[sym]+' x3', true); }
+  else { const pair=wilds>=1||s[0]===s[1]||s[1]===s[2]||s[0]===s[2]; win=pair?bet*2:0; setMsg(pair?'NICE PAIR':'TRY AGAIN', pair); }
+  if(win>0){ credits+=win; winFlash=triple?3.5:2.0; lastJackpot=(triple&&sym===6); popT=4.2;
+    payoutCoins(win,lastJackpot); }
+  refresh();
+}
+
+function spin(){
+  if(spinning||credits<bet){ if(credits<bet) setMsg('NOT ENOUGH CREDITS',false); return; }
+  credits-=bet; win=0; dispWin=0; popT=0; spinning=true; setMsg('GOOD LUCK!',false); refresh();
+  betCoins(Math.max(6,Math.min(20,bet/6|0)));
+  reels.forEach(r=>r.startSpin());
+  const designWin=Math.random()<0.4;
+  const wSym=Math.floor(Math.random()*6);
+  const pos=reels.map((r,i)=>{
+    if(designWin){ const c=[]; STRIP[i].forEach((v,p)=>{ if(v===wSym||v===6) c.push(p); });
+      return c.length? c[Math.floor(Math.random()*c.length)] : Math.floor(Math.random()*N); }
+    return Math.floor(Math.random()*N);
+  });
+  let t=0.9;
+  reels.forEach((r,i)=>{ setTimeout(()=>r.stopAt(pos[i]), (t+i*0.5)*1000); });
+  const wait=()=>{ if(reels.some(r=>r.spinning)) return setTimeout(wait,60); setTimeout(()=>{ evaluate(); spinning=false; refresh(); },200); };
+  setTimeout(wait,(t+3*0.5)*1000);
+}
+
+function setMsg(m,win){ const el=$('msg'); el.textContent=m; el.className=win?'win':''; }
+function changeBet(d){ if(spinning) return; bet=Math.max(10,Math.min(200,bet+d)); refresh(); }
+function refresh(){ $('vbet').textContent=bet; $('vwin').className='v'+(win>0?' hot':''); $('vwin').id='vwin';
+  $('spin').disabled=spinning; $('betup').disabled=spinning; $('betdn').disabled=spinning; $('maxbet').disabled=spinning; }
+
+$('spin').onclick=spin; $('betup').onclick=()=>changeBet(10); $('betdn').onclick=()=>changeBet(-10);
+$('maxbet').onclick=()=>{ bet=200; refresh(); };
+addEventListener('keydown',e=>{ if(e.code==='Space'){e.preventDefault();spin();} });
+
+// ---------- post fx ----------
+let composer,bloom;
+function setupFX(){
+  composer=new EffectComposer(renderer);
+  composer.addPass(new RenderPass(scene,camera));
+  bloom=new UnrealBloomPass(new THREE.Vector2(innerWidth,innerHeight),0.38,0.5,0.9);
+  composer.addPass(bloom); composer.addPass(new OutputPass());
+}
+
+// ---------- loop ----------
+let alive=false; const clock=new THREE.Clock();
+function animate(){
+  requestAnimationFrame(animate);
+  const dt=Math.min(clock.getDelta(),0.05), t=clock.elapsedTime;
+  reels.forEach(r=>r.update(dt));
+  updateCoins(dt);
+  if(winFlash>0) winFlash-=dt;
+  // marquee chase
+  for(let i=0;i<bulbs.length;i++){
+    let k=0.7+1.3*(0.5+0.5*Math.sin(t*6-i*0.55));
+    if(winFlash>0) k=1.4+3.0*(0.5+0.5*Math.sin(t*22+i));
+    bulbs[i].material.emissiveIntensity=k;
+  }
+  // count-up
+  dispCred=approach(dispCred,credits,dt); dispWin=approach(dispWin,win,dt);
+  $('vcred').textContent=Math.round(dispCred); $('vwin').textContent=Math.round(dispWin);
+  // win popup
+  const pop=$('pop');
+  if(popT>0){ popT-=dt; const p=1-popT/4.2;
+    let sc = p<0.14? lerp(0.2,1.18,p/0.14) : p<0.24? lerp(1.18,1,(p-0.14)/0.1) : 1;
+    const al = popT<0.6? popT/0.6 : 1;
+    pop.style.opacity=al; pop.style.transform=`translate(-50%,-50%) scale(${sc})`;
+    pop.querySelector('.big').textContent=(lastJackpot?'JACKPOT +':'WIN +')+Math.round(dispWin);
+  } else pop.style.opacity=0;
+  composer.render();
+}
+function approach(cur,tgt,dt){ const d=tgt-cur; if(Math.abs(d)<0.5) return tgt; return cur+d*Math.min(1,dt*4)+Math.sign(d)*Math.max(0,Math.min(Math.abs(d),120*dt)); }
+function lerp(a,b,t){ return a+(b-a)*Math.max(0,Math.min(1,t)); }
+
+function start(){
+  makeCoinMat();
+  buildCabinet();
+  for(let i=0;i<3;i++) reels.push(new Reel(i));
+  setupFX();
+  refresh();
+  alive=true;
+  $('load').style.opacity=0; setTimeout(()=>$('load').style.display='none',600);
+  animate();
+}
+
+addEventListener('resize',()=>{
+  camera.aspect=innerWidth/innerHeight; camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth,innerHeight); if(composer) composer.setSize(innerWidth,innerHeight);
+});
+</script>
