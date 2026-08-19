@@ -1,48 +1,68 @@
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no, maximum-scale=1">
 <title>Sample 21 — GOLDEN FORTUNE 슬롯 (Unity→Web)</title>
 <style>
   *{margin:0;padding:0;box-sizing:border-box}
-  html,body{height:100%;background:#05060d;overflow:hidden;font-family:'Segoe UI',system-ui,sans-serif;color:#fff;
-    user-select:none;-webkit-user-select:none}
+  :root{--sat:env(safe-area-inset-top,0px);--sar:env(safe-area-inset-right,0px);
+        --sab:env(safe-area-inset-bottom,0px);--sal:env(safe-area-inset-left,0px)}
+  html,body{width:100%;height:100%;height:100dvh;background:#05060d;overflow:hidden;
+    font-family:'Segoe UI',system-ui,sans-serif;color:#fff;user-select:none;-webkit-user-select:none;
+    touch-action:none;-webkit-tap-highlight-color:transparent}
   #app{position:fixed;inset:0}
-  canvas{display:block}
-  /* HUD */
-  #hud{position:fixed;left:18px;top:16px;z-index:10;background:rgba(6,8,16,.62);backdrop-filter:blur(6px);
-    border:1px solid rgba(220,180,90,.3);border-radius:12px;padding:12px 16px;min-width:220px;
-    font-variant-numeric:tabular-nums}
-  .row{display:flex;justify-content:space-between;align-items:baseline;gap:18px;line-height:1.7}
-  .k{font-size:12px;letter-spacing:.12em;color:#c8a24a}
-  .v{font-size:20px;font-weight:700;color:#ffe8a8}
+  canvas{display:block;width:100%!important;height:100%!important}
+  /* HUD (반응형: clamp+vmin, iOS safe-area) */
+  #hud{position:fixed;left:calc(10px + var(--sal));top:calc(10px + var(--sat));z-index:10;
+    background:rgba(6,8,16,.62);backdrop-filter:blur(6px);border:1px solid rgba(220,180,90,.3);
+    border-radius:12px;padding:clamp(6px,1.4vmin,12px) clamp(9px,2vmin,16px);
+    min-width:clamp(138px,26vmin,220px);font-variant-numeric:tabular-nums}
+  .row{display:flex;justify-content:space-between;align-items:baseline;gap:clamp(9px,2.4vmin,18px);line-height:1.55}
+  .k{font-size:clamp(9px,1.5vmin,12px);letter-spacing:.12em;color:#c8a24a}
+  .v{font-size:clamp(13px,2.8vmin,20px);font-weight:700;color:#ffe8a8}
   #vwin.hot{color:#7dff9a}
-  #title{position:fixed;left:50%;top:14px;transform:translateX(-50%);z-index:10;text-align:center}
-  #title b{font-size:15px;letter-spacing:.05em;color:#ffd479;text-shadow:0 0 12px rgba(255,180,60,.6)}
-  #title span{display:block;font-size:11px;color:#9aa2c4;margin-top:2px}
-  #msg{position:fixed;left:50%;top:52px;transform:translateX(-50%);z-index:10;font-size:20px;font-weight:700;
-    letter-spacing:.04em;color:#cfd6ff;text-shadow:0 2px 8px #000}
+  #title{position:fixed;left:50%;top:calc(9px + var(--sat));transform:translateX(-50%);z-index:10;text-align:center;pointer-events:none}
+  #title b{font-size:clamp(11px,2.2vmin,15px);letter-spacing:.05em;color:#ffd479;text-shadow:0 0 12px rgba(255,180,60,.6)}
+  #title span{display:block;font-size:clamp(8px,1.5vmin,11px);color:#9aa2c4;margin-top:2px}
+  #msg{position:fixed;left:50%;top:calc(44px + var(--sat));transform:translateX(-50%);z-index:10;
+    font-size:clamp(14px,3vmin,20px);font-weight:700;letter-spacing:.04em;color:#cfd6ff;text-shadow:0 2px 8px #000;
+    white-space:nowrap;pointer-events:none}
   #msg.win{color:#ffdf6e}
   /* win popup */
   #pop{position:fixed;left:50%;top:40%;transform:translate(-50%,-50%) scale(.2);z-index:11;text-align:center;
-    opacity:0;pointer-events:none;transition:none;padding:18px 40px;border-radius:20px;
-    background:radial-gradient(ellipse at center,rgba(30,10,0,.82),rgba(10,4,0,.35) 70%,transparent);
-    box-shadow:0 0 60px rgba(0,0,0,.6)}
-  #pop .big{font-size:60px;font-weight:900;color:#ffd23f;
+    opacity:0;pointer-events:none;transition:none;padding:clamp(8px,2.5vmin,18px) clamp(18px,5vmin,40px);border-radius:20px;
+    background:radial-gradient(ellipse at center,rgba(30,10,0,.82),rgba(10,4,0,.35) 70%,transparent);box-shadow:0 0 60px rgba(0,0,0,.6)}
+  #pop .big{font-size:clamp(28px,8.5vmin,60px);font-weight:900;color:#ffd23f;white-space:nowrap;
     text-shadow:0 0 24px rgba(255,170,40,1),0 4px 12px #000,-2px -2px 0 #7a4b00,2px 2px 0 #7a4b00}
-  #pop .sub{font-size:24px;font-weight:800;color:#fff2c8;letter-spacing:.2em;text-shadow:0 2px 6px #000}
+  #pop .sub{font-size:clamp(13px,3.2vmin,24px);font-weight:800;color:#fff2c8;letter-spacing:.2em;text-shadow:0 2px 6px #000}
   /* controls */
-  #ctl{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:10;display:flex;gap:10px}
-  button{font:inherit;font-size:15px;font-weight:700;color:#ffe8b0;background:rgba(40,30,12,.7);
-    border:1px solid rgba(220,180,90,.4);border-radius:10px;padding:12px 18px;cursor:pointer;transition:.12s}
+  #ctl{position:fixed;left:50%;bottom:calc(12px + var(--sab));transform:translateX(-50%);z-index:10;
+    display:flex;gap:clamp(6px,1.4vmin,10px)}
+  button{font:inherit;font-weight:700;color:#ffe8b0;background:rgba(40,30,12,.72);border:1px solid rgba(220,180,90,.4);
+    border-radius:10px;cursor:pointer;transition:.12s;
+    font-size:clamp(12px,2.2vmin,15px);padding:clamp(8px,1.7vmin,12px) clamp(11px,2.6vmin,18px)}
   button:hover{background:rgba(80,60,20,.8);border-color:#ffcf6a}
   button:disabled{opacity:.4;cursor:default}
-  #spin{background:linear-gradient(180deg,#e0402e,#a01818);border-color:#ff8a6a;color:#fff;min-width:130px;font-size:18px}
+  #spin{background:linear-gradient(180deg,#e0402e,#a01818);border-color:#ff8a6a;color:#fff;
+    min-width:clamp(86px,17vmin,130px);font-size:clamp(14px,2.6vmin,18px)}
   #spin:hover:not(:disabled){background:linear-gradient(180deg,#ff5a44,#c02020)}
-  #hint{position:fixed;left:50%;bottom:6px;transform:translateX(-50%);z-index:10;font-size:11px;color:rgba(255,255,255,.4)}
+  #hint{position:fixed;left:50%;bottom:calc(1px + var(--sab));transform:translateX(-50%);z-index:10;
+    font-size:clamp(8px,1.5vmin,11px);color:rgba(255,255,255,.4);white-space:nowrap;pointer-events:none;
+    max-width:96vw;overflow:hidden;text-overflow:ellipsis}
+  #fs{position:fixed;right:calc(10px + var(--sar));top:calc(10px + var(--sat));z-index:12;
+    padding:clamp(6px,1.4vmin,10px) clamp(8px,1.8vmin,12px);font-size:clamp(14px,2.6vmin,18px);min-width:0;line-height:1}
   #load{position:fixed;inset:0;background:#05060d;display:flex;align-items:center;justify-content:center;
-    z-index:20;color:#ffd479;letter-spacing:.15em;transition:opacity .6s}
+    z-index:20;color:#ffd479;letter-spacing:.15em;transition:opacity .6s;font-size:clamp(12px,2.5vmin,16px)}
+  /* 폰 세로 → 가로 회전 유도 */
+  #rotate{position:fixed;inset:0;z-index:30;display:none;flex-direction:column;align-items:center;justify-content:center;
+    gap:16px;background:#05060d;text-align:center;padding:24px}
+  #rotate .ic{font-size:clamp(48px,16vmin,80px);animation:rot 2.2s ease-in-out infinite}
+  #rotate .t{font-size:clamp(15px,4.5vmin,20px);color:#ffd479;font-weight:800}
+  #rotate .s{font-size:clamp(12px,3.4vmin,14px);color:#9aa2c4;max-width:300px;line-height:1.6}
+  @keyframes rot{0%,55%,100%{transform:rotate(0)}75%,95%{transform:rotate(-90deg)}}
+  @media (orientation:portrait) and (pointer:coarse){ #rotate{display:flex} }
 </style>
 <div id="app"></div>
-<div id="load">LOADING…</div>
+<div id="load">STAGE LOADING…</div>
+<button id="fs" title="전체화면 (가로)">⛶</button>
 <div id="title"><b>🎰 GOLDEN FORTUNE</b><span>Unity 미니게임 → Web3D 재연 · Three.js</span></div>
 <div id="msg">SPIN TO WIN!</div>
 <div id="pop"><div class="big">WIN +0</div><div class="sub">COINS!</div></div>
@@ -59,7 +79,12 @@
   <button id="maxbet">MAX</button>
   <button id="spin">SPIN</button>
 </div>
-<div id="hint">클릭 SPIN · 황금동전은 스크린 안에서만 연출 (Unity CasinoSlot 재연)</div>
+<div id="hint">SPIN · 황금동전은 스크린 안에서만 연출 · 가로 전체화면 최적화</div>
+<div id="rotate">
+  <div class="ic">📱</div>
+  <div class="t">가로 모드로 돌려주세요</div>
+  <div class="s">이 게임은 가로(landscape) 전체화면에 최적화되어 있습니다. 기기를 가로로 돌리면 시작됩니다.</div>
+</div>
 
 <script type="importmap">
 { "imports": {
@@ -92,7 +117,20 @@ app.appendChild(renderer.domElement);
 const scene=new THREE.Scene(); scene.background=new THREE.Color(0x05060d);
 scene.fog=new THREE.FogExp2(0x05060d,0.045);
 const camera=new THREE.PerspectiveCamera(42,innerWidth/innerHeight,0.1,200);
-camera.position.set(0.22,1.62,4.95); camera.lookAt(0.22,1.42,0);
+// ── 화면 비율에 맞춰 콘텐츠(머신+우측 리액션 캐릭)를 항상 프레임에 담는 fit-to-aspect ──
+// FRAME = 항상 보여야 할 월드 영역: x[cx±halfW], y[cy±halfH] (z~0 평면 기준)
+const FRAME={cx:0.5, cy:1.72, halfW:2.55, halfH:1.98};
+function fitCamera(){
+  const w=Math.max(1,innerWidth), h=Math.max(1,innerHeight), aspect=w/h;
+  const t=Math.tan(THREE.MathUtils.degToRad(camera.fov)/2);
+  const distV=FRAME.halfH/t;              // 세로가 담기는 거리
+  const distH=FRAME.halfW/(t*aspect);     // 가로가 담기는 거리
+  const dist=Math.max(distV,distH)*1.06;  // 둘 중 큰 쪽 + 여유
+  camera.position.set(FRAME.cx, FRAME.cy+0.05, dist+0.25);
+  camera.lookAt(FRAME.cx, FRAME.cy-0.14, 0.1);
+  camera.aspect=aspect; camera.updateProjectionMatrix();
+}
+fitCamera();
 
 // lights
 scene.add(new THREE.AmbientLight(0x334466,0.55));
@@ -431,8 +469,38 @@ function start(){
   animate();
 }
 
-addEventListener('resize',()=>{
-  camera.aspect=innerWidth/innerHeight; camera.updateProjectionMatrix();
-  renderer.setSize(innerWidth,innerHeight); if(composer) composer.setSize(innerWidth,innerHeight);
+// ── 리사이즈/회전: 렌더러 리사이즈 + 카메라 재프레이밍 ──
+function onResize(){
+  const w=Math.max(1,innerWidth), h=Math.max(1,innerHeight);
+  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  renderer.setSize(w,h); if(composer) composer.setSize(w,h);
+  fitCamera();
+}
+addEventListener('resize', onResize);
+addEventListener('orientationchange', ()=>{ setTimeout(onResize,250); setTimeout(onResize,600); });
+if(window.visualViewport) visualViewport.addEventListener('resize', onResize);
+
+// ── 전체화면(가로) 유도: 폰=풀스크린+가로락, PC=풀스크린 토글 ──
+const fsBtn=document.getElementById('fs');
+async function goFullscreen(){
+  try{
+    const el=document.documentElement;
+    if(!document.fullscreenElement && el.requestFullscreen) await el.requestFullscreen({navigationUI:'hide'});
+    else if(!document.fullscreenElement && el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+  }catch(e){}
+  try{ if(screen.orientation && screen.orientation.lock) await screen.orientation.lock('landscape'); }catch(e){}
+  setTimeout(onResize,300);
+}
+if(fsBtn) fsBtn.addEventListener('click', ()=>{
+  if(document.fullscreenElement){ try{document.exitFullscreen();}catch(e){} }
+  else goFullscreen();
 });
+// 첫 SPIN 터치 시(모바일) 가로 전체화면 자동 유도 — 한 번만
+let fsPrompted=false;
+const isTouch = matchMedia('(pointer:coarse)').matches;
+function maybeAutoFullscreen(){
+  if(fsPrompted || !isTouch) return; fsPrompted=true;
+  if(!document.fullscreenElement) goFullscreen();
+}
+document.getElementById('spin').addEventListener('click', maybeAutoFullscreen, {once:false});
 </script>
